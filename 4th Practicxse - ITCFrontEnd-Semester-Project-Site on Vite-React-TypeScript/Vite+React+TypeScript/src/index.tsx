@@ -4,6 +4,6 @@ import './index.scss'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <h1>Хелло реакт ТС</h1>
+    <h1>Hello, Vite+React+TypeScript!</h1>
   </React.StrictMode>,
 )
