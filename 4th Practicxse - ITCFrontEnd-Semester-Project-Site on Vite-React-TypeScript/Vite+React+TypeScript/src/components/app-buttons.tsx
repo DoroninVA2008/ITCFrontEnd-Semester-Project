@@ -20,7 +20,7 @@ export function AppButtons({ buttons, step }: AppButtonsProps) {
           key={key}
           onClick={onClick}
           disabled={disabled}
-          style={{ padding: '10px 15px' }}
+          style={{ padding: '10px 15px', color: 'var(--ckara-color)', cursor: 'pointer', backgroundColor: 'transparent', borderColor: 'var(--ckara-color)' }}
         >
           {/* TypeScript теперь понимает, что label может быть функцией, принимающей number */}
           {typeof label === 'function' ? label(step) : label}

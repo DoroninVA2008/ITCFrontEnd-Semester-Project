@@ -21,9 +21,16 @@ h1 {text-decoration: underline;
   color: var(--vanilla-color);
   width: 100vw;
   margin-top: -0.41em;
+  margin-bottom: 0.4em;
   background: linear-gradient(135deg, var(--ckara-color), var(--chocko-color));
   font-size: 3rem;
 }
+
+label button {transition: all 0.3s ease;
+  color: var(--ckara-color)}
+
+label button:hover {transition: all 0.3s ease;
+  color: var(--chocko-color)}
 
     .App {
       text-align: center;

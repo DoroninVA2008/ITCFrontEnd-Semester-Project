@@ -29,7 +29,7 @@ export function AppInput({ onChange }: AppInputProps): JSX.Element {
           onChange={handleInputChange}
           min={min}
           max={max}
-          style={{ marginLeft: '10px', padding: '5px' }}
+          style={{ marginLeft: '10px', padding: '5px', color: 'var(--ckara-color)', backgroundColor: 'transparent', borderColor: 'var(--ckara-color)' }}
         />
       </label>
     </div>

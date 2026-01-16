@@ -1,35 +1,33 @@
-import React, { useState } from 'react'
-import ReactDOM from 'react-dom/client'
-import { Provider, useSelector, useDispatch } from 'react-redux'
-import { AppCounter } from './components/app-counter.tsx'
-import { AppInput } from './components/app-input.tsx'
-import { AppButtons } from './components/app-buttons.tsx'
-import { store, RootState } from './store.ts' 
-import { reset, setValue } from './counter.ts'
-import './index.scss'
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom/client';
+import { Provider, useSelector, useDispatch } from 'react-redux';
+import { AppCounter } from './components/app-counter.tsx';
+import { AppInput } from './components/app-input.tsx';
+import { AppButtons } from './components/app-buttons.tsx';
+import { store, RootState } from './store.ts'; 
+import { reset, setValue } from './counter.ts';
+import './index.scss';
+
+const MIN_LIMIT = -1000;
+const MAX_LIMIT = +1000;
 
 function App() {
   const [step, setStep] = useState(1);
-  // Юзаем RootState, чтобы TS видел наш counter
   const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch();
-
-  const handleIncrement = () => {
-    const next = Math.min(1000, count + step);
-    dispatch(setValue(next));
+  const updateValue = (nextValue: number) => {
+    // Math.max(-1000, Math.min(1000, nextValue))
+    const clampedValue = Math.max(MIN_LIMIT, Math.min(MAX_LIMIT, nextValue));
+    dispatch(setValue(clampedValue));
   };
 
-  const handleDecrement = () => {
-    const next = Math.max(-1000, count - step);
-    dispatch(setValue(next));
-  };
+  const handleIncrement = () => updateValue(count + step);
+  const handleDecrement = () => updateValue(count - step);
+  const handleReset = () => dispatch(reset());
 
-  const handleReset = () => {
-    dispatch(reset());
-  };
+  const isIncrementDisabled = step >= 0 ? count >= MAX_LIMIT : count <= MIN_LIMIT;
 
-  const isIncrementDisabled = step >= 0 ? count >= 1000 : count <= -1000;
-  const isDecrementDisabled = step >= 0 ? count <= -1000 : count >= 1000;
+  const isDecrementDisabled = step >= 0 ? count <= MIN_LIMIT : count >= MAX_LIMIT;
 
   const buttonsConfig = [
     {
@@ -53,19 +51,22 @@ function App() {
   ];
 
   return (
-    <div style={{ textAlign: 'center', padding: '20px' }}>
+    <div style={{ textAlign: 'center', color: 'var(--ckara-color)', padding: '20px' }}>
       <h1>Hello, Vite+React+TypeScript!</h1>
       <AppCounter count={count} />
-      <AppInput onChange={(newStep) => setStep(newStep)} />
+      <AppInput onChange={(newStep: number) => setStep(newStep)} />
       <AppButtons buttons={buttonsConfig} step={step} />
     </div>
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>
-)
+const rootElement = document.getElementById('root');
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </React.StrictMode>
+  );
+}
