@@ -6,7 +6,9 @@ import { AppInput } from './components/app-input.tsx';
 import { AppButtons } from './components/app-buttons.tsx';
 import { store, RootState } from './store.ts'; 
 import { reset, setValue } from './counter.ts';
+import { AppMap } from './map.tsx';
 import './index.scss';
+import './mobile.scss';
 
 const MIN_LIMIT = -1000;
 const MAX_LIMIT = +1000;
@@ -51,11 +53,12 @@ function App() {
   ];
 
   return (
-    <div style={{ textAlign: 'center', color: 'var(--ckara-color)', padding: '20px' }}>
-      <h1>Hello, Vite+React+TypeScript!</h1>
+    <div style={{ textAlign: 'center', color: 'var(--ckara-color)' }}>
+      <h1>Hello, <a href="../public/index.html">Vite+React+TypeScript!</a></h1>
       <AppCounter count={count} />
       <AppInput onChange={(newStep: number) => setStep(newStep)} />
       <AppButtons buttons={buttonsConfig} step={step} />
+      <AppMap />
     </div>
   );
 }
