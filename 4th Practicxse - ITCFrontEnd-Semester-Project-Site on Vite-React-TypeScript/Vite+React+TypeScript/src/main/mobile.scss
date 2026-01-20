@@ -18,48 +18,52 @@
 
 @media screen and (max-width: 730px) {#map {width: 630px}}
 
-@media screen and (max-width: 700px) {#map {width: 600px}}
+@media screen and (max-width: 700px) {h1 {font-size: 3rem};
+#map {width: 600px}}
 
-@media screen and (max-width: 660px) {#map {width: 570px}}
+@media screen and (max-width: 660px) {h1 {font-size: 2.8rem};
+#map {width: 570px}}
 
-@media screen and (max-width: 620px) {#map {width: 540px}}
+
+@media screen and (max-width: 620px) {h1 {font-size: 2.6rem};
+#map {width: 540px}}
 
 @media screen and (max-width: 600px) {h1 {font-size: 3rem};
 #map {width: 510px}}
 
-@media screen and (max-width: 580px) {h1 {font-size: 3rem};
+@media screen and (max-width: 580px) {h1 {font-size: 2.4rem};
 #map {width: 480px}}
 
-@media screen and (max-width: 560px) {h1 {font-size: 2.8rem};
+@media screen and (max-width: 560px) {h1 {font-size: 2.3rem};
 #map {width: 460px}}
 
-@media screen and (max-width: 540px) {h1 {font-size: 2.6rem};
+@media screen and (max-width: 540px) {h1 {font-size: 2.2rem};
 #map {width: 440px}}
 
-@media screen and (max-width: 520px) {h1 {font-size: 2.4rem};
+@media screen and (max-width: 520px) {h1 {font-size: 2.1rem};
 #map {width: 420px}}
 
-@media screen and (max-width: 480px) {h1 {font-size: 2.2rem};
+@media screen and (max-width: 480px) {h1 {font-size: 2rem};
 #map {width: 380px}}
 
-@media screen and (max-width: 440px) {h1 {font-size: 2rem};
+@media screen and (max-width: 440px) {h1 {font-size: 1.8rem};
 #map {width: 340px}}
 
 @media screen and (max-width: 420px) {#map {width: 320px}}
 
-@media screen and (max-width: 400px) {h1 {font-size: 1.8rem};
+@media screen and (max-width: 400px) {h1 {font-size: 1.6rem};
 #map {width: 300px}}
 
-@media screen and (max-width: 360px) {h1 {font-size: 1.6rem};
+@media screen and (max-width: 360px) {h1 {font-size: 1.4rem};
 #map {width: 280px}}
 
-@media screen and (max-width: 320px) {h1 {font-size: 1.4rem}
+@media screen and (max-width: 320px) {h1 {font-size: 1.2rem}
     h2 {font-size: 1.4rem};
 #map {width: 260px}}
 
 @media screen and (max-width: 300px) {#map {width: 240px}}
 
-@media screen and (max-width: 280px) {h1 {font-size: 1.2rem};
+@media screen and (max-width: 280px) {h1 {font-size: 1.1rem};
 #map {width: 220px}}
 
 @media screen and (max-width: 240px) {h1 {font-size: 1rem}}

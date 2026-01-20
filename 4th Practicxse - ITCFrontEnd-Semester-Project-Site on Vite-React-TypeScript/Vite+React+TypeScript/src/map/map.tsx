@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
-import './index.scss';
+import '../main/index.scss';
 import './map.scss';
 
 // @ts-ignore
-import icon from '../public/marker.png';
+import icon from '../../public/marker.png';
 // @ts-ignore
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
