@@ -10,6 +10,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "composite": true,
     "jsx": "react-jsx",
     "strict": true,
     "noUnusedLocals": true,
@@ -19,6 +20,5 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  // "references": [{ "path": "./tsconfig.node.json" }]
 }
-

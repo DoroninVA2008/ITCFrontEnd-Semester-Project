@@ -61,7 +61,7 @@ export const AppMap: React.FC = () => {
               }}
               onMouseLeave={() => {
                  closeTimeoutRef.current = setTimeout(() => {
-                marker.closePopup();
+                Marker.closePopup();
               }, 200); // 200мс достаточно, чтобы перевести курсор
               }}
             >
