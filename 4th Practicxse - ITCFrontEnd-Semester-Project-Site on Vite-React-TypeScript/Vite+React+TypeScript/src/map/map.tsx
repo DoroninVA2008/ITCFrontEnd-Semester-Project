@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
+import L, { LatLngBoundsExpression } from 'leaflet';
 import '../main/index.scss';
 import './map.scss';
 
@@ -24,13 +24,16 @@ export const AppMap: React.FC = () => {
   const centmap: [number, number] = [64.751244, 98.618423];
   // Реф для хранения таймера закрытия
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
+  const maxMapBounds: LatLngBoundsExpression = [
+    [-112, -169], // Юго-западный угол (°S, °W)
+    [84, 192]   // Северо-восточный угол (°N, °E)
+  ];
   return (
     <div id="map-wrapper">
-      <MapContainer id="map" center={centmap} zoom={3} scrollWheelZoom={true}>
+      <MapContainer id="map" center={centmap} zoom={3} minZoom={3} maxZoom={10} scrollWheelZoom={true} 
+        maxBounds={maxMapBounds} maxBoundsViscosity={200.0}>
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
         />
 
         <Marker
@@ -74,4 +77,3 @@ export const AppMap: React.FC = () => {
     </div>
   );
 };
-

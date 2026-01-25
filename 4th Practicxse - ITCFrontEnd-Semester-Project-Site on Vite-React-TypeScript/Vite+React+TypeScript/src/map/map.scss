@@ -1,4 +1,4 @@
-#map{position: absolute;
+#map {position: absolute;
 		width: 1200px;/* Убрать если надо карту во всю длину*/
 		justify-content: center;
 		align-items: center;
@@ -10,7 +10,7 @@ border-radius: 20px;
 margin-bottom: 3em;
 margin-top: 3em}
 
-.leaflet-control-attribution{display: none;}
+.leaflet-control-attribution {display: none;}
 
 .leaflet-popup {
             opacity: 0;
@@ -34,10 +34,38 @@ margin-top: 3em}
 	left: 0;
 	top: 0;
 	}
+    /* ./map.scss */
+
+#map-wrapper {
+  // width и height должны быть заданы либо тут, либо в MapContainer инлайн стилем
+  // height: 100vh; 
+  // width: 100%;
+  position: relative;
+}
 
 .leaflet-container {
-	overflow: hidden;
-	}
+  overflow: hidden;
+
+  // Этот набор фильтров должен дать тебе хороший старт для точной подгонки.
+  // Я старался поймать коричневато-земляной тон суши и глубокий сине-серый воды.
+  filter: brightness(0.9)   /* Немного затемняем */
+          contrast(1.1)  /* Увеличиваем контраст */
+          saturate(0.5)    /* Уменьшаем насыщенность, чтобы убрать лишний синий */
+          hue-rotate(240deg); /* Поворот оттенка */
+          // Можешь добавить sepia(0.2) для большего "коричневого" эффекта
+          // Или даже invert(1) hue-rotate(180deg) для полного инверта и подгонки оттуда.
+}
+
+.leaflet-marker-icon {
+  // Если маркер должен быть цветным, как на твоем скриншоте (ярко-синим),
+  // то фильтр на нем должен отменить действие родительского фильтра,
+  // либо ты должен использовать маркер, который уже по дизайну подходит
+  // под фильтрованную карту.
+  // Например, если основной фильтр делает изображение темнее,
+  // а маркер кажется слишком тусклым, можно попробовать:
+  filter: brightness(1.5) hue-rotate(-240deg) saturate(1.5); // Скорее всего, тебе тут вообще не нужен фильтр, если изображение маркера уже готово
+}
+
 	
 .leaflet-tile,
 .leaflet-marker-icon,
