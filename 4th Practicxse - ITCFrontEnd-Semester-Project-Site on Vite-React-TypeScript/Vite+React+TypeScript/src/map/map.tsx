@@ -21,7 +21,7 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 export const AppMap: React.FC = () => {
   const center: [number, number] = [55.751244, 37.618423];
-  const centmap: [number, number] = [64.751244, 98.618423];
+  const centmap: [number, number] = [68.751244, 98.618423];
   // Реф для хранения таймера закрытия
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const maxMapBounds: LatLngBoundsExpression = [
