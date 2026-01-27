@@ -34,26 +34,18 @@ margin-top: 3em}
 	left: 0;
 	top: 0;
 	}
-    /* ./map.scss */
 
 #map-wrapper {
-  // width и height должны быть заданы либо тут, либо в MapContainer инлайн стилем
-  // height: 100vh; 
-  // width: 100%;
   position: relative;
 }
 
 .leaflet-container {
   overflow: hidden;
-
   // Этот набор фильтров должен дать тебе хороший старт для точной подгонки.
   // Я старался поймать коричневато-земляной тон суши и глубокий сине-серый воды.
-  filter: brightness(0.9)   /* Немного затемняем */
-          contrast(1.1)  /* Увеличиваем контраст */
-          saturate(0.5)    /* Уменьшаем насыщенность, чтобы убрать лишний синий */
-          hue-rotate(240deg); /* Поворот оттенка */
-          // Можешь добавить sepia(0.2) для большего "коричневого" эффекта
-          // Или даже invert(1) hue-rotate(180deg) для полного инверта и подгонки оттуда.
+  background-color: rgba(255, 140, 0, 0.3); 
+  mix-blend-mode: luminosity;  /* Поворот оттенка */
+    filter: sepia(10.2) invert(-0.1) ;// для полного инверта и подгонки оттуда.
 }
 
 .leaflet-marker-icon {
@@ -63,7 +55,7 @@ margin-top: 3em}
   // под фильтрованную карту.
   // Например, если основной фильтр делает изображение темнее,
   // а маркер кажется слишком тусклым, можно попробовать:
-  filter: brightness(1.5) hue-rotate(-240deg) saturate(1.5); // Скорее всего, тебе тут вообще не нужен фильтр, если изображение маркера уже готово
+  filter: brightness(0.9) hue-rotate(-240deg) saturate(0.5); // Скорее всего, тебе тут вообще не нужен фильтр, если изображение маркера уже готово
 }
 
 	
@@ -125,14 +117,15 @@ margin-top: 3em}
 	-ms-touch-action: none;
 	touch-action: none;
 }
-.leaflet-container {
+.leaflet-container {background: #0a1a0f; /* Очень тёмный зелёный фон для пустот */
+  outline-offset: 1px;
 	-webkit-tap-highlight-color: transparent;
 }
 .leaflet-container a {
 	-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
 }
 .leaflet-tile {
-	filter: inherit;
+  	filter: invert(100%) hue-rotate(180deg) brightness(0.4) contrast(1.8) sepia(0.5) hue-rotate(140deg);
 	visibility: hidden;
 	}
 .leaflet-tile-loaded {

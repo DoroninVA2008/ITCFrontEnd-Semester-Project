@@ -5,14 +5,14 @@ import '../main/index.scss';
 import './map.scss';
 
 // @ts-ignore
-import icon from '../../public/marker.png';
+import icon from '../../public/VectorMarkerSword.png';
 // @ts-ignore
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
 let DefaultIcon = L.icon({
   iconUrl: icon,
   shadowUrl: iconShadow,
-  iconSize: [32, 32],
+  iconSize: [32, 48],
   iconAnchor: [16, 32], // Немного поправил анкор для точности
   popupAnchor: [0, 4], // Чтобы попап открывался над маркером
 });
@@ -63,7 +63,7 @@ export const AppMap: React.FC = () => {
                 }
               }}
               onMouseLeave={() => {
-                 closeTimeoutRef.current = setTimeout(() => {
+                 closeTimeoutRef.current = setTimeout(() => {// @ts-ignore
                 Marker.closePopup();
               }, 200); // 200мс достаточно, чтобы перевести курсор
               }}
