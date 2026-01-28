@@ -1,0 +1,63 @@
+:root {
+  --header-color: #161616;
+  --target-color: #a24c1d;
+  --hover-color: #6e381a;
+  --active-color: #472613;
+  --text-color: #fafafa;
+  --popup-color: #2a1d15;
+  --transition-ive: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+}
+
+header {position: fixed;
+  display: flex;
+  justify-content: flex-start;
+  background-color: var(--header-color);
+  z-index: 1001;
+  width: 100vw;
+  height: 120px;
+  padding-top: 32px;
+  top: 0;
+  left: 0;
+  color: var(--text-color)}
+
+header img {margin-left: 180px}
+
+header h1 {font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 48px;
+  letter-spacing: 2px;
+  margin-left: 16px;
+  position: static}
+
+header button {font-family: Arial, Helvetica, sans-serif;
+  border-radius: 15px;
+  font-size: 18px;
+  padding: 15px 22px 15px 22px;
+  letter-spacing: 1px;
+  right: 222px;
+  cursor: pointer;
+  transition: var(--transition-ive);
+  color: var(--text-color);
+  background-color: var(--target-color);
+  border: 2px solid var(--target-color);
+  position: absolute}
+
+header button:hover {transition: var(--transition-ive);
+  background-color: var(--hover-color);
+  border: 2px solid var(--hover-color)}
+
+header button:active {transition: var(--transition-ive);
+  background-color: var(--active-color);
+  border: 2px solid var(--active-color)}
