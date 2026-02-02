@@ -35,7 +35,7 @@ export const AppMap: React.FC = () => {
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
         />
-
+        
         <Marker
           position={center}
           eventHandlers={{

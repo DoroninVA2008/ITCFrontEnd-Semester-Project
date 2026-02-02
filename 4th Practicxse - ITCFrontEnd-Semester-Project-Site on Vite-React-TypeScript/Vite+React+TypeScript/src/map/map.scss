@@ -1,4 +1,13 @@
 #map {position: absolute;
+	.leaflet-tile-container {
+    // Чистый фильтр для темно-зеленого эффекта (если слой светлый)
+    // Если слой уже темный (как CartoDB), оставь только легкую коррекцию
+    filter: brightness(0.8) contrast(1.1) saturate(0.6) hue-rotate(100deg);
+  }
+
+  .leaflet-tile {
+    visibility: visible !important; // Чтобы не пропадало ничего
+  }
 		width: 1200px;/* Убрать если надо карту во всю длину*/
 		justify-content: center;
 		align-items: center;
@@ -56,8 +65,8 @@ margin-top: 3em}
   background: #1f2a27; /* Очень тёмный зелёный фон для пустот */
   outline-offset: 1px;
   filter: sepia(10.2) invert(-0.1) brightness(1);
-  mix-blend-mode: luminosity;  /* Поворот оттенка */
-// для полного инверта и подгонки оттуда.
+  mix-blend-mode: luminosity;/* Поворот оттенка */
+// для полного инверта и подгонки оттуда. mix-blend-mode:multiply; luminosity
 }
 
 .leaflet-marker-icon {
