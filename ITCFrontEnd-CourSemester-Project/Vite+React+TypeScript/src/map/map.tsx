@@ -3,10 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L, { LatLngBoundsExpression } from 'leaflet'
 import '../main/index.scss'
 import './map.scss'
-
-// @ts-ignore
 import icon from '../../public/VectorMarkerSword.png';
-// @ts-ignore
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
 let DefaultIcon = L.icon({

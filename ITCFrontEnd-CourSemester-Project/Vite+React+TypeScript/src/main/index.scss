@@ -1,8 +1,8 @@
 :root {
-  --header-color: #161616;
-  --target-color: #a24c1d;
-  --hover-color: #6e381a;
-  --active-color: #472613;
+  --header-color: #010612;
+  --target-color: #C09139;
+  --hover-color: #805A13;
+  --active-color: #48330C;
   --text-color: #fafafa;
   --popup-color: #2a1d15;
   --transition-ive: all 0.3s ease;
@@ -14,9 +14,17 @@
   box-sizing: border-box;
 }
 
-body {
-  display: flex;
+body {display: flex;
   justify-content: center;
+}
+
+.RussianFon {width: 100vw;
+  height: 100vh;
+  margin-top: 3vh;
+  background-image: url(../../public/Mapp.jpg);
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-size: cover;
 }
 
 header {position: fixed;
@@ -31,22 +39,22 @@ header {position: fixed;
   left: 0;
   color: var(--text-color)}
 
-header img {margin-left: 180px}
+header img {margin-left: 160px}
 
 header h1 {font-family: Arial, Helvetica, sans-serif;
-  font-weight: 600;
+  font-weight: 100;
   font-style: normal;
   font-size: 48px;
+  margin-top: -2px;
   letter-spacing: 2px;
-  margin-left: 16px;
-  position: static}
+  margin-left: 8px}
 
 header button {font-family: Arial, Helvetica, sans-serif;
   border-radius: 15px;
   font-size: 18px;
   padding: 15px 22px 15px 22px;
   letter-spacing: 1px;
-  right: 222px;
+  right: 162px;
   cursor: pointer;
   transition: var(--transition-ive);
   color: var(--text-color);

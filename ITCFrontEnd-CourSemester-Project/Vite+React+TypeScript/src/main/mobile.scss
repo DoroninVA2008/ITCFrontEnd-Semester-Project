@@ -1,16 +1,83 @@
-@media screen and (max-width: 1300px) {header {height: 200px !important}
-    header img {margin-left: 160px !important}
+@media screen and (max-width: 1200px) {header {height: 200px !important}
+    header img {margin-left: 140px !important}
     header button {top: 120px;
-  right: 222px;}}
+  right: 142px !important;}}
 
-@media screen and (max-width: 1200px) {header img {margin-left: 140px !important}}
+@media screen and (max-width: 1100px) {header {position: absolute !important}
+  header img {margin-left: 120px !important}}
 
-@media screen and (max-width: 1100px) {header img {margin-left: 120px !important}}
+@media screen and (max-width: 1040px) {header img {margin-left: 110px !important}}
 
-@media screen and (max-width: 1000px) {header img {margin-left: 100px !important}}
+@media screen and (max-width: 980px) {header img {margin-left: 100px !important}}
 
-@media screen and (max-width: 940px) {header img {margin-left: 80px !important}}
+@media screen and (max-width: 940px) {header img {margin-left: 90px !important}}
 
-@media screen and (max-width: 880px) {header img {margin-left: 60px !important}}
+@media screen and (max-width: 880px) {header img {margin-left: 80px !important}}
 
-@media screen and (max-width: 840px) {header img {margin-left: 40px !important}}
+@media screen and (max-width: 840px) {header img {margin-left: 70px !important}}
+
+@media screen and (max-width: 800px) {header img {margin-left: 60px !important}}
+
+@media screen and (max-width: 770px) {header img {margin-left: 50px !important}}
+
+@media screen and (max-width: 740px) {header img {margin-left: 40px !important}}
+
+@media screen and (max-width: 710px) {header img {margin-left: 30px !important}
+header h1 {max-width: 540px}}
+
+@media screen and (max-width: 680px) {header img {margin-left: 30px !important}
+header h1 {max-width: 540px}}
+
+@media screen and (max-width: 650px) {header {height: 260px !important}
+header button {margin-top: 40px}}
+
+@media screen and (max-width: 620px) {header h1 {max-width: 380px}}
+
+@media screen and (max-width: 540px) {header button {justify-content: center;
+  right: 132px !important;
+  display: flex}}
+
+@media screen and (max-width: 480px) {header button {right: 122px !important}}
+
+@media screen and (max-width: 450px) {header{height: 440px !important}
+header img {margin-left: 200px !important}
+header h1 {margin-left: 120px !important;
+  margin-top: 80px !important;
+  position: absolute;
+  display: flex;
+  max-width: 340px}
+header button {right: 100px !important;
+  margin-top: 220px}}
+
+@media screen and (max-width: 430px) {header img {margin-left: 190px !important}}
+
+@media screen and (max-width: 420px) {header button {right: 80px !important}
+header img {margin-left: 180px !important}
+header h1 {margin-left: 110px !important}}
+
+@media screen and (max-width: 390px) {header button {right: 60px !important}
+header img {margin-left: 168px !important}
+header h1 {margin-left: 100px !important}}
+
+@media screen and (max-width: 370px) {header button {right: 40px !important}
+header img {margin-left: 156px !important}
+header h1 {margin-left: 90px !important}}
+
+@media screen and (max-width: 350px) {header button {right: 30px !important}
+header img {margin-left: 146px !important}
+header h1 {margin-left: 80px !important}}
+
+@media screen and (max-width: 340px) {header button {right: 24px !important}
+header img {margin-left: 136px !important}
+header h1 {margin-left: 70px !important}}
+
+@media screen and (max-width: 310px) {header button {right: 16px !important}
+header img {margin-left: 126px !important}
+header h1 {margin-left: 60px !important}}
+
+@media screen and (max-width: 280px) {header button {right: 6px !important}
+header img {margin-left: 114px !important}
+header h1 {margin-left: 50px !important}}
+
+@media screen and (max-width: 260px) {header h1 {margin-left: 40px !important}
+header img {margin-left: 104px !important}}

@@ -2,13 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './store.ts';
-import { Mapp } from '../map/map.tsx';
 import './mobile.scss';
 import './index.scss';
 
 function App() {
   return (
-    <div>
+    <div className="RussianFon">
       <header>
         <a href="/public/index.html">
           <img src="/RussianHeroesLogo.png" alt="Логотип Россия - страна Героев"></img>
@@ -20,7 +19,6 @@ function App() {
           Предложить событие
         </button>
       </header>
-      <Mapp />
     </div>
     );
 }
