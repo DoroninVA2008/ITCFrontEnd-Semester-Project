@@ -1,0 +1,758 @@
+@media screen and (max-width: 1600px) {
+  .RussianFon {
+  background-position-x: right !important;
+    height: 800px
+  }
+}
+
+@media screen and (max-width: 1380px) {
+  .RussianText {position: absolute;
+    top: -2vh;
+    margin-left: -10px;
+    margin-bottom: 20px;
+    max-width: 900px
+  }
+}
+
+@media screen and (max-width: 1320px) {
+  .RussianText {
+    max-width: 800px
+  }
+
+  .RussianFon h1 {
+    font-size: 84px !important;
+    line-height: 100px !important;
+  }
+
+  .RussianFon h2 {
+    font-size: 38px !important;
+    line-height: 60px !important;
+  }
+
+  .RussianFon h3 {
+    font-size: 16px !important;
+    line-height: 24px !important;
+  }
+}
+
+@media screen and (max-width: 1260px) {
+  .RussianText {
+    margin-left: -20px;
+    margin-bottom: 20px;
+  }
+
+  .RussianFon h1 {
+    font-size: 72px !important;
+    line-height: 90px !important;
+  }
+
+  .RussianFon h2 {
+    font-size: 36px !important;
+    line-height: 54px !important;
+  }
+
+  .RussianFon h3 {
+    font-size: 14px !important;
+    line-height: 22px !important;
+  }
+
+  .RussianFon button {right: 142px !important;
+    font-size: 16px !important;
+    padding: 14px 20px 14px 20px !important;}
+}
+
+@media screen and (max-width: 1200px) {
+  header {
+    height: 200px !important
+  }
+
+  header img {
+    margin-left: 140px !important
+  }
+
+  header button {
+    top: 120px;
+    right: 142px !important}
+
+  .RussianText {
+    margin-left: -30px;
+  }
+
+  .RussianFon {
+    margin-top: 200px !important
+  }
+  
+  .RussianFon h1 {
+    font-size: 66px !important;
+    line-height: 86px !important;
+  }
+
+  .RussianFon h2 {
+    max-width: 580px !important;
+    font-size: 32px !important;
+    line-height: 44px !important;
+  }
+
+  .RussianFon h3 {
+    font-size: 14px !important;
+    line-height: 22px !important;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  header {
+    position: absolute !important
+  }
+
+  header img {
+    margin-left: 120px !important
+  }
+
+  .RussianText {
+    margin-left: -40px;
+  }
+  
+  .RussianFon h1 {
+    font-size: 60px !important;
+    line-height: 78px !important;
+  }
+
+  .RussianFon h2 {
+    max-width: 540px !important;
+    font-size: 30px !important;
+    line-height: 40px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 540px !important;
+    font-size: 14px !important;
+    line-height: 22px !important;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  header img {
+    margin-left: 110px !important
+  }
+
+  .RussianText {
+    margin-left: -48px;
+  }
+
+  .RussianFon h1 {
+    font-size: 56px !important;
+    line-height: 72px !important;
+  }
+
+  .RussianFon h2 {
+    max-width: 520px !important;
+    font-size: 28px !important;
+    line-height: 36px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 540px !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+  }
+
+  .RussianFon button {right: 112px !important;
+    font-size: 14px !important;
+    padding: 12px 17px 12px 17px !important;}
+}
+
+@media screen and (max-width: 980px) {
+  header img {
+    margin-left: 100px !important
+  }
+
+  .RussianText {
+    margin-left: -56px;
+  }
+  
+  .RussianFon h1 {
+    font-size: 52px !important;
+    line-height: 68px !important;
+  }
+
+  .RussianFon h2 {
+    max-width: 400px !important;
+    font-size: 26px !important;
+    line-height: 34px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 500px !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+  }
+}
+
+@media screen and (max-width: 940px) {
+  header img {
+    margin-left: 90px !important
+  }
+
+  .RussianText {
+    margin-left: -56px;
+  }
+  
+  .RussianFon h1 {
+    font-size: 52px !important;
+    line-height: 68px !important;
+  }
+
+  .RussianFon h2 {
+    max-width: 400px !important;
+    font-size: 26px !important;
+    line-height: 34px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 500px !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+  }
+}
+
+@media screen and (max-width: 880px) {
+  header img {
+    margin-left: 80px !important
+  }
+
+  .RussianText {
+    margin-left: -64px;
+  }
+  
+  .RussianFon h1 {
+    font-size: 48px !important;
+    line-height: 64px !important;
+  }
+
+  .RussianFon h2 {
+    max-width: 400px !important;
+    font-size: 24px !important;
+    line-height: 32px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 440px !important;
+    font-size: 12px !important;
+    line-height: 18px !important;
+  }
+}
+
+@media screen and (max-width: 840px) {
+  header img {
+    margin-left: 70px !important
+  }
+
+  .RussianText {
+    margin-left: -68px;
+  }
+  
+  .RussianFon h1 {
+    font-size: 46px !important;
+    line-height: 60px !important;
+  }
+
+  .RussianFon h2 {
+    max-width: 400px !important;
+    font-size: 22px !important;
+    line-height: 30px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 400px !important;
+    font-size: 10px !important;
+    line-height: 18px !important;
+  }
+
+  .RussianFon button {
+    right: 112px !important;
+    font-size: 12px !important;
+    padding: 10px 14px 10px 14px !important;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  header img {
+    margin-left: 60px !important
+  }
+
+  .RussianText {
+    margin-left: -74px;
+  }
+  
+  .RussianFon h1 {
+    font-size: 42px !important;
+    line-height: 56px !important;
+  }
+
+  .RussianFon h2 {
+    max-width: 380px !important;
+    font-size: 20px !important;
+    line-height: 28px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 440px !important;
+    font-size: 8px !important;
+    line-height: 18px !important;
+  }
+
+  .RussianFon button {
+    right: 102px !important;
+    font-size: 12px !important;
+    padding: 10px 14px 10px 14px !important;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  header img {
+    margin-left: 50px !important
+  }
+
+  .RussianText {
+    margin-left: -78px;
+  }
+  
+  .RussianFon h1 {
+    font-size: 40px !important;
+    line-height: 54px !important;
+  }
+
+  .RussianFon h2 {
+    max-width: 380px !important;
+    font-size: 20px !important;
+    line-height: 26px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 440px !important;
+    font-size: 8px !important;
+    line-height: 16px !important;
+  }
+
+  .RussianFon button {
+    right: 92px !important;
+    font-size: 10px !important;
+    padding: 8px 13px 8px 13px !important;
+    border-radius: 10px !important;
+  }
+}
+
+@media screen and (max-width: 740px) {
+  header img {
+    margin-left: 40px !important
+  }
+
+  .RussianText {
+    margin-left: -82px;
+  }
+  
+  .RussianFon h1 {
+    font-size: 38px !important;
+    line-height: 50px !important;
+  }
+
+  .RussianFon h2 {
+    max-width: 340px !important;
+    font-size: 18px !important;
+    line-height: 24px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 440px !important;
+    font-size: 6px !important;
+    line-height: 16px !important;
+  }
+}
+
+@media screen and (max-width: 710px) {
+  header img {
+    margin-left: 30px !important
+  }
+
+  header h1 {
+    max-width: 540px
+  }
+
+  .RussianText {
+    margin-left: -86px;
+  }
+  
+  .RussianFon h1 {
+    font-size: 36px !important;
+    line-height: 46px !important;
+  }
+
+  .RussianFon h2 {
+    max-width: 320px !important;
+    font-size: 16px !important;
+    line-height: 24px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 440px !important;
+    font-size: 6px !important;
+    line-height: 16px !important;
+  }
+
+  .RussianFon button {
+    right: 82px !important;
+    font-size: 8px !important;
+    padding: 8px 10px 8px 10px !important;
+    border-radius: 8px !important;
+  }
+}
+
+@media screen and (max-width: 680px) {header img {margin-left: 30px !important}
+header h1 {max-width: 540px}}
+
+@media screen and (max-width: 650px) {header {height: 260px !important}
+header button {margin-top: 40px}
+    .RussianFon {margin-top: 260px !important}}
+
+@media screen and (max-width: 620px) {
+  header h1 {
+    max-width: 380px
+  }
+
+  .RussianText {
+    margin-left: -92px;
+  }
+  
+  .RussianFon h1 {
+    font-size: 34px !important;
+    line-height: 46px !important;
+  }
+
+  .RussianFon h2 {
+    max-width: 320px !important;
+    font-size: 16px !important;
+    line-height: 24px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 440px !important;
+    font-size: 6px !important;
+    line-height: 16px !important;
+  }
+
+  .RussianFon button {
+    right: 72px !important;
+    font-size: 6px !important;
+    padding: 6px 8px 6px 8px !important;
+    border-radius: 6px !important;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  header button {
+    justify-content: center;
+    right: 132px !important;
+    display: flex
+  }
+
+  .RussianText {
+    margin-left: -112px;
+  }
+  
+  .RussianFon h1 {
+    font-size: 32px !important;
+    line-height: 40px !important;
+  }
+
+  .RussianFon h2 {
+    max-width: 280px !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 440px !important;
+    font-size: 6px !important;
+    line-height: 16px !important;
+  }
+
+  .RussianFon button {
+    right: 62px !important;
+    font-size: 5px !important;
+    padding: 5px 6px 5px 6px !important;
+    border-radius: 6px !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  header button {
+    right: 122px !important
+  }
+
+  .RussianText {
+    margin-left: -116px;
+  }
+  
+  .RussianFon h1 {
+    font-size: 28px !important;
+    line-height: 38px !important;
+  }
+
+  .RussianFon h2 {
+    max-width: 260px !important;
+    font-size: 12px !important;
+    line-height: 18px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 440px !important;
+    font-size: 5px !important;
+    line-height: 16px !important;
+  }
+
+  .RussianFon button {
+    right: 52px !important;
+    font-size: 5px !important;
+    padding: 5px 6px 5px 6px !important;
+    border-radius: 6px !important;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  header{
+    height: 440px !important
+  }
+
+  header img {
+    margin-left: 200px !important
+  }
+
+  header h1 {
+    margin-left: 120px !important;
+    margin-top: 80px !important;
+    position: absolute;
+    display: flex;
+    max-width: 340px
+  }
+
+  header button {
+    right: 100px !important;
+    margin-top: 220px
+  }
+
+  .RussianFon {
+    margin-top: 440px !important
+  }
+
+  .RussianText {
+    margin-left: -120px;
+  }
+  
+  .RussianFon h1 {letter-spacing: 2px !important;
+    font-size: 28px !important;
+    line-height: 38px !important;
+  }
+
+  .RussianFon h2 {letter-spacing: 1px !important;
+    max-width: 200px !important;
+    font-size: 12px !important;
+    line-height: 18px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 440px !important;
+    font-size: 5px !important;
+    line-height: 16px !important;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  header img {
+    margin-left: 190px !important
+  }
+}
+
+@media screen and (max-width: 420px) {
+  header button {
+    right: 80px !important
+  }
+
+  header img {
+    margin-left: 180px !important
+  }
+
+  header h1 {
+    margin-left: 110px !important
+  }
+
+  .RussianFon {
+    margin-top: 440px !important
+  }
+
+  .RussianText {
+    margin-left: -120px;
+  }
+  
+  .RussianFon h1 {letter-spacing: 2px !important;
+    font-size: 24px !important;
+    line-height: 32px !important;
+  }
+
+  .RussianFon h2 {letter-spacing: 1px !important;
+    max-width: 160px !important;
+    font-size: 10px !important;
+    line-height: 16px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 440px !important;
+    font-size: 4px !important;
+    line-height: 16px !important;
+  }
+
+  .RussianFon button {
+    right: 32px !important;
+    font-size: 5px !important;
+    padding: 5px 6px 5px 6px !important;
+    border-radius: 6px !important;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  header button {
+    right: 60px !important
+  }
+
+  header img {
+    margin-left: 168px !important
+  }
+
+  header h1 {
+    margin-left: 100px !important
+  }
+
+  .RussianFon {
+    margin-top: 440px !important
+  }
+
+  .RussianText {
+    margin-left: -124px;
+  }
+  
+  .RussianFon h1 {letter-spacing: 2px !important;
+    font-size: 20px !important;
+    line-height: 28px !important;
+  }
+
+  .RussianFon h2 {letter-spacing: 1px !important;
+    max-width: 160px !important;
+    font-size: 10px !important;
+    line-height: 14px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 440px !important;
+    font-size: 4px !important;
+    line-height: 16px !important;
+  }
+}
+
+@media screen and (max-width: 370px) {
+  header button {
+    right: 50px !important
+  }
+
+  header img {
+    margin-left: 156px !important
+  }
+
+  header h1 {
+    margin-left: 90px !important
+  }
+
+  .RussianFon {
+    margin-top: 440px !important
+  }
+
+  .RussianText {
+    margin-left: -124px;
+  }
+  
+  .RussianFon h1 {letter-spacing: 2px !important;
+    font-size: 18px !important;
+    line-height: 24px !important;
+  }
+
+  .RussianFon h2 {letter-spacing: 1px !important;
+    max-width: 160px !important;
+    font-size: 8px !important;
+    line-height: 12px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 440px !important;
+    font-size: 4px !important;
+    line-height: 12px !important;
+  }
+}
+
+@media screen and (max-width: 350px) {header button {right: 30px !important}
+header img {margin-left: 146px !important}
+header h1 {margin-left: 80px !important}}
+
+@media screen and (max-width: 340px) {header button {right: 24px !important}
+header img {margin-left: 136px !important}
+header h1 {margin-left: 70px !important}}
+
+@media screen and (max-width: 310px) {
+  header button {
+    right: 16px !important
+  }
+
+  header img {
+    margin-left: 126px !important
+  }
+
+  header h1 {
+    margin-left: 60px !important
+  }
+
+  .RussianFon {
+    margin-top: 440px !important
+  }
+
+  .RussianText {
+    margin-left: -128px;
+  }
+  
+  .RussianFon h1 {letter-spacing: 2px !important;
+    font-size: 16px !important;
+    line-height: 20px !important;
+  }
+
+  .RussianFon h2 {letter-spacing: 1px !important;
+    max-width: 140px !important;
+    font-size: 7px !important;
+    line-height: 10px !important;
+  }
+
+  .RussianFon h3 {
+    max-width: 120px !important;
+    font-size: 4px !important;
+    line-height: 8px !important;
+  }
+
+  .RussianFon button {
+    right: 32px !important;
+    font-size: 4px !important;
+    padding: 3px 4px 3px 4px !important;
+    border-radius: 4px !important;
+  }
+}
+
+@media screen and (max-width: 280px) {header button {right: 6px !important}
+header img {margin-left: 114px !important}
+header h1 {margin-left: 50px !important}}
+
+@media screen and (max-width: 260px) {header h1 {margin-left: 40px !important}
+header img {margin-left: 104px !important}}

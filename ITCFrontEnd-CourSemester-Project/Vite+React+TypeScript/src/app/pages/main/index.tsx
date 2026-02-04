@@ -7,7 +7,7 @@ import './index.scss';
 
 function App() {
   return (
-    <div className="RussianFon">
+    <div>
       <header>
         <a href="/public/index.html">
           <img src="/RussianHeroesLogo.png" alt="Логотип Россия - страна Героев"></img>
@@ -19,8 +19,28 @@ function App() {
           Предложить событие
         </button>
       </header>
+      <div className="RussianFon">
+        <div className="RussianText">
+          <h1>
+            Россия —
+              <br />
+                страна героев
+          </h1>
+          <h2>
+            Интерактивная карта исторических
+              <br />
+                событий
+          </h2>
+          <h3>
+            Исследуйте историю. Сохраняйте память. Добавляйте события на общую карту подвигов.
+          </h3>
+        </div>
+        <button>
+          Перейти к карте →
+        </button>
+      </div>
     </div>
-    );
+  );
 }
 
 const rootElement = document.getElementById('root');

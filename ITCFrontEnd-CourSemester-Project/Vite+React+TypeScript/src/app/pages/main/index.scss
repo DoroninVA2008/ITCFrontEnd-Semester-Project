@@ -1,0 +1,134 @@
+:root {
+  --header-color: #030816b3;
+  --target-color: #c09139;
+  --hover-color: #805A13;
+  --active-color: #48330C;
+  --text-color: #fafafa;
+  --popup-color: #2a1d15;
+  --shadow-color: #d4a244;
+  --transition-ive: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center; 
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  position: absolute;
+  display: flex;
+  justify-content: flex-start;
+  background-color: var(--header-color);
+  z-index: 1001;
+  width: 100vw;
+  height: 120px;
+  padding-top: 32px;
+  top: 0;
+  color: var(--text-color);
+}
+
+header img {
+  margin-left: 160px;
+}
+
+header h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 100;
+  font-style: normal;
+  font-size: 36px;
+  margin-top: 6px;
+  letter-spacing: 2px;
+  margin-left: 8px;
+}
+
+header button, .RussianFon button {
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 15px;
+  font-size: 18px;
+  padding: 15px 22px 15px 22px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+  color: var(--target-color);
+  background-color: transparent;
+  border: 2px solid var(--target-color);
+  box-shadow: 0px 0px 10px 0px var(--shadow-color);
+  position: absolute;
+}
+
+header button:hover,
+.RussianFon button:hover {
+  transition: color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+  color: var(--hover-color);
+  border: 2px solid var(--hover-color);
+  box-shadow: 0px 0px 10px 0px var(--hover-color);
+}
+
+header button:active,
+.RussianFon button:active {
+  transition: color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+  color: var(--active-color);
+  border: 2px solid var(--active-color);
+  box-shadow: 0px 0px 10px 0px var(--active-color);
+}
+
+header button {right: 162px}
+
+.RussianFon button {right: 162px;
+  bottom: 8vh}
+
+.RussianFon {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  margin-top: 120px;
+  background-image: url(../../public/Mapp.png);
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-size: cover;
+}
+
+.RussianFon h1, .RussianFon h2, .RussianFon h3 {
+  font-family: Arial, Helvetica, sans-serif !important;
+  position: relative;
+  color: var(--text-color);
+  font-weight: 500;
+  font-style: normal;
+  margin-left: 160px;
+}
+
+.RussianFon h1 {
+  font-size: 96px;
+  top: 20vh;
+  line-height: 120px;
+  letter-spacing: 4px;
+}
+
+.RussianFon h2 {
+  font-size: 44px;
+  top: 23vh;
+  line-height: 70px;
+  letter-spacing: 2px;
+}
+
+.RussianFon h3 {
+  font-size: 18px;
+  top: 25vh;
+  line-height: 26px;
+  letter-spacing: 0.4px;
+}
