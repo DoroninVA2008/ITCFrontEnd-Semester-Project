@@ -7,6 +7,7 @@
   --popup-color: #2a1d15;
   --shadow-color: #d4a244;
   --transition-ive: all 0.3s ease;
+  --font-shrift: Arial, Helvetica, sans-serif;
 }
 
 * {
@@ -53,7 +54,7 @@ header img {
 }
 
 header h1 {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-shrift);
   font-weight: 100;
   font-style: normal;
   font-size: 36px;
