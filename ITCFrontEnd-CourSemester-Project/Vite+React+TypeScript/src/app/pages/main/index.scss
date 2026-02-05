@@ -21,6 +21,12 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  width: 100vw;
+  position: relative;
+  background-image: url(../../public/Mapp.png);
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-size: cover;
 }
 
 #root {
@@ -97,7 +103,6 @@ header button {right: 162px}
   height: 100vh;
   position: relative;
   margin-top: 120px;
-  background-image: url(../../public/Mapp.png);
   background-repeat: no-repeat;
   background-position-x: center;
   background-size: cover;

@@ -1,6 +1,6 @@
 @media screen and (max-width: 1600px) {
   .RussianFon {
-  background-position-x: right !important;
+    background-position-x: right !important;
     height: 800px
   }
 }
@@ -58,6 +58,8 @@
 
   .RussianFon button {right: 142px !important;
     font-size: 16px !important;
+    border: 1.8px solid var(--target-color) !important;
+    box-shadow: 0px 0px 9px 0px var(--shadow-color);
     padding: 14px 20px 14px 20px !important;}
 }
 
@@ -72,6 +74,10 @@
 
   header button {
     top: 120px;
+    font-size: 16px !important;
+    border: 1.6px solid var(--target-color) !important;
+    box-shadow: 0px 0px 8px 0px var(--shadow-color) !important;
+    padding: 12px 18px 12px 18px !important;
     right: 142px !important}
 
   .RussianText {
@@ -139,6 +145,11 @@
     margin-left: -48px;
   }
 
+  header button {
+    font-size: 14px !important;
+    padding: 12px 17px 12px 17px !important;
+  }
+
   .RussianFon h1 {
     font-size: 56px !important;
     line-height: 72px !important;
@@ -158,6 +169,8 @@
 
   .RussianFon button {right: 112px !important;
     font-size: 14px !important;
+    border: 1.8px solid var(--target-color) !important;
+    box-shadow: 0px 0px 8px 0px var(--shadow-color) !important;
     padding: 12px 17px 12px 17px !important;}
 }
 
@@ -220,6 +233,10 @@
     margin-left: 80px !important
   }
 
+  header button {
+    padding: 11px 16px 11px 16px !important;
+  }
+
   .RussianText {
     margin-left: -64px;
   }
@@ -247,6 +264,10 @@
     margin-left: 70px !important
   }
 
+  header button {
+    padding: 12px 14px 12px 14px !important;
+  }
+
   .RussianText {
     margin-left: -68px;
   }
@@ -271,7 +292,9 @@
   .RussianFon button {
     right: 112px !important;
     font-size: 12px !important;
-    padding: 10px 14px 10px 14px !important;
+    border: 1.4px solid var(--target-color) !important;
+    box-shadow: 0px 0px 7px 0px var(--shadow-color) !important;
+    padding: 10px 15px 10px 15px !important;
   }
 }
 
@@ -282,6 +305,10 @@
 
   .RussianText {
     margin-left: -74px;
+  }
+
+  header button {
+    padding: 12px 13px 12px 13px !important;
   }
   
   .RussianFon h1 {
@@ -304,6 +331,8 @@
   .RussianFon button {
     right: 102px !important;
     font-size: 12px !important;
+    border: 1.2px solid var(--target-color) !important;
+    box-shadow: 0px 0px 6px 0px var(--shadow-color) !important;
     padding: 10px 14px 10px 14px !important;
   }
 }
@@ -315,6 +344,10 @@
 
   .RussianText {
     margin-left: -78px;
+  }
+
+  header button {
+    padding: 11px 12px 11px 12px !important;
   }
   
   .RussianFon h1 {
@@ -337,6 +370,8 @@
   .RussianFon button {
     right: 92px !important;
     font-size: 10px !important;
+    border: 1px solid var(--target-color) !important;
+    box-shadow: 0px 0px 5px 0px var(--shadow-color) !important;
     padding: 8px 13px 8px 13px !important;
     border-radius: 10px !important;
   }
@@ -381,6 +416,10 @@
   .RussianText {
     margin-left: -86px;
   }
+
+  header button {
+    padding: 10px 11px 10px 11px !important;
+  }
   
   .RussianFon h1 {
     font-size: 36px !important;
@@ -402,6 +441,7 @@
   .RussianFon button {
     right: 82px !important;
     font-size: 8px !important;
+    box-shadow: 0px 0px 4px 0px var(--shadow-color) !important;
     padding: 8px 10px 8px 10px !important;
     border-radius: 8px !important;
   }
@@ -411,8 +451,14 @@
 header h1 {max-width: 540px}}
 
 @media screen and (max-width: 650px) {header {height: 260px !important}
-header button {margin-top: 40px}
-    .RussianFon {margin-top: 260px !important}}
+  header button {
+    margin-top: 40px;
+    padding: 12px 11px 12px 11px !important;
+    border: 1.4px solid var(--target-color) !important;
+    box-shadow: 0px 0px 7px 0px var(--shadow-color) !important;
+  }
+
+  .RussianFon {margin-top: 260px !important}}
 
 @media screen and (max-width: 620px) {
   header h1 {
@@ -443,6 +489,7 @@ header button {margin-top: 40px}
   .RussianFon button {
     right: 72px !important;
     font-size: 6px !important;
+    box-shadow: 0px 0px 3px 0px var(--shadow-color) !important;
     padding: 6px 8px 6px 8px !important;
     border-radius: 6px !important;
   }
@@ -451,7 +498,9 @@ header button {margin-top: 40px}
 @media screen and (max-width: 540px) {
   header button {
     justify-content: center;
-    right: 132px !important;
+    right: 152px !important;
+    padding: 12px 11px 12px 11px !important;
+    box-shadow: 0px 0px 6px 0px var(--shadow-color) !important;
     display: flex
   }
 
@@ -479,6 +528,8 @@ header button {margin-top: 40px}
   .RussianFon button {
     right: 62px !important;
     font-size: 5px !important;
+    border: 0.8px solid var(--target-color) !important;
+    box-shadow: 0px 0px 2px 0px var(--shadow-color) !important;
     padding: 5px 6px 5px 6px !important;
     border-radius: 6px !important;
   }
@@ -486,6 +537,9 @@ header button {margin-top: 40px}
 
 @media screen and (max-width: 480px) {
   header button {
+    border: 1.2px solid var(--target-color) !important;
+    padding: 12px 12px 12px 12px !important;
+    box-shadow: 0px 0px 5px 0px var(--shadow-color) !important;
     right: 122px !important
   }
 
@@ -513,6 +567,7 @@ header button {margin-top: 40px}
   .RussianFon button {
     right: 52px !important;
     font-size: 5px !important;
+    box-shadow: 0px 0px 1px 0px var(--shadow-color) !important;
     padding: 5px 6px 5px 6px !important;
     border-radius: 6px !important;
   }
@@ -520,7 +575,7 @@ header button {margin-top: 40px}
 
 @media screen and (max-width: 450px) {
   header{
-    height: 440px !important
+    height: 380px !important
   }
 
   header img {
@@ -528,16 +583,18 @@ header button {margin-top: 40px}
   }
 
   header h1 {
-    margin-left: 120px !important;
+    margin-left: 150px !important;
     margin-top: 80px !important;
     position: absolute;
     display: flex;
-    max-width: 340px
+    max-width: 240px
   }
 
   header button {
-    right: 100px !important;
-    margin-top: 220px
+    right: 120px !important;
+    padding: 11px 10px 11px 10px !important;
+    box-shadow: 0px 0px 4px 0px var(--shadow-color) !important;
+    margin-top: 160px
   }
 
   .RussianFon {
@@ -574,7 +631,10 @@ header button {margin-top: 40px}
 
 @media screen and (max-width: 420px) {
   header button {
-    right: 80px !important
+    border: 1px solid var(--target-color) !important;
+    padding: 12px 9px 12px 9px !important;
+    box-shadow: 0px 0px 3px 0px var(--shadow-color) !important;
+    right: 110px !important
   }
 
   header img {
@@ -582,7 +642,7 @@ header button {margin-top: 40px}
   }
 
   header h1 {
-    margin-left: 110px !important
+    margin-left: 130px !important
   }
 
   .RussianFon {
@@ -613,6 +673,7 @@ header button {margin-top: 40px}
   .RussianFon button {
     right: 32px !important;
     font-size: 5px !important;
+    border: 0.6px solid var(--target-color) !important;
     padding: 5px 6px 5px 6px !important;
     border-radius: 6px !important;
   }
@@ -620,7 +681,9 @@ header button {margin-top: 40px}
 
 @media screen and (max-width: 390px) {
   header button {
-    right: 60px !important
+    box-shadow: 0px 0px 2px 0px var(--shadow-color) !important;
+    padding: 11px 8px 11px 8px !important;
+    right: 100px !important
   }
 
   header img {
@@ -628,7 +691,7 @@ header button {margin-top: 40px}
   }
 
   header h1 {
-    margin-left: 100px !important
+    margin-left: 120px !important
   }
 
   .RussianFon {
@@ -659,7 +722,9 @@ header button {margin-top: 40px}
 
 @media screen and (max-width: 370px) {
   header button {
-    right: 50px !important
+    box-shadow: 0px 0px 1px 0px var(--shadow-color) !important;
+    padding: 10px 6px 10px 6px !important;
+    right: 90px !important
   }
 
   header img {
@@ -667,7 +732,7 @@ header button {margin-top: 40px}
   }
 
   header h1 {
-    margin-left: 90px !important
+    margin-left: 110px !important
   }
 
   .RussianFon {
@@ -696,17 +761,18 @@ header button {margin-top: 40px}
   }
 }
 
-@media screen and (max-width: 350px) {header button {right: 30px !important}
+@media screen and (max-width: 350px) {header button {right: 80px !important}
 header img {margin-left: 146px !important}
 header h1 {margin-left: 80px !important}}
 
-@media screen and (max-width: 340px) {header button {right: 24px !important}
+@media screen and (max-width: 340px) {header button {right: 70px !important}
 header img {margin-left: 136px !important}
 header h1 {margin-left: 70px !important}}
 
 @media screen and (max-width: 310px) {
   header button {
-    right: 16px !important
+    padding: 8px 5px 8px 5px !important;
+    right: 60px !important
   }
 
   header img {
@@ -714,7 +780,7 @@ header h1 {margin-left: 70px !important}}
   }
 
   header h1 {
-    margin-left: 60px !important
+    margin-left: 80px !important
   }
 
   .RussianFon {
@@ -745,14 +811,15 @@ header h1 {margin-left: 70px !important}}
   .RussianFon button {
     right: 32px !important;
     font-size: 4px !important;
+    border: 0.4px solid var(--target-color) !important;
     padding: 3px 4px 3px 4px !important;
     border-radius: 4px !important;
   }
 }
 
-@media screen and (max-width: 280px) {header button {right: 6px !important}
+@media screen and (max-width: 280px) {header button {right: 46px !important}
 header img {margin-left: 114px !important}
 header h1 {margin-left: 50px !important}}
 
-@media screen and (max-width: 260px) {header h1 {margin-left: 40px !important}
+@media screen and (max-width: 260px) {header h1 {margin-left: 50px !important}
 header img {margin-left: 104px !important}}
