@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store.ts';
-import { Map } from '../map/mapp';
 import './mobile.scss';
 import './index.scss';
 
