@@ -1,13 +1,24 @@
-import React from 'react';
-import { Mapp } from './map.tsx';
-import './map.scss';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { Map } from './map.tsx'
+import './mapp.scss'
 
-export const Map: React.FC = () => {
+export const Mapp: React.FC = () => {
   return (
-    <div>
-      <h2>Добро пожаловать на Главную страницу!</h2>
-      <p>Это наш основной контент.</p>
-      <Mapp />
+    <div className="MappPage">
+      <header>
+        {/* Link теперь работает корректно, используя контекст BrowserRouter */}
+        <Link to="/app">
+          <img src="/RussianHeroesLogo.png" alt="Логотип Россия - страна Героев"></img>
+        </Link>
+        <h1>
+          Россия - страна Героев
+        </h1>
+        <button>
+          Предложить событие
+        </button>
+      </header>
+      <Map />
     </div>
   );
 };

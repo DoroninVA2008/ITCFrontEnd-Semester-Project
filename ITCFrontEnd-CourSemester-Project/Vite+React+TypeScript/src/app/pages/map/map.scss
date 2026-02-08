@@ -1,14 +1,46 @@
-#map {position: absolute;
-		width: 1200px;/* Убрать если надо карту во всю длину*/
-		justify-content: center;
-		align-items: center;
-		display: flex;
-		transform: translateX(-50%);
-		left: 50%;
-    height: 600px;
-border-radius: 20px;
-margin-bottom: 3em;
-margin-top: 20em}
+#map {width: 100vw; /* Убрать если надо карту во всю длину*/
+    height: 100vh;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	background: rgb(17, 20, 38);
+	top: 0;
+	left: 0;
+	opacity: 1;}
+
+.country-label {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: white;
+  font-weight: 10;
+  font-family: 'Cruinn';
+  font-size: 12px;
+  text-align: center;
+  pointer-events: none; /* Чтобы текст не мешал кликать по карте */
+  
+  .country-name {
+    color: white;
+    font-weight: 10;
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none;
+    text-align: center;
+    
+    @media (min-width: 768px) {
+      font-size: 21px;
+    }
+  }
+}
+
+// Для большей читаемости при зуме
+.leaflet-container .leaflet-overlay-pane {
+  .country-label {
+    .country-name {
+      font-size: 12px !important;
+    }
+  }
+}
 
 .leaflet-control-attribution {display: none;}
 
@@ -41,11 +73,13 @@ margin-top: 20em}
 
 .leaflet-container {
   overflow: hidden;
-  background: #45c09f; /* Очень тёмный зелёный фон для пустот */
   outline-offset: 1px;
-  filter: sepia(10.2) invert(-0.1) brightness(1);
-  mix-blend-mode: luminosity;  /* Поворот оттенка */
+  mix-blend-mode: hard-light;  /* Поворот оттенка */
 // для полного инверта и подгонки оттуда.
+}
+
+.leaflet-tile-pane {
+  filter: invert(0.2) hue-rotate(0deg) brightness(0.7) contrast(1.4) saturate(0.5); /* Экспериментируй с этими значениями */
 }
 
 .leaflet-marker-icon {
@@ -54,7 +88,8 @@ margin-top: 20em}
   // либо ты должен использовать маркер, который уже по дизайну подходит
   // под фильтрованную карту.
   // Например, если основной фильтр делает изображение темнее,
-  // а маркер кажется слишком тусклым, можно попробовать: filter: brightness(1) hue-rotate(-240deg) saturate(0.5); // Скорее всего, тебе тут вообще не нужен фильтр, если изображение маркера уже готово
+  // а маркер кажется слишком тусклым, можно попробовать: 
+  filter: brightness(1); // Скорее всего, тебе тут вообще не нужен фильтр, если изображение маркера уже готово
 }
 	
 .leaflet-tile,
@@ -189,21 +224,10 @@ margin-top: 20em}
 	}
 .leaflet-control {
 	float: left;
+	display: none;
 		}
 .leaflet-right .leaflet-control {
 	float: right;
-	}
-.leaflet-top .leaflet-control {
-	margin-top: 10px;
-	}
-.leaflet-bottom .leaflet-control {
-	margin-bottom: 10px;
-	}
-.leaflet-left .leaflet-control {
-	margin-right: 10px;
-	}
-.leaflet-right .leaflet-control {
-	margin-right: 10px;
 	}
 
 .leaflet-fade-anim .leaflet-popup {

@@ -41,17 +41,20 @@ body {
   padding: 0;
   overflow-x: hidden;
   width: 100vw;
-  position: relative;
-  background-image: url(../../public/Mapp.png);
-  background-repeat: no-repeat;
-  background-position-x: center;
-  background-size: cover;
 }
 
 #root {
   width: 100vw;
+  display: flex;
+  justify-content: center; 
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
+  position: relative;
+  background-image: url(../../../assets/Mapp.png);
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-size: cover;
 }
 
 header {
@@ -117,7 +120,7 @@ header button:active,
 .RussianFon button {
   position: absolute;
   right: 162px;
-  bottom: 80px}
+  bottom: 8vh}
 
 .RussianFon {
   width: 100vw;
