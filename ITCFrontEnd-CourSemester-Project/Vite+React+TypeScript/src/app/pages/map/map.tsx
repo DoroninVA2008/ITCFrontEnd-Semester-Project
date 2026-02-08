@@ -1,14 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
-import L, { LatLngBoundsExpression } from 'leaflet'
-import './map.scss'
-import icon from '../../../assets/VectorMarkerSword.png'
-import iconShadow from '../../../../public/marker-shadow.png'
-import countriesGeoJSon from './countries.geojson'
-import { countriesTranslation } from './countriesTranslation.ts'
-import { countriesPosition } from './countriesPosition.ts'
+import React, { useEffect, useState, useRef } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import L, { LatLngBoundsExpression } from 'leaflet';
+import './map.scss';
+import icon from '../../../assets/VectorMarkerSword.png';
+import iconShadow from '../../../../public/marker-shadow.png';
+import { countriesTranslation } from './countriesTranslation.ts';
+import { countriesPosition } from './countriesPosition.ts';
+/*Adidas // НаВайбКодил с ДипСиком эту страницу интерактивной карты*/
 
-// Настройка иконки маркера
 let DefaultIcon = L.icon({
   iconUrl: icon,
   shadowUrl: iconShadow,
@@ -19,69 +18,384 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-// Функция для получения правильной позиции метки
+// Функция для коррекции координат России - ВАЖНОЕ ИЗМЕНЕНИЕ!
+const adjustRussianCoordinates = (geoData: any): any => {
+  if (!geoData) return geoData;
+  
+  const adjustedData = JSON.parse(JSON.stringify(geoData));
+  
+  adjustedData.features = adjustedData.features.map((feature: any) => {
+    const englishName = feature.properties.name || 
+                       feature.properties.NAME || 
+                       feature.properties.ADMIN || '';
+    
+    // Ищем Россию по разным возможным названиям
+    const isRussia = englishName === 'Russia' || 
+                    englishName === 'Russian Federation' || 
+                    englishName === 'Russian' ||
+                    countriesTranslation[englishName] === 'Россия';
+    
+    if (isRussia) {
+      console.log('Найдена Россия, корректируем координаты для объединения...');
+      
+      // Для MultiPolygon
+      if (feature.geometry.type === 'MultiPolygon') {
+        feature.geometry.coordinates = feature.geometry.coordinates.map((polygon: any[][][]) => {
+          return polygon.map((ring: any[][]) => {
+            return ring.map((coord: any[]) => {
+              const [lng, lat] = coord;
+              
+              // ВАЖНОЕ ИЗМЕНЕНИЕ: определяем, что нужно сдвинуть ВПРАВО
+              // Ищем западную часть России, которую нужно сдвинуть вправо
+              const isWesternRussia = (
+                (lng < -30 && lat > 50) ||           // Части, которые оказались в западном полушарии
+                (lng < 0 && lng > -180 && lat > 50)  // Любые части России с отрицательной долготой
+              );
+              
+              // Также сдвигаем часть Европейской России дальше вправо
+              const isEuropeanRussia = (
+                (lng > 0 && lng < 90 && lat > 50)    // Европейская часть России
+              );
+              
+              if (isWesternRussia) {
+                // Сдвигаем ВПРАВО на 360 градусов
+                const adjustedLng = lng + 360;
+                console.log(`Перенос вправо: [${lng}, ${lat}] -> [${adjustedLng}, ${lat}]`);
+                return [adjustedLng, lat];
+              } else if (isEuropeanRussia) {
+                // Немного сдвигаем Европейскую Россию вправо для лучшего совмещения
+                return [lng + 20, lat];
+              }
+              
+              return coord;
+            });
+          });
+        });
+      }
+      
+      // Для Polygon
+      else if (feature.geometry.type === 'Polygon') {
+        feature.geometry.coordinates = feature.geometry.coordinates.map((ring: any[][]) => {
+          return ring.map((coord: any[]) => {
+            const [lng, lat] = coord;
+            
+            const isWesternRussia = (
+              (lng < -30 && lat > 50) ||
+              (lng < 0 && lng > -180 && lat > 50)
+            );
+            
+            const isEuropeanRussia = (
+              (lng > 0 && lng < 90 && lat > 50)
+            );
+            
+            if (isWesternRussia) {
+              return [lng + 360, lat];
+            } else if (isEuropeanRussia) {
+              return [lng + 20, lat];
+            }
+            
+            return coord;
+          });
+        });
+      }
+    }
+    return feature;
+  });
+  
+  return adjustedData;
+};
+
+// Альтернативный подход: сдвигаем ВСЕ координаты России вправо
+const adjustAllRussiaToRight = (geoData: any): any => {
+  if (!geoData) return geoData;
+  
+  const adjustedData = JSON.parse(JSON.stringify(geoData));
+  
+  adjustedData.features = adjustedData.features.map((feature: any) => {
+    const englishName = feature.properties.name || 
+                       feature.properties.NAME || 
+                       feature.properties.ADMIN || '';
+    
+    const isRussia = englishName === 'Russia' || 
+                    englishName === 'Russian Federation' || 
+                    englishName === 'Russian' ||
+                    countriesTranslation[englishName] === 'Россия';
+    
+    if (isRussia) {
+      console.log('Сдвигаем ВСЮ Россию вправо...');
+      
+      // Определяем смещение: сдвигаем всю Россию вправо
+      const shiftAmount = 180; // Можно регулировать это значение
+      
+      if (feature.geometry.type === 'MultiPolygon') {
+        feature.geometry.coordinates = feature.geometry.coordinates.map((polygon: any[][][]) => {
+          return polygon.map((ring: any[][]) => {
+            return ring.map((coord: any[]) => {
+              let [lng, lat] = coord;
+              
+              // Сдвигаем ВСЕ координаты России вправо
+              // Но аккуратно, чтобы не выйти за пределы
+              if (lng < 0) {
+                // Если координата уже отрицательная (в западном полушарии)
+                return [lng + shiftAmount * 2, lat];
+              } else if (lng < 180) {
+                // Если в восточном полушарии
+                return [lng + shiftAmount, lat];
+              } else {
+                // Если уже больше 180
+                return [lng, lat];
+              }
+            });
+          });
+        });
+      }
+    }
+    return feature;
+  });
+  
+  return adjustedData;
+};
+
+// Еще один подход: делаем Россию центром карты
+const centerRussiaOnMap = (geoData: any): any => {
+  if (!geoData) return geoData;
+  
+  const adjustedData = JSON.parse(JSON.stringify(geoData));
+  
+  adjustedData.features = adjustedData.features.map((feature: any) => {
+    const englishName = feature.properties.name || 
+                       feature.properties.NAME || 
+                       feature.properties.ADMIN || '';
+    
+    const isRussia = englishName === 'Russia' || 
+                    englishName === 'Russian Federation' || 
+                    countriesTranslation[englishName] === 'Россия';
+    
+    if (isRussia) {
+      console.log('Центрируем Россию на карте...');
+      
+      if (feature.geometry.type === 'MultiPolygon') {
+        feature.geometry.coordinates = feature.geometry.coordinates.map((polygon: any[][][]) => {
+          return polygon.map((ring: any[][]) => {
+            return ring.map((coord: any[]) => {
+              let [lng, lat] = coord;
+              
+              // Рассчитываем смещение для центрирования России
+              // Цель: чтобы Россия была в центре карты (в районе 0-180 градусов)
+              
+              if (lng < 0) {
+                // Части в западном полушарии сдвигаем вправо
+                return [lng + 360, lat];
+              } else if (lng > 180) {
+              }
+              
+              return coord;
+            });
+          });
+        });
+      }
+    }
+    return feature;
+  });
+  
+  return adjustedData;
+};
+
 const getCountryLabelPosition = (countryName: string, bounds: L.LatLngBounds): L.LatLng => {
-  // Используем кастомные позиции для больших стран
   if (countriesPosition[countryName]) {
     const [lat, lng] = countriesPosition[countryName];
     return L.latLng(lat, lng);
   }
-  
-  // Для остальных стран используем центр bounds
   return bounds.getCenter();
 };
+
+const getCountrySizeCategory = (bounds: L.LatLngBounds): 'large' | 'medium' | 'small' => {
+  const area = bounds.getNorth() - bounds.getSouth();
+  
+  if (area > 10) return 'large';
+  if (area > 3) return 'medium'; 
+  return 'small';
+};
+
+interface CountryLabelItem {
+  marker: L.Marker;
+  englishName: string;
+  russianName: string;
+  bounds: L.LatLngBounds;
+  sizeCategory: 'large' | 'medium' | 'small';
+}
 
 const CountryLabels = () => {
   const map = useMap();
   const [geoData, setGeoData] = useState<any>(null);
+  const [currentZoom, setCurrentZoom] = useState(map.getZoom());
+  const allLabelsRef = useRef<CountryLabelItem[]>([]);
+  const countriesLayerRef = useRef<L.GeoJSON | null>(null);
 
   useEffect(() => {
-    fetch('./src/app/pages/map/countries.geojson') // Для отображения специально встроенного слоя земли на карте, с надписями названия стран
+    const handleZoom = () => {
+      setCurrentZoom(map.getZoom());
+    };
+    
+    map.on('zoomend', handleZoom);
+    return () => {
+      map.off('zoomend', handleZoom);
+    };
+  }, [map]);
+
+  const shouldShowLabel = (sizeCategory: 'large' | 'medium' | 'small', zoom: number): boolean => {
+    if (zoom >= 8) return true;
+    
+    switch(sizeCategory) {
+      case 'large':
+        return zoom >= 3;
+      case 'medium':
+        return zoom >= 4;
+      case 'small':
+        return zoom >= 5;
+      default:
+        return false;
+    }
+  };
+
+  const updateLabelsVisibility = (zoom: number) => {
+    allLabelsRef.current.forEach(item => {
+      const { marker, sizeCategory } = item;
+      const shouldBeVisible = shouldShowLabel(sizeCategory, zoom);
+
+      const divIconElement = marker.getElement(); 
+      if (divIconElement) {
+        if (shouldBeVisible) {
+          divIconElement.classList.add('is-visible');
+          divIconElement.classList.remove('is-hidden');
+        } else {
+          divIconElement.classList.add('is-hidden');
+          divIconElement.classList.remove('is-visible');
+        }
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (geoData) {
+      allLabelsRef.current.forEach(item => {
+        if (map.hasLayer(item.marker)) {
+          map.removeLayer(item.marker);
+        }
+      });
+      allLabelsRef.current = [];
+
+      geoData.features.forEach((feature: any) => {
+        const englishName = feature.properties.name || 
+                           feature.properties.NAME || 
+                           feature.properties.ADMIN || 
+                           'Неизвестная страна';
+        
+        const russianName = countriesTranslation[englishName] || englishName;
+        
+        try {
+          const tempLayer = L.geoJSON(feature);
+          const bounds = tempLayer.getBounds();
+          const sizeCategory = getCountrySizeCategory(bounds);
+          
+          const labelPosition = getCountryLabelPosition(englishName, bounds);
+          
+          const initialVisibility = shouldShowLabel(sizeCategory, currentZoom);
+          const initialClassName = initialVisibility ? 'is-visible' : 'is-hidden';
+
+          const label = L.marker(labelPosition, {
+            icon: L.divIcon({
+              className: `country-label country-label-${sizeCategory} ${initialClassName}`,
+              html: `<div class="country-name">${russianName}</div>`,
+              iconSize: [100, 20],
+              iconAnchor: [50, 10]
+            }),
+            interactive: false,
+            zIndexOffset: 1000
+          });
+          
+          label.addTo(map);
+          allLabelsRef.current.push({
+            marker: label,
+            englishName,
+            russianName,
+            bounds,
+            sizeCategory,
+          });
+        } catch (error) {
+          console.log('Ошибка при создании метки:', russianName, error);
+        }
+      });
+      
+      updateLabelsVisibility(currentZoom);
+    }
+  }, [geoData, map]);
+
+  useEffect(() => {
+    if (geoData) {
+      updateLabelsVisibility(currentZoom);
+    }
+  }, [currentZoom, geoData]);
+
+  useEffect(() => {
+    fetch('./src/app/pages/map/countries.geojson')
       .then(response => response.json())
       .then(data => {
-        setGeoData(data);
+        // Пробуем разные методы коррекции по очереди
+        console.log('Загружен GeoJSON, применяем коррекцию координат...');
         
-        const geoJsonLayer = L.geoJSON(data, {
-          style: {
-            fillColor: "#2c4672", // #2c4672
-            weight: 1,
-            color: "#0a46b5",
-            filter: 'contrast(0.1)',
-            fillOpacity: 1,
-            opacity: 1
-          },
-          onEachFeature: (feature, layer) => {
-            const englishName = feature.properties.name || 
-                               feature.properties.NAME || 
-                               feature.properties.ADMIN || 
-                               'Неизвестная страна';
-            
-            const russianName = countriesTranslation[englishName] || englishName;
-            try {
-              const bounds = layer.getBounds();
-              // Используем улучшенную функцию для позиционирования
-              const labelPosition = getCountryLabelPosition(englishName, bounds);
-              
-              const label = L.marker(labelPosition, {
-                icon: L.divIcon({
-                  className: 'country-label',
-                  html: `<div class="country-name">${russianName}</div>`,
-                  iconSize: [100, 20],
-                  iconAnchor: [50, 10]
-                }),
-                interactive: false,
-                zIndexOffset: 1000
-              }).addTo(map);
-            } catch (error) {
-              console.log('Ошибка при создании метки:', russianName, error);
-            }
-          }
-        }).addTo(map);
+        // Сначала пробуем центрировать Россию
+        let adjustedData = centerRussiaOnMap(data);
+        
+        // Если не помогло, пробуем сдвиг вправо
+        if (window.location.search.includes('forceright')) {
+          adjustedData = adjustAllRussiaToRight(data);
+        }
+        
+        // Если все еще проблема, пробуем базовую коррекцию
+        if (window.location.search.includes('forcebasic')) {
+          adjustedData = adjustRussianCoordinates(data);
+        }
+        
+        setGeoData(adjustedData);
       })
       .catch(error => {
         console.error('Ошибка загрузки GeoJSON:', error);
       });
-  }, [map]);
+    
+    return () => {
+      allLabelsRef.current.forEach(item => {
+        if (map.hasLayer(item.marker)) {
+          map.removeLayer(item.marker);
+        }
+      });
+      allLabelsRef.current = [];
+      
+      if (countriesLayerRef.current && map.hasLayer(countriesLayerRef.current)) {
+        map.removeLayer(countriesLayerRef.current);
+      }
+    };
+  }, [map]); 
+
+  useEffect(() => {
+    if (geoData) {
+      if (countriesLayerRef.current && map.hasLayer(countriesLayerRef.current)) {
+        map.removeLayer(countriesLayerRef.current);
+      }
+      
+      const countriesLayer = L.geoJSON(geoData, {
+        style: {
+          fillColor: "#9193a1",
+          weight: 1,
+          color: "#0a46b5",
+          fillOpacity: 1,
+          opacity: 1
+        },
+      }).addTo(map);
+      
+      countriesLayerRef.current = countriesLayer;
+    }
+  }, [geoData, map]);
 
   return null;
 };
@@ -92,7 +406,7 @@ export const Map: React.FC = () => {
   
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
-  
+
   const maxMapBounds: LatLngBoundsExpression = [
     [-112, -169],
     [84, 192]
@@ -138,6 +452,8 @@ export const Map: React.FC = () => {
       >
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+          noWrap={false} // Разрешаем тайлам повторяться
         />
         <CountryLabels />
         <Marker 
