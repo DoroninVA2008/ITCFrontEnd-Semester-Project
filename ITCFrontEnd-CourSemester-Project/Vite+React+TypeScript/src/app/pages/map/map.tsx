@@ -449,11 +449,13 @@ export const Map: React.FC = () => {
         scrollWheelZoom={true} 
         maxBounds={maxMapBounds} 
         maxBoundsViscosity={1.0}
+        style={{ backgroundColor: '#0d0f1dff' }} // #01071bff
       >
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
           noWrap={false} // Разрешаем тайлам повторяться
+          opacity={0.2} // Еле заметный слой
         />
         <CountryLabels />
         <Marker 
