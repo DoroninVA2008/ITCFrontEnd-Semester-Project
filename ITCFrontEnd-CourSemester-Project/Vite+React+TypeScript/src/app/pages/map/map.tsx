@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L, { LatLngBoundsExpression } from 'leaflet';
-import './map.scss';
-import icon from '../../../assets/VectorMarkerSword.png';
+import './map.scss'; //@ts-ignore
+import icon from '../../../assets/VectorMarkerSword.png'; //@ts-ignore
 import iconShadow from '../../../../public/marker-shadow.png';
 import { countriesTranslation } from './countriesTranslation.ts';
 import { countriesPosition } from './countriesPosition.ts';
@@ -449,13 +449,13 @@ export const Map: React.FC = () => {
         scrollWheelZoom={true} 
         maxBounds={maxMapBounds} 
         maxBoundsViscosity={1.0}
-        style={{ backgroundColor: '#0d0f1dff' }} // #01071bff
+        style={{ backgroundColor: '#0d0f1dff'}} // #01071bff
       >
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
           noWrap={false} // Разрешаем тайлам повторяться
-          opacity={0.2} // Еле заметный слой
+          opacity={0} // Еле заметный слой
         />
         <CountryLabels />
         <Marker 
@@ -477,7 +477,6 @@ export const Map: React.FC = () => {
                 }
               }}
             >
-              Бро, я живой! <br /> 
               Это Интерактивная Карта с библиотекой Leaflet на React`ивном TypeScript!
             </div>
           </Popup>

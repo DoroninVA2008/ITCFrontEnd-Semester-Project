@@ -1,12 +1,23 @@
-#map {width: 100vw; /* Убрать если надо карту во всю длину*/
-    height: 100vh;
+#map {
+	width: 100vw;
+  	height: 100vh;
+  	aspect-ratio: 16/9; 
+  	margin: 0 auto;
 	justify-content: center;
 	align-items: center;
 	display: flex;
-	background: rgb(17, 20, 38);
+	background: #0d0f1dff;
 	top: 0;
 	left: 0;
-	opacity: 1;}
+	opacity: 1;
+	overflow: hidden;
+  	object-fit: contain;
+    transform: scale(1);
+}
+
+#map-wrapper {
+  position: relative;
+}
 
 .country-label {
   // По умолчанию метка невидима и слегка уменьшена.
@@ -113,7 +124,6 @@
   }
 }
 
-
 .leaflet-control-attribution {display: none;}
 
 .leaflet-popup {
@@ -138,10 +148,6 @@
 	left: 0;
 	top: 0;
 	}
-
-#map-wrapper {
-  position: relative;
-}
 
 .leaflet-container {
   overflow: hidden;
