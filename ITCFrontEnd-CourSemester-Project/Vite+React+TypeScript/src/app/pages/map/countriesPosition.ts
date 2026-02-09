@@ -40,7 +40,7 @@ export const countriesPosition: Record<string, [number, number]> = {
   'United Kingdom': [54, -2],
   'Iceland': [65, -18],
   'Japan': [36, 138],
-  'New Zealand': [-41, 174],
+  'New Zealand': [-41, 168],
   'Chile': [-33, -71],
   'Nigeria': [10, 8],
   'Tanzania': [-6, 35],

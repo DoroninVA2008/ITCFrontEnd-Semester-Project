@@ -385,9 +385,9 @@ const CountryLabels = () => {
       
       const countriesLayer = L.geoJSON(geoData, {
         style: {
-          fillColor: "#9193a1",
-          weight: 1,
-          color: "#0a46b5",
+          fillColor: "#9f9fa4", // #9193a1
+          weight: 2, // 1.2
+          color: "#0d0f1dff",
           fillOpacity: 1,
           opacity: 1
         },
@@ -449,7 +449,7 @@ export const Map: React.FC = () => {
         scrollWheelZoom={true} 
         maxBounds={maxMapBounds} 
         maxBoundsViscosity={1.0}
-        style={{ backgroundColor: '#0d0f1dff'}} // #01071bff
+        style={{ backgroundColor: '#0d0f1dff', filter: 'brightness(0.9)'}} // #01071bff
       >
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
