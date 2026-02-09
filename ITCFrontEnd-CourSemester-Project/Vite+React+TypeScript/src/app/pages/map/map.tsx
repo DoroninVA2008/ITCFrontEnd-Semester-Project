@@ -338,7 +338,7 @@ const CountryLabels = () => {
   }, [currentZoom, geoData]);
 
   useEffect(() => {
-    fetch('./src/app/pages/map/countries.geojson')
+    fetch('https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson') // ./src/app/pages/map/countries.geojson
       .then(response => response.json())
       .then(data => {
         // Пробуем разные методы коррекции по очереди
@@ -386,7 +386,7 @@ const CountryLabels = () => {
       const countriesLayer = L.geoJSON(geoData, {
         style: {
           fillColor: "#9f9fa4", // #9193a1
-          weight: 2, // 1.2
+          weight: 1.2, // 2
           color: "#0d0f1dff",
           fillOpacity: 1,
           opacity: 1
