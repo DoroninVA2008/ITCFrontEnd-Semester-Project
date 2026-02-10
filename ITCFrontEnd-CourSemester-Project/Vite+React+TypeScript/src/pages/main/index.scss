@@ -46,6 +46,7 @@ body {
 
 #root {
   width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center; 
   margin: 0;
@@ -121,13 +122,12 @@ header button:active,
 .RussianFon button {
   position: absolute;
   right: 162px;
-  bottom: 8vh}
+  bottom: calc(-88vh + 460px); // О нет, Дерьмовый Кальк :`(
+}
 
 .RussianFon {
   width: 100vw;
-  height: 100vh;
   position: relative;
-  margin-top: 120px;
   background-repeat: no-repeat;
   background-position-x: center;
   background-size: cover;
@@ -146,6 +146,7 @@ header button:active,
   font-weight: 800 !important;
   line-height: 120px;
   letter-spacing: 0.4px;
+  margin-top: 120px;
 }
 
 .RussianFon h2 {

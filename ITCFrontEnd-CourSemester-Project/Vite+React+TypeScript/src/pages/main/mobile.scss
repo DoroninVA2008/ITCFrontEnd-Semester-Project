@@ -1,7 +1,7 @@
 @media screen and (max-width: 1600px) {
   .RussianFon {
     background-position-x: right !important;
-    height: 800px
+    // height: 800px
   }
 
   #map {
@@ -9,22 +9,11 @@
   }
 }
 
-@media screen and (max-width: 1380px) {
-  .RussianText {position: absolute;
-    top: -2vh;
-    margin-left: -10px;
-    margin-bottom: 20px;
-    max-width: 900px
-  }
-
-  #map {
-    height: 116vh;
-}
-}
-
-@media screen and (max-width: 1320px) {
+@media screen and (max-width: 1520px) {
   .RussianText {
-    max-width: 800px
+    top: -1vh !important;
+    position: absolute;
+    max-width: 900px
   }
 
   .RussianFon h1 {
@@ -41,6 +30,31 @@
     font-size: 16px !important;
     line-height: 24px !important;
   }
+  
+  .RussianFon button {
+    bottom: calc(-96vh + 20px) !important
+  }
+}
+
+@media screen and (max-width: 1450px) {
+  .RussianText {
+    top: -4vh !important;
+    position: absolute;
+    max-width: 900px
+  }
+}
+
+@media screen and (max-width: 1380px) {
+  .RussianText {position: absolute;
+    top: -2vh;
+    margin-left: -10px;
+    margin-bottom: 20px;
+    max-width: 900px
+  }
+
+  #map {
+    height: 116vh;
+}
 }
 
 @media screen and (max-width: 1260px) {
@@ -99,24 +113,20 @@
   .RussianText {
     margin-left: -30px;
   }
-
-  .RussianFon {
-    margin-top: 200px !important
-  }
   
   .RussianFon h1 {
-    font-size: 66px !important;
+    font-size: 64px !important;
     line-height: 86px !important;
   }
 
   .RussianFon h2 {
     max-width: 580px !important;
-    font-size: 32px !important;
+    font-size: 30px !important;
     line-height: 44px !important;
   }
 
   .RussianFon h3 {
-    font-size: 14px !important;
+    font-size: 12px !important;
     line-height: 22px !important;
   }
 }
@@ -135,19 +145,19 @@
   }
   
   .RussianFon h1 {
-    font-size: 60px !important;
+    font-size: 58px !important;
     line-height: 78px !important;
   }
 
   .RussianFon h2 {
     max-width: 540px !important;
-    font-size: 30px !important;
+    font-size: 28px !important;
     line-height: 40px !important;
   }
 
   .RussianFon h3 {
     max-width: 540px !important;
-    font-size: 14px !important;
+    font-size: 11px !important;
     line-height: 22px !important;
   }
 
@@ -172,18 +182,18 @@
 
   .RussianFon h1 {
     font-size: 56px !important;
-    line-height: 72px !important;
+    line-height: 68px !important;
   }
 
   .RussianFon h2 {
     max-width: 520px !important;
-    font-size: 28px !important;
+    font-size: 26px !important;
     line-height: 36px !important;
   }
 
   .RussianFon h3 {
     max-width: 540px !important;
-    font-size: 14px !important;
+    font-size: 10px !important;
     line-height: 20px !important;
   }
 
@@ -213,7 +223,7 @@
   }
 
   .RussianFon h2 {
-    max-width: 400px !important;
+    max-width: 1500px !important;
     font-size: 26px !important;
     line-height: 34px !important;
   }
@@ -240,18 +250,18 @@
   
   .RussianFon h1 {
     font-size: 52px !important;
-    line-height: 68px !important;
+    line-height: 64px !important;
   }
 
   .RussianFon h2 {
-    max-width: 400px !important;
-    font-size: 26px !important;
-    line-height: 34px !important;
+    max-width: 600px !important;
+    font-size: 24px !important;
+    line-height: 32px !important;
   }
 
   .RussianFon h3 {
     max-width: 500px !important;
-    font-size: 14px !important;
+    font-size: 10px !important;
     line-height: 20px !important;
   }
 
@@ -271,24 +281,31 @@
 
   .RussianText {
     margin-left: -64px;
+    top: -1vh !important;
   }
   
   .RussianFon h1 {
     font-size: 48px !important;
-    line-height: 64px !important;
+    line-height: 56px !important;
   }
 
   .RussianFon h2 {
     max-width: 400px !important;
-    font-size: 24px !important;
+    font-size: 20px !important;
     line-height: 32px !important;
   }
 
   .RussianFon h3 {
     max-width: 440px !important;
-    font-size: 12px !important;
+    font-size: 8px !important;
     line-height: 18px !important;
   }
+
+  .RussianFon button {right: 112px !important;
+    font-size: 13px !important;
+    border: 1.5px solid var(--target-color) !important;
+    box-shadow: 0px 0px 7px 0px var(--shadow-color) !important;
+    padding: 11px 16px 11px 16px !important;}
 }
 
 @media screen and (max-width: 840px) {
@@ -306,23 +323,23 @@
   
   .RussianFon h1 {
     font-size: 46px !important;
-    line-height: 60px !important;
+    line-height: 54px !important;
   }
 
   .RussianFon h2 {
     max-width: 400px !important;
-    font-size: 22px !important;
+    font-size: 18px !important;
     line-height: 30px !important;
   }
 
   .RussianFon h3 {
     max-width: 400px !important;
-    font-size: 10px !important;
-    line-height: 18px !important;
+    font-size: 8px !important;
+    line-height: 16px !important;
   }
 
   .RussianFon button {
-    right: 112px !important;
+    right: 108px !important;
     font-size: 12px !important;
     border: 1.4px solid var(--target-color) !important;
     box-shadow: 0px 0px 7px 0px var(--shadow-color) !important;
@@ -337,6 +354,7 @@
 
   .RussianText {
     margin-left: -74px;
+    top: 0vh !important;
   }
 
   header button {
@@ -345,27 +363,27 @@
   
   .RussianFon h1 {
     font-size: 42px !important;
-    line-height: 56px !important;
+    line-height: 48px !important;
   }
 
   .RussianFon h2 {
     max-width: 380px !important;
-    font-size: 20px !important;
-    line-height: 28px !important;
+    font-size: 16px !important;
+    line-height: 26px !important;
   }
 
   .RussianFon h3 {
     max-width: 440px !important;
-    font-size: 8px !important;
+    font-size: 7px !important;
     line-height: 18px !important;
   }
 
   .RussianFon button {
-    right: 102px !important;
-    font-size: 12px !important;
+    right: 94px !important;
+    font-size: 10px !important;
     border: 1.2px solid var(--target-color) !important;
     box-shadow: 0px 0px 6px 0px var(--shadow-color) !important;
-    padding: 10px 14px 10px 14px !important;
+    padding: 9px 14px 9px 14px !important;
   }
 
   #map {
@@ -374,6 +392,11 @@
 }
 
 @media screen and (max-width: 770px) {
+  header {
+    padding-top: 28px !important;
+    height: 180px !important
+  }
+
   header img {
     margin-left: 50px !important
   }
@@ -384,26 +407,28 @@
 
   header button {
     padding: 11px 12px 11px 12px !important;
+    margin-top: -12px;
   }
   
   .RussianFon h1 {
     font-size: 40px !important;
-    line-height: 54px !important;
+    line-height: 42px !important;
   }
 
   .RussianFon h2 {
     max-width: 380px !important;
-    font-size: 20px !important;
-    line-height: 26px !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
   }
 
   .RussianFon h3 {
     max-width: 440px !important;
-    font-size: 8px !important;
+    font-size: 7px !important;
     line-height: 16px !important;
   }
 
   .RussianFon button {
+    bottom: calc(-100vh + 18px) !important;
     right: 92px !important;
     font-size: 10px !important;
     border: 1px solid var(--target-color) !important;
@@ -418,6 +443,11 @@
 }
 
 @media screen and (max-width: 740px) {
+  header {
+    padding-top: 28px !important;
+    height: 170px !important
+  }
+
   header img {
     margin-left: 40px !important
   }
@@ -425,22 +455,26 @@
   .RussianText {
     margin-left: -82px;
   }
+
+  header button {
+    margin-top: -16px;
+  }
   
   .RussianFon h1 {
     font-size: 38px !important;
-    line-height: 50px !important;
+    line-height: 40px !important;
   }
 
   .RussianFon h2 {
     max-width: 340px !important;
-    font-size: 18px !important;
-    line-height: 24px !important;
+    font-size: 12px !important;
+    line-height: 18px !important;
   }
 
   .RussianFon h3 {
     max-width: 400px !important;
     font-size: 6px !important;
-    line-height: 16px !important;
+    line-height: 14px !important;
   }
 
   #map {
@@ -449,37 +483,44 @@
 }
 
 @media screen and (max-width: 710px) {
+  header {
+    padding-top: 24px !important;
+    height: 160px !important
+  }
+
   header img {
     margin-left: 30px !important
   }
 
   header h1 {
-    max-width: 540px
+    max-width: 540px;
   }
 
   .RussianText {
+    top: -3vh !important;
     margin-left: -86px;
   }
 
   header button {
+    margin-top: -22px;
     padding: 10px 11px 10px 11px !important;
   }
   
   .RussianFon h1 {
     font-size: 36px !important;
-    line-height: 46px !important;
+    line-height: 38px !important;
   }
 
   .RussianFon h2 {
     max-width: 320px !important;
-    font-size: 16px !important;
-    line-height: 24px !important;
+    font-size: 12px !important;
+    line-height: 16px !important;
   }
 
   .RussianFon h3 {
     max-width: 440px !important;
     font-size: 6px !important;
-    line-height: 16px !important;
+    line-height: 12px !important;
   }
 
   .RussianFon button {
@@ -493,7 +534,7 @@
   #map {
     height: 150vh;
   }
-}
+}//
 
 @media screen and (max-width: 680px) {
   header img {
@@ -501,7 +542,7 @@
   }
 
   header h1 {
-    max-width: 540px
+    max-width: 540px;
   }
 
   #map {
