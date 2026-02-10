@@ -2,10 +2,11 @@ import React, { useEffect, useState, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L, { LatLngBoundsExpression } from 'leaflet';
 import './map.scss'; //@ts-ignore
-import icon from '../../../assets/VectorMarkerSword.png'; //@ts-ignore
-import iconShadow from '../../../../public/marker-shadow.png';
-import { countriesTranslation } from './countriesTranslation.ts';
-import { countriesPosition } from './countriesPosition.ts';
+import icon from '../../assets/VectorMarkerSword.png'; //@ts-ignore
+import iconShadow from '../../../public/marker-shadow.png';
+import { countriesTranslation } from './layer/countriesTranslation.ts';
+import { countriesPosition } from './layer/countriesPosition.ts';
+import { eventsAPI } from './events/even.ts'; 
 /*Adidas // НаВайбКодил с ДипСиком эту страницу интерактивной карты*/
 
 let DefaultIcon = L.icon({
@@ -18,7 +19,6 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-// Функция для коррекции координат России - ВАЖНОЕ ИЗМЕНЕНИЕ!
 const adjustRussianCoordinates = (geoData: any): any => {
   if (!geoData) return geoData;
   
@@ -29,7 +29,6 @@ const adjustRussianCoordinates = (geoData: any): any => {
                        feature.properties.NAME || 
                        feature.properties.ADMIN || '';
     
-    // Ищем Россию по разным возможным названиям
     const isRussia = englishName === 'Russia' || 
                     englishName === 'Russian Federation' || 
                     englishName === 'Russian' ||
@@ -38,32 +37,26 @@ const adjustRussianCoordinates = (geoData: any): any => {
     if (isRussia) {
       console.log('Найдена Россия, корректируем координаты для объединения...');
       
-      // Для MultiPolygon
       if (feature.geometry.type === 'MultiPolygon') {
         feature.geometry.coordinates = feature.geometry.coordinates.map((polygon: any[][][]) => {
           return polygon.map((ring: any[][]) => {
             return ring.map((coord: any[]) => {
               const [lng, lat] = coord;
               
-              // ВАЖНОЕ ИЗМЕНЕНИЕ: определяем, что нужно сдвинуть ВПРАВО
-              // Ищем западную часть России, которую нужно сдвинуть вправо
               const isWesternRussia = (
-                (lng < -30 && lat > 50) ||           // Части, которые оказались в западном полушарии
-                (lng < 0 && lng > -180 && lat > 50)  // Любые части России с отрицательной долготой
+                (lng < -30 && lat > 50) ||  
+                (lng < 0 && lng > -180 && lat > 50)
               );
               
-              // Также сдвигаем часть Европейской России дальше вправо
               const isEuropeanRussia = (
-                (lng > 0 && lng < 90 && lat > 50)    // Европейская часть России
+                (lng > 0 && lng < 90 && lat > 50)
               );
               
               if (isWesternRussia) {
-                // Сдвигаем ВПРАВО на 360 градусов
                 const adjustedLng = lng + 360;
                 console.log(`Перенос вправо: [${lng}, ${lat}] -> [${adjustedLng}, ${lat}]`);
                 return [adjustedLng, lat];
               } else if (isEuropeanRussia) {
-                // Немного сдвигаем Европейскую Россию вправо для лучшего совмещения
                 return [lng + 20, lat];
               }
               
@@ -73,7 +66,6 @@ const adjustRussianCoordinates = (geoData: any): any => {
         });
       }
       
-      // Для Polygon
       else if (feature.geometry.type === 'Polygon') {
         feature.geometry.coordinates = feature.geometry.coordinates.map((ring: any[][]) => {
           return ring.map((coord: any[]) => {
@@ -105,7 +97,6 @@ const adjustRussianCoordinates = (geoData: any): any => {
   return adjustedData;
 };
 
-// Альтернативный подход: сдвигаем ВСЕ координаты России вправо
 const adjustAllRussiaToRight = (geoData: any): any => {
   if (!geoData) return geoData;
   
@@ -133,16 +124,11 @@ const adjustAllRussiaToRight = (geoData: any): any => {
             return ring.map((coord: any[]) => {
               let [lng, lat] = coord;
               
-              // Сдвигаем ВСЕ координаты России вправо
-              // Но аккуратно, чтобы не выйти за пределы
               if (lng < 0) {
-                // Если координата уже отрицательная (в западном полушарии)
                 return [lng + shiftAmount * 2, lat];
               } else if (lng < 180) {
-                // Если в восточном полушарии
                 return [lng + shiftAmount, lat];
               } else {
-                // Если уже больше 180
                 return [lng, lat];
               }
             });
@@ -156,7 +142,6 @@ const adjustAllRussiaToRight = (geoData: any): any => {
   return adjustedData;
 };
 
-// Еще один подход: делаем Россию центром карты
 const centerRussiaOnMap = (geoData: any): any => {
   if (!geoData) return geoData;
   
@@ -180,11 +165,7 @@ const centerRussiaOnMap = (geoData: any): any => {
             return ring.map((coord: any[]) => {
               let [lng, lat] = coord;
               
-              // Рассчитываем смещение для центрирования России
-              // Цель: чтобы Россия была в центре карты (в районе 0-180 градусов)
-              
               if (lng < 0) {
-                // Части в западном полушарии сдвигаем вправо
                 return [lng + 360, lat];
               } else if (lng > 180) {
               }
@@ -338,7 +319,7 @@ const CountryLabels = () => {
   }, [currentZoom, geoData]);
 
   useEffect(() => {
-    fetch('https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson') // ./src/app/pages/map/countries.geojson
+    fetch('https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson') // ./src/pages/map/layer/countries.geojson
       .then(response => response.json())
       .then(data => {
         // Пробуем разные методы коррекции по очереди
