@@ -5,7 +5,7 @@ import './map.scss'; //@ts-ignore
 import icon from '../../assets/VectorMarkerSword.png'; //@ts-ignore
 import iconShadow from '../../../public/marker-shadow.png';
 import { countriesTranslation } from './layer/countriesTranslation.ts';
-import { countriesPosition } from './layer/countriesPosition.ts';
+import { countriesPosition } from './layer/countriesPosition.ts'; //@ts-ignore
 import { eventsAPI } from './events/even.ts'; 
 /*Adidas // НаВайбКодил с ДипСиком эту страницу интерактивной карты*/
 
