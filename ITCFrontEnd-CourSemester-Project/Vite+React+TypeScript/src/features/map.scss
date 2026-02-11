@@ -9,9 +9,7 @@
 	background: #010B29;
 	top: 0;
 	left: 0;
-	opacity: 1;
 	overflow: hidden;
-  	object-fit: contain;
     transform: scale(1);
 }
 
@@ -20,11 +18,9 @@
 }
 
 .country-label {
-  // По умолчанию метка невидима и слегка уменьшена.
-  // Это состояние "за кадром", когда она не активна.
   opacity: 0;
-  transform: scale(0.8); // Начинаем с уменьшенного размера, чтобы эффект был интереснее
-  pointer-events: none; // Важно! Чтобы метки не перехватывали события мыши на карте
+  transform: scale(0.8);
+  pointer-events: none;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
@@ -33,45 +29,37 @@
   font-family: 'Cruinn';
   transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 
-  // Стиль для div внутри L.divIcon, который содержит название страны
-  .country-name { // Используй свой шрифт, бро
-    font-size: 18px;
-    color: #fff; // Легкая тень для читаемости
+.country-name {
+	font-size: 18px;
+	color: #fff;
     white-space: nowrap;
-    pointer-events: none; // Чтобы название не переносилось на новую строку
-    text-align: center;// Полупрозрачный черный фон
-    display: inline-block; // Чтобы фон был только по размеру текста
+    pointer-events: none;
+    text-align: center;
+    display: inline-block;
   }
 
-  // Состояние, когда метка должна быть СКРЫТА
   &.is-hidden {
     opacity: 0;
-    transform: scale(0.8); // Снова уменьшаем и делаем невидимой
-    // Можно добавить filter: blur(2px); для эффекта размытия при скрытии
+    transform: scale(0.8); 
   }
 
-  // Состояние, когда метка должна быть ВИДИМА
   &.is-visible {
     opacity: 1;
-    transform: scale(1); // Возвращаем в нормальный размер
-    // Можно добавить filter: blur(0); для обратного эффекта
+    transform: scale(1);
   }
 
-  // Дополнительные стили для разных категорий размеров (если нужны)
   &.country-label-large .country-name {
-    font-size: 20px; // Более заметный фон для больших
+    font-size: 20px;
   }
   &.country-label-medium .country-name {
     font-size: 18px;
   }
   &.country-label-small .country-name {
-    font-size: 16px; // Менее заметный для маленьких
+    font-size: 16px;
   }
 }
 
-// Это для отладки или если нужно переопределить стандартные стили Leaflet
 .leaflet-div-icon {
-  // Убедись, что overflow не обрезает твой текст или фон, если он выходит за iconSize
   overflow: visible !important; 
 }
 
@@ -105,7 +93,6 @@
   }
 }
 
-// Для большей читаемости при зуме
 .leaflet-container .leaflet-overlay-pane {
   .country-label {
     .country-name {

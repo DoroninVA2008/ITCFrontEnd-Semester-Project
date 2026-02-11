@@ -60,7 +60,7 @@
 @media screen and (max-width: 1260px) {
   #map {
     height: 118vh;
-}
+  }
 
   .RussianText {
     margin-left: -20px;
@@ -551,7 +551,10 @@
 }
 
 @media screen and (max-width: 650px) {
-
+  .RussianFon {
+    background-position-x: right !important;
+    height: 480px
+  }
   header {
     height: 230px !important
   }
@@ -568,7 +571,7 @@
   }
 
   .RussianFon button {
-    bottom: -130vh !important;
+    bottom: 20px !important;
     right: 82px !important;
     font-size: 8px !important;
     box-shadow: 0px 0px 4px 0px var(--shadow-color) !important;
@@ -607,7 +610,7 @@
   }
 
   .RussianFon button {
-    bottom: -150vh !important;
+    bottom: 16px !important;
     right: 72px !important;
     font-size: 6px !important;
     box-shadow: 0px 0px 3px 0px var(--shadow-color) !important;
@@ -630,6 +633,7 @@
   }
 
   .RussianFon {
+    height: 460px;
     margin-top: 20px !important
   }
   
@@ -651,7 +655,7 @@
   }
 
   .RussianFon button {
-    bottom: -160vh !important;
+    bottom: 30px !important;
     right: 62px !important;
     font-size: 5px !important;
     border: 0.8px solid var(--target-color) !important;
@@ -667,6 +671,10 @@
     padding: 12px 12px 12px 12px !important;
     box-shadow: 0px 0px 5px 0px var(--shadow-color) !important;
     right: 122px !important
+  }
+
+  .RussianFon {
+    height: 430px;
   }
 
   .RussianText {
@@ -691,7 +699,7 @@
   }
 
   .RussianFon button {
-    bottom: -170vh !important;
+    bottom: 26px !important;
     right: 52px !important;
     font-size: 5px !important;
     box-shadow: 0px 0px 1px 0px var(--shadow-color) !important;
@@ -725,6 +733,7 @@
   }
 
   .RussianFon {
+    height: 440px;
     margin-top: 180px !important
   }
 
@@ -773,6 +782,7 @@
   }
 
   .RussianFon {
+    height: 420px;
     margin-top: 200px !important
   }
 
@@ -798,7 +808,7 @@
   }
 
   .RussianFon button {
-    bottom: -180vh !important;
+    bottom: 26px !important;
     right: 32px !important;
     font-size: 5px !important;
     border: 0.6px solid var(--target-color) !important;
@@ -823,6 +833,7 @@
   }
 
   .RussianFon {
+    height: 380px;
     margin-top: 200px !important
   }
 
@@ -846,6 +857,10 @@
     font-size: 4px !important;
     line-height: 16px !important;
   }
+
+  .RussianFon button {
+    bottom: 12px !important;
+  }
 }
 
 @media screen and (max-width: 370px) {
@@ -864,7 +879,8 @@
   }
 
   .RussianFon {
-    margin-top: 210px !important
+    height: 350px;
+    margin-top: 210px !important;
   }
 
   .RussianText {
@@ -912,6 +928,7 @@ header h1 {margin-left: 70px !important}}
   }
 
   .RussianFon {
+    height: 320px;
     margin-top: 210px !important
   }
 

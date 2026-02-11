@@ -1,14 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import L, { LatLngBoundsExpression } from 'leaflet';
-import './map.scss'; //@ts-ignore
-import icon from '../../assets/VectorMarkerSword.png'; //@ts-ignore
-import iconShadow from '../../../public/marker-shadow.png';
-import { countriesTranslation } from './layer/countriesTranslation.ts';
-import { countriesPosition } from './layer/countriesPosition.ts'; //@ts-ignore
-import { eventsAPI } from './events/even.ts'; 
+import React, { useEffect, useState, useRef } from 'react'
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
+import L, { LatLngBoundsExpression } from 'leaflet'
+import './map.scss' //@ts-ignore
+import icon from '../assets/VectorMarkerSword.png'; //@ts-ignore
+import iconShadow from '../../public/marker-shadow.png'
+import { countriesTranslation } from './layer/countriesTranslation.ts'
+import { countriesPosition } from './layer/countriesPosition.ts' //@ts-ignore
+// import { eventsAPI } from './events/even.ts'; 
 /*Adidas // НаВайбКодил с ДипСиком эту страницу интерактивной карты*/
-
 let DefaultIcon = L.icon({
   iconUrl: icon,
   shadowUrl: iconShadow,
@@ -19,157 +18,24 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-const adjustRussianCoordinates = (geoData: any): any => {
-  if (!geoData) return geoData;
-  
-  const adjustedData = JSON.parse(JSON.stringify(geoData));
-  
-  adjustedData.features = adjustedData.features.map((feature: any) => {
-    const englishName = feature.properties.name || 
-                       feature.properties.NAME || 
-                       feature.properties.ADMIN || '';
-    
-    const isRussia = englishName === 'Russia' || 
-                    englishName === 'Russian Federation' || 
-                    englishName === 'Russian' ||
-                    countriesTranslation[englishName] === 'Россия';
-    
-    if (isRussia) {
-      console.log('Найдена Россия, корректируем координаты для объединения...');
-      
-      if (feature.geometry.type === 'MultiPolygon') {
-        feature.geometry.coordinates = feature.geometry.coordinates.map((polygon: any[][][]) => {
-          return polygon.map((ring: any[][]) => {
-            return ring.map((coord: any[]) => {
-              const [lng, lat] = coord;
-              
-              const isWesternRussia = (
-                (lng < -30 && lat > 50) ||  
-                (lng < 0 && lng > -180 && lat > 50)
-              );
-              
-              const isEuropeanRussia = (
-                (lng > 0 && lng < 90 && lat > 50)
-              );
-              
-              if (isWesternRussia) {
-                const adjustedLng = lng + 360;
-                console.log(`Перенос вправо: [${lng}, ${lat}] -> [${adjustedLng}, ${lat}]`);
-                return [adjustedLng, lat];
-              } else if (isEuropeanRussia) {
-                return [lng + 20, lat];
-              }
-              
-              return coord;
-            });
-          });
-        });
-      }
-      
-      else if (feature.geometry.type === 'Polygon') {
-        feature.geometry.coordinates = feature.geometry.coordinates.map((ring: any[][]) => {
-          return ring.map((coord: any[]) => {
-            const [lng, lat] = coord;
-            
-            const isWesternRussia = (
-              (lng < -30 && lat > 50) ||
-              (lng < 0 && lng > -180 && lat > 50)
-            );
-            
-            const isEuropeanRussia = (
-              (lng > 0 && lng < 90 && lat > 50)
-            );
-            
-            if (isWesternRussia) {
-              return [lng + 360, lat];
-            } else if (isEuropeanRussia) {
-              return [lng + 20, lat];
-            }
-            
-            return coord;
-          });
-        });
-      }
-    }
-    return feature;
-  });
-  
-  return adjustedData;
-};
-
-const adjustAllRussiaToRight = (geoData: any): any => {
-  if (!geoData) return geoData;
-  
-  const adjustedData = JSON.parse(JSON.stringify(geoData));
-  
-  adjustedData.features = adjustedData.features.map((feature: any) => {
-    const englishName = feature.properties.name || 
-                       feature.properties.NAME || 
-                       feature.properties.ADMIN || '';
-    
-    const isRussia = englishName === 'Russia' || 
-                    englishName === 'Russian Federation' || 
-                    englishName === 'Russian' ||
-                    countriesTranslation[englishName] === 'Россия';
-    
-    if (isRussia) {
-      console.log('Сдвигаем ВСЮ Россию вправо...');
-      
-      // Определяем смещение: сдвигаем всю Россию вправо
-      const shiftAmount = 180; // Можно регулировать это значение
-      
-      if (feature.geometry.type === 'MultiPolygon') {
-        feature.geometry.coordinates = feature.geometry.coordinates.map((polygon: any[][][]) => {
-          return polygon.map((ring: any[][]) => {
-            return ring.map((coord: any[]) => {
-              let [lng, lat] = coord;
-              
-              if (lng < 0) {
-                return [lng + shiftAmount * 2, lat];
-              } else if (lng < 180) {
-                return [lng + shiftAmount, lat];
-              } else {
-                return [lng, lat];
-              }
-            });
-          });
-        });
-      }
-    }
-    return feature;
-  });
-  
-  return adjustedData;
-};
-
 const centerRussiaOnMap = (geoData: any): any => {
   if (!geoData) return geoData;
   
   const adjustedData = JSON.parse(JSON.stringify(geoData));
   
   adjustedData.features = adjustedData.features.map((feature: any) => {
-    const englishName = feature.properties.name || 
-                       feature.properties.NAME || 
-                       feature.properties.ADMIN || '';
-    
-    const isRussia = englishName === 'Russia' || 
-                    englishName === 'Russian Federation' || 
-                    countriesTranslation[englishName] === 'Россия';
+    const englishName = feature.properties.name || feature.properties.NAME || feature.properties.ADMIN || '';
+    const isRussia = englishName === 'Russia' || englishName === 'Russian Federation' || countriesTranslation[englishName] === 'Россия';
     
     if (isRussia) {
-      console.log('Центрируем Россию на карте...');
-      
       if (feature.geometry.type === 'MultiPolygon') {
         feature.geometry.coordinates = feature.geometry.coordinates.map((polygon: any[][][]) => {
           return polygon.map((ring: any[][]) => {
             return ring.map((coord: any[]) => {
               let [lng, lat] = coord;
-              
               if (lng < 0) {
                 return [lng + 360, lat];
-              } else if (lng > 180) {
               }
-              
               return coord;
             });
           });
@@ -177,8 +43,8 @@ const centerRussiaOnMap = (geoData: any): any => {
       }
     }
     return feature;
-  });
-  
+  }
+);
   return adjustedData;
 };
 
@@ -204,7 +70,7 @@ interface CountryLabelItem {
   russianName: string;
   bounds: L.LatLngBounds;
   sizeCategory: 'large' | 'medium' | 'small';
-}
+};
 
 const CountryLabels = () => {
   const map = useMap();
@@ -267,10 +133,7 @@ const CountryLabels = () => {
       allLabelsRef.current = [];
 
       geoData.features.forEach((feature: any) => {
-        const englishName = feature.properties.name || 
-                           feature.properties.NAME || 
-                           feature.properties.ADMIN || 
-                           'Неизвестная страна';
+        const englishName = feature.properties.name || feature.properties.NAME || feature.properties.ADMIN || 'Неизвестная страна';
         
         const russianName = countriesTranslation[englishName] || englishName;
         
@@ -322,21 +185,8 @@ const CountryLabels = () => {
     fetch('https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson') // ./src/pages/map/layer/countries.geojson
       .then(response => response.json())
       .then(data => {
-        // Пробуем разные методы коррекции по очереди
-        console.log('Загружен GeoJSON, применяем коррекцию координат...');
         
-        // Сначала пробуем центрировать Россию
         let adjustedData = centerRussiaOnMap(data);
-        
-        // Если не помогло, пробуем сдвиг вправо
-        if (window.location.search.includes('forceright')) {
-          adjustedData = adjustAllRussiaToRight(data);
-        }
-        
-        // Если все еще проблема, пробуем базовую коррекцию
-        if (window.location.search.includes('forcebasic')) {
-          adjustedData = adjustRussianCoordinates(data);
-        }
         
         setGeoData(adjustedData);
       })
@@ -421,8 +271,7 @@ export const Map: React.FC = () => {
 
   return (
     <div id="map-wrapper">
-      <MapContainer 
-        id="map" 
+      <MapContainer id="map"
         center={centmap} 
         zoom={3} 
         minZoom={3} 
@@ -430,13 +279,11 @@ export const Map: React.FC = () => {
         scrollWheelZoom={true} 
         maxBounds={maxMapBounds} 
         maxBoundsViscosity={1.0}
-        style={{ backgroundColor: '#010B29'}}
       >
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-          noWrap={false} // Разрешаем тайлам повторяться
-          opacity={0} // Еле заметный слой
+          noWrap={false}
+          opacity={0}
         />
         <CountryLabels />
         <Marker 
