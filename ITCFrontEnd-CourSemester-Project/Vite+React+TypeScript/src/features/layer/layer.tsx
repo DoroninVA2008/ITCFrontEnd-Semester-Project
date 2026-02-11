@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { useMap } from 'react-leaflet'
 import L from 'leaflet'
 import { countriesTranslation } from './countriesTranslation.ts'
@@ -10,7 +10,12 @@ interface CountryLabelItem {
   russianName: string;
   bounds: L.LatLngBounds;
   sizeCategory: 'large' | 'medium' | 'small';
-};
+}
+
+const visZoom = 8;
+const larZoom = 3;
+const medZoom = 4;
+const smaZoom = 5;
 
 const centerRussiaOnMap = (geoData: any): any => {
   if (!geoData) return geoData;
@@ -21,24 +26,21 @@ const centerRussiaOnMap = (geoData: any): any => {
     const englishName = feature.properties.name || feature.properties.NAME || feature.properties.ADMIN || '';
     const isRussia = englishName === 'Russia' || englishName === 'Russian Federation' || countriesTranslation[englishName] === 'Россия';
     
-    if (isRussia) {
-      if (feature.geometry.type === 'MultiPolygon') {
-        feature.geometry.coordinates = feature.geometry.coordinates.map((polygon: any[][][]) => {
-          return polygon.map((ring: any[][]) => {
-            return ring.map((coord: any[]) => {
-              let [lng, lat] = coord;
-              if (lng < 0) {
-                return [lng + 360, lat];
-              }
-              return coord;
-            });
+    if (isRussia && feature.geometry.type === 'MultiPolygon') {
+      feature.geometry.coordinates = feature.geometry.coordinates.map((polygon: any[][][]) => {
+        return polygon.map((ring: any[][]) => {
+          return ring.map((coord: any[]) => {
+            let [lng, lat] = coord;
+            if (lng < 0) {
+              return [lng + 360, lat];
+            }
+            return coord;
           });
         });
-      }
+      });
     }
     return feature;
-  }
-);
+  });
   return adjustedData;
 };
 
@@ -52,10 +54,24 @@ const getCountryLabelPosition = (countryName: string, bounds: L.LatLngBounds): L
 
 const getCountrySizeCategory = (bounds: L.LatLngBounds): 'large' | 'medium' | 'small' => {
   const area = bounds.getNorth() - bounds.getSouth();
-  
   if (area > 10) return 'large';
   if (area > 3) return 'medium'; 
   return 'small';
+};
+
+const shouldShowLabel = (sizeCategory: 'large' | 'medium' | 'small', zoom: number): boolean => {
+  if (zoom >= visZoom) return true;
+  
+  switch(sizeCategory) {
+    case 'large':
+      return zoom >= larZoom;
+    case 'medium':
+      return zoom >= medZoom;
+    case 'small':
+      return zoom >= smaZoom;
+    default:
+      return false;
+  }
 };
 
 export const CountryLabels: React.FC = () => {
@@ -64,10 +80,12 @@ export const CountryLabels: React.FC = () => {
   const [currentZoom, setCurrentZoom] = useState(map.getZoom());
   const allLabelsRef = useRef<CountryLabelItem[]>([]);
   const countriesLayerRef = useRef<L.GeoJSON | null>(null);
+  const isDataLoadedRef = useRef(false);
 
   useEffect(() => {
     const handleZoom = () => {
-      setCurrentZoom(map.getZoom());
+      const newZoom = map.getZoom();
+      setCurrentZoom(newZoom);
     };
     
     map.on('zoomend', handleZoom);
@@ -76,22 +94,7 @@ export const CountryLabels: React.FC = () => {
     };
   }, [map]);
 
-  const shouldShowLabel = (sizeCategory: 'large' | 'medium' | 'small', zoom: number): boolean => {
-    if (zoom >= 8) return true;
-    
-    switch(sizeCategory) {
-      case 'large':
-        return zoom >= 3;
-      case 'medium':
-        return zoom >= 4;
-      case 'small':
-        return zoom >= 5;
-      default:
-        return false;
-    }
-  };
-
-  const updateLabelsVisibility = (zoom: number) => {
+  const updateLabelsVisibility = useCallback((zoom: number) => {
     allLabelsRef.current.forEach(item => {
       const { marker, sizeCategory } = item;
       const shouldBeVisible = shouldShowLabel(sizeCategory, zoom);
@@ -107,74 +110,16 @@ export const CountryLabels: React.FC = () => {
         }
       }
     });
-  };
+  }, []);
 
   useEffect(() => {
-    if (geoData) {
-      allLabelsRef.current.forEach(item => {
-        if (map.hasLayer(item.marker)) {
-          map.removeLayer(item.marker);
-        }
-      });
-      allLabelsRef.current = [];
-
-      geoData.features.forEach((feature: any) => {
-        const englishName = feature.properties.name || feature.properties.NAME || feature.properties.ADMIN || 'Неизвестная страна';
-        
-        const russianName = countriesTranslation[englishName] || englishName;
-        
-        try {
-          const tempLayer = L.geoJSON(feature);
-          const bounds = tempLayer.getBounds();
-          const sizeCategory = getCountrySizeCategory(bounds);
-          
-          const labelPosition = getCountryLabelPosition(englishName, bounds);
-          
-          const initialVisibility = shouldShowLabel(sizeCategory, currentZoom);
-          const initialClassName = initialVisibility ? 'is-visible' : 'is-hidden';
-
-          const label = L.marker(labelPosition, {
-            icon: L.divIcon({
-              className: `country-label country-label-${sizeCategory} ${initialClassName}`,
-              html: `<div class="country-name">${russianName}</div>`,
-              iconSize: [100, 20],
-              iconAnchor: [50, 10]
-            }),
-            interactive: false,
-            zIndexOffset: 1000
-          });
-          
-          label.addTo(map);
-          allLabelsRef.current.push({
-            marker: label,
-            englishName,
-            russianName,
-            bounds,
-            sizeCategory,
-          });
-        } catch (error) {
-          console.log('Ошибка при создании метки:', russianName, error);
-        }
-      });
-      
-      updateLabelsVisibility(currentZoom);
-    }
-  }, [geoData, map]);
-
-  useEffect(() => {
-    if (geoData) {
-      updateLabelsVisibility(currentZoom);
-    }
-  }, [currentZoom, geoData]);
-
-  useEffect(() => {
-    fetch('https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson') // ./src/pages/map/layer/countries.geojson
+    if (isDataLoadedRef.current) return;
+    fetch('https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson') // ./src/features/layer/countries.geojson
       .then(response => response.json())
       .then(data => {
-        
-        let adjustedData = centerRussiaOnMap(data);
-        
+        const adjustedData = centerRussiaOnMap(data);
         setGeoData(adjustedData);
+        isDataLoadedRef.current = true;
       })
       .catch(error => {
         console.error('Ошибка загрузки GeoJSON:', error);
@@ -192,26 +137,82 @@ export const CountryLabels: React.FC = () => {
         map.removeLayer(countriesLayerRef.current);
       }
     };
-  }, [map]); 
+  }, [map]);
 
   useEffect(() => {
-    if (geoData) {
-      if (countriesLayerRef.current && map.hasLayer(countriesLayerRef.current)) {
-        map.removeLayer(countriesLayerRef.current);
+    if (!geoData) return;
+
+    allLabelsRef.current.forEach(item => {
+      if (map.hasLayer(item.marker)) {
+        map.removeLayer(item.marker);
       }
+    });
+    allLabelsRef.current = [];
+
+    geoData.features.forEach((feature: any) => {
+      const englishName = feature.properties.name || feature.properties.NAME || feature.properties.ADMIN || 'Неизвестная страна';
+      const russianName = countriesTranslation[englishName] || englishName;
       
-      const countriesLayer = L.geoJSON(geoData, {
-        style: {
-          fillColor: "#2C4672",
-          weight: 1.2,
-          color: "#2F3B54",
-          fillOpacity: 1,
-          opacity: 1
-        },
-      }).addTo(map);
-      
-      countriesLayerRef.current = countriesLayer;
+      try {
+        const tempLayer = L.geoJSON(feature);
+        const bounds = tempLayer.getBounds();
+        const sizeCategory = getCountrySizeCategory(bounds);
+        const labelPosition = getCountryLabelPosition(englishName, bounds);
+        
+        const initialVisibility = shouldShowLabel(sizeCategory, currentZoom);
+        const initialClassName = initialVisibility ? 'is-visible' : 'is-hidden';
+
+        const label = L.marker(labelPosition, {
+          icon: L.divIcon({
+            className: `country-label country-label-${sizeCategory} ${initialClassName}`,
+            html: `<div class="country-name">${russianName}</div>`,
+            iconSize: [100, 20],
+            iconAnchor: [50, 10]
+          }),
+          interactive: false,
+          zIndexOffset: 1000
+        });
+        
+        label.addTo(map);
+        allLabelsRef.current.push({
+          marker: label,
+          englishName,
+          russianName,
+          bounds,
+          sizeCategory,
+        });
+      } catch (error) {
+        console.log('Ошибка при создании метки:', russianName, error);
+      }
+    });
+    
+    updateLabelsVisibility(currentZoom);
+  }, [geoData, map]);
+
+  useEffect(() => {
+    if (geoData && allLabelsRef.current.length > 0) {
+      updateLabelsVisibility(currentZoom);
     }
+  }, [currentZoom, geoData, updateLabelsVisibility]);
+
+  useEffect(() => {
+    if (!geoData) return;
+
+    if (countriesLayerRef.current && map.hasLayer(countriesLayerRef.current)) {
+      map.removeLayer(countriesLayerRef.current);
+    }
+    
+    const countriesLayer = L.geoJSON(geoData, {
+      style: {
+        fillColor: "#2C4672",
+        weight: 1.2,
+        color: "#2F3B54",
+        fillOpacity: 1,
+        opacity: 1
+      },
+    }).addTo(map);
+    
+    countriesLayerRef.current = countriesLayer;
   }, [geoData, map]);
 
   return null;
