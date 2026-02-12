@@ -1,9 +1,12 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
+// import { titleH1 } from './slice/title.tsx';
 
-export const Inapp: React.FC = () => {
+export const MainContent: React.FC = () => {
+  // const title = useSelector(state => state['main-content'].title);
   return (
     <div className="RussianFon">
-      <div className="RussianText">
+      <div className="RussianText"> {/*title*/}
         <h1>
           Россия —
             <br />

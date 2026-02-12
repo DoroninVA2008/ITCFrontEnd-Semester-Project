@@ -1,14 +1,14 @@
 import React from 'react'
 import { Header } from '../../widgets/header.tsx'
-import { Inapp } from '../../features/inapp.tsx'
+import { MainContent } from '../../features/main-content/main-content.tsx'
 import './mobile.scss'
 import './index.scss'
 
-export const App: React.FC = () => { 
+export const Main: React.FC = () => { 
   return (
     <div className="MainPage">
       <Header />
-      <Inapp />
+      <MainContent />
     </div>
   );
 }

@@ -5,6 +5,9 @@ import { rootSaga } from './saga/rootSaga.ts'
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
+  // mainContent: {
+  //   title: "<h1>Россия — <br /> страна героев</h1>"
+  // },
   reducer: {
   },
   middleware: (getDefaultMiddleware) =>

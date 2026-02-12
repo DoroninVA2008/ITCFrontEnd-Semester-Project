@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { countriesTranslation } from './countriesTranslation';
-import { countriesPosition } from './countriesPosition';
+import { countriesTranslation } from './countriesTranslation.ts';
+import { countriesPosition } from './countriesPosition.ts';
 
 interface CountryLabelItem {
   marker: L.Marker;
@@ -57,7 +57,6 @@ export const CountryLabels: React.FC<CountryLabelsProps> = ({
   const countriesLayerRef = useRef<L.GeoJSON | null>(null);
   const isDataLoadedRef = useRef(false);
 
-  // Вспомогательные функции
   const centerRussiaOnMap = useCallback((geoData: any): any => {
     if (!geoData) return geoData;
     
@@ -117,7 +116,6 @@ export const CountryLabels: React.FC<CountryLabelsProps> = ({
     }
   }, [visibleZoom, largeZoom, mediumZoom, smallZoom]);
 
-  // Следим за изменением зума
   useEffect(() => {
     const handleZoom = () => {
       setCurrentZoom(map.getZoom());
@@ -129,7 +127,6 @@ export const CountryLabels: React.FC<CountryLabelsProps> = ({
     };
   }, [map]);
 
-  // Обновляем видимость меток
   const updateLabelsVisibility = useCallback((zoom: number) => {
     allLabelsRef.current.forEach(item => {
       const { marker, sizeCategory } = item;
@@ -143,7 +140,6 @@ export const CountryLabels: React.FC<CountryLabelsProps> = ({
     });
   }, [shouldShowLabel]);
 
-  // Загружаем GeoJSON данные
   useEffect(() => {
     if (isDataLoadedRef.current || isLoading) return;
 
@@ -170,9 +166,7 @@ export const CountryLabels: React.FC<CountryLabelsProps> = ({
 
     loadGeoData();
 
-    // Очистка при размонтировании
     return () => {
-      // Удаляем все метки
       allLabelsRef.current.forEach(item => {
         if (map.hasLayer(item.marker)) {
           map.removeLayer(item.marker);
@@ -180,7 +174,6 @@ export const CountryLabels: React.FC<CountryLabelsProps> = ({
       });
       allLabelsRef.current = [];
       
-      // Удаляем слой с границами
       if (countriesLayerRef.current && map.hasLayer(countriesLayerRef.current)) {
         map.removeLayer(countriesLayerRef.current);
         countriesLayerRef.current = null;
@@ -190,11 +183,9 @@ export const CountryLabels: React.FC<CountryLabelsProps> = ({
     };
   }, [map, geoJsonUrl, centerRussiaOnMap, isLoading]);
 
-  // Создаем метки для стран
   useEffect(() => {
     if (!geoData) return;
 
-    // Удаляем старые метки
     allLabelsRef.current.forEach(item => {
       if (map.hasLayer(item.marker)) {
         map.removeLayer(item.marker);
@@ -202,7 +193,6 @@ export const CountryLabels: React.FC<CountryLabelsProps> = ({
     });
     allLabelsRef.current = [];
 
-    // Создаем новые метки
     geoData.features.forEach((feature: any) => {
       const englishName = feature.properties.name || 
                          feature.properties.NAME || 
@@ -246,23 +236,19 @@ export const CountryLabels: React.FC<CountryLabelsProps> = ({
     updateLabelsVisibility(currentZoom);
   }, [geoData, map, currentZoom, getCountrySizeCategory, getCountryLabelPosition, shouldShowLabel, updateLabelsVisibility, labelStyle]);
 
-  // Обновляем видимость при изменении зума
   useEffect(() => {
     if (geoData && allLabelsRef.current.length > 0) {
       updateLabelsVisibility(currentZoom);
     }
   }, [currentZoom, geoData, updateLabelsVisibility]);
 
-  // Добавляем слой с границами стран
   useEffect(() => {
     if (!geoData || !showBoundaries) return;
 
-    // Удаляем старый слой
     if (countriesLayerRef.current && map.hasLayer(countriesLayerRef.current)) {
       map.removeLayer(countriesLayerRef.current);
     }
     
-    // Создаем новый слой
     const countriesLayer = L.geoJSON(geoData, {
       style: boundaryStyle,
     }).addTo(map);
@@ -277,6 +263,5 @@ export const CountryLabels: React.FC<CountryLabelsProps> = ({
     };
   }, [geoData, map, showBoundaries, boundaryStyle]);
 
-  // Компонент ничего не рендерит, только управляет картой
   return null;
 };
