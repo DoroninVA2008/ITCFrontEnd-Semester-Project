@@ -1,4 +1,4 @@
-const Events = 'http://155.212.132.55:7666/api/objects/get-event-types-list'; // ./src/pages/map/events/evenlists.json
+const Events = 'http://155.212.132.55:7666/api/objects/get-object-data/1'; // ./src/features/events/evenlists.json
 
 const headers = {
     'Content-Type': 'application/json',
@@ -11,7 +11,6 @@ interface EventType {
   latitude?: number;
   longitude?: number;
   country?: string;
-  // Добавляем возможные поля из API
   location?: string;
   coordinates?: string;
   lat?: number;

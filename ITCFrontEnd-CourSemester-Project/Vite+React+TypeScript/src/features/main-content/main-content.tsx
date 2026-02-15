@@ -1,25 +1,18 @@
-import { useSelector } from 'react-redux';
+import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-// import { titleH1 } from './slice/title.tsx';
+import { RootState } from '../../app/store'
 
 export const MainContent: React.FC = () => {
-  // const title = useSelector(state => state['main-content'].title);
+  const titleH1 = useSelector((state: RootState) => state.title1.titleH1);
+  const titleH2 = useSelector((state: RootState) => state.title2.titleH2);
+  const titleH3 = useSelector((state: RootState) => state.title3.titleH3);
   return (
     <div className="RussianFon">
-      <div className="RussianText"> {/*title*/}
-        <h1>
-          Россия —
-            <br />
-              страна героев
-        </h1>
-        <h2>
-          Интерактивная карта исторических
-            <br />
-              событий
-        </h2>
-        <h3>
-          Исследуйте историю. Сохраняйте память. Добавляйте события на общую карту подвигов.
-        </h3>
+      <div className="RussianText"> 
+        <div dangerouslySetInnerHTML={{ __html: titleH1 }} />
+        <div dangerouslySetInnerHTML={{ __html: titleH2 }} />
+        <div dangerouslySetInnerHTML={{ __html: titleH3 }} />
       </div>
       <Link to="/map">
         <button>
