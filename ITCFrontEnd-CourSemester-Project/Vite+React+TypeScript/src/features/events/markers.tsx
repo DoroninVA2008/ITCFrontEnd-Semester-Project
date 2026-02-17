@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import { Marker, Popup } from 'react-leaflet'
+import { eventsAPI } from './even.ts'
 import L from 'leaflet' // @ts-ignore
 import icon from '../../assets/VectorMarkerSword.png' // @ts-ignore
 import iconShadow from '../../../public/marker-shadow.png'

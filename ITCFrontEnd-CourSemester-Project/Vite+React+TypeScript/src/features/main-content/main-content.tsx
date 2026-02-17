@@ -1,18 +1,26 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { RootState } from '../../app/store'
+// import { RootState } from '../../app/store'
+import { MainContent } from './index'
 
-export const MainContent: React.FC = () => {
-  const titleH1 = useSelector((state: RootState) => state.title1.titleH1);
-  const titleH2 = useSelector((state: RootState) => state.title2.titleH2);
-  const titleH3 = useSelector((state: RootState) => state.title3.titleH3);
+export const MainContentComponent: React.FC = () => {
+  const titleH1Text = useSelector(MainContent.selectors.selectH1);
+  const titleH2Text = useSelector(MainContent.selectors.selectH2);
+  const titleH3Text = useSelector(MainContent.selectors.selectH3);
+
   return (
     <div className="RussianFon">
-      <div className="RussianText"> 
-        <div dangerouslySetInnerHTML={{ __html: titleH1 }} />
-        <div dangerouslySetInnerHTML={{ __html: titleH2 }} />
-        <div dangerouslySetInnerHTML={{ __html: titleH3 }} />
+      <div className="RussianText">
+        <div>
+          {titleH1Text}
+        </div>
+        <div>
+          {titleH2Text}
+        </div>
+        <div>
+          {titleH3Text}
+        </div>
       </div>
       <Link to="/map">
         <button>
