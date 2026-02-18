@@ -1,4 +1,3 @@
-// evenPositions.ts
 export enum EventType {
     Battle = 1,
     Tragedy = 2
@@ -21,7 +20,7 @@ interface ApiResponse {
 
 type Coordinates = [number, number];
 
-const API_URL = 'http://155.212.132.55:7666/api/objects/get-objects-list';
+const API_URL = 'https://155-212-132-55.sslip.io/api/objects/get-objects-list' // http://155.212.132.55:7666/api/objects/get-objects-list
 
 class EventsDataService {
     private static instance: EventsDataService;
@@ -124,6 +123,7 @@ class EventsDataService {
             this._loadingPromise = null;
         }
     }
+
 
     // Добавляем метод для загрузки резервных данных
     private async loadBackupData(): Promise<void> {

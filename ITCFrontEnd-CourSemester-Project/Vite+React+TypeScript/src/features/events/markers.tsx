@@ -1,9 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { Marker, Popup } from 'react-leaflet'
-import L from 'leaflet'
-// @ts-ignore
-import icon from '../../assets/VectorMarkerSword.png'
-// @ts-ignore
+import L from 'leaflet' // @ts-ignore
+import icon from '../../assets/VectorMarkerSword.png' // @ts-ignore
 import iconShadow from '../../../public/marker-shadow.png'
 import { eventsDataService, EventObject } from './evenPositions'
 
@@ -85,6 +83,7 @@ const EventMarker: React.FC<{ event: EventObject }> = ({ event }) => {
             return dateString;
         }
     };
+
 
     return (
         <Marker
@@ -198,6 +197,7 @@ export const MarkerWithPopup: React.FC = () => {
             </div>
         );
     }
+
 
     if (error) {
         return (
