@@ -40,42 +40,47 @@ const EventMarker: React.FC<{ event: EventObject }> = ({ event }) => {
     }
 
     const eventHandlers = {
-    mouseover: () => {
-        if (closeTimeoutRef.current) {
-            clearTimeout(closeTimeoutRef.current);
-            closeTimeoutRef.current = null;
-        }
-        if (markerRef.current) {
-            markerRef.current.openPopup();
-        }
-    },
-    
-    mouseout: () => {
-        closeTimeoutRef.current = setTimeout(() => {
-            if (markerRef.current) {
-                markerRef.current.closePopup();
+        mouseover: () => {
+            if (closeTimeoutRef.current) {
+                clearTimeout(closeTimeoutRef.current);
+                closeTimeoutRef.current = null;
             }
-        }, popupTimeOut);
-    },
-    
-    click: () => {
-        // Отменяем таймаут закрытия
-        if (closeTimeoutRef.current) {
-            clearTimeout(closeTimeoutRef.current);
-            closeTimeoutRef.current = null;
-        }
-
-        if (markerRef.current) {
-            if (markerRef.current.isPopupOpen()) {
-                // Если открыт → закрываем
-                markerRef.current.closePopup();
-            } else {
-                // Если закрыт → открываем
+            if (markerRef.current) {
                 markerRef.current.openPopup();
             }
-        }
-    }
-};
+        },
+        
+        mouseout: () => {
+            closeTimeoutRef.current = setTimeout(() => {
+                if (markerRef.current) {
+                    markerRef.current.closePopup();
+                }
+            }, popupTimeOut);
+        },
+        
+        click: () => {
+            if (closeTimeoutRef.current) {
+                clearTimeout(closeTimeoutRef.current);
+                closeTimeoutRef.current = null;
+            }
+    
+            if (markerRef.current) {
+                if (markerRef.current.isPopupOpen()) {
+                    markerRef.current.closePopup();
+                } 
+            }
+        },
+
+        doubleclick: () => {
+            if (closeTimeoutRef.current) {
+                clearTimeout(closeTimeoutRef.current);
+                closeTimeoutRef.current = null;
+            }
+            if (markerRef.current) {
+                markerRef.current.openPopup();
+            }
+        },
+    };
 
     const formatDate = (dateString: string) => {
         try {
@@ -127,8 +132,8 @@ const EventMarker: React.FC<{ event: EventObject }> = ({ event }) => {
 
 export const MarkerWithPopup: React.FC = () => {
     const [events, setEvents] = useState<EventObject[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const [, setLoading] = useState(true);
+    const [, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const loadEvents = async () => {
