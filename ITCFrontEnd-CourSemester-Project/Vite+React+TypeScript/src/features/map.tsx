@@ -2,7 +2,7 @@ import React from 'react'
 import { MapContainer, TileLayer } from 'react-leaflet'
 import { LatLngBoundsExpression } from 'leaflet'
 import { CountryLabels } from './layer/layer.tsx'
-import { MarkerWithPopup } from './events/markers.tsx'
+import { MarkerWithPopup } from './events/markers.tsx' // @ts-ignore
 import './map.scss'
 
 const centmap: [number, number] = [68.751244, 98.618423];
@@ -13,6 +13,8 @@ const maxMapBounds: LatLngBoundsExpression = [[-112, -169], [84, 192]];
 const TiLayer = "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png";
 
 export const Map: React.FC = () => {
+  console.log('Rendering Map with markers');
+  
   return (
     <div id="map-wrapper">
       <MapContainer id="map"

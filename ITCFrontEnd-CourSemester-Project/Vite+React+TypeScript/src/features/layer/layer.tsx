@@ -114,7 +114,7 @@ export const CountryLabels: React.FC = () => {
 
   useEffect(() => {
     if (isDataLoadedRef.current) return; // https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson
-    fetch('./src/features/layer/countries.geojson') // ./src/features/layer/countries.geojson
+    fetch('https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson') // ./src/features/layer/countries.geojson
       .then(response => response.json())
       .then(data => {
         const adjustedData = centerRussiaOnMap(data);
