@@ -20,7 +20,7 @@ interface ApiResponse {
 
 type Coordinates = [number, number];
 
-const API_URL = 'https://155-212-132-55.sslip.io/api/objects/get-objects-list' // http://155.212.132.55:7666/api/objects/get-objects-list
+const API_URL = 'https://155-212-132-55.sslip.io/api/objects/get-objects-list'; // http://155.212.132.55:7666/api/objects/get-objects-list
 
 class EventsDataService {
     private static instance: EventsDataService;
@@ -72,8 +72,9 @@ class EventsDataService {
             const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 секунд таймаут
             
             const response = await fetch(API_URL, {
+                method: 'POST',
                 signal: controller.signal,
-                mode: 'cors', // Пробуем CORS
+                mode: 'cors',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
