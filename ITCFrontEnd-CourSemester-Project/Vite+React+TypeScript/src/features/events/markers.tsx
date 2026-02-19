@@ -57,29 +57,6 @@ const EventMarker: React.FC<{ event: EventObject }> = ({ event }) => {
                 }
             }, popupTimeOut);
         },
-        
-        click: () => {
-            if (closeTimeoutRef.current) {
-                clearTimeout(closeTimeoutRef.current);
-                closeTimeoutRef.current = null;
-            }
-    
-            if (markerRef.current) {
-                if (markerRef.current.isPopupOpen()) {
-                    markerRef.current.closePopup();
-                } 
-            }
-        },
-
-        doubleclick: () => {
-            if (closeTimeoutRef.current) {
-                clearTimeout(closeTimeoutRef.current);
-                closeTimeoutRef.current = null;
-            }
-            if (markerRef.current) {
-                markerRef.current.openPopup();
-            }
-        },
     };
 
     const formatDate = (dateString: string) => {
@@ -109,20 +86,17 @@ const EventMarker: React.FC<{ event: EventObject }> = ({ event }) => {
                             closeTimeoutRef.current = null;
                         }
                     }}
-                    style={{ 
-                        padding: '4px'
-                    }}
                 >
-                    <h3 style={{ margin: '0 0 10px 0', color: '#FFFFFF' }}>
+                    <h3 style={{ margin: '0 0 6px 0', color: '#FFFFFF' }}>
                         {event.title}
                     </h3>
                     
-                    <p style={{ margin: '0 0 10px 0', fontSize: '14px', lineHeight: '1.5' }}>
+                    {/* <p style={{ margin: '0 0 10px 0', fontSize: '14px', lineHeight: '1.4' }}>
                         {event.description}
-                    </p>
+                    </p> */}
                     
-                    <small style={{ color: '#FFFFFF', display: 'block', fontSize: '14px' }}>
-                        {formatDate(event.eventDate)}
+                    <small style={{ color: '#FFFFFF', display: 'block', fontSize: '14px', marginTop: '0.2em' }}>
+                        🗓️ {formatDate(event.eventDate)}
                     </small>
                 </div>
             </Popup>
