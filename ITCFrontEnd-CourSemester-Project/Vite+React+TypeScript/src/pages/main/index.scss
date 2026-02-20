@@ -6,6 +6,7 @@
   --text-color: #fafafa;
   --popup-color: #2a1d15;
   --shadow-color: #d4a244;
+  --backgroundOpacity-color: rgba(212, 162, 68, 0.1);
   --mapp-color: #2c4672;
   --transition-ive: all 0.3s ease;
   --font-shrift: 'Cruinn', sans-serif;
@@ -97,14 +98,15 @@ header button, .RussianFon button {
   cursor: pointer;
   transition: color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
   color: var(--target-color);
-  background-color: transparent;
+  background-color: var(--backgroundOpacity-color);
   border: 2px solid var(--target-color);
   box-shadow: 0px 0px 10px 0px var(--shadow-color);
   position: absolute;
 }
 
 header button:hover,
-.RussianFon button:hover {
+.RussianFon button:hover,
+.FilterList button:hover {
   transition: color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
   color: var(--hover-color);
   border: 2px solid var(--hover-color);
@@ -112,7 +114,8 @@ header button:hover,
 }
 
 header button:active,
-.RussianFon button:active {
+.RussianFon button:active,
+.FilterList button:active {
   transition: color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
   color: var(--active-color);
   border: 2px solid var(--active-color);
@@ -147,6 +150,23 @@ header button:active,
   line-height: 120px;
   letter-spacing: 0.4px;
   margin-top: 120px;
+  animation: h1st 1.6s 0s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes h1st {
+  from {
+    opacity: 0;
+    margin-left: 20px;
+  }
+  to {
+    opacity: 1;
+    margin-left: 160px;
+  }
+}
+
+.RussianFon h1.visible {
+  opacity: 1
 }
 
 .RussianFon h2 {
@@ -155,6 +175,23 @@ header button:active,
   font-weight: 400;
   line-height: 70px;
   letter-spacing: 0.4px;
+  animation: h2nd 1.6s 0.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes h2nd {
+  from {
+    opacity: 0;
+    margin-left: 20px;
+  }
+  to {
+    opacity: 1;
+    margin-left: 160px;
+  }
+}
+
+.RussianFon h2.visible {
+  opacity: 1
 }
 
 .RussianFon h3 {
@@ -163,4 +200,21 @@ header button:active,
   font-weight: 300;
   line-height: 26px;
   letter-spacing: 0.4px;
+  animation: h3rd 1.6s 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes h3rd {
+  from {
+    opacity: 0;
+    margin-left: 20px;
+  }
+  to {
+    opacity: 1;
+    margin-left: 160px;
+  }
+}
+
+.RussianFon h3.visible {
+  opacity: 1
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-// import { RootState } from '../../app/store'
 import { MainContent } from './index'
 
 export const MainContentComponent: React.FC = () => {
@@ -15,10 +14,14 @@ export const MainContentComponent: React.FC = () => {
         <div>
           {titleH1Text}
         </div>
-        <div>
+        <div
+          style={{animationDelay: `${titleH2Text.length * 0.6}s`}}
+        >
           {titleH2Text}
         </div>
-        <div>
+        <div 
+          style={{animationDelay: `${titleH2Text.length * 1.2}s`}}
+        >
           {titleH3Text}
         </div>
       </div>

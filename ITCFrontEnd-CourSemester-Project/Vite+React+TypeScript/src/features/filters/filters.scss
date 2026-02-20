@@ -1,0 +1,138 @@
+.FilterContainer {
+  position: relative;
+  display: inline-block;
+  box-shadow: 0px 0px 10px 0px var(--shadow-color);
+}
+
+.FilterList {
+  position: absolute;
+  top: 160px;
+  left: 160px;
+  transition: opacity 0.5s ease;
+}
+
+.FilterList.clicked {
+  transition: opacity 0.5s ease;
+  box-shadow: 0px 0px 10px 0px var(--shadow-color);
+  position: absolute;
+  z-index: 1;
+  width: 404px;
+  height: 260px;
+  border-radius: 15px;
+  opacity: 1;
+  background-color: rgba(212, 162, 68, 0);
+  border: 0px solid var(--target-color);
+}
+
+.FilterList button {
+  position: relative; // меняем с absolute на relative
+  z-index: 2;
+  border-radius: 15px;
+  font-weight: var(--font-shrift-weight) !important;
+  font-style: normal;
+  font-size: 18px;
+  padding: 15px 300px 15px 20px; // большой правый отступ для списка
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+  color: var(--target-color);
+  background-color: rgba(212, 162, 68, 0.1);
+  border: 2px solid var(--target-color);
+  box-shadow: 0px 0px 10px 0px var(--shadow-color);
+  text-align: left;
+}
+
+.FilterList button.clicked {
+  position: relative;
+  z-index: 1;
+  border-left: 2px solid var(--target-color);
+  border-top: 2px solid var(--target-color);
+  border-right: 2px solid var(--target-color);
+  border-bottom: 0;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  font-weight: var(--font-shrift-weight) !important;
+  font-style: normal;
+  font-size: 18px;
+  padding: 15px 300px 15px 20px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+  color: var(--target-color);
+  background-color: rgba(212, 162, 68, 0.1);
+  box-shadow: none; // ← добавляем эту строку для удаления тени
+}
+
+.FilterDropdown {
+  position: absolute;
+  width: 404px; 
+  background-color: rgba(212, 162, 68, 0.1);
+  border-left: 2px solid var(--target-color);
+  border-bottom: 2px solid var(--target-color);
+  border-right: 2px solid var(--target-color);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  padding: 15px;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s ease !important;
+  pointer-events: none; // чтобы нельзя было кликнуть, когда скрыто
+  
+  &.clicked {
+    opacity: 1;
+    transition: opacity 0.3s ease !important;
+    pointer-events: all;
+  }
+}
+
+.FilterItem {
+  margin-bottom: 30px;
+  color: var(--target-color);
+  letter-spacing: 1px;
+  font-weight: var(--font-shrift-weight) !important;
+  font-style: normal;
+  
+  label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-left: 6px;
+    
+    summary {
+      rotate: 180deg;
+      font-size: 80px;
+      right: 20px;
+      margin-bottom: 64px;
+      position: absolute;
+    }
+
+    &:hover summary {
+      rotate: 360deg;
+      right: 10px;
+      margin-bottom: -60px;
+    }
+  }
+}
+
+.FilterActions {
+  display: flex;
+  gap: 10px;
+  margin-top: -5px;
+  
+  button {
+    flex: 1;
+    padding: 12px 0 12px 0;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .ApplyBtn, .ResetBtn {
+    color: var(--target-color);
+    background: transparent;
+    text-align: center;
+  }
+}
