@@ -1,34 +1,41 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react'
 
 interface DualRangeSliderProps {
   min: number;
   max: number;
+  value: { min: number; max: number }; // Добавляем value проп
   onChange?: (min: number, max: number) => void;
 }
 
 export const DualRangeSlider: React.FC<DualRangeSliderProps> = ({ 
   min, 
   max, 
+  value,
   onChange 
 }) => {
-  const [minVal, setMinVal] = useState(min);
-  const [maxVal, setMaxVal] = useState(max);
+  const [minVal, setMinVal] = useState(value.min);
+  const [maxVal, setMaxVal] = useState(value.max);
+  
   const minRangeRef = useRef<HTMLInputElement>(null);
   const maxRangeRef = useRef<HTMLInputElement>(null);
   const rangeTrackRef = useRef<HTMLDivElement>(null);
 
+  // Синхронизируем внутреннее состояние с пропсом value
+  useEffect(() => {
+    setMinVal(value.min);
+    setMaxVal(value.max);
+  }, [value]);
+
+  // Обновляем позицию закрашенной области
   useEffect(() => {
     if (minRangeRef.current && maxRangeRef.current && rangeTrackRef.current) {
-      // Правильный расчет процентов на основе значений
       const minPercent = ((minVal - min) / (max - min)) * 100;
       const maxPercent = ((maxVal - min) / (max - min)) * 100;
       
-      // Учитываем ширину ползунков для точного позиционирования
-      const thumbWidth = 17; // ширина ползунка в пикселях
+      const thumbWidth = 17;
       const sliderWidth = rangeTrackRef.current.parentElement?.offsetWidth || 100;
       
-      // Корректировка процентов с учетом ширины ползунков
-      const thumbOffset = (thumbWidth / sliderWidth) * 0;
+      const thumbOffset = (thumbWidth / sliderWidth) * 7;
       
       const correctedMinPercent = Math.max(0, minPercent - thumbOffset);
       const correctedMaxPercent = Math.min(100, maxPercent + thumbOffset);
@@ -50,19 +57,8 @@ export const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
     onChange?.(minVal, value);
   };
 
-  // Форматирование годов для отображения
-  const formatYear = (year: number) => {
-    if (year === 2026) return 'н.в.';
-    return `${year}г.`;
-  };
-
   return (
     <div className="dual-range-slider" data-index="3">
-      {/* <div className="slider-values">
-        <span>{formatYear(minVal)}</span>
-        <span>{formatYear(maxVal)}</span>
-      </div> */}
-      
       <div className="slider-track"></div>
       <div ref={rangeTrackRef} className="slider-range"></div>
       

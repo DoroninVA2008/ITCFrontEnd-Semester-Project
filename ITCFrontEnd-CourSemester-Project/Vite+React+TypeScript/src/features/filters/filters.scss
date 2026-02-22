@@ -59,7 +59,6 @@
 }
 
 .FilterDropdown {
-  position: absolute;
   width: 405px; 
   background: rgba(94, 67, 16, 0.25);
   border-left: 2px solid var(--target-color);
@@ -69,18 +68,20 @@
   border-bottom-right-radius: 15px;
   padding: 15px;
   z-index: 2;
-  opacity: 0;
   transition: opacity 0.3s ease !important;
+  opacity: 0;
   pointer-events: none;
   max-height: 700px;
   overflow-y: auto;
 
+  &::-webkit-scrollbar-corner,
   &::-webkit-scrollbar {
+    background: var(--target-color);
     width: 8px;
   }
   
   &::-webkit-scrollbar-track {
-  background: rgba(94, 67, 16, 0.25);
+    background: var(--target-color);
     border-radius: 4px;
   }
   
@@ -98,6 +99,12 @@
     transition: opacity 0.3s ease !important;
     pointer-events: all;
   }
+
+  &.doublclicked {
+  transition: opacity 0.3s ease !important;
+  opacity: 0;
+  pointer-events: none;
+}
 }
 
 .FilterItem {
@@ -244,7 +251,7 @@
     position: absolute;
     width: 100%;
     height: 8px;
-    background: rgba(128, 90, 19); // Более светлый фон для трека
+    background: rgba(192, 145, 57); // Более светлый фон для трека
     border-radius: 6px;
     top: 50%;
     transform: translateY(-50%);
@@ -254,7 +261,7 @@
   .slider-range {
     position: absolute;
     height: 8px;
-    background: rgba(192, 145, 57, 1); // Основной цвет закрашенного участка
+    background: rgba(128, 90, 19); // Основной цвет закрашенного участка
     border-radius: 6px;
     top: 50%;
     transform: translateY(-50%);
