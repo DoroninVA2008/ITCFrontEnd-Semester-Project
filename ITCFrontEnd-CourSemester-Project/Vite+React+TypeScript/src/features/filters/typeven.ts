@@ -1,5 +1,18 @@
 import { EventType } from '../events/evenPositions.ts'
 
+type FilterOption = string;
+
+export interface FilterConfig {
+  name: string;
+  options: FilterOption[];
+}
+
+export interface HistoricalPeriod {
+  label: string;
+  startYear: number;
+  endYear: number;
+}
+
 export interface EventDates {
     id: number;
     title: string;
@@ -20,14 +33,14 @@ interface ApiResponse {
     objects: EventDates[];
 }
 
-const dates_api_url = 'https://155-212-132-55.sslip.io/api/objects/get-objects-list';
+const types_api_url = 'https://155-212-132-55.sslip.io/api/objects/get-objects-list';
 
 export async function fetchEvents(): Promise<EventDates[]> {
     try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-        const response = await fetch(dates_api_url, {
+        const response = await fetch(types_api_url, {
                 method: 'POST',
                 signal: controller.signal,
                 mode: 'cors',

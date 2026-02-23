@@ -71,7 +71,7 @@
   transition: opacity 0.3s ease !important;
   opacity: 0;
   pointer-events: none;
-  max-height: 700px;
+  max-height: 69vh; // 700px
   overflow-y: auto;
 
   &::-webkit-scrollbar-corner,
@@ -429,7 +429,7 @@ input[type="range"].dual-range {
       border-color: var(--target-color);
       background-color: transparent;
       
-      &::after {
+      &::after {// Галочка 
         content: '';
         position: absolute;
         left: 4px;

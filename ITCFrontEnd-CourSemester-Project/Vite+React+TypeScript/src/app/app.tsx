@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from './store.ts'
-import { Main } from '../pages/main'
+// import { Index } from '../pages/main/main.tsx'
+import { Main } from '../pages/main/index.tsx'
 import { Mapp } from '../pages/map/mapp.tsx'
 
 const rootElement = document.getElementById('root');

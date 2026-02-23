@@ -1,32 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { DualRangeSlider } from './sliders'
-import { fetchEvents, filterEventsByDateRange, EventDates } from './typedates'
-import './filters.scss'
-
-type FilterOption = string;
-
-interface FilterConfig {
-  name: string;
-  options: FilterOption[];
-}
-
-// Интерфейс для исторического периода с годами
-interface HistoricalPeriod {
-  label: string;
-  startYear: number;
-  endYear: number;
-}
+import { FilterConfig, HistoricalPeriod, EventDates, fetchEvents, filterEventsByDateRange } from './typeven'
+import './filter.scss'
 
 export const FilterButtonList: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [activeFilter, setActiveFilter] = useState<number | null>(null)
   const [selectedOptions, setSelectedOptions] = useState<{[key: string]: boolean}>({})
   const [periodRange, setPeriodRange] = useState({ min: 862, max: 2026 })
-  const [events, setEvents] = useState<EventDates[]>([])
+  const [events, setEvents] = useState<EventDates[]>([]) //@ts-ignore
   const [filteredEvents, setFilteredEvents] = useState<EventDates[]>([])
   
   const [minInputValue, setMinInputValue] = useState('862')
   const [maxInputValue, setMaxInputValue] = useState('2026')
+  
+  const [selectedPeriod, setSelectedPeriod] = useState<string | null>(null)
 
   const historicalPeriods: HistoricalPeriod[] = [
     { label: '862–988гг.', startYear: 862, endYear: 988 },
@@ -101,6 +89,15 @@ export const FilterButtonList: React.FC = () => {
     console.log(`Выбран период: от ${min} до ${max}`)
   }
 
+  // Обработчик для выбора периода (одиночный выбор)
+  const handlePeriodSelect = (periodLabel: string) => {
+    if (selectedPeriod === periodLabel) {
+      setSelectedPeriod(null) // снимаем выделение если кликнули на тот же
+    } else {
+      setSelectedPeriod(periodLabel) // выбираем новый период
+    }
+  }
+
   // Обработчики для текстовых инпутов
   const handleMinInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMinInputValue(e.target.value)
@@ -137,6 +134,13 @@ export const FilterButtonList: React.FC = () => {
     setPeriodRange({ min: period.startYear, max: period.endYear })
     // Опционально: автоматически закрыть выпадающий список
     // setActiveFilter(null)
+  }
+
+  // Функция для сброса всех фильтров
+  const handleResetFilters = () => {
+    setSelectedOptions({})
+    setSelectedPeriod(null)
+    setPeriodRange({ min: 862, max: 2026 })
   }
 
   return (
@@ -190,15 +194,13 @@ export const FilterButtonList: React.FC = () => {
                         value={periodRange}
                         onChange={handlePeriodChange}
                       />
-                      
                     </>
                   )}
                   
-                  {/* Для периода фильтруем кнопки */}
                   {index === 2 
                     ? historicalPeriods.map((period, optIndex) => {
                         const isInRange = isPeriodInRange(period)
-                        const isSelected = selectedOptions[period.label] || false
+                        const isSelected = selectedPeriod === period.label // Используем отдельное состояние для периода
                         
                         return (
                           <div
@@ -207,11 +209,8 @@ export const FilterButtonList: React.FC = () => {
                             onClick={(e) => {
                               e.stopPropagation()
                               if (isInRange) {
+                                handlePeriodSelect(period.label) // Используем обработчик для одиночного выбора
                                 handlePeriodClick(period)
-                                setSelectedOptions(prev => ({
-                                  ...prev,
-                                  [period.label]: !prev[period.label]
-                                }))
                               }
                             }}
                             style={{
@@ -223,15 +222,7 @@ export const FilterButtonList: React.FC = () => {
                             <input 
                               type="checkbox" 
                               checked={isSelected}
-                              onChange={(e) => {
-                                e.stopPropagation()
-                                if (isInRange) {
-                                  setSelectedOptions(prev => ({
-                                    ...prev,
-                                    [period.label]: e.target.checked
-                                  }))
-                                }
-                              }}
+                              onChange={() => {}} // Управляем через родительский div
                               onClick={(e) => e.stopPropagation()}
                               disabled={!isInRange}
                             />
@@ -273,7 +264,7 @@ export const FilterButtonList: React.FC = () => {
           
           <div className="FilterActions">
             <button className="ApplyBtn">Применить</button>
-            <button className="ResetBtn">Сбросить</button>
+            <button className="ResetBtn" onClick={handleResetFilters}>Сбросить</button>
           </div>
         </div>
       </div>

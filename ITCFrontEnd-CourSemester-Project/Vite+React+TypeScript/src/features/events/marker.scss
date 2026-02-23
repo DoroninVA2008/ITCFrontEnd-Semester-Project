@@ -1,0 +1,22 @@
+.leaflet-popup {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+}
+        .leaflet-popup-open .leaflet-popup {
+            opacity: 1;
+        }
+
+.leaflet-marker-icon {
+  	filter: brightness(1);
+	transition: all 0.3s ease;
+}
+
+.leaflet-marker-icon:hover {
+  	filter: brightness(0.8); 
+	transition: all 0.3s ease;
+}
+
+.leaflet-marker-icon:active {
+  	filter: brightness(0.6);
+	transition: all 0.3s ease;
+}

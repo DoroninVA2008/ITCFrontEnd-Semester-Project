@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react'
 interface DualRangeSliderProps {
   min: number;
   max: number;
-  value: { min: number; max: number }; // Добавляем value проп
+  value: { min: number; max: number };
   onChange?: (min: number, max: number) => void;
 }
 
@@ -20,13 +20,11 @@ export const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
   const maxRangeRef = useRef<HTMLInputElement>(null);
   const rangeTrackRef = useRef<HTMLDivElement>(null);
 
-  // Синхронизируем внутреннее состояние с пропсом value
   useEffect(() => {
     setMinVal(value.min);
     setMaxVal(value.max);
   }, [value]);
 
-  // Обновляем позицию закрашенной области
   useEffect(() => {
     if (minRangeRef.current && maxRangeRef.current && rangeTrackRef.current) {
       const minPercent = ((minVal - min) / (max - min)) * 100;
