@@ -1,9 +1,9 @@
 import React from 'react'
 import { MapContainer, TileLayer } from 'react-leaflet'
 import { LatLngBoundsExpression } from 'leaflet'
-import { CountryLabels } from './layers/layers.tsx'
-import { MarkerWithPopup } from './events/markers.tsx'
-import { FilterButtonList } from './filters/filters.tsx'// @ts-ignore
+import { CountryLabels } from '../layers/layers.tsx'
+import { MarkerWithPopup } from '../events/markers.tsx'
+import { FilterButtonList } from '../filters/filters.tsx'// @ts-ignore
 import './map.scss'
 
 const centmap: [number, number] = [68.751244, 98.618423];

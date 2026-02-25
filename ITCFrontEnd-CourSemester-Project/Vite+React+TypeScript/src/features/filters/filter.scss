@@ -192,7 +192,13 @@
     color: var(--target-color);
     background-color: transparent;
     border: 2px solid var(--target-color);
-    box-shadow: 0px 0px 10px 0px var(--shadow-color);
+    outline: none;
+
+    &:hover, &:focus {
+      border: 2px solid var(--target-color);
+      transition: color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0px 0px 10px 0px var(--shadow-color);
+    }
   }
 
   input[data-index="2"] {

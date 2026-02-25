@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { FilterDropdown } from './dropdown'
-import { EventDates, fetchEvents, filterEventsByDateRange } from './typeven'
+import { EventDates, fetchEvents, filterEventsByDateRange } from './typeven'//@ts-ignore
 import './filter.scss'
 
 export const FilterButtonList: React.FC = () => {
