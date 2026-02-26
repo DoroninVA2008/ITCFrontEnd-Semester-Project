@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { SuccessModal } from './contact';
+import { ContactModal } from './contact';
 import './modal.scss';
 
 interface SuggestEventModalProps {
@@ -29,14 +29,10 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
 
   const handleCloseSuccessModal = () => {
     setShowSuccessModal(false);
-    setZipFile(null);
-    setEventName('');
   };
 
   const handleCloseMainModal = () => {
     onClose();
-    setZipFile(null);
-    setEventName('');
   };
 
   const UploadIcon = (
@@ -206,7 +202,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
           </form>
         </div>
       </div>
-      <SuccessModal 
+      <ContactModal 
         isOpen={showSuccessModal}
         onClose={handleCloseSuccessModal}
         eventName={eventName}
