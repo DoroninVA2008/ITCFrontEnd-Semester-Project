@@ -5,12 +5,12 @@ import './filter.scss'
 
 export const FilterButtonList: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [periodRange, setPeriodRange] = useState({ min: 862, max: 2026 })
+  const [periodRange] = useState({ min: 862, max: 2026 })
   const [events, setEvents] = useState<EventDates[]>([]) //@ts-ignore
   const [filteredEvents, setFilteredEvents] = useState<EventDates[]>([])
   
-  const [minInputValue, setMinInputValue] = useState('862')
-  const [maxInputValue, setMaxInputValue] = useState('2026')
+  const [, setMinInputValue] = useState('862')
+  const [, setMaxInputValue] = useState('2026')
 
   useEffect(() => {
     loadEvents()

@@ -7,7 +7,9 @@ import './mobile.scss'
 export const Main: React.FC = () => {
   return (
     <div>
-      <Header />
+      <Header onOpenModal={function (): void {
+        throw new Error('Function not implemented.')
+      } } />
       <MainContentComponent />
     </div>
   );
