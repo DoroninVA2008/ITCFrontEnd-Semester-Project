@@ -6,7 +6,7 @@ interface SubDropdownBtnProps {
   isInRange: boolean
   onClick: () => void
   onCheckboxChange: () => void
-  disabled?: boolean
+  // disabled?: boolean
 }
 
 export const SubDropdownBtn: React.FC<SubDropdownBtnProps> = ({
@@ -15,20 +15,15 @@ export const SubDropdownBtn: React.FC<SubDropdownBtnProps> = ({
   isInRange,
   onClick,
   onCheckboxChange,
-  disabled = false
 }) => {
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation()
-    if (isInRange) {
-      onClick()
-    }
+    onClick() // Всегда вызываем, без проверок
   }
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation()
-    if (isInRange) {
-      onCheckboxChange()
-    }
+    onCheckboxChange() // Всегда вызываем, без проверок
   }
 
   const handleCheckboxClick = (e: React.MouseEvent) => {
@@ -38,19 +33,13 @@ export const SubDropdownBtn: React.FC<SubDropdownBtnProps> = ({
   const buttonClasses = [
     'SubDropdownBtn',
     isSelected ? 'selected' : '',
-    !isInRange ? 'out-of-range' : ''
+    !isInRange ? 'out-of-range' : '' // Только для визуала
   ].filter(Boolean).join(' ')
-
-  const buttonStyles = {
-    display: isInRange ? 'block' : 'none',
-    pointerEvents: isInRange ? 'auto' : 'none' as const
-  }
 
   return (
     <div
       className={buttonClasses}
-      onClick={handleClick} //@ts-ignore
-      style={buttonStyles}
+      onClick={handleClick}
     >
       <span>{label}</span>
       <input 
@@ -58,7 +47,7 @@ export const SubDropdownBtn: React.FC<SubDropdownBtnProps> = ({
         checked={isSelected}
         onChange={handleCheckboxChange}
         onClick={handleCheckboxClick}
-        disabled={disabled || !isInRange}
+        // disabled={!isInRange} // НЕ блокируем чекбокс
       />
     </div>
   )

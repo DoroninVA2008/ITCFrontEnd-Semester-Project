@@ -36,7 +36,7 @@ export const ActiveFilterDropdown: React.FC<ActiveFilterDropdownProps> = ({
     setMaxInputValue(formatYear(periodRange.max))
   }, [periodRange])
 
-  const isPeriodInRange = (period: HistoricalPeriod): boolean => {
+    const isPeriodInRange = (period: HistoricalPeriod): boolean => {
     return (period.startYear <= periodRange.max && period.endYear >= periodRange.min)
   }
 
@@ -69,18 +69,17 @@ export const ActiveFilterDropdown: React.FC<ActiveFilterDropdownProps> = ({
     return `${year}`
   }
 
-  const handlePeriodButtonClick = (period: HistoricalPeriod) => {
-    if (isPeriodInRange(period)) {
-      onPeriodSelect(period.label)
-      onPeriodClick(period)
-    }
+    const handlePeriodButtonClick = (period: HistoricalPeriod) => {
+    // Просто вызываем колбэки без проверки диапазона
+    onPeriodSelect(period.label)
+    onPeriodClick(period)
   }
 
   const handleOptionButtonClick = (option: string) => {
     onOptionToggle(option)
   }
 
-  return (
+    return (
     <div className="FilterSubDropdown">
       {filterIndex === 2 && (
         <>
@@ -113,7 +112,7 @@ export const ActiveFilterDropdown: React.FC<ActiveFilterDropdownProps> = ({
       
       {filterIndex === 2 
         ? historicalPeriods.map((period, optIndex) => {
-            const isInRange = isPeriodInRange(period)
+            const isInRange = isPeriodInRange(period) // Только для визуала!
             const isSelected = selectedPeriod === period.label
             
             return (
@@ -121,10 +120,9 @@ export const ActiveFilterDropdown: React.FC<ActiveFilterDropdownProps> = ({
                 key={optIndex}
                 label={period.label}
                 isSelected={isSelected}
-                isInRange={isInRange}
-                onClick={() => handlePeriodButtonClick(period)}
-                onCheckboxChange={() => handlePeriodButtonClick(period)}
-                disabled={!isInRange}
+                isInRange={isInRange} // Передаем ТОЛЬКО для стилей
+                onClick={() => handlePeriodButtonClick(period)} // Клик всегда работает
+                onCheckboxChange={() => handlePeriodButtonClick(period)} // Чекбокс всегда работает
               />
             )
           })
@@ -133,7 +131,7 @@ export const ActiveFilterDropdown: React.FC<ActiveFilterDropdownProps> = ({
               key={optIndex}
               label={option}
               isSelected={selectedOptions[option] || false}
-              isInRange={true}
+              isInRange={true} // Для обычных опций всегда true
               onClick={() => handleOptionButtonClick(option)}
               onCheckboxChange={() => handleOptionButtonClick(option)}
             />
