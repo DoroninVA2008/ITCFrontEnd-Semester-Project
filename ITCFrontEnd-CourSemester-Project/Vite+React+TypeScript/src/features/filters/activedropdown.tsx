@@ -70,7 +70,6 @@ export const ActiveFilterDropdown: React.FC<ActiveFilterDropdownProps> = ({
   }
 
     const handlePeriodButtonClick = (period: HistoricalPeriod) => {
-    // Просто вызываем колбэки без проверки диапазона
     onPeriodSelect(period.label)
     onPeriodClick(period)
   }

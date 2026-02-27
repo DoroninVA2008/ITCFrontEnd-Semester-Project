@@ -125,11 +125,8 @@ class EventsDataService {
         }
     }
 
-
-    // Добавляем метод для загрузки резервных данных
     private async loadBackupData(): Promise<void> {
-        try {
-            // Пробуем загрузить из локального файла как запасной вариант
+        try {// Пробуем загрузить из локального файла как запасной вариант
             const backupResponse = await fetch('./src/features/events/evenlists.json');
             if (backupResponse.ok) {
                 const backupData = await backupResponse.json();

@@ -26,6 +26,8 @@
   font-weight: var(--font-shrift-weight) !important;
   font-style: normal;
   font-size: 18px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   padding: 15px 300px 15px 20px; // большой правый отступ для списка
   letter-spacing: 1px;
   cursor: pointer;
@@ -142,10 +144,11 @@
     padding: 12px 0 12px 0;
     border-radius: 15px;
     cursor: pointer;
-    font-size: 14px;
   }
   
   .ApplyBtn, .ResetBtn {
+    backdrop-filter: blur(0);
+    -webkit-backdrop-filter: blur(0);
     color: var(--target-color);
     background: transparent;
     text-align: center;
@@ -245,7 +248,7 @@
 .dual-range-slider {
   position: relative;
   width: 100%;
-  margin: 30px 0 20px 0;
+  margin: 10px 0 10px 0;
   .slider-track {
     position: absolute;
     width: 100%;

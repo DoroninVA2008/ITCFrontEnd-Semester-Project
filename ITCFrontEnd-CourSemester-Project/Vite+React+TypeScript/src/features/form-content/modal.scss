@@ -333,7 +333,7 @@ border-style: dashed;
     margin-top: 20px;
   }
 
-  &:hover {
+  &.with-background, &.with-background:active {
     transition: all 0.3s ease;
     color: rgb(250, 250, 250);
     background-color: rgb(192, 145, 57);

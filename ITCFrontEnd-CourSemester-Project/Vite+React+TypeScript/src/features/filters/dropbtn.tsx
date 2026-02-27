@@ -16,8 +16,7 @@ export const SubDropdownBtn: React.FC<SubDropdownBtnProps> = ({
   onClick,
   onCheckboxChange,
 }) => {
-  const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation()
+  const handleClick = () => {
     onClick() // Всегда вызываем, без проверок
   }
 

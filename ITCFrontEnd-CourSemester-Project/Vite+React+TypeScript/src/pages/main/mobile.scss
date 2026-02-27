@@ -94,9 +94,9 @@
     height: 200px !important
   }
 
-  header img {
-    margin-left: 140px !important
-  }
+  // header img {
+  //   margin-left: 140px !important
+  // }
 
   header button {
     top: 120px;
@@ -136,9 +136,9 @@
     position: absolute !important
   }
 
-  header img {
-    margin-left: 120px !important
-  }
+  // header img {
+  //   margin-left: 120px !important
+  // }
 
   .RussianText {
     margin-left: -40px;
@@ -167,9 +167,9 @@
 }
 
 @media screen and (max-width: 1040px) {
-  header img {
-    margin-left: 110px !important
-  }
+  // header img {
+  //   margin-left: 110px !important
+  // }
 
   .RussianText {
     margin-left: -48px;
@@ -209,9 +209,9 @@
 }
 
 @media screen and (max-width: 980px) {
-  header img {
-    margin-left: 100px !important
-  }
+  // header img {
+  //   margin-left: 100px !important
+  // }
 
   .RussianText {
     margin-left: -56px;
@@ -240,9 +240,9 @@
 }
 
 @media screen and (max-width: 940px) {
-  header img {
-    margin-left: 90px !important
-  }
+  // header img {
+  //   margin-left: 90px !important
+  // }
 
   .RussianText {
     margin-left: -56px;
@@ -271,9 +271,9 @@
 }
 
 @media screen and (max-width: 880px) {
-  header img {
-    margin-left: 80px !important
-  }
+  // header img {
+  //   margin-left: 80px !important
+  // }
 
   header button {
     padding: 11px 16px 11px 16px !important;
@@ -309,9 +309,9 @@
 }
 
 @media screen and (max-width: 840px) {
-  header img {
-    margin-left: 70px !important
-  }
+  // header img {
+  //   margin-left: 70px !important
+  // }
 
   header button {
     padding: 12px 14px 12px 14px !important;
@@ -348,9 +348,9 @@
 }
 
 @media screen and (max-width: 800px) {
-  header img {
-    margin-left: 60px !important
-  }
+  // header img {
+  //   margin-left: 60px !important
+  // }
 
   .RussianText {
     margin-left: -74px;
@@ -397,9 +397,9 @@
     height: 180px !important
   }
 
-  header img {
-    margin-left: 50px !important
-  }
+  // header img {
+  //   margin-left: 50px !important
+  // }
 
   .RussianText {
     margin-left: -78px;
@@ -448,9 +448,9 @@
     height: 170px !important
   }
 
-  header img {
-    margin-left: 40px !important
-  }
+  // header img {
+  //   margin-left: 40px !important
+  // }
 
   .RussianText {
     margin-left: -82px;
@@ -488,9 +488,9 @@
     height: 160px !important
   }
 
-  header img {
-    margin-left: 30px !important
-  }
+  // header img {
+  //   margin-left: 30px !important
+  // }
 
   header h1 {
     max-width: 540px;
@@ -537,9 +537,9 @@
 }
 
 @media screen and (max-width: 680px) {
-  header img {
-    margin-left: 30px !important
-  }
+  // header img {
+  //   margin-left: 30px !important
+  // }
 
   header h1 {
     max-width: 540px;
@@ -620,6 +620,9 @@
 }
 
 @media screen and (max-width: 540px) {
+  header a {
+    margin-left: 100px !important
+  }
   header button {
     justify-content: center;
     right: 152px !important;
@@ -714,7 +717,7 @@
   }
 
   header img {
-    margin-left: 200px !important
+    margin-left:90px !important
   }
 
   header h1 {
@@ -774,7 +777,7 @@
   }
 
   header img {
-    margin-left: 180px !important
+    margin-left: 70px !important
   }
 
   header h1 {
@@ -825,7 +828,7 @@
   }
 
   header img {
-    margin-left: 168px !important
+    margin-left: 60px !important
   }
 
   header h1 {
@@ -906,7 +909,7 @@
 }
 
 @media screen and (max-width: 350px) {header button {right: 80px !important}
-header img {margin-left: 146px !important}
+header img {margin-left: 46px !important}
 header h1 {margin-left: 80px !important}}
 
 @media screen and (max-width: 340px) {header button {right: 70px !important}
@@ -920,7 +923,7 @@ header h1 {margin-left: 70px !important}}
   }
 
   header img {
-    margin-left: 126px !important
+    margin-left: 26px !important
   }
 
   header h1 {
@@ -963,8 +966,8 @@ header h1 {margin-left: 70px !important}}
 }
 
 @media screen and (max-width: 280px) {header button {right: 46px !important}
-header img {margin-left: 114px !important}
+header img {margin-left: 14px !important}
 header h1 {margin-left: 50px !important}}
 
 @media screen and (max-width: 260px) {header h1 {margin-left: 50px !important}
-header img {margin-left: 104px !important}}
+header img {margin-left: 4px !important}}

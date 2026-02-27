@@ -8,7 +8,6 @@ export const FilterButtonList: React.FC = () => {
   const [periodRange] = useState({ min: 862, max: 2026 })
   const [events, setEvents] = useState<EventDates[]>([]) //@ts-ignore
   const [filteredEvents, setFilteredEvents] = useState<EventDates[]>([])
-  
   const [, setMinInputValue] = useState('862')
   const [, setMaxInputValue] = useState('2026')
 
