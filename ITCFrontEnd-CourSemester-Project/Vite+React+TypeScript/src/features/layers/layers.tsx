@@ -89,7 +89,7 @@ export const CountryLabels: React.FC = () => {
         isDataLoadedRef.current = true;
       })
       .catch(error => {
-        console.error('Ошибка загрузки GeoJSON:', error);
+        console.error('Ошибка загрузки GeoJSon:', error);
       });
     
     return () => {
