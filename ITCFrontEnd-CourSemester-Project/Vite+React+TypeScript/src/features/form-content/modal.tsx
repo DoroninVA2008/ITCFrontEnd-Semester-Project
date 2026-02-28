@@ -246,7 +246,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
         </div>
       </div>
       <ContactModal
-  isOpen={showSuccessModal && !isFileDeleted} // отключено, если удален файл
+  isOpen={showSuccessModal} // отключено, если удален файл && !isFileDeleted
   onClose={handleCloseSuccessModal}
   eventName={eventName}
 />

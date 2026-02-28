@@ -3,11 +3,15 @@ import { EventType } from '../events/evenPositions.ts'
 type FilterOption = string;
 
 export interface FilterConfig {
-  name: string;
-  options: FilterOption[];
+  id: string;
+  label: string;
+  type: 'period' | 'options'; // Например, 'period' для слайдера, 'options' для типов событий
+  // Дополнительные свойства, если нужны, например, для option-фильтров
+  options?: { label: string; value: string | number }[];
 }
 
 export interface HistoricalPeriod {
+  id: string;
   label: string;
   startYear: number;
   endYear: number;

@@ -1,3 +1,5 @@
+import { watchFetchData } from '../../app/saga/saga'
+
 export enum EventType {
     Battle = 1,
     Tragedy = 2

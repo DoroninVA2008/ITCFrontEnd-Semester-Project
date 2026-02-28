@@ -14,6 +14,7 @@ interface ActiveFilterDropdownProps {
   onPeriodSelect: (periodLabel: string) => void
   onPeriodClick: (period: HistoricalPeriod) => void
   onOptionToggle: (option: string) => void
+  onFilterType?: (type: number | null) => void
 }
 
 export const ActiveFilterDropdown: React.FC<ActiveFilterDropdownProps> = ({

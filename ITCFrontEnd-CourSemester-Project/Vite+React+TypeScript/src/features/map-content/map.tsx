@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { MapContainer, TileLayer } from 'react-leaflet'
 import { CountryLabels } from '../layers/layers.tsx'
 import { MarkerWithPopup } from '../events/markers.tsx'
-import { FilterButtonList } from '../filters/filters.tsx' // обновленный импорт
+import { FilterButtonList } from '../filters/filters.tsx'
 import './map.scss'
 
 const centmap: [number, number] = [68.751244, 98.618423]
@@ -14,14 +14,25 @@ const TiLayer = 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.
 
 export const Map: React.FC = () => {
   const [activeEventId, setActiveEventId] = useState<number | null>(null)
+  const [filteredEventTypes, setFilteredEventTypes] = useState<number[]>([])
 
   const handleSelectEvent = (id: number | null) => {
     setActiveEventId(id)
   }
 
+  const handleFilterByType = (type: number | null) => {
+    if (type === null) {
+      setFilteredEventTypes([])
+    } else if (filteredEventTypes.includes(type)) {
+      setFilteredEventTypes(prev => prev.filter(t => t !== type))
+    } else {
+      setFilteredEventTypes(prev => [...prev, type])
+    }
+  }
+
   return (
     <div id="map-wrapper">
-      <FilterButtonList onSelectEvent={handleSelectEvent} />
+      <FilterButtonList onSelectEvent={handleSelectEvent} onFilterType={handleFilterByType} />
       <MapContainer
         id="map"
         center={centmap}
@@ -34,8 +45,10 @@ export const Map: React.FC = () => {
       >
         <TileLayer url={TiLayer} noWrap={false} opacity={0} />
         <CountryLabels />
-        {/* Передача активного id */}
-        <MarkerWithPopup activeEventId={activeEventId} />
+        <MarkerWithPopup
+          activeEventId={activeEventId}
+          filteredEventTypes={filteredEventTypes}
+        />
       </MapContainer>
     </div>
   )
