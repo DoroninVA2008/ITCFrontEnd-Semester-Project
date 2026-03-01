@@ -126,7 +126,7 @@ export const ActiveFilterDropdown: React.FC<ActiveFilterDropdownProps> = ({
               />
             )
           })
-        : filter.options.map((option, optIndex) => (
+        : filter.options.map((option: string, optIndex: React.Key | null | undefined) => (
             <SubDropdownBtn
               key={optIndex}
               label={option}

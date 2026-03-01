@@ -32,7 +32,9 @@ export const Map: React.FC = () => {
 
   return (
     <div id="map-wrapper">
-      <FilterButtonList onSelectEvent={handleSelectEvent} onFilterType={handleFilterByType} />
+      <FilterButtonList //@ts-ignore
+      onSelectEvent={handleSelectEvent} 
+      onFilterType={handleFilterByType} />
       <MapContainer
         id="map"
         center={centmap}
@@ -45,7 +47,7 @@ export const Map: React.FC = () => {
       >
         <TileLayer url={TiLayer} noWrap={false} opacity={0} />
         <CountryLabels />
-        <MarkerWithPopup
+        <MarkerWithPopup //@ts-ignore
           activeEventId={activeEventId}
           filteredEventTypes={filteredEventTypes}
         />

@@ -1,4 +1,4 @@
-import { watchFetchData } from '../../app/saga/saga'
+// import { watchFetchData } from '../../app/saga/saga'
 
 export enum EventType {
     Battle = 1,

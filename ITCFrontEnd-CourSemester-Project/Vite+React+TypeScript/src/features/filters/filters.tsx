@@ -52,8 +52,8 @@ export const FilterButtonList: React.FC = () => {
           Фильтры
         </button>
         <FilterDropdown 
-          isOpen={isOpen} 
-          onClose={() => setIsOpen(false)} 
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)} label={''} 
         />
       </div>
     </div>

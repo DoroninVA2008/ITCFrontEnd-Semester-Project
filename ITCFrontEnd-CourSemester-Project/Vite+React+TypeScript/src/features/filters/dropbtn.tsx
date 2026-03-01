@@ -1,12 +1,12 @@
 import React from 'react'
 
 interface SubDropdownBtnProps {
-  label: string
-  isSelected: boolean
-  isInRange: boolean
-  onClick: () => void
-  onCheckboxChange: () => void
-  // disabled?: boolean
+  label: string;
+  isSelected: boolean;
+  isInRange: boolean;
+  onClick: () => void;
+  onCheckboxChange: () => void;
+  // disabled?: boolean;
 }
 
 export const SubDropdownBtn: React.FC<SubDropdownBtnProps> = ({

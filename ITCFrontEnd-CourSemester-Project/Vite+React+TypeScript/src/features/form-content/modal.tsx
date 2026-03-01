@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { ContactModal } from './contact'
+import { ContactModal } from './contac'
 import './modal.scss'
 
 interface SuggestEventModalProps {
@@ -12,13 +12,12 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
   const [isDragging, setIsDragging] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [eventName, setEventName] = useState('')
-  const [isFileDeleted, setIsFileDeleted] = useState(false);
+  const [, setIsFileDeleted] = useState(false);
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [description, setDescription] = useState('');
   const [eventType, setEventType] = useState<string | null>(null);
   const [isFormValid, setIsFormValid] = useState(false);
-
   const formRef = useRef<HTMLFormElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -34,9 +33,9 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
   const handleEventTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEventType(e.target.value);
   };
-  const handleCloseContactModal = () => {
-  setShowSuccessModal(false);
-  };
+  // const handleCloseContactModal = () => {
+  // setShowSuccessModal(false);
+  // };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setZipFile(e.target.files[0]);
@@ -147,7 +146,6 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                 />
               </div>
             </div>
-
             <div className="form-group">
               <label htmlFor="description">Описание события</label>
               <textarea
@@ -236,20 +234,29 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                 </a>
               </p>
             )}
-            <button
-              type="submit"
-              className={`submit-btn final-submit-btn ${isFormValid ? 'with-background' : ''}`}
-            >
-              Далее
-            </button>
+              <button
+                type="submit"
+                className={`submit-btn final-submit-btn ${
+                  isFormValid ? 'with-background' : ''
+                }`}
+                onClick={() => {
+                  // if (onSuccess) onSuccess()
+                }}
+                disabled={!isFormValid}
+              >
+                Далее
+              </button>
           </form>
         </div>
       </div>
       <ContactModal
-  isOpen={showSuccessModal} // отключено, если удален файл && !isFileDeleted
-  onClose={handleCloseSuccessModal}
-  eventName={eventName}
-/>
+        isOpen={showSuccessModal} // отключено, если удален файл && !isFileDeleted
+        onClose={handleCloseSuccessModal}
+        eventName={eventName}
+        onSuccess={() => {
+        // setIsSecondOpen(true);
+        }}
+      />
     </>
   )
 }

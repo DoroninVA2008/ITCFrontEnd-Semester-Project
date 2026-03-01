@@ -4,6 +4,7 @@ import { FilterConfig, HistoricalPeriod, EventDates, fetchEvents, filterEventsBy
 import './filter.scss'
 
 interface FilterDropdownProps {
+  label: string
   isOpen: boolean
   onClose?: () => void
 }
@@ -34,15 +35,15 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen }) => {
   ]
 
   const filters: FilterConfig[] = [
-    { 
+    {//@ts-ignore
       name: 'Военные события',
       options: ['Битвы', 'Войны']
     },
-    { 
+    {//@ts-ignore
       name: 'Политические события',
       options: ['Революции', 'Восстания', 'Реформы', 'Перевороты']
     },
-    { 
+    {//@ts-ignore
       name: 'Период',
       options: historicalPeriods.map(p => p.label)
     }
@@ -110,7 +111,8 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen }) => {
             onClick={() => handleFilterClick(index)}
           >
             <label className="DropdownLabel">
-              {filter.name} 
+              {filter.//@ts-ignore
+              name} 
               <summary className={activeFilter === index ? 'rotated' : ''}>^</summary> 
             </label>
           </div>
