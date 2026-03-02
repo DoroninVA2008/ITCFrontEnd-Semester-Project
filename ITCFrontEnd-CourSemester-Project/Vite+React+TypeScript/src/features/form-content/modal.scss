@@ -38,6 +38,43 @@ $font-weight: 100;
     visibility: hidden !important;
     transition: opacity 0.3s ease, visibility 0.3s ease !important;
   }
+
+  &.submitted {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.modal-overlay1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1002;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  
+  &.open {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  &.close {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: opacity 0.3s ease, visibility 0.3s ease !important;
+  }
+
+  &.submitted {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 .modal-content {
@@ -47,7 +84,7 @@ $font-weight: 100;
   padding: 40px;
   width: 100%;
   max-width: 600px;
-  height: auto;
+  height: auto; // 800px
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   position: relative;
   font-family: $font-family;

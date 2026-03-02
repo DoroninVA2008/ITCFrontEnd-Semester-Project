@@ -63,7 +63,34 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
     console.log('Форма отправлена', nameVal)
     onClose()
     setTimeout(() => setShowSuccessModal(true), 300)
-  }
+
+  // Создаем FormData чтобы отправить файл + JSON
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('date', date);
+    formData.append('description', description);
+    formData.append('eventType', eventType!); // ! потому что валидность гарантирована
+
+    if (zipFile) {
+      formData.append('file', zipFile);
+    }
+
+    fetch('https://155-212-132-55.sslip.io/api/requests/create-request', {
+      method: 'POST',
+      body: formData,
+      // Не задаем headers Content-Type, он автоматически подстроится под formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log('Чё-то в консоли:', data);
+      setEventName(name); // сохраняем для отображения или дальнейших действий
+      onClose();
+      setTimeout(() => setShowSuccessModal(true), 300);
+    })
+    .catch((err) => {
+      console.error('Ошибка:', err);
+    });
+  };
 
   const handleCloseSuccessModal = () => {
     setShowSuccessModal(false)

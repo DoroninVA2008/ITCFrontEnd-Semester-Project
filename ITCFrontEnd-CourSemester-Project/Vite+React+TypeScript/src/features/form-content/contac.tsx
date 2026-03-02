@@ -106,7 +106,6 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, eve
           </div>
         </div>
       </div>
-      
       <SuccessModal
         isOpen={isSuccessModalOpen}
         onClose={handleSuccessClose}
