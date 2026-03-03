@@ -7,6 +7,10 @@ interface SuggestEventModalProps {
   onClose: () => void
 }
 
+interface ApiResponse {
+  message: string;
+}
+
 export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, onClose }) => {
   const [zipFile, setZipFile] = useState<File | null>(null)
   const [isDragging, setIsDragging] = useState(false)
@@ -75,21 +79,39 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
       formData.append('file', zipFile);
     }
 
-    fetch('https://155-212-132-55.sslip.io/api/requests/create-request', {
+    const formAPI = 'https://155-212-132-55.sslip.io/api/requests/create-request';
+
+    fetch(formAPI, {
       method: 'POST',
       body: formData,
       // Не задаем headers Content-Type, он автоматически подстроится под formData
     })
-    .then(res => res.json())
-    .then(data => {
-      console.log('Чё-то в консоли:', data);
-      setEventName(name); // сохраняем для отображения или дальнейших действий
-      onClose();
-      setTimeout(() => setShowSuccessModal(true), 300);
-    })
-    .catch((err) => {
-      console.error('Ошибка:', err);
-    });
+    // modal.tsx (фрагмент с улучшенной обработкой ответа)
+.then(res => {
+  if (!res.ok) {
+    // Если сервер вернул ошибку (например, 400 или 500), пробрасываем её
+    throw new Error(`HTTP error! status: ${res.status}`);
+  }
+  return res.json();
+})
+.then(data => {
+  console.log('Ответ от сервера:', data);
+  // Проверяем, что ответ именно такой, как вы ожидаете
+  if (data.message === 'success') {
+    setEventName(name);
+    onClose();
+    setTimeout(() => setShowSuccessModal(true), 300);
+  } else {
+    // Обработка неожиданного ответа
+    console.error('Неожиданный формат ответа:', data);
+    // Здесь можно показать пользователю сообщение об ошибке
+  }
+})
+.catch((err) => {
+  console.error('Ошибка при отправке:', err);
+  // Обязательно покажите пользователю уведомление об ошибке!
+  // Например, через всплывающее окно или изменение состояния компонента.
+});
   };
 
   const handleCloseSuccessModal = () => {
