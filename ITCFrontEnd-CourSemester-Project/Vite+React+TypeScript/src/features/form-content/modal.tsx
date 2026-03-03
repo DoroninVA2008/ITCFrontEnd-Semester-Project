@@ -5,11 +5,12 @@ import './modal.scss'
 interface SuggestEventModalProps {
   isOpen: boolean
   onClose: () => void
+  onReset?: () => void
 }
 
-interface ApiResponse {
-  message: string;
-}
+// interface ApiResponse {
+//   message: string;
+// }
 
 export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, onClose }) => {
   const [zipFile, setZipFile] = useState<File | null>(null)
@@ -81,10 +82,16 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
 
     const formAPI = 'https://155-212-132-55.sslip.io/api/requests/create-request';
 
+for (let pair of formData.entries()) {
+  console.log(pair[0]+ ': ' + pair[1]);
+}
+
     fetch(formAPI, {
       method: 'POST',
       body: formData,
-      // Не задаем headers Content-Type, он автоматически подстроится под formData
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
     // modal.tsx (фрагмент с улучшенной обработкой ответа)
 .then(res => {
