@@ -21,6 +21,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [description, setDescription] = useState('');
+  const [eventDate, setEventDate] = useState<string | null>(null);
   const [eventType, setEventType] = useState<string | null>(null);
   const [isFormValid, setIsFormValid] = useState(false);
   const formRef = useRef<HTMLFormElement>(null)

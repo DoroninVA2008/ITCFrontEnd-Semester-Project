@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { MapContainer, TileLayer } from 'react-leaflet'
+import { useMapContext } from './MapContext'
 import { CountryLabels } from '../layers/layers.tsx'
 import { MarkerWithPopup } from '../events/markers.tsx'
 import { FilterButtonList } from '../filters/filters.tsx'
@@ -33,8 +34,8 @@ export const Map: React.FC = () => {
   return (
     <div id="map-wrapper">
       <FilterButtonList //@ts-ignore
-      onSelectEvent={handleSelectEvent} 
-      onFilterType={handleFilterByType} />
+        onSelectEvent={handleSelectEvent} 
+        onFilterType={handleFilterByType} />
       <MapContainer
         id="map"
         center={centmap}
