@@ -38,7 +38,28 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, eve
   }, [email, telegram])
 
   const handleSend = () => {
-    // Сначала закрываем текущую модалку
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('telegramUsername', telegram);
+
+  fetch('https://155-212-132-55.sslip.io/api/requests/create-request', {
+    method: 'POST',
+    body: formData,
+  })
+  .then(res => {
+    if (res.ok) {
+      return res.json();
+    }
+    throw new Error(`HTTP error! status: ${res.status}`);
+  })
+  .then(data => {
+    if (data.message === 'success') {
+      // Успешная отправка — можно показать модалку или сообщение
+    }
+  })
+  .catch(err => {
+    console.error('Ошибка при отправке:', err);
+  });
     handleClose();
     
     // Через небольшую задержку открываем SuccessModal
@@ -79,6 +100,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, eve
               name="email"
               placeholder="имя@mail.com"
               ref={emailRef}
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -91,6 +113,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, eve
               name="tg"
               placeholder="@имя пользователя"
               ref={tgRef}
+              value={telegram}
               onChange={(e) => setTelegram(e.target.value)}
               required
             />

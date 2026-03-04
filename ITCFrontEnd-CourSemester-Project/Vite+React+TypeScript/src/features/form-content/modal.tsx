@@ -82,44 +82,37 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
 
     const formAPI = 'https://155-212-132-55.sslip.io/api/requests/create-request';
 
-for (let pair of formData.entries()) {
-  console.log(pair[0]+ ': ' + pair[1]);
-}
+    for (let pair of formData.entries()) {
+      console.log(pair[0]+ ': ' + pair[1])
+    }
 
     fetch(formAPI, {
       method: 'POST',
       body: formData,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      // headers: {
+      //   'Content-Type': 'application/json',
+      // },
     })
-    // modal.tsx (фрагмент с улучшенной обработкой ответа)
-.then(res => {
-  if (!res.ok) {
-    // Если сервер вернул ошибку (например, 400 или 500), пробрасываем её
-    throw new Error(`HTTP error! status: ${res.status}`);
-  }
-  return res.json();
-})
-.then(data => {
-  console.log('Ответ от сервера:', data);
-  // Проверяем, что ответ именно такой, как вы ожидаете
-  if (data.message === 'success') {
-    setEventName(name);
-    onClose();
-    setTimeout(() => setShowSuccessModal(true), 300);
-  } else {
-    // Обработка неожиданного ответа
-    console.error('Неожиданный формат ответа:', data);
-    // Здесь можно показать пользователю сообщение об ошибке
-  }
-})
-.catch((err) => {
-  console.error('Ошибка при отправке:', err);
-  // Обязательно покажите пользователю уведомление об ошибке!
-  // Например, через всплывающее окно или изменение состояния компонента.
-});
-  };
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      return res.json();
+    })
+    .then(data => {
+      console.log('Ответ от сервера:', data);
+      if (data.message === 'success') {
+        setEventName(name);
+        onClose();
+        setTimeout(() => setShowSuccessModal(true), 300);
+      } else {
+        console.error('Неожиданный формат ответа:', data);
+      }
+    })
+    .catch((err) => {
+      console.error('Ошибка при отправке:', err);
+    });
+}
 
   const handleCloseSuccessModal = () => {
     setShowSuccessModal(false)
@@ -258,9 +251,7 @@ for (let pair of formData.entries()) {
                   id="file-upload-input"
                   name="zipUpload"
                   accept=".zip"
-                  onChange={(e) => {
-                    handleFileChange(e);
-                  }}
+                  onChange={handleFileChange}
                   ref={fileInputRef}
                   style={{ display: 'none' }}
                   required
