@@ -18,7 +18,7 @@ $font-weight: 100;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.75);
-  display: flex;
+  display: grid;
   justify-content: center;
   align-items: center;
   z-index: 1002;
@@ -92,6 +92,7 @@ $font-weight: 100;
   box-sizing: border-box;
   opacity: 0;
   animation: padeOut 0.5s ease forwards;
+  display: grid;
   
   .open & {
     opacity: 1;
@@ -111,11 +112,11 @@ $font-weight: 100;
 
 .modal-close {
   position: absolute;
-  top: 40px;
+  top: 38px;
   right: 40px;
   background: none;
   border: none;
-  font-size: 36px;
+  font-size: 28px;
   cursor: pointer;
   color: $text-color;
   width: 30px;
@@ -145,7 +146,7 @@ $font-weight: 100;
 
 .modal-description {
   font-size: 16px;
-  max-width: 424px;
+  max-width: 438px;
   font-weight: $font-weight;
   color: $text-color; // Чуть светлее, чем основной текст
   line-height: 1.5;
@@ -154,7 +155,7 @@ $font-weight: 100;
 
 .modal-descriptions {
   font-size: 16px;
-  max-width: 540px;
+  max-width: 560px;
   font-weight: $font-weight;
   color: $text-color;
   margin-bottom: 30px;
@@ -163,11 +164,11 @@ $font-weight: 100;
 }
 
 .modal-description1 {
-  margin-top: 30px
+  margin-top: 20px
 }
 
 .modal-description2 {
-  margin-top: 46px
+  margin-top: 20px
 }
 
 .modal-description3 {
@@ -382,6 +383,12 @@ border-style: dashed;
     word-break: break-all}
 
     .uploaded-file-name a {
+    // max-width: calc(100% - 100px);
+    // white-space: nowrap;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // display: inline-block;
+    // vertical-align: middle;
       position: relative;
       left: 12px;
       top: -4px}
@@ -445,6 +452,10 @@ border-style: dashed;
   font-family: "Cruinn";
 }
 
+#email, #tg {
+  margin-top: 6px;
+}
+
 #email,
 #tg,
 textarea {
@@ -458,7 +469,6 @@ textarea {
   border-radius: 10px;
   color: $text-color;
   font-size: 16px;
-  margin-top: 6px;
   outline: none;
   transition: all 0.3s ease;
   resize: none;
@@ -480,6 +490,6 @@ textarea {
   margin-bottom: 20px;}
 
 #GEMail {
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
     }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { MapContainer, TileLayer } from 'react-leaflet'
-import { useMapContext } from './MapContext'
+// import { useMapContext } from './MapContext'
 import { CountryLabels } from '../layers/layers.tsx'
 import { MarkerWithPopup } from '../events/markers.tsx'
 import { FilterButtonList } from '../filters/filters.tsx'
