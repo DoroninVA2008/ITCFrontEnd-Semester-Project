@@ -1,14 +1,17 @@
 import React from 'react'
 import { Butoapp } from '../features/main-content/butoapp'
-import { Butoform, HeaderProps } from '../features/main-content/butoform'
+import { Buterm } from '../features/main-content/buterm'
+import { Butoform } from '../features/main-content/butoform'
+
+export interface HeaderProps {
+  onOpenModal: () => void
+}
 
 export const Header: React.FC<HeaderProps> = ({ onOpenModal }) => {
   return(
     <header>
       <Butoapp />
-      <h1>
-        Россия - страна Героев
-      </h1>
+      <Buterm />
       <Butoform onOpenModal={onOpenModal} />
     </header>
   );

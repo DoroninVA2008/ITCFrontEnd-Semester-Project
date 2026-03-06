@@ -8,21 +8,15 @@ interface SuggestEventModalProps {
   onReset?: () => void
 }
 
-// interface ApiResponse {
-//   message: string;
-// }
-
 export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, onClose }) => {
   const [zipFile, setZipFile] = useState<File | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [eventName, setEventName] = useState('')
   const [eventPayload, setEventPayload] = useState<ContactEventPayload | null>(null)
-  const [, setIsFileDeleted] = useState(false);
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [description, setDescription] = useState('');
-  // const [eventDate, setEventDate] = useState<string | null>(null);
   const [eventType, setEventType] = useState<string | null>(null);
   const [isFormValid, setIsFormValid] = useState(false);
   const formRef = useRef<HTMLFormElement>(null)
@@ -32,18 +26,19 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
+  
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDate(e.target.value);
   };
+  
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(e.target.value);
   };
+  
   const handleEventTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEventType(e.target.value);
   };
-  // const handleCloseContactModal = () => {
-  // setShowSuccessModal(false);
-  // };
+  
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setZipFile(e.target.files[0]);
@@ -64,7 +59,14 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    if (!isFormValid) {
+      alert('Заполните все поля, и добавьте файл.');
+      return;
+    }
+    
     if (!formRef.current) return
+    
     const form = formRef.current
     const nameVal = (form.elements.namedItem('name') as HTMLInputElement).value
     setEventName(nameVal)
@@ -74,7 +76,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
       date,
       description,
       eventType: eventType!,
-      zipFile,
+      zipFile: zipFile!,
     })
 
     onClose()
@@ -93,10 +95,26 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
     e.preventDefault()
     e.stopPropagation()
     setIsDragging(false)
+    
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       const file = e.dataTransfer.files[0]
-      if (file.type === 'application/zip' || file.name.endsWith('.zip')) {
+      
+      // Проверяем, что это ZIP файл
+      if (file.type === 'application/zip' || 
+          file.name.endsWith('.zip') || 
+          file.type === 'application/x-zip-compressed') {
+        
         setZipFile(file)
+        
+        // Обновляем value в скрытом input для валидации
+        if (fileInputRef.current) {
+          // Создаем новый FileList объект (это сложно сделать программно)
+          // Поэтому просто отметим, что файл загружен через стейт
+          // и уберем required атрибут или будем валидировать по состоянию
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(file);
+          fileInputRef.current.files = dataTransfer.files;
+        }
       } else {
         alert('Пожалуйста, загрузите файл формата .zip')
         setZipFile(null)
@@ -119,6 +137,13 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
   const handleBrowseClick = () => {
     fileInputRef.current?.click()
   }
+
+  const handleRemoveFile = () => {
+    setZipFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
   const UploadIcon = (
     <svg xmlns="http://www.w3.org/2000/svg" width="82" height="82" viewBox="0 0 82 82" fill="none">
@@ -174,7 +199,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
               />
             </div>
 
-             <div className="form-group">
+            <div className="form-group">
               <label>Тип события</label>
               <div className="event-type-radios">
                 <label className="radio-button" tabIndex={0} onFocus={(e) => {
@@ -216,7 +241,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                 <input
                   type="file"
                   id="file-upload-input"
-                  name="zipUpload"
+                  // name="zipUpload"
                   accept=".zip"
                   onChange={handleFileChange}
                   ref={fileInputRef}
@@ -232,49 +257,45 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
             {zipFile && (
               <p className="uploaded-file-name">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -1 20 20" fill="none">
-                  <path d="M11.25 2.5L15.8333 7.08333V16.6667C15.8333 17.125 15.4583 17.5 15 17.5H4.99999C4.54166 17.5 4.16666 17.125 4.16666 16.6667V3.33333C4.16666 2.875 4.54166 2.5 4.99999 2.5H11.25Z" stroke="#C09139" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M11.6667 2.91663V6.66663H15.4167L11.6667 2.91663Z" fill="black" stroke="#C09139" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M11.25 2.5L15.8333 7.08333V16.6667C15.8333 17.125 15.4583 17.5 15 17.5H4.99999C4.54166 17.5 4.16666 17.125 4.16666 16.6667V3.33333C4.16666 2.875 4.54166 2.5 4.99999 2.5H11.25Z" stroke="#C09139" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M11.6667 2.91663V6.66663H15.4167L11.6667 2.91663Z" fill="black" stroke="#C09139" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
                 <a>{zipFile.name}</a>
                 <a
                   className="remove-file-button"
-                  onClick={() => {
-                    setZipFile(null);
-                    setIsFileDeleted(true); // важный флаг — устанавливаем в true при удалении
-                  }}
+                  onClick={handleRemoveFile}
                   aria-label="Удалить файл"
                 >
                   ×
                 </a>
               </p>
             )}
-              <button
-                type="submit"
-                className={`submit-btn final-submit-btn ${
-                  isFormValid ? 'with-background' : ''
-                }`}
-                onClick={() => {
-                  // if (onSuccess) onSuccess()
-                }}
-              >
-                Далее
-              </button>
+            
+            <button
+              type="submit"
+              className={`submit-btn final-submit-btn ${
+                isFormValid ? 'with-background' : ''
+              }`}
+              disabled={!isFormValid}
+            >
+              Далее
+            </button>
           </form>
         </div>
       </div>
+      
       {eventPayload && (
         <ContactModal
-          isOpen={showSuccessModal} // отключено, если удален файл && !isFileDeleted
+          isOpen={showSuccessModal}
           onClose={handleCloseSuccessModal}
           eventName={eventName}
           formApiUrl={formApiUrl}
           eventPayload={eventPayload}
           onSuccess={() => {
-          // setIsSecondOpen(true);
+            // setIsSecondOpen(true);
           }}
         />
       )}
     </>
   )
 }
-

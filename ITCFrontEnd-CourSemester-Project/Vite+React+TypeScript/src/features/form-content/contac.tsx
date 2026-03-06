@@ -83,14 +83,16 @@ export const ContactModal: React.FC<ContactModalProps> = ({
     if (isSubmitting) return
     setError(null)
 
+    // alert('Отправка...');
+
     if (!eventPayload) {// setError
-      alert('Не удалось отправить заявку: данные события не найдены.')
+      alert('Не удалось отправить заявку: данные события не найдены!')
       return
     }
 
     const eventDate = toIsoDate(eventPayload.date)
     if (!eventDate) {
-      alert('Некорректная дата. Используйте формат ДД.ММ.ГГГГ.')
+      alert('Некорректная дата. Используйте формат ДД.ММ.ГГГГ!')
       return
     }
 
@@ -137,7 +139,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
       }, 300);
     } catch (err) {
       console.error('Ошибка при отправке:', err);
-      alert('Не удалось отправить заявку. Проверьте данные и попробуйте ещё раз.');
+      alert('Не удалось отправить заявку. Проверьте данные и попробуйте ещё раз!');
     } finally {
       setIsSubmitting(false)
     }

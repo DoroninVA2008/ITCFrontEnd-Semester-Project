@@ -1,8 +1,5 @@
 import React from 'react'
-
-export interface HeaderProps {
-  onOpenModal: () => void
-}
+import { HeaderProps } from '../../widgets/header'
 
 export const Butoform: React.FC<HeaderProps> = ({ onOpenModal }) => {
   return (
