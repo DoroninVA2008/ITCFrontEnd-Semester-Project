@@ -9,7 +9,7 @@ export const Index: React.FC = () => {
     <div className="MainPage">
       <Header onOpenModal={function (): void {
               throw new Error('Function not implemented.')
-            } } />
+            }} />
       <IndexContentComponent />
     </div>
   );

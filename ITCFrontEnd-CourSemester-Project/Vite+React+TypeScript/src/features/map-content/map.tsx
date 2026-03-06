@@ -3,7 +3,7 @@ import { MapContainer, TileLayer } from 'react-leaflet'
 // import { useMapContext } from './MapContext'
 import { CountryLabels } from '../layers/layers.tsx'
 import { MarkerWithPopup } from '../events/markers.tsx'
-import { FilterButtonList } from '../filters/filters.tsx'
+import { FilterButtonList } from '../filters/filters.tsx' //@ts-ignore
 import './map.scss'
 
 const centmap: [number, number] = [68.751244, 98.618423]

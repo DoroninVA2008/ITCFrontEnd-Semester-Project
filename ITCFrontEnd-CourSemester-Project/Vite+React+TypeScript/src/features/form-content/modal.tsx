@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { ContactModal } from './contac'
+﻿import React, { useState, useRef, useEffect } from 'react'
+import { ContactModal, type ContactEventPayload } from './contac'
 import './modal.scss'
 
 interface SuggestEventModalProps {
@@ -17,6 +17,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
   const [isDragging, setIsDragging] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [eventName, setEventName] = useState('')
+  const [eventPayload, setEventPayload] = useState<ContactEventPayload | null>(null)
   const [, setIsFileDeleted] = useState(false);
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
@@ -26,6 +27,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
   const [isFormValid, setIsFormValid] = useState(false);
   const formRef = useRef<HTMLFormElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const formApiUrl = 'https://155-212-132-55.sslip.io/api/requests/create-request';
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -66,53 +68,18 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
     const form = formRef.current
     const nameVal = (form.elements.namedItem('name') as HTMLInputElement).value
     setEventName(nameVal)
-    console.log('Форма отправлена', nameVal)
+
+    setEventPayload({
+      name,
+      date,
+      description,
+      eventType: eventType!,
+      zipFile,
+    })
+
     onClose()
     setTimeout(() => setShowSuccessModal(true), 300)
-
-  // Создаем FormData чтобы отправить файл + JSON
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('date', date);
-    formData.append('description', description);
-    formData.append('eventType', eventType!); // ! потому что валидность гарантирована
-
-    if (zipFile) {
-      formData.append('file', zipFile);
-    }
-
-    const formAPI = 'https://155-212-132-55.sslip.io/api/requests/create-request';
-
-    for (let pair of formData.entries()) {
-      console.log(pair[0]+ ': ' + pair[1])
-    }
-    fetch(formAPI, {
-      method: 'POST',
-      body: formData,
-      // headers: {
-      //   'Content-Type': 'application/json',
-      // },
-    })
-    .then(res => {
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      return res.json();
-    })
-    .then(data => {
-      console.log('Ответ от сервера:', data);
-      if (data.message === 'success') {
-        setEventName(name);
-        onClose();
-        setTimeout(() => setShowSuccessModal(true), 300);
-      } else {
-        console.error('Неожиданный формат ответа:', data);
-      }
-    })
-    .catch((err) => {
-      console.error('Ошибка при отправке:', err);
-    });
-}
+  }
 
   const handleCloseSuccessModal = () => {
     setShowSuccessModal(false)
@@ -289,21 +256,25 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                 onClick={() => {
                   // if (onSuccess) onSuccess()
                 }}
-                disabled={!isFormValid}
               >
                 Далее
               </button>
           </form>
         </div>
       </div>
-      <ContactModal
-        isOpen={showSuccessModal} // отключено, если удален файл && !isFileDeleted
-        onClose={handleCloseSuccessModal}
-        eventName={eventName}
-        onSuccess={() => {
-        // setIsSecondOpen(true);
-        }}
-      />
+      {eventPayload && (
+        <ContactModal
+          isOpen={showSuccessModal} // отключено, если удален файл && !isFileDeleted
+          onClose={handleCloseSuccessModal}
+          eventName={eventName}
+          formApiUrl={formApiUrl}
+          eventPayload={eventPayload}
+          onSuccess={() => {
+          // setIsSecondOpen(true);
+          }}
+        />
+      )}
     </>
   )
 }
+

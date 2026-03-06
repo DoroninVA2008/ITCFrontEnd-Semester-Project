@@ -13,7 +13,6 @@ export const Main: React.FC = () => {
   return (
     <div>
       <Header onOpenModal={openModal} />
-      
             <SuggestEventModal 
               isOpen={isModalOpen}
               onClose={closeModal}

@@ -1,6 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react'
+﻿import React, { useState, useRef, useEffect } from 'react'
 import { SuccessModal } from './success'
 import './modal.scss'
+
+export interface ContactEventPayload {
+  name: string;
+  date: string;
+  description: string;
+  eventType: string;
+  zipFile?: File | null;
+}
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -9,16 +17,50 @@ interface ContactModalProps {
   isClosing?: boolean;
   eventName?: string;
   onSuccess?: () => void;
+  formApiUrl: string;
+  eventPayload: ContactEventPayload;
 }
 
-export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, eventName, onSuccess }) => {
+export const ContactModal: React.FC<ContactModalProps> = ({
+  isOpen,
+  onClose,
+  eventName,
+  onSuccess,
+  formApiUrl,
+  eventPayload,
+}) => {
   const [isClosing, setIsClosing] = useState(false)
   const [email, setEmail] = useState('');
   const [telegram, setTelegram] = useState('');
   const [isSuccessModalOpen, setSuccessModalOpen] = useState(false)
   const [isFormValid, setIsFormValid] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const emailRef = useRef<HTMLInputElement>(null)
   const tgRef = useRef<HTMLInputElement>(null)
+
+  const getEventTypeId = (value: string) => {
+    if (value === 'political') return 1
+    if (value === 'military') return 2
+    return null
+  }
+
+  const toIsoDate = (value: string) => {
+    const parts = value.split('.')
+    if (parts.length !== 3) return null
+    const [ddStr, mmStr, yyyyStr] = parts
+    const day = Number(ddStr)
+    const month = Number(mmStr)
+    const year = Number(yyyyStr)
+    if (!Number.isInteger(day) || !Number.isInteger(month) || !Number.isInteger(year)) return null
+    if (year < 1900 || year > 2100) return null
+    if (month < 1 || month > 12) return null
+    const daysInMonth = new Date(year, month, 0).getDate()
+    if (day < 1 || day > daysInMonth) return null
+    const mm = String(month).padStart(2, '0')
+    const dd = String(day).padStart(2, '0')
+    return `${year}-${mm}-${dd}`
+  }
 
   const handleClose = () => {
     setIsClosing(true)
@@ -37,38 +79,68 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, eve
     setIsFormValid(emailValid && tgValid)
   }, [email, telegram])
 
-  const handleSend = () => {
+  const handleSend = async () => {
+    if (isSubmitting) return
+    setError(null)
+
+    if (!eventPayload) {
+      setError('Не удалось отправить заявку: данные события не найдены.')
+      return
+    }
+
+    const eventDate = toIsoDate(eventPayload.date)
+    if (!eventDate) {
+      setError('Некорректная дата. Используйте формат ДД.ММ.ГГГГ.')
+      return
+    }
+
+    const eventTypeId = getEventTypeId(eventPayload.eventType)
+    if (!eventTypeId) {
+      setError('Некорректный тип события.')
+      return
+    }
+
     const formData = new FormData();
+    formData.append('title', eventPayload.name);
+    formData.append('description', eventPayload.description);
+    if (eventPayload.zipFile) {
+      formData.append('archive', eventPayload.zipFile);
+    }
     formData.append('email', email);
     formData.append('telegramUsername', telegram);
+    formData.append('eventDate', eventDate);
+    formData.append('eventTypeId', String(eventTypeId));
 
-  fetch('https://155-212-132-55.sslip.io/api/requests/create-request', {
-    method: 'POST',
-    body: formData,
-  })
-  .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    throw new Error(`HTTP error! status: ${res.status}`);
-  })
-  .then(data => {
-    if (data.message === 'success') {
-      // Успешная отправка — можно показать модалку или сообщение
-    }
-  })
-  .catch(err => {
-    console.error('Ошибка при отправке:', err);
-  });
-    handleClose();
-    
-    // Через небольшую задержку открываем SuccessModal
-    setTimeout(() => {
-      setSuccessModalOpen(true);
-      if (onSuccess) {
-        onSuccess();
+    setIsSubmitting(true)
+    try {
+      const res = await fetch(formApiUrl, {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`)
       }
-    }, 300); // Задержка должна совпадать с длительностью анимации закрытия
+
+      const data = await res.json()
+      if (data.message !== 'success') {
+        throw new Error('Unexpected response format')
+      }
+
+      handleClose();
+
+      setTimeout(() => {
+        setSuccessModalOpen(true);
+        if (onSuccess) {
+          onSuccess();
+        }
+      }, 300);
+    } catch (err) {
+      console.error('Ошибка при отправке:', err);
+      setError('Не удалось отправить заявку. Проверьте данные и попробуйте ещё раз.');
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleSuccessClose = () => {
@@ -121,11 +193,12 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, eve
           <div className="success-actions">
             <button
               className={`submit-btn final-submit-btn ${isFormValid ? 'with-background' : ''}`}
-              disabled={!isFormValid}
+              disabled={!isFormValid || isSubmitting}
               onClick={handleSend}
             >
-              Отправить заявку
+              {isSubmitting ? 'Отправка...' : 'Отправить заявку'}
             </button>
+            {error && <p className="form-error">{error}</p>}
           </div>
         </div>
       </div>
@@ -136,3 +209,5 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, eve
     </>
   )
 }
+
+

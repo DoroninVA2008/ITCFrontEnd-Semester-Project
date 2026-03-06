@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { MainContent } from './index'
+import { Butomap } from './butomap'
 
 export const MainContentComponent: React.FC = () => {
   const titleH1Text = useSelector(MainContent.selectors.selectH1);
@@ -25,11 +25,7 @@ export const MainContentComponent: React.FC = () => {
           {titleH3Text}
         </div>
       </div>
-      <Link to="/map">
-        <button>
-          Перейти к карте →
-        </button>
-      </Link>
+      <Butomap />
     </div>
   );
 };

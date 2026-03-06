@@ -1,22 +1,15 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-
-interface HeaderProps {
-  onOpenModal: () => void; // Переименовал для ясности
-}
+import React from 'react'
+import { Butoapp } from '../features/main-content/butoapp'
+import { Butoform, HeaderProps } from '../features/main-content/butoform'
 
 export const Header: React.FC<HeaderProps> = ({ onOpenModal }) => {
   return(
     <header>
-      <Link to="/app">
-        <img src="/RussianHeroesLogo.png" alt="Логотип Россия - страна Героев" />
-      </Link>
+      <Butoapp />
       <h1>
         Россия - страна Героев
       </h1>
-      <button onClick={onOpenModal}>
-        Предложить событие
-      </button>
+      <Butoform onOpenModal={onOpenModal} />
     </header>
   );
 };
