@@ -83,20 +83,20 @@ export const ContactModal: React.FC<ContactModalProps> = ({
     if (isSubmitting) return
     setError(null)
 
-    if (!eventPayload) {
-      setError('Не удалось отправить заявку: данные события не найдены.')
+    if (!eventPayload) {// setError
+      alert('Не удалось отправить заявку: данные события не найдены.')
       return
     }
 
     const eventDate = toIsoDate(eventPayload.date)
     if (!eventDate) {
-      setError('Некорректная дата. Используйте формат ДД.ММ.ГГГГ.')
+      alert('Некорректная дата. Используйте формат ДД.ММ.ГГГГ.')
       return
     }
 
     const eventTypeId = getEventTypeId(eventPayload.eventType)
     if (!eventTypeId) {
-      setError('Некорректный тип события.')
+      alert('Некорректный тип события.');
       return
     }
 
@@ -137,7 +137,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
       }, 300);
     } catch (err) {
       console.error('Ошибка при отправке:', err);
-      setError('Не удалось отправить заявку. Проверьте данные и попробуйте ещё раз.');
+      alert('Не удалось отправить заявку. Проверьте данные и попробуйте ещё раз.');
     } finally {
       setIsSubmitting(false)
     }
@@ -209,5 +209,3 @@ export const ContactModal: React.FC<ContactModalProps> = ({
     </>
   )
 }
-
-
