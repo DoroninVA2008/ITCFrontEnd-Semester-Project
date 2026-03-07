@@ -13,16 +13,15 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose }) =
     setTimeout(() => {
       setIsClosing(false);
       onClose();
-    }, 300); // Длительность анимации закрытия
+    }, 300);
   };
 
-  // Если модалка не открыта и не в процессе закрытия - не рендерим
   if (!isOpen && !isClosing) return null;
 
   return (
     <div 
       className={`modal-overlay ${isOpen && !isClosing ? 'open' : isClosing ? 'close' : ''}`}
-      style={{ display: isOpen || isClosing ? 'flex' : 'none' }}
+      style={{ display: (isOpen || isClosing) ? 'flex' : 'none' }}
       onClick={(e) => e.stopPropagation()}
     >
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>

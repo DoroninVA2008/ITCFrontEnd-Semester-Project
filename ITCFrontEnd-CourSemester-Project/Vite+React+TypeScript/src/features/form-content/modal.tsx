@@ -23,6 +23,20 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
   const fileInputRef = useRef<HTMLInputElement>(null)
   const formApiUrl = 'https://155-212-132-55.sslip.io/api/requests/create-request';
 
+  // Функция сброса формы
+  const resetForm = () => {
+    setName('');
+    setDate('');
+    setDescription('');
+    setEventType(null);
+    setZipFile(null);
+    setEventPayload(null);
+    setEventName('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
@@ -84,11 +98,13 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
   }
 
   const handleCloseSuccessModal = () => {
-    setShowSuccessModal(false)
+    setShowSuccessModal(false);
+    resetForm(); // Сбрасываем форму при закрытии модалки контактов
   }
 
   const handleCloseMainModal = () => {
-    onClose()
+    onClose();
+    resetForm(); // Сбрасываем форму при закрытии основной модалки
   }
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -213,6 +229,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                     name="eventType" 
                     value="political" 
                     onChange={handleEventTypeChange} 
+                    checked={eventType === 'political'}
                     required 
                   />
                     <span className="radio-custom-label">Политическое событие</span>
@@ -229,6 +246,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                     name="eventType" 
                     value="military"
                     onChange={handleEventTypeChange} 
+                    checked={eventType === 'military'}
                     required 
                   />
                   <span className="radio-custom-label">Военное событие</span>
@@ -251,7 +269,6 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                 <input
                   type="file"
                   id="file-upload-input"
-                  // name="zipUpload"
                   accept=".zip"
                   onChange={handleFileChange}
                   ref={fileInputRef}
@@ -293,7 +310,6 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
           </form>
         </div>
       </div>
-      
       {eventPayload && (
         <ContactModal
           isOpen={showSuccessModal}
@@ -301,9 +317,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
           eventName={eventName}
           formApiUrl={formApiUrl}
           eventPayload={eventPayload}
-          onSuccess={() => {
-            // setIsSecondOpen(true);
-          }}
+          onFormReset={resetForm} // передаем функцию сброса
         />
       )}
     </>

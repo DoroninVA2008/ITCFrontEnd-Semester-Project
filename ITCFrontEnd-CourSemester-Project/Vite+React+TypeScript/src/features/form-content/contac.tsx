@@ -19,6 +19,7 @@ interface ContactModalProps {
   onSuccess?: () => void;
   formApiUrl: string;
   eventPayload: ContactEventPayload;
+  onFormReset?: () => void; // новый проп
 }
 
 export const ContactModal: React.FC<ContactModalProps> = ({
@@ -28,6 +29,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   onSuccess,
   formApiUrl,
   eventPayload,
+  onFormReset, // добавляем проп
 }) => {
   const [isClosing, setIsClosing] = useState(false)
   const [email, setEmail] = useState('');
@@ -63,12 +65,11 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   }
 
   const handleClose = () => {
-    setIsClosing(true)
-    const timer = setTimeout(() => {
-      setIsClosing(false)
-      onClose()
-    }, 300)
-    return () => clearTimeout(timer)
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsClosing(false);
+      onClose(); // вызываем родительский коллбэк
+    }, 300);
   }
 
   useEffect(() => {
@@ -83,9 +84,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
     if (isSubmitting) return
     setError(null)
 
-    // alert('Отправка...');
-
-    if (!eventPayload) {// setError
+    if (!eventPayload) {
       alert('Не удалось отправить заявку: данные события не найдены!')
       return
     }
@@ -136,6 +135,9 @@ export const ContactModal: React.FC<ContactModalProps> = ({
         if (onSuccess) {
           onSuccess();
         }
+        if (onFormReset) {
+          onFormReset(); // вызываем очистку формы в родителе
+        }
       }, 300);
     } catch (err) {
       console.error('Ошибка при отправке:', err);
@@ -147,6 +149,11 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
   const handleSuccessClose = () => {
     setSuccessModalOpen(false);
+  }
+
+  const resetForm = () => {
+    setEmail('');
+    setTelegram('');
   }
 
   return (
@@ -206,7 +213,11 @@ export const ContactModal: React.FC<ContactModalProps> = ({
       </div>
       <SuccessModal
         isOpen={isSuccessModalOpen}
-        onClose={handleSuccessClose}
+        onClose={() => {
+          setSuccessModalOpen(false);
+          setEmail('');
+          setTelegram('');
+        }}
       />
     </>
   )
