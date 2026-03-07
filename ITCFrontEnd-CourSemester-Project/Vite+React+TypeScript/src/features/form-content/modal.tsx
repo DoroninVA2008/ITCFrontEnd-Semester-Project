@@ -169,9 +169,9 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                   id="name"
                   name="name"
                   placeholder="Введите название события"
-                  required
                   value={name}
                   onChange={handleNameChange}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -181,25 +181,25 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                   id="date"
                   name="date"
                   placeholder="ДД.ММ.ГГГГ"
-                  required
                   value={date}
                   onChange={handleDateChange}
+                  required
                 />
               </div>
             </div>
-            <div className="form-group">
+            <div className="form-group" data-index="1">
               <label htmlFor="description">Описание события</label>
               <textarea
                 id="description"
                 name="description"
                 placeholder="Кратко опишите событие"
-                required
                 value={description}
                 onChange={handleDescriptionChange}
+                required
               />
             </div>
 
-            <div className="form-group">
+            <div className="form-group" data-index="2">
               <label>Тип события</label>
               <div className="event-type-radios">
                 <label className="radio-button" tabIndex={0} onFocus={(e) => {
@@ -208,8 +208,13 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                 onBlur={(e) => {
                   e.currentTarget.classList.remove('focused');
                 }}>
-                  <input type="radio" name="eventType" value="political" 
-                    onChange={handleEventTypeChange} required />
+                  <input 
+                    type="radio" 
+                    name="eventType" 
+                    value="political" 
+                    onChange={handleEventTypeChange} 
+                    required 
+                  />
                     <span className="radio-custom-label">Политическое событие</span>
                     <span className="radio-circle"></span>
                 </label>
@@ -219,8 +224,13 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                 onBlur={(e) => {
                   e.currentTarget.classList.remove('focused');
                 }}>
-                  <input type="radio" name="eventType" value="military"
-                    onChange={handleEventTypeChange} required />
+                  <input 
+                    type="radio" 
+                    name="eventType" 
+                    value="military"
+                    onChange={handleEventTypeChange} 
+                    required 
+                  />
                   <span className="radio-custom-label">Военное событие</span>
                   <span className="radio-circle"></span>
                 </label>

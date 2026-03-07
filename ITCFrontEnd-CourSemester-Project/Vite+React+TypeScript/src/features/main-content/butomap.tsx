@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 
 export const Butomap: React.FC = () => {
   return(
-      <Link to="/map">
-        <button>
-          Перейти к карте →
-        </button>
-      </Link>
+    <Link to="/map">
+      <button>
+        Перейти к карте →
+      </button>
+    </Link>
   )
 }

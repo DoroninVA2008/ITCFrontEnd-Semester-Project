@@ -8,8 +8,8 @@ export const Index: React.FC = () => {
   return (
     <div className="MainPage">
       <Header onOpenModal={function (): void {
-              throw new Error('Function not implemented.')
-            }} />
+        throw new Error('Function not implemented.')
+      }} />
       <IndexContentComponent />
     </div>
   );

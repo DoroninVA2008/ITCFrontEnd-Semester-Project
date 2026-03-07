@@ -1,4 +1,107 @@
 @media screen and (max-width: 1600px) {
+  .modal-content {
+    padding-top: 34px;
+    padding-bottom: 34px;
+    .modal-title {
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .modal-description, 
+    .modal-descriptions {
+      font-size: 14px;
+      max-width: 420px;
+    }
+
+    .modal-description {
+      margin-bottom: 16px;
+    }
+    
+    .modal-close {
+      font-size: 26px;
+      top: 32px;
+    }
+
+    form {
+      .form-row {
+        margin-bottom: -14px;
+      }
+
+      .form-group {
+        label, input, textarea, .radio-custom-label {
+          font-size: 14px;
+        }
+
+        input {
+          padding: 8px 15px
+        }
+
+        &[data-index="1"] {
+          margin-bottom: 16px
+        }
+
+        &[data-index="2"] {
+          margin-bottom: 12px
+        }
+
+        .drop-zone {
+          height: 182px;
+          padding-top: 4px;
+
+          & svg {
+            width: 70px; 
+            height: 70px;
+            margin-bottom: 0
+          }
+        }
+
+        .drop-zone-text {
+          font-size: 14px;
+        }
+
+        #description {
+          height: 20px;
+        }
+
+        .event-type-radios 
+        .radio-button {
+            padding: 8px 15px 8px 15px;
+        }
+
+        .file-format-info {
+          font-size: 11px;
+          margin-top: 0px;
+          margin-bottom: 6px;
+        }
+
+        .browse-files-button {
+          font-size: 12px;
+          padding: 8px 14px 8px 14px;
+          border-radius: 12px;
+        }
+
+        &.file-upload-wrapper {
+          margin-bottom: 20px;
+        }
+      }
+
+      .uploaded-file-name {
+        padding: 6px 20px;
+        margin-top: -12px !important;
+        margin-bottom: 12px !important;
+
+        & a {
+          margin-top: 4px;
+          font-size: 16px;
+        }
+      }
+
+      .remove-file-button {
+        font-size: 20px !important
+      }   
+    }
+  }
+
   .RussianFon {
     background-position-x: right !important;
     // height: 800px
