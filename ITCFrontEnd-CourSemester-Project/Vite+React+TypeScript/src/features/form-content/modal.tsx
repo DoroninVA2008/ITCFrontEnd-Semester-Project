@@ -32,6 +32,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
     setZipFile(null);
     setEventPayload(null);
     setEventName('');
+    // возможно, сбросить input refs, если есть
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -98,13 +99,11 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
   }
 
   const handleCloseSuccessModal = () => {
-    setShowSuccessModal(false);
-    resetForm(); // Сбрасываем форму при закрытии модалки контактов
+    setShowSuccessModal(false); // resetForm(); Сбрасываем форму при закрытии модалки контактов
   }
 
   const handleCloseMainModal = () => {
-    onClose();
-    resetForm(); // Сбрасываем форму при закрытии основной модалки
+    onClose(); // resetForm(); Сбрасываем форму при закрытии основной модалки
   }
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {

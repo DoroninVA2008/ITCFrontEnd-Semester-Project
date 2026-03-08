@@ -13,13 +13,12 @@ export interface ContactEventPayload {
 interface ContactModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onStartClose?: () => void;
-  isClosing?: boolean;
+  // остальные пропсы
   eventName?: string;
   onSuccess?: () => void;
   formApiUrl: string;
   eventPayload: ContactEventPayload;
-  onFormReset?: () => void; // новый проп
+  onFormReset?: () => void; // проп для сброса формы
 }
 
 export const ContactModal: React.FC<ContactModalProps> = ({
@@ -29,7 +28,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   onSuccess,
   formApiUrl,
   eventPayload,
-  onFormReset, // добавляем проп
+  onFormReset, // новый проп
 }) => {
   const [isClosing, setIsClosing] = useState(false)
   const [email, setEmail] = useState('');
@@ -51,24 +50,28 @@ export const ContactModal: React.FC<ContactModalProps> = ({
     const parts = value.split('.')
     if (parts.length !== 3) return null
     const [ddStr, mmStr, yyyyStr] = parts
-    const day = Number(ddStr)
-    const month = Number(mmStr)
-    const year = Number(yyyyStr)
-    if (!Number.isInteger(day) || !Number.isInteger(month) || !Number.isInteger(year)) return null
-    if (year < 1900 || year > 2100) return null
-    if (month < 1 || month > 12) return null
-    const daysInMonth = new Date(year, month, 0).getDate()
-    if (day < 1 || day > daysInMonth) return null
-    const mm = String(month).padStart(2, '0')
-    const dd = String(day).padStart(2, '0')
-    return `${year}-${mm}-${dd}`
+    const day = Number(ddStr);
+    const month = Number(mmStr);
+    const year = Number(yyyyStr);
+    if (
+      !Number.isInteger(day) ||
+      !Number.isInteger(month) ||
+      !Number.isInteger(year)
+    ) return null;
+    if (year < 1900 || year > 2100) return null;
+    if (month < 1 || month > 12) return null;
+    const daysInMonth = new Date(year, month, 0).getDate();
+    if (day < 1 || day > daysInMonth) return null;
+    const mm = String(month).padStart(2, '0');
+    const dd = String(day).padStart(2, '0');
+    return `${year}-${mm}-${dd}`;
   }
 
   const handleClose = () => {
     setIsClosing(true);
     setTimeout(() => {
       setIsClosing(false);
-      onClose(); // вызываем родительский коллбэк
+      onClose();
     }, 300);
   }
 
@@ -97,20 +100,20 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
     const eventTypeId = getEventTypeId(eventPayload.eventType)
     if (!eventTypeId) {
-      alert('Некорректный тип события.');
+      alert('Некорректный тип события.')
       return
     }
 
-    const formData = new FormData();
-    formData.append('title', eventPayload.name);
-    formData.append('description', eventPayload.description);
+    const formData = new FormData()
+    formData.append('title', eventPayload.name)
+    formData.append('description', eventPayload.description)
     if (eventPayload.zipFile) {
-      formData.append('archive', eventPayload.zipFile);
+      formData.append('archive', eventPayload.zipFile)
     }
-    formData.append('email', email);
-    formData.append('telegramUsername', telegram);
-    formData.append('eventDate', eventDate);
-    formData.append('eventTypeId', String(eventTypeId));
+    formData.append('email', email)
+    formData.append('telegramUsername', telegram)
+    formData.append('eventDate', eventDate)
+    formData.append('eventTypeId', String(eventTypeId))
 
     setIsSubmitting(true)
     try {
@@ -128,20 +131,15 @@ export const ContactModal: React.FC<ContactModalProps> = ({
         throw new Error('Unexpected response format')
       }
 
-      handleClose();
+      handleClose()
 
       setTimeout(() => {
-        setSuccessModalOpen(true);
-        if (onSuccess) {
-          onSuccess();
-        }
-        if (onFormReset) {
-          onFormReset(); // вызываем очистку формы в родителе
-        }
-      }, 300);
+        setSuccessModalOpen(true)
+        if (onSuccess) onSuccess()
+      }, 300)
     } catch (err) {
-      console.error('Ошибка при отправке:', err);
-      alert('Не удалось отправить заявку. Проверьте данные и попробуйте ещё раз!');
+      console.error('Ошибка при отправке:', err)
+      alert('Не удалось отправить заявку. Проверьте данные и попробуйте ещё раз!')
     } finally {
       setIsSubmitting(false)
     }
@@ -214,9 +212,11 @@ export const ContactModal: React.FC<ContactModalProps> = ({
       <SuccessModal
         isOpen={isSuccessModalOpen}
         onClose={() => {
-          setSuccessModalOpen(false);
-          setEmail('');
-          setTelegram('');
+          setSuccessModalOpen(false)
+        }}
+        onReset={() => {
+          resetForm()
+          if (onFormReset) onFormReset()
         }}
       />
     </>

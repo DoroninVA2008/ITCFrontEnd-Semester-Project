@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 
 interface SuccessModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: () => void;            // Коллбэк при закрытии
+  onReset?: () => void;           // Коллбэк для сброса формы (опционально)
 }
 
-export const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose }) => {
+export const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, onReset }) => {
   const [isClosing, setIsClosing] = useState(false);
 
   const handleClose = () => {
@@ -16,10 +17,19 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose }) =
     }, 300);
   };
 
+  const handleReturnToMap = () => {
+    if (onReset) {
+      setTimeout(() => {
+        onReset();
+      }, 300)
+    }
+    handleClose();
+  };
+
   if (!isOpen && !isClosing) return null;
 
   return (
-    <div 
+    <div
       className={`modal-overlay ${isOpen && !isClosing ? 'open' : isClosing ? 'close' : ''}`}
       style={{ display: (isOpen || isClosing) ? 'flex' : 'none' }}
       onClick={(e) => e.stopPropagation()}
@@ -50,7 +60,7 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose }) =
           Вы можете закрыть это окно и продолжить работу с картой.
         </p>
         <div className="success-actions">
-          <button className="submit-btn-active" onClick={handleClose}>
+          <button className="submit-btn-active" onClick={handleReturnToMap}>
             Вернуться к карте
           </button>
         </div>
