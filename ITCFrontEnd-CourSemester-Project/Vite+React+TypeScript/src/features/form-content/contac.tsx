@@ -145,9 +145,9 @@ export const ContactModal: React.FC<ContactModalProps> = ({
     }
   }
 
-  const handleSuccessClose = () => {
-    setSuccessModalOpen(false);
-  }
+  // const handleSuccessClose = () => {
+  //   setSuccessModalOpen(false);
+  // }
 
   const resetForm = () => {
     setEmail('');

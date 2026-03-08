@@ -23,8 +23,8 @@ export const FilterButtonList: React.FC = () => {
   useEffect(() => {
     if (events.length > 0) {
       const dateRange = {
-        dateFrom: `${periodRange.min}-01-01`,
-        dateTo: `${periodRange.max}-01-01`
+        dateFrom: `${periodRange.min}.01.01`,
+        dateTo: `${periodRange.max}.01.01`
       }
       const filtered = filterEventsByDateRange(events, dateRange)
       setFilteredEvents(filtered)

@@ -46,14 +46,14 @@ export async function fetchEvents(): Promise<EventDates[]> {
         const timeoutId = setTimeout(() => controller.abort(), 10000);
 
         const response = await fetch(types_api_url, {
-                method: 'POST',
-                signal: controller.signal,
-                mode: 'cors',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            });
+            method: 'POST',
+            signal: controller.signal,
+            mode: 'cors',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
             
             clearTimeout(timeoutId);
         const data: ApiResponse = await response.json();
