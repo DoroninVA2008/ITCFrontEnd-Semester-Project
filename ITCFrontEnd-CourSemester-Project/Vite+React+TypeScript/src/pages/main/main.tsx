@@ -1,7 +1,7 @@
 import React from 'react'
 import { Header } from '../../widgets/header.tsx'
-import { IndexContentComponent } from '../../features/main-content/index-content.tsx'
-import './mobile.scss'
+import { IndexContentComponent } from '../../features/main-content/index-content.tsx' //@ts-ignore
+import './mobile.scss' //@ts-ignore
 import './main.scss'
 
 export const Index: React.FC = () => { 

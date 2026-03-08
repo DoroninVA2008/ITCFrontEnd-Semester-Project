@@ -1,4 +1,4 @@
-import L from 'leaflet'
+import L from 'leaflet' //@ts-ignore
 import './countrie.scss'
 
 export interface CountryLabelItem {

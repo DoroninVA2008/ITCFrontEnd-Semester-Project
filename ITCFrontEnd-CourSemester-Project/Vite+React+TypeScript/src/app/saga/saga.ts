@@ -13,6 +13,12 @@ const FETCH_DATA = 'FETCH_DATA';
 const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
 const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 
+var TiLayer: string = 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png';
+var LandGeoJSon: string = 'https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson'; // ./src/features/layers/countries.geojson
+var eventsListTypes: string = 'https://155-212-132-55.sslip.io/api/objects/get-objects-list';
+var eventsListDates: string = 'http://155.212.132.55:7666/api/objects/get-objects-list';
+var formApi: string = 'https://155-212-132-55.sslip.io/api/requests/create-request';
+
 const api = {
   fetchData: async (payload: FetchDataPayload): Promise<DataResponse> => {
     const response = await fetch(`/api/data/${payload.id}`);

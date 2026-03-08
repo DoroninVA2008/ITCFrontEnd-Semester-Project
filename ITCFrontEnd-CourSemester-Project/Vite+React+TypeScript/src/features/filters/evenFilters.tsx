@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { EventObject } from '../events/evenPositions';
-
 // Типы событий для фильтрации
 export interface FilterState {
   selectedOptions: {[key: string]: boolean};

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
-import { useMap } from 'react-leaflet'
 import L from 'leaflet'
+import { useMap } from 'react-leaflet'
 import { CountryLabelItem, getCountrySizeCategory, shouldShowLabel } from './zoom.tsx'
 import { countriesTranslation } from './countriesTranslation.ts'
-import { countriesPosition } from './countriesPosition.ts'
+import { countriesPosition } from './countriesPosition.ts' //@ts-ignore
 import './countrie.scss'
 
 const centerRussiaOnMap = (geoData: any): any => {
@@ -81,7 +81,7 @@ export const CountryLabels: React.FC = () => {
 
   useEffect(() => {
     if (isDataLoadedRef.current) return; // https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson
-    fetch('https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson') // ./src/features/layers/countries.geojson
+    fetch('./src/features/layers/countries.geojson') // ./src/features/layers/countries.geojson
       .then(response => response.json())
       .then(data => {
         const adjustedData = centerRussiaOnMap(data);
