@@ -1,6 +1,7 @@
-import React, { createContext, useContext, ReactNode } from 'react';
+﻿import React, { createContext, useContext, ReactNode, useEffect, useMemo, useState, useCallback } from 'react';
 import { EventObject } from '../events/evenPositions';
 import { useEventFilters, FilterState } from './evenFilters';
+import { fetchEvents, fetchEventsByFilters, buildFilterRequestData } from './typeven';
 
 interface EventFilterContextType {
   filteredEvents: EventObject[];
@@ -9,6 +10,11 @@ interface EventFilterContextType {
   setPeriodRange: (min: number, max: number) => void;
   setSelectedPeriod: (periodLabel: string | null) => void;
   resetFilters: () => void;
+  applyFilters: () => Promise<void>;
+  applyFiltersWith: (nextState: FilterState) => Promise<void>;
+  resetAndReload: () => Promise<void>;
+  isLoading: boolean;
+  error: string | null;
 }
 
 const EventFilterContext = createContext<EventFilterContextType | undefined>(undefined);
@@ -23,29 +29,114 @@ export const useEventFilterContext = () => {
 
 interface EventFilterProviderProps {
   children: ReactNode;
-  events: EventObject[];
 }
 
-export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ children, events }) => {
+export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ children }) => {
+  const [events, setEvents] = useState<EventObject[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   const {
     filteredEvents,
     filterState,
     toggleOption,
     setPeriodRange,
     setSelectedPeriod,
-    resetFilters
+    resetFilters,
+    setFilterState
   } = useEventFilters({ events });
+
+  const loadInitialEvents = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const fetchedEvents = await fetchEvents();
+      setEvents(Array.isArray(fetchedEvents) ? (fetchedEvents as EventObject[]) : []);
+    } catch (err) {
+      console.error('Failed to load events:', err);
+      setError('РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ СЃРѕР±С‹С‚РёСЏ');
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadInitialEvents();
+  }, [loadInitialEvents]);
+
+  const applyFilters = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const payload = buildFilterRequestData({
+        selectedOptions: filterState.selectedOptions,
+        periodRange: filterState.periodRange,
+        selectedPeriod: filterState.selectedPeriod
+      });
+      const fetchedEvents = await fetchEventsByFilters(payload);
+      setEvents(Array.isArray(fetchedEvents) ? (fetchedEvents as EventObject[]) : []);
+    } catch (err) {
+      console.error('Failed to apply filters:', err);
+      setError('РќРµ СѓРґР°Р»РѕСЃСЊ РїСЂРёРјРµРЅРёС‚СЊ С„РёР»СЊС‚СЂС‹');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [filterState]);
+
+  const applyFiltersWith = useCallback(async (nextState: FilterState) => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      setFilterState(nextState);
+      const payload = buildFilterRequestData({
+        selectedOptions: nextState.selectedOptions,
+        periodRange: nextState.periodRange,
+        selectedPeriod: nextState.selectedPeriod
+      });
+      const fetchedEvents = await fetchEventsByFilters(payload);
+      setEvents(Array.isArray(fetchedEvents) ? (fetchedEvents as EventObject[]) : []);
+    } catch (err) {
+      console.error('Failed to apply filters:', err);
+      setError('РќРµ СѓРґР°Р»РѕСЃСЊ РїСЂРёРјРµРЅРёС‚СЊ С„РёР»СЊС‚СЂС‹');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [setFilterState]);
+
+  const resetAndReload = useCallback(async () => {
+    resetFilters();
+    await loadInitialEvents();
+  }, [loadInitialEvents, resetFilters]);
+
+  const contextValue = useMemo(() => ({
+    filteredEvents,
+    filterState,
+    toggleOption,
+    setPeriodRange,
+    setSelectedPeriod,
+    resetFilters,
+    applyFilters,
+    applyFiltersWith,
+    resetAndReload,
+    isLoading,
+    error
+  }), [
+    filteredEvents,
+    filterState,
+    toggleOption,
+    setPeriodRange,
+    setSelectedPeriod,
+    resetFilters,
+    applyFilters,
+    applyFiltersWith,
+    resetAndReload,
+    isLoading,
+    error
+  ]);
 
   return (
     <EventFilterContext.Provider
-      value={{
-        filteredEvents,
-        filterState,
-        toggleOption,
-        setPeriodRange,
-        setSelectedPeriod,
-        resetFilters
-      }}
+      value={contextValue}
     >
       {children}
     </EventFilterContext.Provider>

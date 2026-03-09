@@ -15,8 +15,8 @@ const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 
 export var tiLayer = 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png';
 export var landGeoJSon = './src/features/layers/countries.geojson'; // https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson
-export var eventsListTypes = 'https://155-212-132-55.sslip.io/api/objects/get-objects-list';
-export var eventsListDates = 'http://155.212.132.55:7666/api/objects/get-objects-list';
+export var eventsListDates = 'https://155-212-132-55.sslip.io/api/objects/get-objects-list';
+export var eventsListTypes = 'https://155-212-132-55.sslip.io/api/objects/get-event-types-list';
 export var formApi = 'https://155-212-132-55.sslip.io/api/requests/create-request';
 
 const api = {

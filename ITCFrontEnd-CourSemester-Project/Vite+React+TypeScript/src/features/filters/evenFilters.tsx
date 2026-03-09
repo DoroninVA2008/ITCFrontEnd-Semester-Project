@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+﻿import { useState, useEffect, useCallback, useMemo } from 'react';
 import { EventObject } from '../events/evenPositions';
-// Типы событий для фильтрации
+// РўРёРїС‹ СЃРѕР±С‹С‚РёР№ РґР»СЏ С„РёР»СЊС‚СЂР°С†РёРё
 export interface FilterState {
   selectedOptions: {[key: string]: boolean};
   periodRange: { min: number; max: number };
@@ -19,7 +19,7 @@ export const useEventFilters = ({ events, onFilteredEventsChange }: UseEventFilt
     selectedPeriod: null
   });
 
-  // Маппинг опций к типам событий
+  // РњР°РїРїРёРЅРі РѕРїС†РёР№ Рє С‚РёРїР°Рј СЃРѕР±С‹С‚РёР№
   const getEventTypeFromOption = (option: string): number[] => {
     switch(option) {
       case 'Битвы':
@@ -35,7 +35,7 @@ export const useEventFilters = ({ events, onFilteredEventsChange }: UseEventFilt
     }
   };
 
-  // Получаем все выбранные типы событий
+  // РџРѕР»СѓС‡Р°РµРј РІСЃРµ РІС‹Р±СЂР°РЅРЅС‹Рµ С‚РёРїС‹ СЃРѕР±С‹С‚РёР№
   const selectedEventTypes = useMemo(() => {
     const types = new Set<number>();
     Object.entries(filterState.selectedOptions).forEach(([option, isSelected]) => {
@@ -46,23 +46,23 @@ export const useEventFilters = ({ events, onFilteredEventsChange }: UseEventFilt
     return Array.from(types);
   }, [filterState.selectedOptions]);
 
-  // Фильтрация событий
+  // Р¤РёР»СЊС‚СЂР°С†РёСЏ СЃРѕР±С‹С‚РёР№
   const filteredEvents = useMemo(() => {
     return events.filter(event => {
-      // Фильтр по дате
+      // Р¤РёР»СЊС‚СЂ РїРѕ РґР°С‚Рµ
       const eventYear = new Date(event.eventDate).getFullYear();
       const dateMatch = eventYear >= filterState.periodRange.min && 
                        eventYear <= filterState.periodRange.max;
       
-      // Фильтр по типу события (военные/политические)
+      // Р¤РёР»СЊС‚СЂ РїРѕ С‚РёРїСѓ СЃРѕР±С‹С‚РёСЏ (РІРѕРµРЅРЅС‹Рµ/РїРѕР»РёС‚РёС‡РµСЃРєРёРµ)
       const typeMatch = selectedEventTypes.length === 0 || 
                        selectedEventTypes.includes(event.eventType);
       
-      // Фильтр по историческому периоду
+      // Р¤РёР»СЊС‚СЂ РїРѕ РёСЃС‚РѕСЂРёС‡РµСЃРєРѕРјСѓ РїРµСЂРёРѕРґСѓ
       let periodMatch = true;
       if (filterState.selectedPeriod) {
-        // Парсим годы из метки периода (например, "862–988гг.")
-        const matches = filterState.selectedPeriod.match(/(\d+)–(\d+)/);
+        // РџР°СЂСЃРёРј РіРѕРґС‹ РёР· РјРµС‚РєРё РїРµСЂРёРѕРґР° (РЅР°РїСЂРёРјРµСЂ, "862вЂ“988РіРі.")
+        const matches = filterState.selectedPeriod.match(/(\d+)вЂ“(\d+)/);
         if (matches) {
           const startYear = parseInt(matches[1]);
           const endYear = parseInt(matches[2]);
@@ -74,12 +74,12 @@ export const useEventFilters = ({ events, onFilteredEventsChange }: UseEventFilt
     });
   }, [events, filterState, selectedEventTypes]);
 
-  // Уведомляем об изменении отфильтрованных событий
+  // РЈРІРµРґРѕРјР»СЏРµРј РѕР± РёР·РјРµРЅРµРЅРёРё РѕС‚С„РёР»СЊС‚СЂРѕРІР°РЅРЅС‹С… СЃРѕР±С‹С‚РёР№
   useEffect(() => {
     onFilteredEventsChange?.(filteredEvents);
   }, [filteredEvents, onFilteredEventsChange]);
 
-  // Методы для обновления фильтров
+  // РњРµС‚РѕРґС‹ РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ С„РёР»СЊС‚СЂРѕРІ
   const toggleOption = useCallback((option: string) => {
     setFilterState(prev => ({
       ...prev,
@@ -112,12 +112,17 @@ export const useEventFilters = ({ events, onFilteredEventsChange }: UseEventFilt
     });
   }, []);
 
+  const setFilterStateDirect = useCallback((nextState: FilterState) => {
+    setFilterState(nextState);
+  }, []);
+
   return {
     filterState,
     filteredEvents,
     toggleOption,
     setPeriodRange,
     setSelectedPeriod,
-    resetFilters
+    resetFilters,
+    setFilterState: setFilterStateDirect
   };
 };

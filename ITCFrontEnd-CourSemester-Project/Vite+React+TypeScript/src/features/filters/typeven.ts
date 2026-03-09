@@ -1,5 +1,5 @@
 import { EventType } from '../events/evenPositions.ts'
-import { eventsListTypes } from '../../app/saga/saga.ts'
+import { eventsListDates } from '../../app/saga/saga.ts'
 
 // type FilterOption = string;
 
@@ -39,12 +39,36 @@ interface ApiResponse {
     objects: EventDates[];
 }
 
+export interface FilterRequestData {
+    data: string[];
+    dateFrom: string;
+    dateTo: string;
+    periodLabel: string | null;
+}
+
+export const buildFilterRequestData = (params: {
+    selectedOptions: { [key: string]: boolean };
+    periodRange: { min: number; max: number };
+    selectedPeriod: string | null;
+}): FilterRequestData => {
+    const data = Object.entries(params.selectedOptions)
+        .filter(([, isSelected]) => isSelected)
+        .map(([option]) => option);
+
+    return {
+        data,
+        dateFrom: `${params.periodRange.min}-01-01`,
+        dateTo: `${params.periodRange.max}-12-31`,
+        periodLabel: params.selectedPeriod,
+    };
+};
+
 export async function fetchEvents(): Promise<EventDates[]> {
     try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-        const response = await fetch(eventsListTypes, {
+        const response = await fetch(eventsListDates, {
             method: 'POST',
             signal: controller.signal,
             mode: 'cors',
@@ -55,10 +79,47 @@ export async function fetchEvents(): Promise<EventDates[]> {
         });
             
             clearTimeout(timeoutId);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data: ApiResponse = await response.json();
+        if (!data || !Array.isArray(data.objects)) {
+            return [];
+        }
         return data.objects;
     } catch (error) {
         console.error('Failed to fetch events:', error);
+        return [];
+    }
+}
+
+export async function fetchEventsByFilters(payload: FilterRequestData): Promise<EventDates[]> {
+    try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+        const response = await fetch(eventsListDates, {
+            method: 'POST',
+            signal: controller.signal,
+            mode: 'cors',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        clearTimeout(timeoutId);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data: ApiResponse = await response.json();
+        if (!data || !Array.isArray(data.objects)) {
+            return [];
+        }
+        return data.objects;
+    } catch (error) {
+        console.error('Failed to fetch events by filters:', error);
         return [];
     }
 }
