@@ -19,7 +19,6 @@ export const useEventFilters = ({ events, onFilteredEventsChange }: UseEventFilt
     selectedPeriod: null
   });
 
-  // РњР°РїРїРёРЅРі РѕРїС†РёР№ Рє С‚РёРїР°Рј СЃРѕР±С‹С‚РёР№
   const getEventTypeFromOption = (option: string): number[] => {
     switch(option) {
       case 'Битвы':
@@ -34,8 +33,7 @@ export const useEventFilters = ({ events, onFilteredEventsChange }: UseEventFilt
         return [];
     }
   };
-
-  // РџРѕР»СѓС‡Р°РµРј РІСЃРµ РІС‹Р±СЂР°РЅРЅС‹Рµ С‚РёРїС‹ СЃРѕР±С‹С‚РёР№
+  
   const selectedEventTypes = useMemo(() => {
     const types = new Set<number>();
     Object.entries(filterState.selectedOptions).forEach(([option, isSelected]) => {
