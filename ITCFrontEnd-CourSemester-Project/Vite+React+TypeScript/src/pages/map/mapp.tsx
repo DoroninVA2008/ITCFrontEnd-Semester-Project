@@ -6,9 +6,9 @@ import './mapp.scss'
 
 export const Mapp: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  
   return (
     <div className="MappPage">
       <Header onOpenModal={openModal} />

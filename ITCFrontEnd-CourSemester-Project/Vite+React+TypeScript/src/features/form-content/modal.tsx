@@ -1,5 +1,6 @@
 ﻿import React, { useState, useRef, useEffect } from 'react'
-import { ContactModal, type ContactEventPayload } from './contac'
+import { formApi } from '../../app/saga/saga'
+import { ContactModal, type ContactEventPayload } from './contac' // @ts-ignore
 import './modal.scss'
 
 interface SuggestEventModalProps {
@@ -14,16 +15,15 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [eventName, setEventName] = useState('')
   const [eventPayload, setEventPayload] = useState<ContactEventPayload | null>(null)
-  const [name, setName] = useState('');
-  const [date, setDate] = useState('');
+  const [name, setName] = useState('')
+  const [date, setDate] = useState('')
   const [description, setDescription] = useState('');
   const [eventType, setEventType] = useState<string | null>(null);
   const [isFormValid, setIsFormValid] = useState(false);
   const formRef = useRef<HTMLFormElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const formApiUrl = 'https://155-212-132-55.sslip.io/api/requests/create-request';
+  const formApiUrl = formApi
 
-  // Функция сброса формы
   const resetForm = () => {
     setName('');
     setDate('');

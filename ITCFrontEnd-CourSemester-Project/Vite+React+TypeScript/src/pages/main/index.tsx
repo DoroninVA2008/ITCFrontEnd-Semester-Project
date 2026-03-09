@@ -5,7 +5,7 @@ import { MainContentComponent } from '../../features/main-content/main-content.t
 import './index.scss' //@ts-ignore
 import './mobile.scss'
 
-export const Main: React.FC = () => {
+export const Index: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);

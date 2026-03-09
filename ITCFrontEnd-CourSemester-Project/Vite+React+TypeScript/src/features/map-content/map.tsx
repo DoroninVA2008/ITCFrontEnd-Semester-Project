@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { MapContainer, TileLayer } from 'react-leaflet'
 // import { useMapContext } from './MapContext'
+import { tiLayer } from '../../app/saga/saga.ts'
 import { CountryLabels } from '../layers/layers.tsx'
 import { MarkerWithPopup } from '../events/markers.tsx'
 import { FilterButtonList } from '../filters/filters.tsx' //@ts-ignore
@@ -11,7 +12,6 @@ const zoom = 3
 const minZoom = 3
 const maxZoom = 12
 const maxMapBounds: [number, number][] = [[-112, -169], [84, 192]]
-const TiLayer = 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png'
 
 export const Map: React.FC = () => {
   const [activeEventId, setActiveEventId] = useState<number | null>(null)
@@ -46,7 +46,7 @@ export const Map: React.FC = () => {
         maxBounds={maxMapBounds}
         maxBoundsViscosity={1.0}
       >
-        <TileLayer url={TiLayer} noWrap={false} opacity={0} />
+        <TileLayer url={tiLayer} noWrap={false} opacity={0} />
         <CountryLabels />
         <MarkerWithPopup //@ts-ignore
           activeEventId={activeEventId}

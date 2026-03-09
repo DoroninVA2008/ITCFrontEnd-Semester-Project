@@ -1,5 +1,5 @@
 ﻿import React, { useState, useRef, useEffect } from 'react'
-import { SuccessModal } from './success'
+import { SuccessModal } from './success' // @ts-ignore
 import './modal.scss'
 
 export interface ContactEventPayload {

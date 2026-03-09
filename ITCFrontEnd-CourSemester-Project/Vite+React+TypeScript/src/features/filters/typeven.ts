@@ -1,4 +1,5 @@
 import { EventType } from '../events/evenPositions.ts'
+import { eventsListTypes } from '../../app/saga/saga.ts'
 
 // type FilterOption = string;
 
@@ -38,14 +39,12 @@ interface ApiResponse {
     objects: EventDates[];
 }
 
-const types_api_url = 'https://155-212-132-55.sslip.io/api/objects/get-objects-list';
-
 export async function fetchEvents(): Promise<EventDates[]> {
     try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-        const response = await fetch(types_api_url, {
+        const response = await fetch(eventsListTypes, {
             method: 'POST',
             signal: controller.signal,
             mode: 'cors',

@@ -1,3 +1,16 @@
+$header-color: #030816b3;
+$target-color: #c09139;
+$hover-color: #805A13;
+$active-color: #48330C;
+$text-color: #fafafa;
+$popup-color: #2a1d15;
+$shadow-color: #d4a244;
+$backgroundOpacity-color: rgba(212, 162, 68, 0.1);
+$mapp-color: #2c4672;
+$transition-ive: all 0.3s ease;
+$font-shrift: 'Cruinn', sans-serif;
+$font-shrift-weight: 300;
+
 .FilterList {
   position: absolute;
   top: 160px;
@@ -15,15 +28,15 @@
   min-height: 260px;
   border-radius: 15px;
   opacity: 1;
-  box-shadow: 0px 0px 10px 0px var(--shadow-color);
-  border: 0px solid var(--target-color);
+  box-shadow: 0px 0px 10px 0px $shadow-color;
+  border: 0px solid $target-color;
 }
 
 .FilterList button {
   position: relative; // меняем с absolute на relative
   z-index: 2;
   border-radius: 15px;
-  font-weight: var(--font-shrift-weight) !important;
+  font-weight: $font-shrift-weight !important;
   font-style: normal;
   font-size: 18px;
   backdrop-filter: blur(5px);
@@ -32,42 +45,51 @@
   letter-spacing: 1px;
   cursor: pointer;
   transition: color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
-  color: var(--target-color);
+  color: $target-color;
   background: rgba(94, 67, 16, 0.25);
-  border: 2px solid var(--target-color);
-  box-shadow: 0px 0px 10px 0px var(--shadow-color);
+  border: 2px solid $target-color;
+  box-shadow: 0px 0px 10px 0px $shadow-color;
   text-align: left;
 }
 
 .FilterList button.clicked {
   position: relative;
   z-index: 1;
-  border-left: 2px solid var(--target-color);
-  border-top: 2px solid var(--target-color);
-  border-right: 2px solid var(--target-color);
+  border-left: 2px solid $target-color;
+  border-top: 2px solid $target-color;
+  border-right: 2px solid $target-color;
   border-bottom: 0;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  font-weight: var(--font-shrift-weight) !important;
+  font-weight: $font-shrift-weight !important;
   font-style: normal;
   font-size: 18px;
   padding: 15px 300px 15px 20px;
   letter-spacing: 1px;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
-  color: var(--target-color);
+  color: $target-color;
   background: rgba(94, 67, 16, 0.25);
   box-shadow: none; 
+
+  &:active {
+    border-left: 2px solid $active-color;
+    border-top: 2px solid $active-color;
+    border-right: 2px solid $active-color;
+    border-bottom: 0;
+    box-shadow: 0 0 10px 0 $active-color;
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+  }
 }
 
 .FilterDropdown {
   width: auto; // 403px
   background: rgba(94, 67, 16, 0.25);
-  border-left: 2px solid var(--target-color);
-  border-bottom: 2px solid var(--target-color);
-  border-right: 2px solid var(--target-color);
+  border-left: 2px solid $target-color;
+  border-bottom: 2px solid $target-color;
+  border-right: 2px solid $target-color;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   padding: 15px;
@@ -77,8 +99,6 @@
   pointer-events: none;
   max-height: 69vh;
   overflow-y: auto;
-  
-  // Скрываем полосу прокрутки для разных браузеров
   scrollbar-width: none; /* Для Firefox */
   -ms-overflow-style: none; /* Для Internet Explorer и Edge */
   
@@ -103,9 +123,9 @@
 
 .FilterItem {
   margin-bottom: 30px;
-  color: var(--target-color);
+  color: $target-color;
   letter-spacing: 1px;
-  font-weight: var(--font-shrift-weight) !important;
+  font-weight: $font-shrift-weight !important;
   font-style: normal;
   
   .DropdownLabel {
@@ -149,7 +169,7 @@
   .ApplyBtn, .ResetBtn {
     backdrop-filter: blur(0);
     -webkit-backdrop-filter: blur(0);
-    color: var(--target-color);
+    color: $target-color;
     background: transparent;
     text-align: center;
   }
@@ -183,17 +203,17 @@
     font-size: 16px;
     border-radius: 15px;
     cursor: pointer;
-    font-weight: var(--font-shrift-weight) !important;
+    font-weight: $font-shrift-weight !important;
     transition: color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
-    color: var(--target-color);
+    color: $target-color;
     background-color: transparent;
-    border: 2px solid var(--target-color);
+    border: 2px solid $target-color;
     outline: none;
 
     &:hover, &:focus {
-      border: 2px solid var(--target-color);
+      border: 2px solid $target-color;
       transition: color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0px 0px 10px 0px var(--shadow-color);
+      box-shadow: 0px 0px 10px 0px $shadow-color;
     }
   }
 
@@ -281,9 +301,9 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
-    color: var(--target-color);
+    color: $target-color;
     font-size: 14px;
-    font-weight: var(--font-shrift-weight);
+    font-weight: $font-shrift-weight;
     
     span {
       padding: 4px 8px;
@@ -335,7 +355,6 @@ input[type="range"].dual-range {
     }
   }
   
-  // Для Firefox
   &::-moz-range-track {
     width: 100%;
     height: 8px;
@@ -396,7 +415,7 @@ input[type="range"].dual-range {
 }
 
 .SubDropdownBtn {
-  font-weight: var(--font-shrift-weight) !important;
+  font-weight: $font-shrift-weight !important;
   padding: 12px 16px;
   border: none;
   cursor: pointer;
@@ -405,10 +424,10 @@ input[type="range"].dual-range {
   border-radius: 15px;
   letter-spacing: 1px;
   transition: color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
-  color: var(--target-color);
+  color: $target-color;
   background-color: transparent;
-  border: 2px solid var(--target-color);
-  box-shadow: 0px 0px 10px 0px var(--shadow-color);
+  border: 2px solid $target-color;
+  box-shadow: 0px 0px 10px 0px $shadow-color;
   position: relative; /* Добавляем для позиционирования чекбокса */
   
   input[type="checkbox"] {
@@ -419,7 +438,7 @@ input[type="range"].dual-range {
     height: 18px;
     border-radius: 3px;
     background-color: transparent;
-    border: 2px solid var(--target-color);
+    border: 2px solid $target-color;
     cursor: pointer;
     position: absolute;
     right: 20px;
@@ -428,7 +447,7 @@ input[type="range"].dual-range {
     transition: all 0.3s ease;
     
     &:checked {
-      border-color: var(--target-color);
+      border-color: $target-color;
       background-color: transparent;
       
       &::after {// Галочка 
@@ -438,7 +457,7 @@ input[type="range"].dual-range {
         top: 1px;
         width: 6px;
         height: 10px;
-        border: solid var(--target-color);
+        border: solid $target-color;
         border-width: 0 2px 2px 0;
         transform: rotate(45deg);
         transition: all 0.3s ease;
@@ -447,29 +466,29 @@ input[type="range"].dual-range {
   }
 
   &:hover, &:active {
-    color: var(--hover-color);
-    border: 2px solid var(--hover-color);
-    box-shadow: 0px 0px 10px 0px var(--hover-color);
+    color: $hover-color;
+    border: 2px solid $hover-color;
+    box-shadow: 0px 0px 10px 0px $hover-color;
     
     input[type="checkbox"] {
-      border-color: var(--hover-color);
+      border-color: $hover-color;
       
       &::after {
-        border-color: var(--hover-color);
+        border-color: $hover-color;
       }
     }
   }
 
   &:active {
-    color: var(--active-color);
-    border: 2px solid var(--active-color);
-    box-shadow: 0px 0px 10px 0px var(--active-color);
+    color: $active-color;
+    border: 2px solid $active-color;
+    box-shadow: 0px 0px 10px 0px $active-color;
     
     input[type="checkbox"] {
-      border-color: var(--active-color);
+      border-color: $active-color;
       
       &::after {
-        border-color: var(--active-color);
+        border-color: $active-color;
       }
     }
   }
