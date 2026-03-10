@@ -1,7 +1,7 @@
 import React from 'react'
-import { Butomap } from './butomap'
+import { Butomap } from '../butomap'
 
-export const IndexContentComponent: React.FC = () => {
+export const MainContentComponent: React.FC = () => {
   return (
     <div className="RussianFon">
       <div className="RussianText">

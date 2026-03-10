@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Header } from '../../widgets/header.tsx'
 import { SuggestEventModal } from '../../features/form-content/modal.tsx'
-import { IndexContentComponent } from '../../features/main-content/index-content.tsx' // @ts-ignore
+import { MainContentComponent } from '../../features/main-content/ui/main-content.tsx' // @ts-ignore
 import './mobile.scss' // @ts-ignore
 import './main.scss'
 
@@ -17,7 +17,7 @@ export const Main: React.FC = () => {
           isOpen={isModalOpen}
           onClose={closeModal}
         />
-        <IndexContentComponent />
+        <MainContentComponent />
       </div>
     );
 }

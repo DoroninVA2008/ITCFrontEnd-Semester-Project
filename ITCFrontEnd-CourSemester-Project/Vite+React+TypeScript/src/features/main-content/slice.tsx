@@ -4,6 +4,7 @@ export interface TitleHState {
   title1: string;
   title2: string;
   title3: string;
+  needAnimated: true;
 }
 
 const initialState: TitleHState = {// @ts-ignore

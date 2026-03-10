@@ -1,15 +1,16 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { MainContent } from './index'
+import { MainContent } from '../index'
 
 export const TitlesContentComponent: React.FC = () => {
   const titleH1Text = useSelector(MainContent.selectors.selectH1);
   const titleH2Text = useSelector(MainContent.selectors.selectH2);
   const titleH3Text = useSelector(MainContent.selectors.selectH3);
-
+  const needAnimated = useSelector(MainContent.selectors.selectNeedAnimated);
+  // {classNames('RussianFon', {animated: needAnimated})}
   return (
       <div className="RussianText">
-        <div>
+        <div className="">
           {titleH1Text}
         </div>
         <div

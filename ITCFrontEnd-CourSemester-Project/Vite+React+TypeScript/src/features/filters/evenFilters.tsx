@@ -1,6 +1,6 @@
-﻿import { useState, useEffect, useCallback, useMemo } from 'react';
-import { EventObject } from '../events/evenPositions';
-// РўРёРїС‹ СЃРѕР±С‹С‚РёР№ РґР»СЏ С„РёР»СЊС‚СЂР°С†РёРё
+﻿import { useState, useEffect, useCallback, useMemo } from 'react'
+import { EventObject } from '../events/evenPositions'
+
 export interface FilterState {
   selectedOptions: {[key: string]: boolean};
   periodRange: { min: number; max: number };
@@ -26,7 +26,6 @@ export const useEventFilters = ({ events, onFilteredEventsChange }: UseEventFilt
         return [1]; // EventType.Battle
       case 'Революции':
       case 'Восстания':
-      case 'Реформы':
       case 'Перевороты':
         return [2]; // EventType.Tragedy
       default:
@@ -44,22 +43,17 @@ export const useEventFilters = ({ events, onFilteredEventsChange }: UseEventFilt
     return Array.from(types);
   }, [filterState.selectedOptions]);
 
-  // Р¤РёР»СЊС‚СЂР°С†РёСЏ СЃРѕР±С‹С‚РёР№
   const filteredEvents = useMemo(() => {
     return events.filter(event => {
-      // Р¤РёР»СЊС‚СЂ РїРѕ РґР°С‚Рµ
       const eventYear = new Date(event.eventDate).getFullYear();
       const dateMatch = eventYear >= filterState.periodRange.min && 
                        eventYear <= filterState.periodRange.max;
       
-      // Р¤РёР»СЊС‚СЂ РїРѕ С‚РёРїСѓ СЃРѕР±С‹С‚РёСЏ (РІРѕРµРЅРЅС‹Рµ/РїРѕР»РёС‚РёС‡РµСЃРєРёРµ)
       const typeMatch = selectedEventTypes.length === 0 || 
                        selectedEventTypes.includes(event.eventType);
       
-      // Р¤РёР»СЊС‚СЂ РїРѕ РёСЃС‚РѕСЂРёС‡РµСЃРєРѕРјСѓ РїРµСЂРёРѕРґСѓ
       let periodMatch = true;
       if (filterState.selectedPeriod) {
-        // РџР°СЂСЃРёРј РіРѕРґС‹ РёР· РјРµС‚РєРё РїРµСЂРёРѕРґР° (РЅР°РїСЂРёРјРµСЂ, "862вЂ“988РіРі.")
         const matches = filterState.selectedPeriod.match(/(\d+)вЂ“(\d+)/);
         if (matches) {
           const startYear = parseInt(matches[1]);
@@ -72,12 +66,10 @@ export const useEventFilters = ({ events, onFilteredEventsChange }: UseEventFilt
     });
   }, [events, filterState, selectedEventTypes]);
 
-  // РЈРІРµРґРѕРјР»СЏРµРј РѕР± РёР·РјРµРЅРµРЅРёРё РѕС‚С„РёР»СЊС‚СЂРѕРІР°РЅРЅС‹С… СЃРѕР±С‹С‚РёР№
   useEffect(() => {
     onFilteredEventsChange?.(filteredEvents);
   }, [filteredEvents, onFilteredEventsChange]);
 
-  // РњРµС‚РѕРґС‹ РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ С„РёР»СЊС‚СЂРѕРІ
   const toggleOption = useCallback((option: string) => {
     setFilterState(prev => ({
       ...prev,

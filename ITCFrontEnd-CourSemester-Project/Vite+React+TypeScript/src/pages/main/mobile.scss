@@ -1,3 +1,16 @@
+$header-color: #030816b3;
+$target-color: #c09139;
+$hover-color: #805A13;
+$active-color: #48330C;
+$text-color: #fafafa;
+$popup-color: #2a1d15;
+$shadow-color: #d4a244;
+$backgroundOpacity-color: rgba(212, 162, 68, 0.1);
+$mapp-color: #2c4672;
+$transition-ive: all 0.3s ease;
+$font-shrift: 'Cruinn', sans-serif;
+$font-shrift-weight: 300;
+
 @media screen and (max-width: 1600px) {
   .modal-content {
     padding-top: 34px;
@@ -187,8 +200,8 @@
 
   .RussianFon button {right: 142px !important;
     font-size: 16px !important;
-    border: 1.8px solid var(--target-color) !important;
-    box-shadow: 0px 0px 9px 0px var(--shadow-color);
+    border: 1.8px solid $target-color !important;
+    box-shadow: 0px 0px 9px 0px $shadow-color;
     padding: 14px 20px 14px 20px !important;}
 }
 
@@ -204,8 +217,8 @@
   header button {
     top: 120px;
     font-size: 16px !important;
-    border: 1.6px solid var(--target-color) !important;
-    box-shadow: 0px 0px 8px 0px var(--shadow-color) !important;
+    border-width: 1.6px !important;
+    box-shadow: 0px 0px 8px 0px $shadow-color !important;
     padding: 12px 18px 12px 18px !important;
     right: 142px !important}
 
@@ -302,8 +315,8 @@
 
   .RussianFon button {right: 112px !important;
     font-size: 14px !important;
-    border: 1.8px solid var(--target-color) !important;
-    box-shadow: 0px 0px 8px 0px var(--shadow-color) !important;
+    border: 1.8px solid $target-color !important;
+    box-shadow: 0px 0px 8px 0px $shadow-color !important;
     padding: 12px 17px 12px 17px !important;}
 
   #map {
@@ -406,8 +419,8 @@
 
   .RussianFon button {right: 112px !important;
     font-size: 13px !important;
-    border: 1.5px solid var(--target-color) !important;
-    box-shadow: 0px 0px 7px 0px var(--shadow-color) !important;
+    border: 1.5px solid $target-color !important;
+    box-shadow: 0px 0px 7px 0px $shadow-color !important;
     padding: 11px 16px 11px 16px !important;}
 }
 
@@ -444,8 +457,8 @@
   .RussianFon button {
     right: 108px !important;
     font-size: 12px !important;
-    border: 1.4px solid var(--target-color) !important;
-    box-shadow: 0px 0px 7px 0px var(--shadow-color) !important;
+    border: 1.4px solid $target-color !important;
+    box-shadow: 0px 0px 7px 0px $shadow-color !important;
     padding: 10px 15px 10px 15px !important;
   }
 }
@@ -484,8 +497,8 @@
   .RussianFon button {
     right: 94px !important;
     font-size: 10px !important;
-    border: 1.2px solid var(--target-color) !important;
-    box-shadow: 0px 0px 6px 0px var(--shadow-color) !important;
+    border: 1.2px solid $target-color !important;
+    box-shadow: 0px 0px 6px 0px $shadow-color !important;
     padding: 9px 14px 9px 14px !important;
   }
 
@@ -534,8 +547,8 @@
     bottom: calc(-100vh + 18px) !important;
     right: 92px !important;
     font-size: 10px !important;
-    border: 1px solid var(--target-color) !important;
-    box-shadow: 0px 0px 5px 0px var(--shadow-color) !important;
+    border: 1px solid $target-color !important;
+    box-shadow: 0px 0px 5px 0px $shadow-color !important;
     padding: 8px 13px 8px 13px !important;
     border-radius: 10px !important;
   }
@@ -629,7 +642,7 @@
   .RussianFon button {
     right: 82px !important;
     font-size: 8px !important;
-    box-shadow: 0px 0px 4px 0px var(--shadow-color) !important;
+    box-shadow: 0px 0px 4px 0px $shadow-color !important;
     padding: 8px 10px 8px 10px !important;
     border-radius: 8px !important;
   }
@@ -665,8 +678,8 @@
   header button {
     margin-top: 40px;
     padding: 12px 11px 12px 11px !important;
-    border: 1.4px solid var(--target-color) !important;
-    box-shadow: 0px 0px 7px 0px var(--shadow-color) !important;
+    border: 1.4px solid $target-color !important;
+    box-shadow: 0px 0px 7px 0px $shadow-color !important;
   }
 
   .RussianText {
@@ -677,7 +690,7 @@
     bottom: 20px !important;
     right: 82px !important;
     font-size: 8px !important;
-    box-shadow: 0px 0px 4px 0px var(--shadow-color) !important;
+    box-shadow: 0px 0px 4px 0px $shadow-color !important;
     padding: 8px 10px 8px 10px !important;
     border-radius: 8px !important;
   }
@@ -716,7 +729,7 @@
     bottom: 16px !important;
     right: 72px !important;
     font-size: 6px !important;
-    box-shadow: 0px 0px 3px 0px var(--shadow-color) !important;
+    box-shadow: 0px 0px 3px 0px $shadow-color !important;
     padding: 6px 8px 6px 8px !important;
     border-radius: 6px !important;
   }
@@ -730,7 +743,7 @@
     justify-content: center;
     right: 152px !important;
     padding: 12px 11px 12px 11px !important;
-    box-shadow: 0px 0px 6px 0px var(--shadow-color) !important;
+    box-shadow: 0px 0px 6px 0px $shadow-color !important;
     display: flex
   }
 
@@ -764,8 +777,8 @@
     bottom: 30px !important;
     right: 62px !important;
     font-size: 5px !important;
-    border: 0.8px solid var(--target-color) !important;
-    box-shadow: 0px 0px 2px 0px var(--shadow-color) !important;
+    border: 0.8px solid $target-color !important;
+    box-shadow: 0px 0px 2px 0px $shadow-color !important;
     padding: 5px 6px 5px 6px !important;
     border-radius: 6px !important;
   }
@@ -773,9 +786,9 @@
 
 @media screen and (max-width: 480px) {
   header button {
-    border: 1.2px solid var(--target-color) !important;
+    border: 1.2px solid $target-color !important;
     padding: 12px 12px 12px 12px !important;
-    box-shadow: 0px 0px 5px 0px var(--shadow-color) !important;
+    box-shadow: 0px 0px 5px 0px $shadow-color !important;
     right: 122px !important
   }
 
@@ -808,7 +821,7 @@
     bottom: 26px !important;
     right: 52px !important;
     font-size: 5px !important;
-    box-shadow: 0px 0px 1px 0px var(--shadow-color) !important;
+    box-shadow: 0px 0px 1px 0px $shadow-color !important;
     padding: 5px 6px 5px 6px !important;
     border-radius: 6px !important;
   }
@@ -820,7 +833,7 @@
   }
 
   header img {
-    margin-left:90px !important
+    margin-left: 90px !important
   }
 
   header h1 {
@@ -834,7 +847,7 @@
   header button {
     right: 120px !important;
     padding: 11px 10px 11px 10px !important;
-    box-shadow: 0px 0px 4px 0px var(--shadow-color) !important;
+    box-shadow: 0px 0px 4px 0px $shadow-color !important;
     margin-top: 160px
   }
 
@@ -873,9 +886,9 @@
 
 @media screen and (max-width: 420px) {
   header button {
-    border: 1px solid var(--target-color) !important;
+    border: 1px solid $target-color !important;
     padding: 12px 9px 12px 9px !important;
-    box-shadow: 0px 0px 3px 0px var(--shadow-color) !important;
+    box-shadow: 0px 0px 3px 0px $shadow-color !important;
     right: 110px !important
   }
 
@@ -917,7 +930,7 @@
     bottom: 26px !important;
     right: 32px !important;
     font-size: 5px !important;
-    border: 0.6px solid var(--target-color) !important;
+    border: 0.6px solid $target-color !important;
     padding: 5px 6px 5px 6px !important;
     border-radius: 6px !important;
   }
@@ -925,7 +938,7 @@
 
 @media screen and (max-width: 390px) {
   header button {
-    box-shadow: 0px 0px 2px 0px var(--shadow-color) !important;
+    box-shadow: 0px 0px 2px 0px $shadow-color !important;
     padding: 11px 8px 11px 8px !important;
     right: 100px !important
   }
@@ -971,7 +984,7 @@
 
 @media screen and (max-width: 370px) {
   header button {
-    box-shadow: 0px 0px 1px 0px var(--shadow-color) !important;
+    box-shadow: 0px 0px 1px 0px $shadow-color !important;
     padding: 10px 6px 10px 6px !important;
     right: 90px !important
   }
@@ -1062,15 +1075,32 @@ header h1 {margin-left: 70px !important}}
   .RussianFon button {
     right: 32px !important;
     font-size: 4px !important;
-    border: 0.4px solid var(--target-color) !important;
+    border: 0.4px solid $target-color !important;
     padding: 3px 4px 3px 4px !important;
     border-radius: 4px !important;
   }
 }
 
-@media screen and (max-width: 280px) {header button {right: 46px !important}
-header img {margin-left: 14px !important}
-header h1 {margin-left: 50px !important}}
+@media screen and (max-width: 280px) {
+  header button {
+    right: 46px !important
+  }
 
-@media screen and (max-width: 260px) {header h1 {margin-left: 50px !important}
-header img {margin-left: 4px !important}}
+  header img {
+    margin-left: 14px !important
+  }
+
+  header h1 {
+    margin-left: 50px !important
+  }
+}
+
+@media screen and (max-width: 260px) {
+  header h1 {
+    margin-left: 50px !important
+  }
+
+  header img {
+    margin-left: 4px !important
+  }
+}

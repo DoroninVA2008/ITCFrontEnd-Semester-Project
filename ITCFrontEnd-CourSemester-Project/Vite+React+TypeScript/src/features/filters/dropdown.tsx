@@ -41,7 +41,7 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen }) => {
     },
     {//@ts-ignore
       name: 'Политические события',
-      options: ['Революции', 'Восстания', 'Реформы', 'Перевороты']
+      options: ['Революции', 'Восстания', 'Перевороты']
     },
     {//@ts-ignore
       name: 'Период',
