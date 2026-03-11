@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { EventType } from '../events/evenPositions.ts'
+import { EventType } from '../event-location/evenPositions'
 
 interface FilterContextType {
   selectedTypes: Set<EventType>;

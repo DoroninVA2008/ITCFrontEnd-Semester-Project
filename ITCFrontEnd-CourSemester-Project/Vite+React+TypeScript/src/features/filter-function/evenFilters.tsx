@@ -1,5 +1,5 @@
-﻿import { useState, useEffect, useCallback, useMemo } from 'react'
-import { EventObject } from '../events/evenPositions'
+import { useState, useEffect, useCallback, useMemo } from 'react'
+import { EventObject } from '../event-location/evenPositions'
 import { EventTypeItem, mapSelectedOptionsToEventTypeIds } from './typeven'
 
 export interface FilterState {
@@ -111,3 +111,4 @@ export const useEventFilters = ({ events, eventTypes, onFilteredEventsChange }: 
     setFilterState: setFilterStateDirect
   };
 };
+

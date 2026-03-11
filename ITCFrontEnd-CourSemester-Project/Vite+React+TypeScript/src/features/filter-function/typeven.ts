@@ -1,4 +1,4 @@
-import { EventType } from '../events/evenPositions.ts'
+import { EventType } from '../event-location/evenPositions'
 import { eventsListDates, eventsListTypes } from '../../app/saga/saga.ts'
 
 // type FilterOption = string;
@@ -219,3 +219,4 @@ export function filterEventsByDateRange(
         return eventDate >= fromDate && eventDate <= toDate;
     });
 }
+

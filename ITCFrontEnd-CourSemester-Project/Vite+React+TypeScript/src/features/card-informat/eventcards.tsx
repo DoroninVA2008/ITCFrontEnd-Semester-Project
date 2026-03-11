@@ -1,20 +1,18 @@
-import React from 'react' // @ts-ignore
-import './eventcard.scss' // Подключаем SCSS для стилей
+﻿import React from 'react' // @ts-ignore
+import './eventcard.scss'
 
-// Определение пропсов для нашего компонента
 interface EventCardProps {
-  eventTitle: string;        // Заголовок события
-  eventDate: string;         // Дата события
-  eventDescription: string;  // Описание события
-  imageUrl?: string;         // Необязательная ссылка на изображение
-  onClose: () => void;       // Функция, вызываемая при закрытии карточки (по твоему 'x')
-  onLearnMore: () => void;   // Функция, вызываемая при клике на "Узнать больше"
-  // Пропсы для позиционирования на карте
-  top: number;
-  left: number;
+  eventTitle: string
+  eventDate: string
+  eventDescription: string
+  imageUrl?: string
+  onClose: () => void
+  onLearnMore: () => void
+  top?: number
+  left?: number
+  useMapPosition?: boolean
 }
 
-// Заглушка для иконки изображения
 const ImageIcon: React.FC = () => (
   <svg
     width="50"
@@ -28,7 +26,7 @@ const ImageIcon: React.FC = () => (
       fill="currentColor"
     />
   </svg>
-);
+)
 
 export const EventCard: React.FC<EventCardProps> = ({
   eventTitle,
@@ -39,11 +37,13 @@ export const EventCard: React.FC<EventCardProps> = ({
   onLearnMore,
   top,
   left,
+  useMapPosition = true,
 }) => {
+  const style = useMapPosition && top !== undefined && left !== undefined ? { top, left } : undefined
+
   return (
-    // Позиционируем компонент абсолютно
-    <div className="event-tooltip-card" style={{ top: top, left: left }}>
-      <button className="event-tooltip-close-btn" onClick={onClose} aria-label="Закрыть">
+    <div className={`event-tooltip-card${useMapPosition ? '' : ' event-tooltip-card--popup'}`} style={style}>
+      <button className="event-tooltip-close-btn" onClick={onClose} aria-label="Close">
         &times;
       </button>
 
@@ -58,15 +58,14 @@ export const EventCard: React.FC<EventCardProps> = ({
 
         <div className="event-tooltip-info">
           <h3 className="event-tooltip-title">{eventTitle}</h3>
+          <p className="event-tooltip-description">{eventDescription}</p>
           <span className="event-tooltip-date">{eventDate}</span>
         </div>
       </div>
-
-      <p className="event-tooltip-description">{eventDescription}</p>
 
       <button className="event-tooltip-learn-more-btn" onClick={onLearnMore}>
         Узнать больше
       </button>
     </div>
-  );
-};
+  )
+}

@@ -1,5 +1,5 @@
-﻿import React, { createContext, useContext, ReactNode, useEffect, useMemo, useState, useCallback } from 'react';
-import { EventObject } from '../events/evenPositions';
+import React, { createContext, useContext, ReactNode, useEffect, useMemo, useState, useCallback } from 'react';
+import { EventObject } from '../event-location/evenPositions';
 import { useEventFilters, FilterState } from './evenFilters';
 import { fetchEvents, fetchEventsByFilters, buildFilterRequestData, fetchEventTypes, EventTypeItem } from './typeven';
 
@@ -55,7 +55,7 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ childr
       setEvents(Array.isArray(fetchedEvents) ? (fetchedEvents as EventObject[]) : []);
     } catch (err) {
       console.error('Failed to load events:', err);
-      setError('РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ СЃРѕР±С‹С‚РёСЏ');
+      setError('Не удалось загрузить события');
     } finally {
       setIsLoading(false);
     }
@@ -87,7 +87,7 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ childr
       setEvents(Array.isArray(fetchedEvents) ? (fetchedEvents as EventObject[]) : []);
     } catch (err) {
       console.error('Failed to apply filters:', err);
-      setError('РќРµ СѓРґР°Р»РѕСЃСЊ РїСЂРёРјРµРЅРёС‚СЊ С„РёР»СЊС‚СЂС‹');
+      setError('Не удалось применить фильтры');
     } finally {
       setIsLoading(false);
     }
@@ -108,7 +108,7 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ childr
       setEvents(Array.isArray(fetchedEvents) ? (fetchedEvents as EventObject[]) : []);
     } catch (err) {
       console.error('Failed to apply filters:', err);
-      setError('РќРµ СѓРґР°Р»РѕСЃСЊ РїСЂРёРјРµРЅРёС‚СЊ С„РёР»СЊС‚СЂС‹');
+      setError('Не удалось применить фильтры');
     } finally {
       setIsLoading(false);
     }
@@ -153,3 +153,4 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ childr
     </EventFilterContext.Provider>
   );
 };
+
