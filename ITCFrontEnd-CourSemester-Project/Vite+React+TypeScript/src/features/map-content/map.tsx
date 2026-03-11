@@ -2,9 +2,9 @@
 import { MapContainer, TileLayer } from 'react-leaflet'
 import { tiLayer } from '../../app/saga/saga.ts'
 import { CountryLabels } from '../layers/layers.tsx'
-import { MarkerWithPopup } from '../events/markers.tsx'
-import { FilterButtonList } from '../filters/filters.tsx' //@ts-ignore
-import { EventFilterProvider } from '../filters/evenFilterProvider'
+import { MarkerWithPopup } from '../event-location/markers.tsx'
+import { FilterButtonList } from '../filter-function/filters.tsx' // @ts-ignore
+import { EventFilterProvider } from '../filter-function/evenFilterProvider' // @ts-ignore
 import './map.scss'
 
 const centmap: [number, number] = [68.751244, 98.618423]

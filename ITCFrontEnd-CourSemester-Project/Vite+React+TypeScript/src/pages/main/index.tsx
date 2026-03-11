@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Header } from '../../widgets/header.tsx'
-import { SuggestEventModal } from '../../features/form-content/modal.tsx'
+import { SuggestEventModal } from '../../features/form-dispatch/modal.tsx'
 import { IndexContentComponent } from '../../features/main-content/ui/index-content.tsx' //@ts-ignore
 import './index.scss' //@ts-ignore
 import './mobile.scss'

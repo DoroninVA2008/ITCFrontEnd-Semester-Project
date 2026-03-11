@@ -1,5 +1,6 @@
 ﻿import { useState, useEffect, useCallback, useMemo } from 'react'
 import { EventObject } from '../events/evenPositions'
+import { EventTypeItem, mapSelectedOptionsToEventTypeIds } from './typeven'
 
 export interface FilterState {
   selectedOptions: {[key: string]: boolean};
@@ -9,43 +10,37 @@ export interface FilterState {
 
 interface UseEventFiltersProps {
   events: EventObject[];
+  eventTypes?: EventTypeItem[];
   onFilteredEventsChange?: (filteredEvents: EventObject[]) => void;
 }
 
-export const useEventFilters = ({ events, onFilteredEventsChange }: UseEventFiltersProps) => {
+export const useEventFilters = ({ events, eventTypes, onFilteredEventsChange }: UseEventFiltersProps) => {
   const [filterState, setFilterState] = useState<FilterState>({
     selectedOptions: {},
     periodRange: { min: 862, max: 2026 },
     selectedPeriod: null
   });
 
-  const getEventTypeFromOption = (option: string): number[] => {
-    switch(option) {
-      case 'Битвы':
-      case 'Войны':
-        return [1]; // EventType.Battle
-      case 'Революции':
-      case 'Восстания':
-      case 'Перевороты':
-        return [2]; // EventType.Tragedy
-      default:
-        return [];
-    }
+  const parseEventYear = (dateString: string): number | null => {
+    if (!dateString) return null;
+    const parsed = new Date(dateString);
+    if (!isNaN(parsed.getTime())) return parsed.getFullYear();
+
+    const matches = dateString.match(/\d{3,4}/g);
+    if (!matches || matches.length === 0) return null;
+    const year = parseInt(matches[matches.length - 1], 10);
+    return Number.isNaN(year) ? null : year;
   };
-  
+
   const selectedEventTypes = useMemo(() => {
-    const types = new Set<number>();
-    Object.entries(filterState.selectedOptions).forEach(([option, isSelected]) => {
-      if (isSelected) {
-        getEventTypeFromOption(option).forEach(type => types.add(type));
-      }
-    });
-    return Array.from(types);
-  }, [filterState.selectedOptions]);
+    return mapSelectedOptionsToEventTypeIds(filterState.selectedOptions, eventTypes ?? []);
+  }, [filterState.selectedOptions, eventTypes]);
 
   const filteredEvents = useMemo(() => {
     return events.filter(event => {
-      const eventYear = new Date(event.eventDate).getFullYear();
+      const eventYear = parseEventYear(event.eventDate);
+      if (eventYear === null) return false;
+
       const dateMatch = eventYear >= filterState.periodRange.min && 
                        eventYear <= filterState.periodRange.max;
       
@@ -54,7 +49,7 @@ export const useEventFilters = ({ events, onFilteredEventsChange }: UseEventFilt
       
       let periodMatch = true;
       if (filterState.selectedPeriod) {
-        const matches = filterState.selectedPeriod.match(/(\d+)вЂ“(\d+)/);
+        const matches = filterState.selectedPeriod.match(/(\d+)\D+(\d+)/);
         if (matches) {
           const startYear = parseInt(matches[1]);
           const endYear = parseInt(matches[2]);

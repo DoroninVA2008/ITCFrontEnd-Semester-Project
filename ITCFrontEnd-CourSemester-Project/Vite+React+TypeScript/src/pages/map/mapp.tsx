@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Header } from '../../widgets/header.tsx'
-import { SuggestEventModal } from '../../features/form-content/modal.tsx'
-import { Map } from '../../features/map-content/map.tsx' //@ts-ignore
+import { SuggestEventModal } from '../../features/form-dispatch/modal.tsx'
+import { Map } from '../../features/map-content/map.tsx' // @ts-ignore
 import './mapp.scss'
 
 export const Mapp: React.FC = () => {

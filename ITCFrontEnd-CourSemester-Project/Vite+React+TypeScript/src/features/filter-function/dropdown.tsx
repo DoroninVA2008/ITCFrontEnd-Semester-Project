@@ -1,7 +1,7 @@
 ﻿import React, { useState } from 'react'
 import { ActiveFilterDropdown } from './activedropdown'
-import { FilterConfig, HistoricalPeriod } from './typeven'//@ts-ignore
-import { useEventFilterContext } from './evenFilterProvider'
+import { FilterConfig, HistoricalPeriod } from './typeven'
+import { useEventFilterContext } from './evenFilterProvider'// @ts-ignore
 import './filter.scss'
 
 interface FilterDropdownProps {

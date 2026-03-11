@@ -1,7 +1,7 @@
 ﻿import React, { createContext, useContext, ReactNode, useEffect, useMemo, useState, useCallback } from 'react';
 import { EventObject } from '../events/evenPositions';
 import { useEventFilters, FilterState } from './evenFilters';
-import { fetchEvents, fetchEventsByFilters, buildFilterRequestData } from './typeven';
+import { fetchEvents, fetchEventsByFilters, buildFilterRequestData, fetchEventTypes, EventTypeItem } from './typeven';
 
 interface EventFilterContextType {
   filteredEvents: EventObject[];
@@ -33,6 +33,7 @@ interface EventFilterProviderProps {
 
 export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ children }) => {
   const [events, setEvents] = useState<EventObject[]>([]);
+  const [eventTypes, setEventTypes] = useState<EventTypeItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,7 +45,7 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ childr
     setSelectedPeriod,
     resetFilters,
     setFilterState
-  } = useEventFilters({ events });
+  } = useEventFilters({ events, eventTypes });
 
   const loadInitialEvents = useCallback(async () => {
     try {
@@ -64,6 +65,14 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ childr
     loadInitialEvents();
   }, [loadInitialEvents]);
 
+  useEffect(() => {
+    const loadEventTypes = async () => {
+      const types = await fetchEventTypes();
+      setEventTypes(Array.isArray(types) ? types : []);
+    };
+    loadEventTypes();
+  }, []);
+
   const applyFilters = useCallback(async () => {
     try {
       setIsLoading(true);
@@ -71,7 +80,8 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ childr
       const payload = buildFilterRequestData({
         selectedOptions: filterState.selectedOptions,
         periodRange: filterState.periodRange,
-        selectedPeriod: filterState.selectedPeriod
+        selectedPeriod: filterState.selectedPeriod,
+        eventTypes
       });
       const fetchedEvents = await fetchEventsByFilters(payload);
       setEvents(Array.isArray(fetchedEvents) ? (fetchedEvents as EventObject[]) : []);
@@ -81,7 +91,7 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ childr
     } finally {
       setIsLoading(false);
     }
-  }, [filterState]);
+  }, [filterState, eventTypes]);
 
   const applyFiltersWith = useCallback(async (nextState: FilterState) => {
     try {
@@ -91,7 +101,8 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ childr
       const payload = buildFilterRequestData({
         selectedOptions: nextState.selectedOptions,
         periodRange: nextState.periodRange,
-        selectedPeriod: nextState.selectedPeriod
+        selectedPeriod: nextState.selectedPeriod,
+        eventTypes
       });
       const fetchedEvents = await fetchEventsByFilters(payload);
       setEvents(Array.isArray(fetchedEvents) ? (fetchedEvents as EventObject[]) : []);
@@ -101,7 +112,7 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ childr
     } finally {
       setIsLoading(false);
     }
-  }, [setFilterState]);
+  }, [setFilterState, eventTypes]);
 
   const resetAndReload = useCallback(async () => {
     resetFilters();

@@ -1,5 +1,5 @@
 ﻿import React, { useState } from 'react'
-import { FilterDropdown } from './dropdown'
+import { FilterDropdown } from './dropdown'// @ts-ignore
 import './filter.scss'
 
 export const FilterButtonList: React.FC = () => {

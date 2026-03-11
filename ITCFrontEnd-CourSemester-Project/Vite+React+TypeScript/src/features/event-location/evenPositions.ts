@@ -1,8 +1,10 @@
 // import { watchFetchData } from '../../app/saga/saga'
 
 export enum EventType {
-    Battle = 1,
-    Tragedy = 2
+    Execution = 1,
+    MilitaryOperation = 2,
+    BorderConflict = 3,
+    Uprising = 4
 }
 
 export interface EventObject {

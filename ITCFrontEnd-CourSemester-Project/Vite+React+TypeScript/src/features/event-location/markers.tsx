@@ -1,6 +1,6 @@
-﻿import React from 'react'
+import React from 'react'
 import { EventMarker } from './eventmarkers'
-import { useEventFilterContext } from '../filters/evenFilterProvider'//@ts-ignore
+import { useEventFilterContext } from '../filter-function/evenFilterProvider' // @ts-ignore
 import './marker.scss'
 
 export const MarkerWithPopup: React.FC = () => {

@@ -10,7 +10,7 @@ interface FilterContextType {
 const EventFilterContext = createContext<FilterContextType | undefined>(undefined);
 
 export const EventFilterProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [selectedTypes, setSelectedTypes] = useState<Set<EventType>>(
+  const [selectedTypes, setSelectedTypes] = useState<Set<EventType>>(// @ts-ignore
     new Set([EventType.Battle, EventType.Tragedy])
   );
 
