@@ -13,10 +13,10 @@ export const Index: React.FC = () => {
   return (
     <div>
       <Header onOpenModal={openModal} />
-      <SuggestEventModal 
+      {/* <SuggestEventModal 
         isOpen={isModalOpen}
         onClose={closeModal}
-      />
+      /> */}
       <IndexContentComponent />
     </div>
   );

@@ -1,5 +1,6 @@
-﻿import React, { useState, useRef } from 'react'
+﻿import React, { useState, useRef, useEffect } from 'react'
 import { Marker, Popup, useMap } from 'react-leaflet'
+import { createPortal } from 'react-dom'
 import L from 'leaflet' // @ts-ignore
 import MarkerPolitTarget from '../../assets/MarkerPolitTarget.png' // @ts-ignore
 import MarkerSwordTarget from '../../assets/MarkerSwordTarget.png' // @ts-ignore
@@ -35,7 +36,7 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event }) => {
   const map = useMap()
   const markerRef = useRef<L.Marker | null>(null)
   const [isCardOpen, setIsCardOpen] = useState(false)
-  const [cardPos, setCardPos] = useState<{ top: number; left: number } | null>(null)
+  const [cardLatLng, setCardLatLng] = useState<L.LatLng | null>(null)
 
   const lat = parseFloat(event.latitude)
   const lng = parseFloat(event.longitude)
@@ -63,16 +64,17 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event }) => {
       if (shouldClose) {
         marker.closePopup()
         setIsCardOpen(false)
+        setCardLatLng(null)
         return
       }
 
       marker.openPopup()
-      const p = map.latLngToContainerPoint(e.latlng)
-      setCardPos({ top: p.y - 20, left: p.x + 20 })
+      setCardLatLng(e.latlng)
       setIsCardOpen(true)
     },
     popupclose: () => {
       setIsCardOpen(false)
+      setCardLatLng(null)
     },
   }
 
@@ -94,22 +96,74 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event }) => {
         </Popup>
       </Marker>
 
-      {isCardOpen && cardPos && (
-        <EventCard
-          eventTitle={event.title}
-          eventDate={event.eventDate}
-          eventDescription={event.description}
-          imageUrl={event.previewUrlImage}
-          top={cardPos.top}
-          left={cardPos.left}
+      {isCardOpen && cardLatLng && (
+        <CardOnMap 
+          position={cardLatLng} 
+          map={map}
+          event={event}
           onClose={() => {
             markerRef.current?.closePopup()
             setIsCardOpen(false)
+            setCardLatLng(null)
           }}
-          onLearnMore={() => console.log('open', event.id)}
-          useMapPosition
         />
       )}
     </>
+  )
+}
+
+// Компонент для отображения карточки на карте
+const CardOnMap: React.FC<{
+  position: L.LatLng
+  map: L.Map
+  event: EventObject
+  onClose: () => void
+}> = ({ position, map, event, onClose }) => {
+  const cardRef = useRef<HTMLDivElement>(null)
+  const [cardPosition, setCardPosition] = useState({ top: 0, left: 0 })
+
+  useEffect(() => {
+    const updatePosition = () => {
+      const point = map.latLngToContainerPoint(position)
+      setCardPosition({
+        top: point.y - 100, // Смещение вверх, чтобы карточка была над маркером
+        left: point.x + 20, // Смещение вправо от маркера
+      })
+    }
+
+    updatePosition()
+    map.on('move', updatePosition)
+    map.on('zoom', updatePosition)
+    map.on('resize', updatePosition)
+
+    return () => {
+      map.off('move', updatePosition)
+      map.off('zoom', updatePosition)
+      map.off('resize', updatePosition)
+    }
+  }, [map, position])
+
+  return createPortal(
+    <div
+      ref={cardRef}
+      style={{
+        position: 'absolute',
+        top: cardPosition.top,
+        left: cardPosition.left,
+        zIndex: 1000,
+        pointerEvents: 'auto',
+      }}
+    >
+      <EventCard
+        eventTitle={event.title}
+        eventDate={event.eventDate}
+        eventDescription={event.description}
+        imageUrl={event.previewUrlImage}
+        onClose={onClose}
+        onLearnMore={() => console.log('open', event.id)}
+        // useMapPosition={false}
+      />
+    </div>,
+    map.getContainer()
   )
 }
