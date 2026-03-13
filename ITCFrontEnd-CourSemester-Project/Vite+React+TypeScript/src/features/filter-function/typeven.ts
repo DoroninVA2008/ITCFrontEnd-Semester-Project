@@ -59,9 +59,9 @@ export interface FilterRequestData {
 const OPTION_TO_EVENT_TYPE_NAME: Record<string, string> = {
     'Битвы': 'Военная операция',
     'Войны': 'Военная операция',
-    'Революции': 'Восстание/Бунт',
+    'Революции': 'Расстрел/Расправа',
     'Восстания': 'Восстание/Бунт',
-    'Перевороты': 'Восстание/Бунт'
+    'Перевороты': 'Пограничный конфликт'
 };
 
 const FALLBACK_NAME_TO_ID: Record<string, number> = {
@@ -219,4 +219,3 @@ export function filterEventsByDateRange(
         return eventDate >= fromDate && eventDate <= toDate;
     });
 }
-

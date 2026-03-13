@@ -1,9 +1,12 @@
-.leaflet-popup {
-	opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+.leaflet-popup.event-marker-popup {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.22s ease, transform 0.22s ease;
 }
-.leaflet-popup-open .leaflet-popup {
-    opacity: 1;
+
+.leaflet-popup.event-marker-popup.event-marker-popup-fade-out {
+  opacity: 0;
+  transform: translateY(-6px);
 }
 
 .leaflet-marker-icon {

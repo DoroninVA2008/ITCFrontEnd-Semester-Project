@@ -111,4 +111,3 @@ export const useEventFilters = ({ events, eventTypes, onFilteredEventsChange }: 
     setFilterState: setFilterStateDirect
   };
 };
-

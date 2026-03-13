@@ -118,7 +118,7 @@ $font-shrift-weight: 300;
   transition: opacity 0.3s ease !important;
   opacity: 0;
   pointer-events: none;
-}
+  }
 }
 
 .FilterItem {
@@ -134,23 +134,24 @@ $font-shrift-weight: 300;
     gap: 10px;
     cursor: pointer;
     margin-left: 6px;
+    height: 24px;
     
     summary {
       display: inline-block;
-      rotate: 180deg;
       line-height: 1;
-      font-size: 80px;
+      font-size: 30px;
       min-height: 24px;
       height: 24px;
       max-height: 24px;
-      right: 20px;
       margin-bottom: 10px;
+      margin-left: 108px;
+      right: 20px;
       position: absolute;
     }
 
     summary.rotated, .DropdownLabel.clicked summary {
-      rotate: 360deg;
-      right: 10px;
+      rotate: 180deg;
+      right: 20px; // 10px
       margin-bottom: -10px;
     }
   }

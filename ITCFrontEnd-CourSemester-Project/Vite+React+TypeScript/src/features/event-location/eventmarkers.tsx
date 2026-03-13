@@ -1,4 +1,4 @@
-﻿import React, { useRef, useEffect, useMemo, useCallback } from 'react'
+﻿import React, { useRef, useEffect, useMemo, useCallback, useState } from 'react'
 import { Marker, Popup, useMap } from 'react-leaflet'
 import { createPortal } from 'react-dom'
 import L from 'leaflet' // @ts-ignore
@@ -17,6 +17,8 @@ type EventMarkerProps = {
 }
 
 const popupTimeOut = 100
+const popupFadeDuration = 220
+const cardFadeDuration = 300
 
 const battleIcon = L.icon({
   iconUrl: MarkerPolitTarget,
@@ -41,7 +43,11 @@ const getIconByEventType = (eventType: number) => {
 export const EventMarker: React.FC<EventMarkerProps> = ({ event, markerKey, isActive, onOpen, onClose }) => {
   const map = useMap()
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const fadeCloseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const cardUnmountTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const markerRef = useRef<L.Marker | null>(null)
+  const [shouldRenderCard, setShouldRenderCard] = useState(false)
+  const [isCardVisible, setIsCardVisible] = useState(false)
 
   const lat = parseFloat(event.latitude)
   const lng = parseFloat(event.longitude)
@@ -59,6 +65,7 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event, markerKey, isAc
   }
 
   const handleCardClose = useCallback(() => {
+    setIsCardVisible(false)
     markerRef.current?.closePopup()
     onClose(markerKey)
   }, [markerKey, onClose])
@@ -69,20 +76,85 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event, markerKey, isAc
     }
   }, [isActive])
 
-  const eventHandlers = {
-    mouseover: () => {
+  useEffect(() => {
+    if (isActive) {
+      if (cardUnmountTimeoutRef.current) {
+        clearTimeout(cardUnmountTimeoutRef.current)
+        cardUnmountTimeoutRef.current = null
+      }
+      setShouldRenderCard(true)
+      requestAnimationFrame(() => setIsCardVisible(true))
+      return
+    }
+
+    setIsCardVisible(false)
+    if (shouldRenderCard) {
+      cardUnmountTimeoutRef.current = setTimeout(() => {
+        setShouldRenderCard(false)
+        cardUnmountTimeoutRef.current = null
+      }, cardFadeDuration)
+    }
+  }, [isActive, shouldRenderCard])
+
+  useEffect(() => {
+    return () => {
       if (closeTimeoutRef.current) {
         clearTimeout(closeTimeoutRef.current)
-        closeTimeoutRef.current = null
       }
+      if (fadeCloseTimeoutRef.current) {
+        clearTimeout(fadeCloseTimeoutRef.current)
+      }
+      if (cardUnmountTimeoutRef.current) {
+        clearTimeout(cardUnmountTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  const clearPopupCloseTimers = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current)
+      closeTimeoutRef.current = null
+    }
+    if (fadeCloseTimeoutRef.current) {
+      clearTimeout(fadeCloseTimeoutRef.current)
+      fadeCloseTimeoutRef.current = null
+    }
+  }
+
+  const removeFadeClass = (marker: L.Marker) => {
+    const popupElement = marker.getPopup()?.getElement()
+    if (popupElement) {
+      popupElement.classList.remove('event-marker-popup-fade-out')
+    }
+  }
+
+  const closePopupWithFade = (marker: L.Marker) => {
+    const popupElement = marker.getPopup()?.getElement()
+    if (!popupElement) {
+      marker.closePopup()
+      return
+    }
+
+    popupElement.classList.add('event-marker-popup-fade-out')
+    fadeCloseTimeoutRef.current = setTimeout(() => {
+      marker.closePopup()
+      popupElement.classList.remove('event-marker-popup-fade-out')
+      fadeCloseTimeoutRef.current = null
+    }, popupFadeDuration)
+  }
+
+  const eventHandlers = {
+    mouseover: () => {
       if (markerRef.current) {
+        clearPopupCloseTimers()
+        removeFadeClass(markerRef.current)
         markerRef.current.openPopup()
       }
     },
     mouseout: () => {
       closeTimeoutRef.current = setTimeout(() => {
         if (markerRef.current) {
-          markerRef.current.closePopup()
+          closePopupWithFade(markerRef.current)
         }
       }, popupTimeOut)
     },
@@ -101,12 +173,12 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event, markerKey, isAc
         ref={markerRef}
         eventHandlers={eventHandlers}
       >
-        <Popup>
+        <Popup className="event-marker-popup">
           <div
             onMouseEnter={() => {
-              if (closeTimeoutRef.current) {
-                clearTimeout(closeTimeoutRef.current)
-                closeTimeoutRef.current = null
+              if (markerRef.current) {
+                clearPopupCloseTimers()
+                removeFadeClass(markerRef.current)
               }
             }}
           >
@@ -118,28 +190,34 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event, markerKey, isAc
         </Popup>
       </Marker>
 
-      {/* Карточка появляется при активном маркере */}
-      {isActive && (
-        <CardOnMap position={markerLatLng} map={map} event={event} onClose={handleCardClose} />
+      {shouldRenderCard && (
+        <CardOnMap
+          isVisible={isCardVisible}
+          position={markerLatLng}
+          map={map}
+          event={event}
+          onClose={handleCardClose}
+        />
       )}
     </>
   )
 }
 
 const CardOnMap: React.FC<{
+  isVisible: boolean
   position: L.LatLng
   map: L.Map
   event: EventObject
   onClose: () => void
-}> = ({ position, map, event, onClose }) => {
-  const [cardPosition, setCardPosition] = React.useState({ top: 0, left: 0 })
+}> = ({ isVisible, position, map, event, onClose }) => {
+  const [cardPosition, setCardPosition] = useState({ top: - 300, left: - 20 })
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updatePosition = () => {
       const point = map.latLngToContainerPoint(position)
       setCardPosition({
-        top: point.y - 100,
-        left: point.x + 20,
+        top: point.y - 300,
+        left: point.x - 20,
       })
     }
     updatePosition()
@@ -155,12 +233,13 @@ const CardOnMap: React.FC<{
 
   return createPortal(
     <div
+      className={`event-card-shell ${isVisible ? 'is-visible' : 'is-hidden'}`}
       style={{
         position: 'absolute',
         top: cardPosition.top,
         left: cardPosition.left,
         zIndex: 1000,
-        pointerEvents: 'auto',
+        pointerEvents: isVisible ? 'auto' : 'none',
       }}
     >
       <EventCard
