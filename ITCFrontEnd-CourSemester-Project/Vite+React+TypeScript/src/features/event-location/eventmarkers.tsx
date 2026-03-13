@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef, useEffect } from 'react'
+﻿import React, { useRef, useEffect, useMemo, useCallback } from 'react'
 import { Marker, Popup, useMap } from 'react-leaflet'
 import { createPortal } from 'react-dom'
 import L from 'leaflet' // @ts-ignore
@@ -10,7 +10,13 @@ import { EventObject } from './evenPositions'
 
 type EventMarkerProps = {
   event: EventObject
+  markerKey: string
+  isActive: boolean
+  onOpen: (markerKey: string) => void
+  onClose: (markerKey: string) => void
 }
+
+const popupTimeOut = 100
 
 const battleIcon = L.icon({
   iconUrl: MarkerPolitTarget,
@@ -32,49 +38,58 @@ const getIconByEventType = (eventType: number) => {
   return eventType === 1 ? battleIcon : tragedyIcon
 }
 
-export const EventMarker: React.FC<EventMarkerProps> = ({ event }) => {
+export const EventMarker: React.FC<EventMarkerProps> = ({ event, markerKey, isActive, onOpen, onClose }) => {
   const map = useMap()
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const markerRef = useRef<L.Marker | null>(null)
-  const [isCardOpen, setIsCardOpen] = useState(false)
-  const [cardLatLng, setCardLatLng] = useState<L.LatLng | null>(null)
 
   const lat = parseFloat(event.latitude)
   const lng = parseFloat(event.longitude)
   const position = !isNaN(lat) && !isNaN(lng) ? ([lat, lng] as [number, number]) : null
+  const markerLatLng = useMemo(() => (position ? L.latLng(position[0], position[1]) : null), [position])
 
-  if (!position) return null
+  if (!position || !markerLatLng) return null
 
   const formatDate = (dateString: string) => {
     try {
-      return new Date(dateString).toLocaleDateString('ru-RU', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })
+      return new Date(dateString).toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })
     } catch {
       return dateString
     }
   }
 
+  const handleCardClose = useCallback(() => {
+    markerRef.current?.closePopup()
+    onClose(markerKey)
+  }, [markerKey, onClose])
+
+  useEffect(() => {
+    if (!isActive) {
+      markerRef.current?.closePopup()
+    }
+  }, [isActive])
+
   const eventHandlers = {
+    mouseover: () => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current)
+        closeTimeoutRef.current = null
+      }
+      if (markerRef.current) {
+        markerRef.current.openPopup()
+      }
+    },
+    mouseout: () => {
+      closeTimeoutRef.current = setTimeout(() => {
+        if (markerRef.current) {
+          markerRef.current.closePopup()
+        }
+      }, popupTimeOut)
+    },
     click: (e: L.LeafletMouseEvent) => {
       const marker = e.target as L.Marker
-      const shouldClose = marker.isPopupOpen() && isCardOpen
-
-      if (shouldClose) {
-        marker.closePopup()
-        setIsCardOpen(false)
-        setCardLatLng(null)
-        return
-      }
-
       marker.openPopup()
-      setCardLatLng(e.latlng)
-      setIsCardOpen(true)
-    },
-    popupclose: () => {
-      setIsCardOpen(false)
-      setCardLatLng(null)
+      onOpen(markerKey)
     },
   }
 
@@ -87,7 +102,14 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event }) => {
         eventHandlers={eventHandlers}
       >
         <Popup>
-          <div>
+          <div
+            onMouseEnter={() => {
+              if (closeTimeoutRef.current) {
+                clearTimeout(closeTimeoutRef.current)
+                closeTimeoutRef.current = null
+              }
+            }}
+          >
             <h3 style={{ margin: '0 0 6px 0', color: '#FFFFFF' }}>{event.title}</h3>
             <small style={{ color: '#FFFFFF', display: 'block', fontSize: '14px', marginTop: '0.2em' }}>
               🗓️ {formatDate(event.eventDate)}
@@ -96,46 +118,34 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event }) => {
         </Popup>
       </Marker>
 
-      {isCardOpen && cardLatLng && (
-        <CardOnMap 
-          position={cardLatLng} 
-          map={map}
-          event={event}
-          onClose={() => {
-            markerRef.current?.closePopup()
-            setIsCardOpen(false)
-            setCardLatLng(null)
-          }}
-        />
+      {/* Карточка появляется при активном маркере */}
+      {isActive && (
+        <CardOnMap position={markerLatLng} map={map} event={event} onClose={handleCardClose} />
       )}
     </>
   )
 }
 
-// Компонент для отображения карточки на карте
 const CardOnMap: React.FC<{
   position: L.LatLng
   map: L.Map
   event: EventObject
   onClose: () => void
 }> = ({ position, map, event, onClose }) => {
-  const cardRef = useRef<HTMLDivElement>(null)
-  const [cardPosition, setCardPosition] = useState({ top: 0, left: 0 })
+  const [cardPosition, setCardPosition] = React.useState({ top: 0, left: 0 })
 
-  useEffect(() => {
+  React.useEffect(() => {
     const updatePosition = () => {
       const point = map.latLngToContainerPoint(position)
       setCardPosition({
-        top: point.y - 100, // Смещение вверх, чтобы карточка была над маркером
-        left: point.x + 20, // Смещение вправо от маркера
+        top: point.y - 100,
+        left: point.x + 20,
       })
     }
-
     updatePosition()
     map.on('move', updatePosition)
     map.on('zoom', updatePosition)
     map.on('resize', updatePosition)
-
     return () => {
       map.off('move', updatePosition)
       map.off('zoom', updatePosition)
@@ -145,7 +155,6 @@ const CardOnMap: React.FC<{
 
   return createPortal(
     <div
-      ref={cardRef}
       style={{
         position: 'absolute',
         top: cardPosition.top,
@@ -161,7 +170,6 @@ const CardOnMap: React.FC<{
         imageUrl={event.previewUrlImage}
         onClose={onClose}
         onLearnMore={() => console.log('open', event.id)}
-        // useMapPosition={false}
       />
     </div>,
     map.getContainer()
