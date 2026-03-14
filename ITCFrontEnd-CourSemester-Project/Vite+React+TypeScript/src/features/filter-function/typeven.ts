@@ -50,7 +50,7 @@ interface EventTypesResponse {
 }
 
 export interface FilterRequestData {
-    data: number[];
+    eventTypeIds: number[];
     dateFrom: string;
     dateTo: string;
     periodLabel: string | null;
@@ -99,13 +99,13 @@ export const buildFilterRequestData = (params: {
     selectedPeriod: string | null;
     eventTypes?: EventTypeItem[];
 }): FilterRequestData => {
-    const data = mapSelectedOptionsToEventTypeIds(
+    const eventTypeIds = mapSelectedOptionsToEventTypeIds(
         params.selectedOptions,
         params.eventTypes ?? []
     );
 
     return {
-        data,
+        eventTypeIds,
         dateFrom: `${params.periodRange.min}-01-01`,
         dateTo: `${params.periodRange.max}-12-31`,
         periodLabel: params.selectedPeriod,
@@ -128,6 +128,7 @@ export async function fetchEventTypes(): Promise<EventTypeItem[]> {
         });
 
         clearTimeout(timeoutId);
+        
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -204,18 +205,18 @@ export async function fetchEventsByFilters(payload: FilterRequestData): Promise<
     }
 }
 
-export function filterEventsByDateRange(
-    events: EventDates[], 
-    dateRange: DateRange
-): EventDates[] {
-    const fromDate = new Date(dateRange.dateFrom);
-    fromDate.setHours(0, 0, 0, 0);
+// export function filterEventsByDateRange(
+//     events: EventDates[], 
+//     dateRange: DateRange
+// ): EventDates[] {
+//     const fromDate = new Date(dateRange.dateFrom);
+//     fromDate.setHours(0, 0, 0, 0);
     
-    const toDate = new Date(dateRange.dateTo);
-    toDate.setHours(23, 59, 59, 999);
+//     const toDate = new Date(dateRange.dateTo);
+//     toDate.setHours(23, 59, 59, 999);
     
-    return events.filter(event => {
-        const eventDate = new Date(event.eventDate);
-        return eventDate >= fromDate && eventDate <= toDate;
-    });
-}
+//     return events.filter(event => {
+//         const eventDate = new Date(event.eventDate);
+//         return eventDate >= fromDate && eventDate <= toDate;
+//     });
+// }
