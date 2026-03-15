@@ -13,8 +13,8 @@ const FETCH_DATA = 'FETCH_DATA';
 const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
 const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 
-export var tiLayer = 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png'; 
-export var landGeoJSon = './src/features/layers/countries.geojson'; // https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson
+export var tiLayer = 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png';
+export var landGeoJSon = 'https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson'; // ./src/features/layers/countries.geojson
 export var eventsListDates = 'https://155-212-132-55.sslip.io/api/objects/get-objects-list'; // Для типов событии фильтров
 // export var eventsListTypes = 'https://155-212-132-55.sslip.io/api/objects/get-event-types-list'; // 
 export var formApi = 'https://155-212-132-55.sslip.io/api/requests/create-request'; // Для формы подачи заявки

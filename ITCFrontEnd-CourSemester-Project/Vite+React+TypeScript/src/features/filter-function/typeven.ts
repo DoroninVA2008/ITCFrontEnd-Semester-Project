@@ -49,7 +49,7 @@ export interface FilterRequestData {
 
 const OPTION_TO_EVENT_TYPE_NAME: Record<string, string> = {
     'Битвы': 'Военная операция',
-    'Войны': 'Военная операция',
+    'Войны': 'Войны',
     'Революции': 'Расстрел/Расправа',
     'Восстания': 'Восстание/Бунт',
     'Перевороты': 'Пограничный конфликт'
@@ -59,7 +59,8 @@ const FALLBACK_NAME_TO_ID: Record<string, number> = {
     'Расстрел/Расправа': 1,
     'Военная операция': 2,
     'Пограничный конфликт': 3,
-    'Восстание/Бунт': 4
+    'Восстание/Бунт': 4,
+    'Войны': 5
 };
 
 export const mapSelectedOptionsToEventTypeIds = (

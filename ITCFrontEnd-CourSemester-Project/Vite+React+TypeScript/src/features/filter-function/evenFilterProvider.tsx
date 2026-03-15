@@ -33,7 +33,7 @@ interface EventFilterProviderProps {
 }
 
 export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ children }) => {
-  const [events, setEvents] = useState<EventObject[]>([]);
+  const [events, setEvents] = useState<EventObject[]>([]); // @ts-ignore
   const [eventTypes, setEventTypes] = useState<EventTypeItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
