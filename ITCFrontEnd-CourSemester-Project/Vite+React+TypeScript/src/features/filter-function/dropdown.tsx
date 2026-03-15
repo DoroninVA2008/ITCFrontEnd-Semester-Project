@@ -1,7 +1,7 @@
 ﻿import React, { useState } from 'react'
 import { ActiveFilterDropdown } from './activedropdown'
 import { FilterConfig, HistoricalPeriod } from './typeven'
-import { useEventFilterContext } from './evenFilterProvider'// @ts-ignore
+import { useEventFilterContext } from './evenFilterProvider' // @ts-ignore
 import './filter.scss'
 
 interface FilterDropdownProps {
@@ -35,15 +35,15 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen }) => {
   ]
 
   const filters: FilterConfig[] = [
-    {//@ts-ignore
+    {// @ts-ignore
       name: 'Военные события',
       options: ['Битвы', 'Войны']
     },
-    {//@ts-ignore
+    {// @ts-ignore
       name: 'Политические события',
       options: ['Революции', 'Восстания', 'Перевороты']
     },
-    {//@ts-ignore
+    {// @ts-ignore
       name: 'Период',
       options: historicalPeriods.map(p => p.label)
     }
@@ -55,7 +55,7 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen }) => {
 
   const handlePeriodChange = (min: number, max: number) => {
     setPeriodRange({ min, max })
-    console.log(`Р’С‹Р±СЂР°РЅ РїРµСЂРёРѕРґ: РѕС‚ ${min} РґРѕ ${max}`)
+    console.log('Выбран период (числа):', { min, max })
   }
 
   const handlePeriodSelect = (periodLabel: string) => {
@@ -81,12 +81,30 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen }) => {
   }
 
   const handleApplyFilters = async () => {
+  console.log('Применяются фильтры с periodRange (числа):', periodRange)
+  
+  // Проверяем, есть ли выбранные опции
+  const hasSelectedOptions = Object.values(selectedOptions).some(value => value === true)
+  const hasSelectedPeriod = selectedPeriod !== null
+  const hasCustomPeriodRange = periodRange.min !== 862 || periodRange.max !== 2026
+  
+  // Если ни один фильтр не выбран
+  if (!hasSelectedOptions && !hasSelectedPeriod && !hasCustomPeriodRange) {
+    console.log('Ни один фильтр не выбран, скрываем все маркеры')
+    await applyFiltersWith({
+      selectedOptions: {}, // @ts-ignore
+      periodRange: { min: null, max: null }, // или специальное значение для скрытия всех
+      selectedPeriod: null,
+      hideAllMarkers: true // Добавляем флаг для скрытия всех маркеров
+    })
+  } else {
     await applyFiltersWith({
       selectedOptions,
       periodRange,
       selectedPeriod
     })
   }
+}
 
   if (!isOpen) return null
 
@@ -99,16 +117,16 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen }) => {
             onClick={() => handleFilterClick(index)}
           >
             <label className="DropdownLabel">
-              {filter.//@ts-ignore
-                name} 
+              {filter.// @ts-ignore
+              name}
               <summary className={activeFilter === index ? 'rotated' : ''} data-index={index}>
                 <svg width="30" height="30" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4.33337 9.75L13 18.4167L21.6667 9.75" stroke="#C09139" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M4.33337 9.75L13 18.4167L21.6667 9.75" stroke="#C09139" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </summary> 
             </label>
           </div>
-          
+
           {activeFilter === index && (
             <ActiveFilterDropdown
               filterIndex={index}
@@ -125,7 +143,7 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen }) => {
           )}
         </div>
       ))}
-      
+
       <div className="FilterActions">
         <button className="ApplyBtn" onClick={handleApplyFilters}>Применить</button>
         <button className="ResetBtn" onClick={handleResetFilters}>Сбросить</button>

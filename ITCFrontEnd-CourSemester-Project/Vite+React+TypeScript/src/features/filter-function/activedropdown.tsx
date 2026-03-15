@@ -29,15 +29,26 @@ export const ActiveFilterDropdown: React.FC<ActiveFilterDropdownProps> = ({
   onPeriodClick,
   onOptionToggle
 }) => {
-  const [minInputValue, setMinInputValue] = useState('862')
+  const [minInputValue, setMinInputValue] = useState('0862')
   const [maxInputValue, setMaxInputValue] = useState('2026')
 
+  // Функция для форматирования года с ведущими нулями до 4 знаков
+  const formatYearWithLeadingZeros = (year: number): string => {
+    return year.toString().padStart(4, '0')
+  }
+
+  // Функция для отображения года в UI (с "н.в." для 2026)
+  const formatYearForDisplay = (year: number): string => {
+    if (year === 2026) return 'н.в.'
+    return formatYearWithLeadingZeros(year)
+  }
+
   useEffect(() => {
-    setMinInputValue(formatYear(periodRange.min))
-    setMaxInputValue(formatYear(periodRange.max))
+    setMinInputValue(formatYearForDisplay(periodRange.min))
+    setMaxInputValue(formatYearForDisplay(periodRange.max))
   }, [periodRange])
 
-    const isPeriodInRange = (period: HistoricalPeriod): boolean => {
+  const isPeriodInRange = (period: HistoricalPeriod): boolean => {
     return (period.startYear <= periodRange.max && period.endYear >= periodRange.min)
   }
 
@@ -51,26 +62,33 @@ export const ActiveFilterDropdown: React.FC<ActiveFilterDropdownProps> = ({
 
   const handleMinInputBlur = () => {
     let value = minInputValue.replace(/[^\d]/g, '')
-    let numValue = value ? parseInt(value) : 862
-    
+    let numValue = value ? parseInt(value, 10) : 862
+
+    // Ограничение диапазона
     numValue = Math.min(Math.max(numValue, 862), periodRange.max - 1)
+
+    // Форматирование для отображения
+    const formattedForDisplay = formatYearForDisplay(numValue)
+    setMinInputValue(formattedForDisplay)
+    
+    // Передаем ЧИСЛО (не строку) - форматирование будет в typeven.ts
     onPeriodChange(numValue, periodRange.max)
   }
-
   const handleMaxInputBlur = () => {
     let value = maxInputValue.replace(/[^\d]/g, '')
-    let numValue = value ? parseInt(value) : 2026
-    
+    let numValue = value ? parseInt(value, 10) : 2026
+
     numValue = Math.min(Math.max(numValue, periodRange.min + 1), 2026)
+
+    // Форматирование для отображения
+    const formattedForDisplay = formatYearForDisplay(numValue)
+    setMaxInputValue(formattedForDisplay)
+    
+    // Передаем ЧИСЛО (не строку) - форматирование будет в typeven.ts
     onPeriodChange(periodRange.min, numValue)
   }
 
-  const formatYear = (year: number) => {
-    if (year === 2026) return 'н.в.'
-    return `${year}`
-  }
-
-    const handlePeriodButtonClick = (period: HistoricalPeriod) => {
+  const handlePeriodButtonClick = (period: HistoricalPeriod) => {
     onPeriodSelect(period.label)
     onPeriodClick(period)
   }
@@ -79,7 +97,7 @@ export const ActiveFilterDropdown: React.FC<ActiveFilterDropdownProps> = ({
     onOptionToggle(option)
   }
 
-    return (
+  return (
     <div className="FilterSubDropdown">
       {filterIndex === 2 && (
         <>
@@ -109,20 +127,20 @@ export const ActiveFilterDropdown: React.FC<ActiveFilterDropdownProps> = ({
           />
         </>
       )}
-      
+
       {filterIndex === 2 
         ? historicalPeriods.map((period, optIndex) => {
-            const isInRange = isPeriodInRange(period) // Только для визуала!
+            const isInRange = isPeriodInRange(period)
             const isSelected = selectedPeriod === period.label
-            
+
             return (
               <SubDropdownBtn
                 key={optIndex}
                 label={period.label}
                 isSelected={isSelected}
-                isInRange={isInRange} // Передаем ТОЛЬКО для стилей
-                onClick={() => handlePeriodButtonClick(period)} // Клик всегда работает
-                onCheckboxChange={() => handlePeriodButtonClick(period)} // Чекбокс всегда работает
+                isInRange={isInRange}
+                onClick={() => handlePeriodButtonClick(period)}
+                onCheckboxChange={() => handlePeriodButtonClick(period)}
               />
             )
           })
@@ -131,7 +149,7 @@ export const ActiveFilterDropdown: React.FC<ActiveFilterDropdownProps> = ({
               key={optIndex}
               label={option}
               isSelected={selectedOptions[option] || false}
-              isInRange={true} // Для обычных опций всегда true
+              isInRange={true}
               onClick={() => handleOptionButtonClick(option)}
               onCheckboxChange={() => handleOptionButtonClick(option)}
             />

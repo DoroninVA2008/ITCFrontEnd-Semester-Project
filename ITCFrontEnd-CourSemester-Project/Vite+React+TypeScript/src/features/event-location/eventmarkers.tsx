@@ -36,8 +36,16 @@ const tragedyIcon = L.icon({
   popupAnchor: [0, 4],
 })
 
-const getIconByEventType = (eventType: number) => {
-  return eventType === 1 ? battleIcon : tragedyIcon
+const getIconByEventType = (eventType: number): L.Icon => {
+  return iconMapping[eventType] || tragedyIcon // по умолчанию или по необходимости
+}
+
+const iconMapping: Record<number, L.Icon> = {
+  1: battleIcon, // tragedyIcon
+  2: tragedyIcon,
+  3: battleIcon,
+  4: battleIcon,
+  5: battleIcon,
 }
 
 export const EventMarker: React.FC<EventMarkerProps> = ({ event, markerKey, isActive, onOpen, onClose }) => {
@@ -169,7 +177,7 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event, markerKey, isAc
     <>
       <Marker
         position={position}
-        icon={getIconByEventType(event.eventType)}
+        icon={getIconByEventType(event.eventType)} // тут использовать numeric ID
         ref={markerRef}
         eventHandlers={eventHandlers}
       >

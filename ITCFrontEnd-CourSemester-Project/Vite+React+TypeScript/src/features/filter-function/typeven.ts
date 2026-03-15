@@ -1,19 +1,14 @@
 import { EventType } from '../event-location/evenPositions'
-import { eventsListDates, eventsListTypes } from '../../app/saga/saga.ts'
-
-// type FilterOption = string;
+import { eventsListDates } from '../../app/saga/saga.ts'
 
 export interface FilterConfig {
   options: any;
   id: string;
   label: string;
-  type: 'period' | 'options'; // Например, 'period' для слайдера, 'options' для типов событий
-  // Дополнительные свойства, если нужны, например, для option-фильтров
-  // options?: { label: string; value: string | number }[];
+  type: 'period' | 'options';
 }
 
 export interface HistoricalPeriod {
-  // id: string;
   label: string;
   startYear: number;
   endYear: number;
@@ -45,15 +40,11 @@ interface ApiResponse {
     objects: EventDates[];
 }
 
-interface EventTypesResponse {
-    eventTypes: EventTypeItem[];
-}
-
 export interface FilterRequestData {
     eventTypeIds: number[];
     dateFrom: string;
     dateTo: string;
-    periodLabel: string | null;
+    // periodLabel: string | null;
 }
 
 const OPTION_TO_EVENT_TYPE_NAME: Record<string, string> = {
@@ -93,6 +84,11 @@ export const mapSelectedOptionsToEventTypeIds = (
         .filter((id): id is number => typeof id === 'number');
 };
 
+// Новая функция для форматирования года с ведущими нулями до 4 знаков
+const formatYearForApi = (year: number): string => {
+    return year.toString().padStart(4, '0');
+};
+
 export const buildFilterRequestData = (params: {
     selectedOptions: { [key: string]: boolean };
     periodRange: { min: number; max: number };
@@ -104,45 +100,17 @@ export const buildFilterRequestData = (params: {
         params.eventTypes ?? []
     );
 
+    // Форматируем годы с ведущими нулями для API
+    const formattedMinYear = formatYearForApi(params.periodRange.min);
+    const formattedMaxYear = formatYearForApi(params.periodRange.max);
+
     return {
         eventTypeIds,
-        dateFrom: `${params.periodRange.min}-01-01`,
-        dateTo: `${params.periodRange.max}-12-31`,
-        periodLabel: params.selectedPeriod,
+        dateFrom: `${formattedMinYear}-01-01`,
+        dateTo: `${formattedMaxYear}-12-31`,
+        // periodLabel: params.selectedPeriod,
     };
 };
-
-export async function fetchEventTypes(): Promise<EventTypeItem[]> {
-    try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000);
-
-        const response = await fetch(eventsListTypes, {
-            method: 'POST',
-            signal: controller.signal,
-            mode: 'cors',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        });
-
-        clearTimeout(timeoutId);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data: EventTypesResponse = await response.json();
-        if (!data || !Array.isArray(data.eventTypes)) {
-            return [];
-        }
-        return data.eventTypes;
-    } catch (error) {
-        console.error('Failed to fetch event types:', error);
-        return [];
-    }
-}
 
 export async function fetchEvents(): Promise<EventDates[]> {
     try {
@@ -158,11 +126,10 @@ export async function fetchEvents(): Promise<EventDates[]> {
                 'Content-Type': 'application/json'
             }
         });
-            
-            clearTimeout(timeoutId);
+
+        clearTimeout(timeoutId);
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+            throw new Error(`HTTP error! status: ${response.status}`);}
         const data: ApiResponse = await response.json();
         if (!data || !Array.isArray(data.objects)) {
             return [];
@@ -178,6 +145,8 @@ export async function fetchEventsByFilters(payload: FilterRequestData): Promise<
     try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+        console.log('Отправляемый payload на бэкенд:', payload); // Для отладки
 
         const response = await fetch(eventsListDates, {
             method: 'POST',
@@ -204,19 +173,3 @@ export async function fetchEventsByFilters(payload: FilterRequestData): Promise<
         return [];
     }
 }
-
-// export function filterEventsByDateRange(
-//     events: EventDates[], 
-//     dateRange: DateRange
-// ): EventDates[] {
-//     const fromDate = new Date(dateRange.dateFrom);
-//     fromDate.setHours(0, 0, 0, 0);
-    
-//     const toDate = new Date(dateRange.dateTo);
-//     toDate.setHours(23, 59, 59, 999);
-    
-//     return events.filter(event => {
-//         const eventDate = new Date(event.eventDate);
-//         return eventDate >= fromDate && eventDate <= toDate;
-//     });
-// }

@@ -1,7 +1,8 @@
 import React, { createContext, useContext, ReactNode, useEffect, useMemo, useState, useCallback } from 'react';
 import { EventObject } from '../event-location/evenPositions';
 import { useEventFilters, FilterState } from './evenFilters';
-import { fetchEvents, fetchEventsByFilters, buildFilterRequestData, fetchEventTypes, EventTypeItem } from './typeven';
+import { fetchEvents, fetchEventsByFilters, buildFilterRequestData, // fetchEventTypes, 
+EventTypeItem } from './typeven';
 
 interface EventFilterContextType {
   filteredEvents: EventObject[];
@@ -65,13 +66,13 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ childr
     loadInitialEvents();
   }, [loadInitialEvents]);
 
-  useEffect(() => {
-    const loadEventTypes = async () => {
-      const types = await fetchEventTypes();
-      setEventTypes(Array.isArray(types) ? types : []);
-    };
-    loadEventTypes();
-  }, []);
+  // useEffect(() => {
+  //   const loadEventTypes = async () => {
+  //     const types = await fetchEventTypes();
+  //     setEventTypes(Array.isArray(types) ? types : []);
+  //   };
+  //   loadEventTypes();
+  // }, []);
 
   const applyFilters = useCallback(async () => {
     try {
@@ -153,4 +154,3 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ childr
     </EventFilterContext.Provider>
   );
 };
-
