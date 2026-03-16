@@ -12,16 +12,18 @@ $padding-main: 15px;
 
 .event-tooltip-card {
   position: absolute;
+  top: 120px;
+  right: 0;
   z-index: 1000;
   width: auto;
+  height: 100vh;
   transition: all 0.3s ease;
   background-color: $card-bg-color;
-  border-radius: $border-radius;
   padding: 36px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   color: $text-color-primary;
   font-family: Arial, sans-serif;
-  border: 2px solid rgb(78, 105, 150);
+  // border: 2px solid rgb(78, 105, 150);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -29,11 +31,11 @@ $padding-main: 15px;
   .event-tooltip-close-btn {
     position: absolute;
     top: 6px;
-    right: 6px;
+    right: 8px;
     background: none;
     border: none;
-    color: rgb(86, 133, 188);
-    font-size: 28px;
+    color: $button-color;
+    font-size: 36px;
     font-weight: 100 !important;
     cursor: pointer;
     line-height: 1;
@@ -41,33 +43,33 @@ $padding-main: 15px;
     transition: all 0.3s ease;
     &:hover {
       transition: all 0.3s ease;
-      color: #4a75b2;
+      color: $button-hover-color;
     }
   }
 
   .event-tooltip-header {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
+    // gap: 10px;
+    // align-items: flex-start;
 
     .event-tooltip-image-placeholder {
-      width: 200px;
-      height: 100px;
-      background-color: #5a7ea8;
-      border-radius: math.div($border-radius, 2);
+      width: 580px;
+      height: 320px;
+      margin-top: 10px;
+      background-color: $button-color;
+      border-radius: 10px;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      justify-content: left;
+      align-items: left;
       flex-shrink: 0;
 
       svg {
-        color: rgba($text-color-primary, 0.5);
+        color: $button-color;
       }
 
       .event-tooltip-image {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        // object-fit: cover;
         border-radius: inherit;
       }
     }
@@ -82,16 +84,18 @@ $padding-main: 15px;
         margin-right: 12px;
         font-size: 20px;
         font-weight: 500 !important;
-        line-height: 1.2;
-        letter-spacing: 0.4px;
+        letter-spacing: 0.8px;  
+        line-height: 3;
+        margin-top: 33px;
       }
 
       .event-tooltip-date {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 500 !important;
-        line-height: 1.2;
-        margin-top: 2px;
-        right: 12px;
+        line-height: 3;
+        letter-spacing: 2px;
+        margin-top: 40px;
+        right: 40px;
         position: absolute;
       }
     }
@@ -100,16 +104,19 @@ $padding-main: 15px;
   .event-tooltip-description {
     font-size: 18px;
     position: relative;
-    display:block;
-    width: 500px;
+    display: block;
+    width: 580px;
     line-height: 1.4;
+    font-weight: 400;
+    letter-spacing: 2px;
     margin-top: 20px;
+    margin-bottom: 40px;
   }
 
   .event-tooltip-learn-more-btn {
     background-color: $button-color;
     color: $button-text-color;
-    font-weight: 400;
+    font-weight: 300;
     border: none;
     border-radius: 14px;
     padding: 20px 15px;
@@ -124,6 +131,17 @@ $padding-main: 15px;
     }
   }
 }
+
+  .RightToolTyipe {
+    width: 3px;
+    height: 1000px;
+    margin-top: 464px;
+    z-index: 1001;
+    position: absolute;
+    background: rgb(78, 105, 150);
+    left: -1px; /* снаружи слева блока */
+    transform: translateY(-50%);
+  }
 
 .event-tooltip-card--popup {
   position: relative;

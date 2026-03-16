@@ -1,11 +1,10 @@
 ﻿import React, { useRef, useEffect, useMemo, useCallback, useState } from 'react'
 import { Marker, Popup, useMap } from 'react-leaflet'
-import { createPortal } from 'react-dom'
 import L from 'leaflet' // @ts-ignore
 import MarkerPolitTarget from '../../assets/MarkerPolitTarget.png' // @ts-ignore
 import MarkerSwordTarget from '../../assets/MarkerSwordTarget.png' // @ts-ignore
 import iconShadow from '../../../public/marker-shadow.png'
-import { EventCard } from '../card-informat/eventcards'
+import { CardOnMap } from '../card-informat/cardPosition'
 import { EventObject } from './evenPositions'
 
 type EventMarkerProps = {
@@ -37,11 +36,11 @@ const tragedyIcon = L.icon({
 })
 
 const getIconByEventType = (eventType: number): L.Icon => {
-  return iconMapping[eventType] || tragedyIcon // по умолчанию или по необходимости
+  return iconMapping[eventType] || tragedyIcon
 }
 
 const iconMapping: Record<number, L.Icon> = {
-  1: battleIcon, // tragedyIcon
+  1: battleIcon,
   2: tragedyIcon,
   3: battleIcon,
   4: battleIcon,
@@ -56,7 +55,7 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event, markerKey, isAc
   const markerRef = useRef<L.Marker | null>(null)
   const [shouldRenderCard, setShouldRenderCard] = useState(false)
   const [isCardVisible, setIsCardVisible] = useState(false)
-
+  const [isClicked, setIsClicked] = useState(false) // Новый стейт для отслеживания клика
   const lat = parseFloat(event.latitude)
   const lng = parseFloat(event.longitude)
   const position = !isNaN(lat) && !isNaN(lng) ? ([lat, lng] as [number, number]) : null
@@ -74,6 +73,7 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event, markerKey, isAc
 
   const handleCardClose = useCallback(() => {
     setIsCardVisible(false)
+    setIsClicked(false) // Снимаем класс clicked при закрытии карточки
     markerRef.current?.closePopup()
     onClose(markerKey)
   }, [markerKey, onClose])
@@ -81,9 +81,11 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event, markerKey, isAc
   useEffect(() => {
     if (!isActive) {
       markerRef.current?.closePopup()
+      setIsClicked(false) // Снимаем класс clicked когда маркер становится неактивным
     }
   }, [isActive])
 
+  // Эффект для управления рендерингом карточки
   useEffect(() => {
     if (isActive) {
       if (cardUnmountTimeoutRef.current) {
@@ -168,6 +170,7 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event, markerKey, isAc
     },
     click: (e: L.LeafletMouseEvent) => {
       const marker = e.target as L.Marker
+      setIsClicked(true) // Добавляем класс clicked при клике
       marker.openPopup()
       onOpen(markerKey)
     },
@@ -177,9 +180,11 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event, markerKey, isAc
     <>
       <Marker
         position={position}
-        icon={getIconByEventType(event.eventType)} // тут использовать numeric ID
+        icon={getIconByEventType(event.eventType)}
         ref={markerRef}
         eventHandlers={eventHandlers}
+        onClick={isClicked}
+        className={isClicked ? 'clicked' : ''} // Добавляем класс условно
       >
         <Popup className="event-marker-popup">
           <div
@@ -208,57 +213,5 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event, markerKey, isAc
         />
       )}
     </>
-  )
-}
-
-const CardOnMap: React.FC<{
-  isVisible: boolean
-  position: L.LatLng
-  map: L.Map
-  event: EventObject
-  onClose: () => void
-}> = ({ isVisible, position, map, event, onClose }) => {
-  const [cardPosition, setCardPosition] = useState({ top: - 300, left: - 20 })
-
-  useEffect(() => {
-    const updatePosition = () => {
-      const point = map.latLngToContainerPoint(position)
-      setCardPosition({
-        top: point.y - 300,
-        left: point.x - 20,
-      })
-    }
-    updatePosition()
-    map.on('move', updatePosition)
-    map.on('zoom', updatePosition)
-    map.on('resize', updatePosition)
-    return () => {
-      map.off('move', updatePosition)
-      map.off('zoom', updatePosition)
-      map.off('resize', updatePosition)
-    }
-  }, [map, position])
-
-  return createPortal(
-    <div
-      className={`event-card-shell ${isVisible ? 'is-visible' : 'is-hidden'}`}
-      style={{
-        position: 'absolute',
-        top: cardPosition.top,
-        left: cardPosition.left,
-        zIndex: 1000,
-        pointerEvents: isVisible ? 'auto' : 'none',
-      }}
-    >
-      <EventCard
-        eventTitle={event.title}
-        eventDate={event.eventDate}
-        eventDescription={event.description}
-        imageUrl={event.previewUrlImage}
-        onClose={onClose}
-        onLearnMore={() => console.log('open', event.id)}
-      />
-    </div>,
-    map.getContainer()
   )
 }
