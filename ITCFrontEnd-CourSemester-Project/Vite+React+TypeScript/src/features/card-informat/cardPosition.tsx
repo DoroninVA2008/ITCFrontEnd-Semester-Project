@@ -37,7 +37,7 @@ export const CardOnMap: React.FC<{
         eventDescription={event.description}
         imageUrl={event.previewUrlImage}
         onClose={onClose}
-        onLearnMore={() => console.log('open', event.id)}
+        // onLearnMore={() => console.log('open', event.id)}
       />
     </div>,
     map.getContainer()

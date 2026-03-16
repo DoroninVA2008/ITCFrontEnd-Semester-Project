@@ -55,7 +55,7 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event, markerKey, isAc
   const markerRef = useRef<L.Marker | null>(null)
   const [shouldRenderCard, setShouldRenderCard] = useState(false)
   const [isCardVisible, setIsCardVisible] = useState(false)
-  const [isClicked, setIsClicked] = useState(false) // Новый стейт для отслеживания клика
+  const [, setIsClicked] = useState(false) // Новый стейт для отслеживания клика
   const lat = parseFloat(event.latitude)
   const lng = parseFloat(event.longitude)
   const position = !isNaN(lat) && !isNaN(lng) ? ([lat, lng] as [number, number]) : null
@@ -183,8 +183,8 @@ export const EventMarker: React.FC<EventMarkerProps> = ({ event, markerKey, isAc
         icon={getIconByEventType(event.eventType)}
         ref={markerRef}
         eventHandlers={eventHandlers}
-        onClick={isClicked}
-        className={isClicked ? 'clicked' : ''} // Добавляем класс условно
+        // onClick={isClicked}
+        // className={isClicked ? 'clicked' : ''} // Добавляем класс условно
       >
         <Popup className="event-marker-popup">
           <div
