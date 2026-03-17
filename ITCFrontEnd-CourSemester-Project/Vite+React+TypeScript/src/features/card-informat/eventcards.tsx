@@ -1,5 +1,6 @@
-﻿import React from 'react';
-import './eventcard.scss';
+﻿import React, { useState } from 'react'
+// import { cards } from '../../app/saga/saga' // @ts-ignore
+import './eventcard.scss'
 
 interface EventCardProps {
   eventTitle: string;
@@ -10,6 +11,7 @@ interface EventCardProps {
   siteUrl?: string;
   markerKey?: string;
   onMarkerClickClose?: (markerKey: string) => void;
+  closeDelay?: number; // Пропс для настройки задержки
 }
 
 export const EventCard: React.FC<EventCardProps> = ({
@@ -17,37 +19,46 @@ export const EventCard: React.FC<EventCardProps> = ({
   eventDate,
   eventDescription,
   imageUrl,
-  onClose,
   siteUrl,
+  onClose,
   markerKey,
   onMarkerClickClose,
+  closeDelay = 300, // Задержка по умолчанию 300мс
 }) => {
+  const [isClosing, setIsClosing] = useState(false);
+
   const handleCloseClick = () => {
-    onClose();
-    if (markerKey && onMarkerClickClose) {
-      onMarkerClickClose(markerKey);
-    }
+    if (isClosing) return; // Предотвращаем множественные клики
+    
+    setIsClosing(true);
+    
+    // Задержка перед закрытием
+    setTimeout(() => {
+      onClose();
+      if (markerKey && onMarkerClickClose) {
+        onMarkerClickClose(markerKey);
+      }
+      // Сбрасываем состояние после закрытия
+      setIsClosing(false);
+    }, closeDelay);
   };
 
   const handleLearnMore = () => {
-    if (!siteUrl) return;
-    
-    // Нормализация URL (добавляем https:// если нужно)
-    let url = siteUrl;
+    let url = siteUrl
+    if (!url) return;
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
       url = 'https://' + url;
     }
-    
-    // Открываем в новой вкладке
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   return (
-    <div className="event-tooltip-card">
+    <div className={`event-tooltip-card ${isClosing ? 'is-closing' : ''}`}>
       <button 
         className="event-tooltip-close-btn" 
         onClick={handleCloseClick} 
         aria-label="Close"
+        disabled={isClosing} // Блокируем кнопку во время закрытия
       >
         &times;
       </button>
@@ -61,30 +72,17 @@ export const EventCard: React.FC<EventCardProps> = ({
           <span className="event-tooltip-date">{eventDate}</span>
         </div>
       </div>
-      
-      {/* Вариант с кнопкой */}
-      <button 
-        className="event-tooltip-learn-more-btn" 
-        onClick={handleLearnMore}
-        disabled={!siteUrl}
-        style={{ opacity: siteUrl ? 1 : 0.5, cursor: siteUrl ? 'pointer' : 'not-allowed' }}
-      >
-        Узнать больше
-      </button>
-      
-      {/* Или вариант с ссылкой (закомментирован) */}
-      {/* {siteUrl && (
-        <a 
+      {siteUrl !== undefined && (
+        <button 
           className="event-tooltip-learn-more-btn" 
-          href={siteUrl.startsWith('http') ? siteUrl : `https://${siteUrl}`}
-          target="_blank"
-          rel="noopener noreferrer"
+          onClick={handleLearnMore}
+          disabled={!siteUrl || isClosing}
+          style={{ opacity: siteUrl ? 1 : 0.5, cursor: siteUrl ? 'pointer' : 'not-allowed' }}
         >
           Узнать больше
-        </a>
-      )} */}
-      
+        </button>
+      )}
       <div className="RightToolTyipe"></div>
     </div>
-  );
+  )
 };

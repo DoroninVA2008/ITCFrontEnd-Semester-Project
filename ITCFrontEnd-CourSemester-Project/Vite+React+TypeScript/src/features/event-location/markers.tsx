@@ -1,11 +1,21 @@
-﻿import React, { useState } from 'react'
+﻿import React from 'react'
 import { EventMarker } from './eventmarkers'
-import { useEventFilterContext } from '../filter-function/evenFilterProvider' // @ts-ignore
+import { useEventFilterContext } from '../filter-function/evenFilterProvider'
+import L from 'leaflet' // @ts-ignore
 import './marker.scss'
 
-export const MarkerWithPopup: React.FC = () => {
+interface MarkerWithPopupProps {
+  onMarkerOpen: (event: any, position: L.LatLng, markerKey: string) => void;
+  onMarkerClose: (markerKey: string) => void;
+  activeMarkerKey: string | null;
+}
+
+export const MarkerWithPopup: React.FC<MarkerWithPopupProps> = ({ 
+  onMarkerOpen, 
+  onMarkerClose,
+  activeMarkerKey 
+}) => {
   const { filteredEvents, isLoading, error } = useEventFilterContext()
-  const [activeMarkerKey, setActiveMarkerKey] = useState<string | null>(null)
 
   if (isLoading || error || filteredEvents.length === 0) return null
 
@@ -20,12 +30,10 @@ export const MarkerWithPopup: React.FC = () => {
             event={event}
             markerKey={markerKey}
             isActive={activeMarkerKey === markerKey}
-            onOpen={(openedMarkerKey) => setActiveMarkerKey(openedMarkerKey)}
-            onClose={(closedMarkerKey) => {
-              if (activeMarkerKey === closedMarkerKey) {
-                setActiveMarkerKey(null);
-              }
-            }}
+            onOpen={(openedMarkerKey, event, position) => 
+              onMarkerOpen(event, position, openedMarkerKey)
+            }
+            onClose={onMarkerClose}
           />
         )
       })}

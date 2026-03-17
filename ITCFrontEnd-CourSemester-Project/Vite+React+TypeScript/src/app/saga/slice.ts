@@ -5,18 +5,19 @@ const initialState = {
   header: [],
   main: [],
   mapp: [],
-  layers: [],
-  events: [],
-  filters: [],
-  form: []
+  layer: [],
+  event: [],
+  filter: [],
+  form: [],
+  card: []
 };
 
 const eventsSlice = createSlice({
-  name: 'events',
+  name: 'event',
   initialState,
   reducers: {
     setEvents(state, action) {
-      state.events = action.payload;
+      state.event = action.payload;
     },
     // другие редьюсеры
   }

@@ -1,34 +1,42 @@
 import React, { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import L from 'leaflet' // @ts-ignore
 import { EventCard } from '../card-informat/eventcards'
 import { EventObject } from '../event-location/evenPositions'
+import { cards } from '../../app/saga/saga' // @ts-ignore
+import './eventcard.scss'
 
 export const CardOnMap: React.FC<{
   isVisible: boolean;
   position: L.LatLng;
-  map: L.Map;
   event: EventObject;
   onClose: () => void;
-}> = ({ isVisible, map, event, onClose }) => {
+}> = ({ isVisible, event, onClose }) => {
   const [show, setShow] = useState(false);
 
-  // при изменении пропа isVisible — запускаем анимацию.
+  const urlEvent = event.id - 1;
+  const siteUrl = cards[urlEvent];
+
   useEffect(() => {
     if (isVisible) {
-      setShow(true); // показываем сразу, а анимацию включим чуть позже
+      setShow(true);
     } else {
-      // при скрытии — чуть задержка для плавности, или сразу
       setShow(false);
     }
   }, [isVisible]);
+
+  const mapWrapper = document.getElementById('map-wrapper');
+
+  if (!mapWrapper) return null;
 
   return createPortal(
     <div
       className={`event-card-shell ${show ? 'is-visible' : 'is-hidden'}`}
       style={{
+        position: 'absolute',
+        top: '0px', // Отступ сверху
+        right: '0px', // Отступ справа
         pointerEvents: isVisible ? 'auto' : 'none',
-        zIndex: 1000,
+        zIndex: 10000,
       }}
     >
       <EventCard
@@ -37,9 +45,9 @@ export const CardOnMap: React.FC<{
         eventDescription={event.description}
         imageUrl={event.previewUrlImage}
         onClose={onClose}
-        // onLearnMore={() => console.log('open', event.id)}
+        siteUrl={siteUrl}
       />
     </div>,
-    map.getContainer()
+    mapWrapper
   );
 };
