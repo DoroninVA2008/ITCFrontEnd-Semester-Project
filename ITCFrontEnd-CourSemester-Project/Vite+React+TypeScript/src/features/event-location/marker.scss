@@ -2,26 +2,27 @@
   opacity: 1;
   transform: translateY(0);
   transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.leaflet-popup.event-marker-popup.event-marker-popup-fade-out {
-  opacity: 0;
-  transform: translateY(-6px);
+	
+  &.event-marker-popup-fade-out {
+	opacity: 0;
+	transform: translateY(-6px);
+  }
 }
 
 .leaflet-marker-icon {
-  	filter: brightness(1);
-	transition: all 0.3s ease;
-}
+  filter: brightness(1);
+  transition: all 0.3s ease;
 
-.leaflet-marker-icon:hover {
-  	filter: brightness(0.8); 
+  &:hover {
+	filter: brightness(0.8); 
 	transition: all 0.3s ease;
-}
+  }
 
-.leaflet-marker-icon:active,
-.leaflet-marker-icon.clicked,
-.marker.clicked {
+  &:active,
+  &:focus,
+  &.clicked,
+  .marker.clicked {
   	filter: brightness(0.6);
 	transition: all 0.3s ease;
+  }
 }

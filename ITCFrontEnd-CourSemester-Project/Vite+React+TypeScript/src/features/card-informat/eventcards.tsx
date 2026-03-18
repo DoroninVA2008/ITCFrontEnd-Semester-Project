@@ -1,5 +1,6 @@
 ﻿import React, { useState } from 'react'
-// import { cards } from '../../app/saga/saga' // @ts-ignore
+// import { cards } from '../../app/saga/saga' 
+// @ts-ignore
 import './eventcard.scss'
 
 interface EventCardProps {
@@ -27,6 +28,33 @@ export const EventCard: React.FC<EventCardProps> = ({
 }) => {
   const [isClosing, setIsClosing] = useState(false);
 
+// const initialState = {
+//   cardData: null,
+//   loading: false,
+//   error: null
+// };
+
+// const cardSlice = createSlice({
+//   name: 'card',
+//   initialState,
+//   reducers: {},
+//   extraReducers: (builder) => {
+//     builder
+//       .addCase(FETCH_CARD_DATA, (state) => {
+//         state.loading = true;
+//         state.error = null;
+//       })
+//       .addCase(FETCH_CARD_DATA_SUCCESS, (state, action) => {
+//         state.loading = false;
+//         state.cardData = action.payload.data;
+//       })
+//       .addCase(FETCH_CARD_DATA_FAILURE, (state, action) => {
+//         state.loading = false;
+//         state.error = action.payload.error;
+//       });
+//   }
+// });
+
   const handleCloseClick = () => {
     if (isClosing) return; // Предотвращаем множественные клики
     
@@ -52,13 +80,23 @@ export const EventCard: React.FC<EventCardProps> = ({
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
+  const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return dateString; // В случае неправильного формата
+  return date.toLocaleDateString('ru-RU', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).replace(/\//g, '.');
+};
+
   return (
     <div className={`event-tooltip-card ${isClosing ? 'is-closing' : ''}`}>
       <button 
         className="event-tooltip-close-btn" 
         onClick={handleCloseClick} 
         aria-label="Close"
-        disabled={isClosing} // Блокируем кнопку во время закрытия
+        disabled={isClosing}
       >
         &times;
       </button>
@@ -69,7 +107,7 @@ export const EventCard: React.FC<EventCardProps> = ({
         <div className="event-tooltip-info">
           <h3 className="event-tooltip-title">{eventTitle}</h3>
           <p className="event-tooltip-description">{eventDescription}</p>
-          <span className="event-tooltip-date">{eventDate}</span>
+          <span className="event-tooltip-date">{formatDate(eventDate)}</span>
         </div>
       </div>
       {siteUrl !== undefined && (

@@ -2,7 +2,7 @@
 import { MapContainer, TileLayer } from 'react-leaflet'
 import L from 'leaflet'
 import { tiLayer } from '../../app/saga/saga.ts'
-import { CountryLabels } from '../layers/layers.tsx'
+import { CountryLabels } from '../layer-position/layers.tsx'
 import { MarkerWithPopup } from '../event-location/markers.tsx'
 import { FilterButtonList } from '../filter-function/filters.tsx'
 import { EventFilterProvider } from '../filter-function/evenFilterProvider'

@@ -14,7 +14,7 @@ $padding-main: 15px;
   position: absolute;
   top: 120px;
   right: 0;
-  z-index: 10000;
+  z-index: 1000;
   width: auto;
   height: 100vh;
   transition: all 0.3s ease;
@@ -124,6 +124,7 @@ $padding-main: 15px;
     cursor: pointer;
     text-align: center;
     transition: all 0.3s ease;
+    margin-top: 80px; //
 
     &:hover {
       background-color: $button-hover-color;
@@ -141,7 +142,7 @@ $padding-main: 15px;
     width: 3px;
     height: 10000px;
     margin-top: 4964px;
-    z-index: 1001;
+    z-index: 999;
     position: absolute;
     background: rgb(78, 105, 150);
     left: -1px; /* снаружи слева блока */

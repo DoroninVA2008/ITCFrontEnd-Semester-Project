@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+// import { useSelector } from 'react-redux'
 import { createPortal } from 'react-dom'
 import { EventCard } from '../card-informat/eventcards'
 import { EventObject } from '../event-location/evenPositions'
@@ -12,10 +13,9 @@ export const CardOnMap: React.FC<{
   onClose: () => void;
 }> = ({ isVisible, event, onClose }) => {
   const [show, setShow] = useState(false);
-
+  // const cardData = useSelector((state: any) => state.card.cardData); 
   const urlEvent = event.id - 1;
   const siteUrl = cards[urlEvent];
-
   useEffect(() => {
     if (isVisible) {
       setShow(true);
@@ -33,10 +33,10 @@ export const CardOnMap: React.FC<{
       className={`event-card-shell ${show ? 'is-visible' : 'is-hidden'}`}
       style={{
         position: 'absolute',
-        top: '0px', // Отступ сверху
-        right: '0px', // Отступ справа
+        top: '0px',
+        right: '0px',
         pointerEvents: isVisible ? 'auto' : 'none',
-        zIndex: 10000,
+        zIndex: 100,
       }}
     >
       <EventCard

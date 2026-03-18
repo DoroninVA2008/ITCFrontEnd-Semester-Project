@@ -1,10 +1,12 @@
-﻿import React, { useRef, useEffect, useMemo } from 'react'
+﻿import React, { useState, useRef, useEffect, useMemo } from 'react'
 import { Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
+import { useDispatch } from 'react-redux'
 import { EventObject } from './evenPositions' // @ts-ignore
 import MarkerPolitTarget from '../../assets/MarkerPolitTarget.png' // @ts-ignore
 import MarkerSwordTarget from '../../assets/MarkerSwordTarget.png' // @ts-ignore
 import iconShadow from '../../../public/marker-shadow.png'
+import { FETCH_CARD_DATA } from '../../app/saga/saga'
 
 type EventMarkerProps = {
   event: EventObject
@@ -56,7 +58,6 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
   // const cardUnmountTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   // const [shouldRenderCard, setShouldRenderCard] = useState(false)
   // const [isCardVisible, setIsCardVisible] = useState(false)
-  // const [, setIsClicked] = useState(false)
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const fadeCloseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const markerRef = useRef<L.Marker | null>(null)
@@ -64,6 +65,15 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
   const lng = parseFloat(event.longitude)
   const position = !isNaN(lat) && !isNaN(lng) ? ([lat, lng] as [number, number]) : null
   const markerLatLng = useMemo(() => (position ? L.latLng(position[0], position[1]) : null), [position])
+  const dispatch = useDispatch()
+  const [, setIsClicked] = useState(false)
+
+  // const icon = (clicked: boolean) => L.divIcon({
+  //   html: `<div class="custom-marker ${clicked ? 'clicked' : ''}"></div>`,
+  //   className: '',
+  //   iconSize: [32, 48],
+  //   iconAnchor: [16, 32],
+  // })
 
   if (!position || !markerLatLng) return null
 
@@ -125,7 +135,7 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
     }, popupFadeDuration)
   }
 
-  const eventHandlers = {
+   const eventHandlers = {
     mouseover: () => {
       if (markerRef.current) {
         clearPopupCloseTimers()
@@ -144,6 +154,9 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
       if (markerRef.current && markerLatLng) {
         markerRef.current.openPopup()
         onOpen(markerKey, event, markerLatLng)
+        dispatch({ type: FETCH_CARD_DATA, payload: event.id })
+        setIsClicked(true)
+        setTimeout(() => setIsClicked(false), 1000)
       }
     },
   }
