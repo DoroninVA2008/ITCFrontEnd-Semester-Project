@@ -32,3 +32,5 @@ export const { actions, name, reducer } = createSlice({
     },
   },
 });
+
+actions.setTitleH1.type === 'main-content/setTitleH1'

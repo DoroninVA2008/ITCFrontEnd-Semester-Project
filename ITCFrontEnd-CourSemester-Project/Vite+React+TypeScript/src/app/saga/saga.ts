@@ -1,5 +1,6 @@
 import { takeLatest, put, call } from 'redux-saga/effects'
 import { PayloadAction } from '@reduxjs/toolkit'
+import { MainContent } from '../../features/main-content';
 
 interface FetchDataPayload {
   id?: number;
@@ -40,6 +41,7 @@ function* fetchData(action: PayloadAction<FetchDataPayload>): Generator<any, voi
       type: FETCH_DATA_SUCCESS, 
       payload: response.data 
     });
+
   } catch (error: any) {
     yield put({ 
       type: FETCH_DATA_FAILURE, 
