@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { EventCard } from '../card-informat/eventcards'
 import { EventObject } from '../event-location/evenPositions'
-import { cards } from '../../app/saga/saga' // @ts-ignore
+import { cards } from '../../app/saga/cons' // @ts-ignore
 import './eventcard.scss'
 
 export const CardOnMap: React.FC<{

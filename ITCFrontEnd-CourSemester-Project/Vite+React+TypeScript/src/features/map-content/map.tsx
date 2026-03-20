@@ -1,7 +1,7 @@
 ﻿import React, { useState, useCallback, useRef } from 'react'
 import { MapContainer, TileLayer } from 'react-leaflet'
 import L from 'leaflet'
-import { tiLayer } from '../../app/saga/saga.ts'
+import { tiLayer } from '../../app/saga/cons.ts'
 import { CountryLabels } from '../layer-position/layers.tsx'
 import { MarkerWithPopup } from '../event-location/markers.tsx'
 import { FilterButtonList } from '../filter-function/filters.tsx'
