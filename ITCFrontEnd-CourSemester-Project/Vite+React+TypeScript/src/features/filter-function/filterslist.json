@@ -8,7 +8,7 @@
             "longitude": "35.8167",
             "eventDate": "1812-09-07T00:00:00Z",
             "eventType": 1,
-            "previewUrlImage": "https://example.com/images/borodino.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/7f/28/1b/7f281b383c4ea6b5b5204f851b90f9f0.jpg"
         },
         {
             "id": 2,
@@ -18,7 +18,7 @@
             "longitude": "2.3698",
             "eventDate": "1789-07-14T00:00:00Z",
             "eventType": 4,
-            "previewUrlImage": "https://example.com/images/bastille.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/e1/b5/d3/e1b5d3b3ee39d1ed1a594822615ecff0.jpg"
         },
         {
             "id": 3,
@@ -28,7 +28,7 @@
             "longitude": "13.0475",
             "eventDate": "1945-07-17T00:00:00Z",
             "eventType": 1,
-            "previewUrlImage": "https://example.com/images/potsdam.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/7f/28/1b/7f281b383c4ea6b5b5204f851b90f9f0.jpg"
         },
         {
             "id": 4,
@@ -38,7 +38,7 @@
             "longitude": "30.3141",
             "eventDate": "1905-01-09T00:00:00Z",
             "eventType": 2,
-            "previewUrlImage": "https://example.com/bloody-sunday.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/e1/b5/d3/e1b5d3b3ee39d1ed1a594822615ecff0.jpg"
         },
         {
             "id": 5,
@@ -48,7 +48,7 @@
             "longitude": "37.5405",
             "eventDate": "1896-05-30T00:00:00Z",
             "eventType": 1,
-            "previewUrlImage": "https://example.com/khodynka.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/7f/28/1b/7f281b383c4ea6b5b5204f851b90f9f0.jpg"
         },
         {
             "id": 6,
@@ -58,7 +58,7 @@
             "longitude": "40.0933",
             "eventDate": "1962-06-02T00:00:00Z",
             "eventType": 3,
-            "previewUrlImage": "https://example.com/novocherkassk.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/e1/b5/d3/e1b5d3b3ee39d1ed1a594822615ecff0.jpg"
         },
         {
             "id": 7,
@@ -68,7 +68,7 @@
             "longitude": "30.3063",
             "eventDate": "1825-12-26T00:00:00Z",
             "eventType": 2,
-            "previewUrlImage": "https://example.com/decembrists.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/7f/28/1b/7f281b383c4ea6b5b5204f851b90f9f0.jpg"
         },
         {
             "id": 8,
@@ -78,7 +78,7 @@
             "longitude": "37.6173",
             "eventDate": "1648-06-01T00:00:00Z",
             "eventType": 1,
-            "previewUrlImage": "https://example.com/salt-riot.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/e1/b5/d3/e1b5d3b3ee39d1ed1a594822615ecff0.jpg"
         },
         {
             "id": 9,
@@ -88,7 +88,7 @@
             "longitude": "37.6173",
             "eventDate": "1662-07-25T00:00:00Z",
             "eventType": 4,
-            "previewUrlImage": "https://example.com/copper-riot.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/7f/28/1b/7f281b383c4ea6b5b5204f851b90f9f0.jpg"
         },
         {
             "id": 10,
@@ -98,7 +98,7 @@
             "longitude": "48.04",
             "eventDate": "1705-07-30T00:00:00Z",
             "eventType": 4,
-            "previewUrlImage": "https://example.com/astrakhan-uprising.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/e1/b5/d3/e1b5d3b3ee39d1ed1a594822615ecff0.jpg"
         },
         {
             "id": 11,
@@ -108,7 +108,7 @@
             "longitude": "37.6173",
             "eventDate": "1771-09-15T00:00:00Z",
             "eventType": 4,
-            "previewUrlImage": "https://example.com/plague-riot.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/7f/28/1b/7f281b383c4ea6b5b5204f851b90f9f0.jpg"
         },
         {
             "id": 12,
@@ -118,7 +118,7 @@
             "longitude": "29.77",
             "eventDate": "1921-03-01T00:00:00Z",
             "eventType": 4,
-            "previewUrlImage": "https://example.com/kronstadt.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/e1/b5/d3/e1b5d3b3ee39d1ed1a594822615ecff0.jpg"
         },
         {
             "id": 13,
@@ -128,7 +128,7 @@
             "longitude": "41.4446",
             "eventDate": "1920-08-19T00:00:00Z",
             "eventType": 1,
-            "previewUrlImage": "https://example.com/tambov.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/7f/28/1b/7f281b383c4ea6b5b5204f851b90f9f0.jpg"
         },
         {
             "id": 14,
@@ -138,7 +138,7 @@
             "longitude": "49.1055",
             "eventDate": "1552-10-02T00:00:00Z",
             "eventType": 2,
-            "previewUrlImage": "https://example.com/kazan-siege.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/e1/b5/d3/e1b5d3b3ee39d1ed1a594822615ecff0.jpg"
         },
         {
             "id": 15,
@@ -148,7 +148,7 @@
             "longitude": "28.84",
             "eventDate": "1790-12-22T00:00:00Z",
             "eventType": 2,
-            "previewUrlImage": "https://example.com/izmail.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/7f/28/1b/7f281b383c4ea6b5b5204f851b90f9f0.jpg"
         },
         {
             "id": 16,
@@ -158,7 +158,7 @@
             "longitude": "33.5244",
             "eventDate": "1854-10-13T00:00:00Z",
             "eventType": 2,
-            "previewUrlImage": "https://example.com/sevastopol-defense.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/e1/b5/d3/e1b5d3b3ee39d1ed1a594822615ecff0.jpg"
         },
         {
             "id": 17,
@@ -168,7 +168,7 @@
             "longitude": "30.3141",
             "eventDate": "1941-09-08T00:00:00Z",
             "eventType": 2,
-            "previewUrlImage": "https://example.com/leningrad-blockade.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/7f/28/1b/7f281b383c4ea6b5b5204f851b90f9f0.jpg"
         },
         {
             "id": 18,
@@ -178,7 +178,7 @@
             "longitude": "13.405",
             "eventDate": "1945-04-16T00:00:00Z",
             "eventType": 2,
-            "previewUrlImage": "https://example.com/berlin-assault.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/e1/b5/d3/e1b5d3b3ee39d1ed1a594822615ecff0.jpg"
         },
         {
             "id": 19,
@@ -188,7 +188,7 @@
             "longitude": "131.6",
             "eventDate": "1938-07-29T00:00:00Z",
             "eventType": 3,
-            "previewUrlImage": "https://example.com/khasan.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/7f/28/1b/7f281b383c4ea6b5b5204f851b90f9f0.jpg"
         },
         {
             "id": 20,
@@ -198,7 +198,7 @@
             "longitude": "118.25",
             "eventDate": "1939-05-11T00:00:00Z",
             "eventType": 3,
-            "previewUrlImage": "https://example.com/khalkhin-gol.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/e1/b5/d3/e1b5d3b3ee39d1ed1a594822615ecff0.jpg"
         },
         {
             "id": 21,
@@ -208,7 +208,7 @@
             "longitude": "133.7833",
             "eventDate": "1969-03-02T00:00:00Z",
             "eventType": 3,
-            "previewUrlImage": "https://example.com/damansky.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/7f/28/1b/7f281b383c4ea6b5b5204f851b90f9f0.jpg"
         },
         {
             "id": 22,
@@ -218,7 +218,7 @@
             "longitude": "79.0833",
             "eventDate": "1969-08-13T00:00:00Z",
             "eventType": 3,
-            "previewUrlImage": "https://example.com/zhalanashkol.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/e1/b5/d3/e1b5d3b3ee39d1ed1a594822615ecff0.jpg"
         },
         {
             "id": 23,
@@ -228,7 +228,7 @@
             "longitude": "133.7833",
             "eventDate": "1969-03-15T00:00:00Z",
             "eventType": 3,
-            "previewUrlImage": "https://example.com/damansky-2.jpg"
+            "previewUrlImage": "https://i.pinimg.com/736x/7f/28/1b/7f281b383c4ea6b5b5204f851b90f9f0.jpg"
         }
     ]
 }

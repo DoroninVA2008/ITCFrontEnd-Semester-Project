@@ -12,7 +12,8 @@ interface EventCardProps {
   siteUrl?: string;
   markerKey?: string;
   onMarkerClickClose?: (markerKey: string) => void;
-  closeDelay?: number; // Пропс для настройки задержки
+  closeDelay?: number; 
+  cardData?: any;
 }
 
 export const EventCard: React.FC<EventCardProps> = ({
@@ -25,8 +26,10 @@ export const EventCard: React.FC<EventCardProps> = ({
   markerKey,
   onMarkerClickClose,
   closeDelay = 300, // Задержка по умолчанию 300мс
+  cardData,
 }) => {
-  const [isClosing, setIsClosing] = useState(false);
+  if(!cardData) {
+    const [isClosing, setIsClosing] = useState(false);
 
 // const initialState = {
 //   cardData: null,
@@ -57,9 +60,9 @@ export const EventCard: React.FC<EventCardProps> = ({
 
   const handleCloseClick = () => {
     if (isClosing) return; // Предотвращаем множественные клики
-    
+
     setIsClosing(true);
-    
+
     // Задержка перед закрытием
     setTimeout(() => {
       onClose();
@@ -123,4 +126,5 @@ export const EventCard: React.FC<EventCardProps> = ({
       <div className="RightToolTyipe"></div>
     </div>
   )
+  }
 };

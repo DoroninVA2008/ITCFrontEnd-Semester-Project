@@ -7,6 +7,7 @@ import MarkerPolitTarget from '../../assets/MarkerPolitTarget.png' // @ts-ignore
 import MarkerSwordTarget from '../../assets/MarkerSwordTarget.png' // @ts-ignore
 import iconShadow from '../../../public/marker-shadow.png'
 import { FETCH_CARD_DATA } from '../../app/saga/saga'
+import { tiLayer, card } from '../../app/saga/cons'
 
 type EventMarkerProps = {
   event: EventObject
@@ -48,6 +49,18 @@ const getIconByEventType = (eventType: number): L.Icon => {
   return iconMapping[eventType] || tragedyIcon
 }
 
+export const handleMarkerClick = async (markerKey: string, event: EventObject, position: L.LatLng) => {
+  try {
+    const response = await fetch(`${card(event.id)}`);
+    const data = await response.json();
+    setCardData(data); // сохраняем для отображения
+  } catch (err) {
+    console.error('Ошибка загрузки', err);
+  }
+
+  //можно и дополнительно вызвать onOpen, если нужно
+};
+
 export const EventMarker: React.FC<EventMarkerProps> = ({ 
   event, 
   markerKey, 
@@ -67,6 +80,7 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
   const markerLatLng = useMemo(() => (position ? L.latLng(position[0], position[1]) : null), [position])
   const dispatch = useDispatch()
   const [, setIsClicked] = useState(false)
+  const [cardData, setCardData] = useState<any>(null);
 
   // const icon = (clicked: boolean) => L.divIcon({
   //   html: `<div class="custom-marker ${clicked ? 'clicked' : ''}"></div>`,
@@ -95,71 +109,84 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
     }
   }, [isActive])
 
-  useEffect(() => {
-    return () => {
-      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current)
-      if (fadeCloseTimeoutRef.current) clearTimeout(fadeCloseTimeoutRef.current)
-    }
-  }, [])
+  //!!!
+useEffect(() => {
+  return () => {
+    clearPopupCloseTimers();
+  };
+}, []);
 
-  const clearPopupCloseTimers = () => {
+const clearPopupCloseTimers = () => {
+  if (closeTimeoutRef.current) {
+    clearTimeout(closeTimeoutRef.current);
+    closeTimeoutRef.current = null;
+  }
+  if (fadeCloseTimeoutRef.current) {
+    clearTimeout(fadeCloseTimeoutRef.current);
+    fadeCloseTimeoutRef.current = null;
+  }
+};
+
+const removeFadeClass = (marker: L.Marker) => {
+  const popupElement = marker.getPopup()?.getElement();
+  if (popupElement) {
+    popupElement.classList.remove('event-marker-popup-fade-out');
+  }
+};
+
+const closePopupWithFade = (marker: L.Marker) => {
+  const popupElement = marker.getPopup()?.getElement();
+  if (!popupElement) {
+    marker.closePopup();
+    return;
+  }
+
+  // Clear any existing fade timeout
+  if (fadeCloseTimeoutRef.current) {
+    clearTimeout(fadeCloseTimeoutRef.current);
+  }
+
+  popupElement.classList.add('event-marker-popup-fade-out');
+  fadeCloseTimeoutRef.current = setTimeout(() => {
+    marker.closePopup();
+    popupElement.classList.remove('event-marker-popup-fade-out');
+    fadeCloseTimeoutRef.current = null;
+  }, popupFadeDuration);
+};
+
+const eventHandlers = {
+  mouseover: () => {
+    if (markerRef.current) {
+      clearPopupCloseTimers();
+      removeFadeClass(markerRef.current);
+      markerRef.current.openPopup();
+    }
+  },
+  mouseout: () => {
+    // Clear any existing timeout before setting new one
     if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current)
-      closeTimeoutRef.current = null
+      clearTimeout(closeTimeoutRef.current);
     }
-    if (fadeCloseTimeoutRef.current) {
-      clearTimeout(fadeCloseTimeoutRef.current)
-      fadeCloseTimeoutRef.current = null
-    }
-  }
-
-  const removeFadeClass = (marker: L.Marker) => {
-    const popupElement = marker.getPopup()?.getElement()
-    if (popupElement) {
-      popupElement.classList.remove('event-marker-popup-fade-out')
-    }
-  }
-
-  const closePopupWithFade = (marker: L.Marker) => {
-    const popupElement = marker.getPopup()?.getElement()
-    if (!popupElement) {
-      marker.closePopup()
-      return
-    }
-
-    popupElement.classList.add('event-marker-popup-fade-out')
-    fadeCloseTimeoutRef.current = setTimeout(() => {
-      marker.closePopup()
-      popupElement.classList.remove('event-marker-popup-fade-out')
-      fadeCloseTimeoutRef.current = null
-    }, popupFadeDuration)
-  }
-
-   const eventHandlers = {
-    mouseover: () => {
+    
+    closeTimeoutRef.current = setTimeout(() => {
       if (markerRef.current) {
-        clearPopupCloseTimers()
-        removeFadeClass(markerRef.current)
-        markerRef.current.openPopup()
+        closePopupWithFade(markerRef.current);
       }
-    },
-    mouseout: () => {
-      closeTimeoutRef.current = setTimeout(() => {
-        if (markerRef.current) {
-          closePopupWithFade(markerRef.current)
-        }
-      }, popupTimeOut)
-    },
-    click: () => {
-      if (markerRef.current && markerLatLng) {
-        markerRef.current.openPopup()
-        onOpen(markerKey, event, markerLatLng)
-        dispatch({ type: FETCH_CARD_DATA, payload: event.id })
-        setIsClicked(true)
-        setTimeout(() => setIsClicked(false), 1000)
-      }
-    },
-  }
+    }, popupTimeOut);
+  },
+  click: () => {
+    if (markerRef.current && markerLatLng) {
+      // Clear any pending close operations on click
+      clearPopupCloseTimers();
+      
+      markerRef.current.openPopup();
+      onOpen(markerKey, event, markerLatLng);
+      dispatch({ type: FETCH_CARD_DATA, payload: event.id });
+      setIsClicked(true);
+      setTimeout(() => setIsClicked(false), 1000);
+    }
+  },
+};// !!!
 
   return (
     <Marker

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-// import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { createPortal } from 'react-dom'
 import { EventCard } from '../card-informat/eventcards'
 import { EventObject } from '../event-location/evenPositions'
@@ -13,7 +13,7 @@ export const CardOnMap: React.FC<{
   onClose: () => void;
 }> = ({ isVisible, event, onClose }) => {
   const [show, setShow] = useState(false);
-  // const cardData = useSelector((state: any) => state.card.cardData); 
+  const cardData = useSelector((state: any) => state.card.cardData); 
   const urlEvent = event.id - 1;
   const siteUrl = cards[urlEvent];
   useEffect(() => {
@@ -44,8 +44,14 @@ export const CardOnMap: React.FC<{
         eventDate={event.eventDate}
         eventDescription={event.description}
         imageUrl={event.previewUrlImage}
-        onClose={onClose}
+        // onClose={onClose}
         siteUrl={siteUrl}
+        onClose={() => setCardData(null)}
+        cardData={cardData}
+        // isVisible={true}
+        // position={activeEvent.position}
+        // event={activeEvent.event}
+        // cardData={activeEvent.data}
       />
     </div>,
     mapWrapper
