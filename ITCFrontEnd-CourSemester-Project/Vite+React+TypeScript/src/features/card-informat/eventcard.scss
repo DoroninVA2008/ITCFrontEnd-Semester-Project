@@ -41,6 +41,7 @@ $padding-main: 15px;
     line-height: 1;
     padding: 0 5px;
     transition: all 0.3s ease;
+
     &:hover {
       transition: all 0.3s ease;
       color: $button-hover-color;
@@ -133,8 +134,21 @@ $padding-main: 15px;
   }
 
   &.is-closing {
-    opacity: 0;
-    transition: all 0.3s ease;
+    opacity: 0 !important;
+    transition: all 0.3s ease !important;
+    animation: closeCard 0.3s ease !important;
+
+    @keyframes closeCard {
+      0% {
+        opacity: 1;
+        transition: all 0.3s ease;
+      }
+
+      100% {
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+    }
   }
 }
 
@@ -171,7 +185,6 @@ $padding-main: 15px;
 
 .event-card-shell.is-hidden {
   opacity: 0;
-  transition: opacity 0.3s ease;
-  will-change: opacity;
   pointer-events: none;
+  transition: opacity 0.3s ease;
 }

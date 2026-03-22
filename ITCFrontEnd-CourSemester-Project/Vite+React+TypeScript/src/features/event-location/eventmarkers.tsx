@@ -2,12 +2,15 @@
 import { Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import { useDispatch } from 'react-redux'
-import { EventObject } from './evenPositions' // @ts-ignore
-import MarkerPolitTarget from '../../assets/MarkerPolitTarget.png' // @ts-ignore
-import MarkerSwordTarget from '../../assets/MarkerSwordTarget.png' // @ts-ignore
+import { EventObject } from './evenPositions'
+// @ts-ignore
+import MarkerPolitTarget from '../../assets/MarkerPolitTarget.png'
+// @ts-ignore
+import MarkerSwordTarget from '../../assets/MarkerSwordTarget.png'
+// @ts-ignore
 import iconShadow from '../../../public/marker-shadow.png'
 import { FETCH_CARD_DATA } from '../../app/saga/saga'
-import { tiLayer, card } from '../../app/saga/cons'
+import { CardOnMap } from '../card-informat/cardPosition'
 
 type EventMarkerProps = {
   event: EventObject
@@ -19,7 +22,6 @@ type EventMarkerProps = {
 
 const popupTimeOut = 100
 const popupFadeDuration = 300
-// const cardFadeDuration = 300
 
 const battleIcon = L.icon({
   iconUrl: MarkerPolitTarget,
@@ -49,28 +51,13 @@ const getIconByEventType = (eventType: number): L.Icon => {
   return iconMapping[eventType] || tragedyIcon
 }
 
-export const handleMarkerClick = async (markerKey: string, event: EventObject, position: L.LatLng) => {
-  try {
-    const response = await fetch(`${card(event.id)}`);
-    const data = await response.json();
-    setCardData(data); // сохраняем для отображения
-  } catch (err) {
-    console.error('Ошибка загрузки', err);
-  }
-
-  //можно и дополнительно вызвать onOpen, если нужно
-};
-
 export const EventMarker: React.FC<EventMarkerProps> = ({ 
   event, 
   markerKey, 
   isActive, 
-  onOpen
+  onOpen,
+  onClose
 }) => {
-  // const map = useMap()
-  // const cardUnmountTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  // const [shouldRenderCard, setShouldRenderCard] = useState(false)
-  // const [isCardVisible, setIsCardVisible] = useState(false)
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const fadeCloseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const markerRef = useRef<L.Marker | null>(null)
@@ -79,15 +66,9 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
   const position = !isNaN(lat) && !isNaN(lng) ? ([lat, lng] as [number, number]) : null
   const markerLatLng = useMemo(() => (position ? L.latLng(position[0], position[1]) : null), [position])
   const dispatch = useDispatch()
-  const [, setIsClicked] = useState(false)
-  const [cardData, setCardData] = useState<any>(null);
-
-  // const icon = (clicked: boolean) => L.divIcon({
-  //   html: `<div class="custom-marker ${clicked ? 'clicked' : ''}"></div>`,
-  //   className: '',
-  //   iconSize: [32, 48],
-  //   iconAnchor: [16, 32],
-  // })
+  const [isCardVisible, setIsCardVisible] = useState(false)
+  const [clickedEvent, setClickedEvent] = useState<EventObject | null>(null)
+  const [clickedPosition, setClickedPosition] = useState<L.LatLng | null>(null)
 
   if (!position || !markerLatLng) return null
 
@@ -106,110 +87,134 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
   useEffect(() => {
     if (!isActive) {
       markerRef.current?.closePopup()
+      // Закрываем карточку при деактивации
+      setIsCardVisible(false)
+      setClickedEvent(null)
+      setClickedPosition(null)
     }
   }, [isActive])
 
-  //!!!
-useEffect(() => {
-  return () => {
-    clearPopupCloseTimers();
-  };
-}, []);
-
-const clearPopupCloseTimers = () => {
-  if (closeTimeoutRef.current) {
-    clearTimeout(closeTimeoutRef.current);
-    closeTimeoutRef.current = null;
-  }
-  if (fadeCloseTimeoutRef.current) {
-    clearTimeout(fadeCloseTimeoutRef.current);
-    fadeCloseTimeoutRef.current = null;
-  }
-};
-
-const removeFadeClass = (marker: L.Marker) => {
-  const popupElement = marker.getPopup()?.getElement();
-  if (popupElement) {
-    popupElement.classList.remove('event-marker-popup-fade-out');
-  }
-};
-
-const closePopupWithFade = (marker: L.Marker) => {
-  const popupElement = marker.getPopup()?.getElement();
-  if (!popupElement) {
-    marker.closePopup();
-    return;
-  }
-
-  // Clear any existing fade timeout
-  if (fadeCloseTimeoutRef.current) {
-    clearTimeout(fadeCloseTimeoutRef.current);
-  }
-
-  popupElement.classList.add('event-marker-popup-fade-out');
-  fadeCloseTimeoutRef.current = setTimeout(() => {
-    marker.closePopup();
-    popupElement.classList.remove('event-marker-popup-fade-out');
-    fadeCloseTimeoutRef.current = null;
-  }, popupFadeDuration);
-};
-
-const eventHandlers = {
-  mouseover: () => {
-    if (markerRef.current) {
+  useEffect(() => {
+    return () => {
       clearPopupCloseTimers();
-      removeFadeClass(markerRef.current);
-      markerRef.current.openPopup();
-    }
-  },
-  mouseout: () => {
-    // Clear any existing timeout before setting new one
+    };
+  }, []);
+
+  const clearPopupCloseTimers = () => {
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
     }
-    
-    closeTimeoutRef.current = setTimeout(() => {
+    if (fadeCloseTimeoutRef.current) {
+      clearTimeout(fadeCloseTimeoutRef.current);
+      fadeCloseTimeoutRef.current = null;
+    }
+  };
+
+  const removeFadeClass = (marker: L.Marker) => {
+    const popupElement = marker.getPopup()?.getElement();
+    if (popupElement) {
+      popupElement.classList.remove('event-marker-popup-fade-out');
+    }
+  };
+
+  const closePopupWithFade = (marker: L.Marker) => {
+    const popupElement = marker.getPopup()?.getElement();
+    if (!popupElement) {
+      marker.closePopup();
+      return;
+    }
+
+    if (fadeCloseTimeoutRef.current) {
+      clearTimeout(fadeCloseTimeoutRef.current);
+    }
+
+    popupElement.classList.add('event-marker-popup-fade-out');
+    fadeCloseTimeoutRef.current = setTimeout(() => {
+      marker.closePopup();
+      popupElement.classList.remove('event-marker-popup-fade-out');
+      fadeCloseTimeoutRef.current = null;
+    }, popupFadeDuration);
+  };
+
+  const handleCardClose = () => {
+    setIsCardVisible(false);
+    setClickedEvent(null);
+    setClickedPosition(null);
+    onClose(markerKey);
+  };
+
+  const eventHandlers = {
+    mouseover: () => {
       if (markerRef.current) {
-        closePopupWithFade(markerRef.current);
+        clearPopupCloseTimers();
+        removeFadeClass(markerRef.current);
+        markerRef.current.openPopup();
       }
-    }, popupTimeOut);
-  },
-  click: () => {
-    if (markerRef.current && markerLatLng) {
-      // Clear any pending close operations on click
-      clearPopupCloseTimers();
+    },
+    mouseout: () => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
       
-      markerRef.current.openPopup();
-      onOpen(markerKey, event, markerLatLng);
-      dispatch({ type: FETCH_CARD_DATA, payload: event.id });
-      setIsClicked(true);
-      setTimeout(() => setIsClicked(false), 1000);
-    }
-  },
-};// !!!
+      closeTimeoutRef.current = setTimeout(() => {
+        if (markerRef.current) {
+          closePopupWithFade(markerRef.current);
+        }
+      }, popupTimeOut);
+    },
+    click: () => {
+      if (markerRef.current && markerLatLng) {
+        clearPopupCloseTimers();
+        
+        markerRef.current.openPopup();
+        console.log(`${event.siteUrl}`)
+        // Показываем карточку
+        setClickedEvent(event);
+        setClickedPosition(markerLatLng);
+        setIsCardVisible(true);
+        
+        // Вызываем onOpen и диспатчим запрос
+        onOpen(markerKey, event, markerLatLng);
+        dispatch({ type: FETCH_CARD_DATA, payload: event.id });
+      }
+    },
+  };
 
   return (
-    <Marker
-      position={position}
-      icon={getIconByEventType(event.eventType)}
-      ref={markerRef}
-      eventHandlers={eventHandlers}
-    >
-      <Popup className="event-marker-popup">
-        <div
-          onMouseEnter={() => {
-            if (markerRef.current) {
-              clearPopupCloseTimers()
-              removeFadeClass(markerRef.current)
-            }
-          }}
-        >
-          <h3 style={{ margin: '0 0 6px 0', color: '#FFFFFF' }}>{event.title}</h3>
-          <small style={{ color: '#FFFFFF', display: 'block', fontSize: '14px', marginTop: '0.2em' }}>
-            🗓️ {formatDate(event.eventDate)}
-          </small>
-        </div>
-      </Popup>
-    </Marker>
+    <>
+      <Marker
+        position={position}
+        icon={getIconByEventType(event.eventType)}
+        ref={markerRef}
+        eventHandlers={eventHandlers}
+      >
+        <Popup className="event-marker-popup">
+          <div
+            onMouseEnter={() => {
+              if (markerRef.current) {
+                clearPopupCloseTimers()
+                removeFadeClass(markerRef.current)
+              }
+            }}
+          >
+            <h3 style={{ margin: '0 0 6px 0', color: '#FFFFFF' }}>{event.title}</h3>
+            <small style={{ color: '#FFFFFF', display: 'block', fontSize: '14px', marginTop: '0.2em' }}>
+              🗓️ {formatDate(event.eventDate)}
+            </small>
+          </div>
+        </Popup>
+      </Marker>
+      
+      {/* Рендерим карточку, если она видима */}
+      {isCardVisible && clickedEvent && clickedPosition && (
+        <CardOnMap
+          isVisible={isCardVisible}
+          position={clickedPosition}
+          event={clickedEvent}
+          onClose={handleCardClose}
+        />
+      )}
+    </>
   )
 }

@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-// /src/assets/RussianHeroesLogo.png
+// ../../public/RussianHeroesLogo.png
 export const Butoapp: React.FC = () => {
   return(
     <Link to="/app">
-      <img src="../../public/RussianHeroesLogo.png" alt="Логотип Россия - страна Героев" />
+      <img src="./RussianHeroesLogo.png" alt="Логотип Россия - страна Героев" />
     </Link>
   )
 }

@@ -16,6 +16,7 @@ export interface EventObject {
     eventDate: string;
     eventType: EventType;
     previewUrlImage: string;
+    siteUrl: string;
 }
 
 interface ApiResponse {
@@ -106,7 +107,7 @@ class EventsDataService {
                     } else {
                         console.warn(
                             `[EventsDataService] Не удалось распарсить координаты для события ID: ${event.id}, ` +
-                            `Title: "${event.title}", Координаты: (${event.latitude}, ${event.longitude})`
+                            `Title: "${event.title}", Координаты: (${event.latitude}, ${event.longitude}), Сайт: "${event.siteUrl}"`
                         );
                     }
                 });

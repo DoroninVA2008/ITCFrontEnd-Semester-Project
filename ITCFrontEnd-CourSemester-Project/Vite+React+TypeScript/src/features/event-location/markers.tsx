@@ -2,7 +2,7 @@
 import { EventMarker } from './eventmarkers'
 import { useEventFilterContext } from '../filter-function/evenFilterProvider'
 import L from 'leaflet'
-import { handleMarkerClick } from './eventmarkers' // @ts-ignore
+// import { handleMarkerClick } from './eventmarkers' // @ts-ignore
 import './marker.scss'
 
 interface MarkerWithPopupProps {
@@ -31,10 +31,10 @@ export const MarkerWithPopup: React.FC<MarkerWithPopupProps> = ({
             event={event}
             markerKey={markerKey}
             isActive={activeMarkerKey === markerKey}
-            // onOpen={(openedMarkerKey, event, position) => 
-            //   onMarkerOpen(event, position, openedMarkerKey)
-            // }
-            onOpen={handleMarkerClick}
+            onOpen={(openedMarkerKey, event, position) => 
+              onMarkerOpen(event, position, openedMarkerKey)
+            }
+            // onOpen={handleMarkerClick}
             onClose={onMarkerClose}
           />
         )

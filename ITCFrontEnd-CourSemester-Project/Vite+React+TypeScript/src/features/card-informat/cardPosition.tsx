@@ -13,9 +13,12 @@ export const CardOnMap: React.FC<{
   onClose: () => void;
 }> = ({ isVisible, event, onClose }) => {
   const [show, setShow] = useState(false);
-  const cardData = useSelector((state: any) => state.card.cardData); 
+  // Добавляем проверку на существование state.card
+  const cardData = useSelector((state: any) => state.card?.cardData); 
   const urlEvent = event.id - 1;
   const siteUrl = cards[urlEvent];
+  const siteURL = event.siteUrl;
+  
   useEffect(() => {
     if (isVisible) {
       setShow(true);
@@ -44,14 +47,9 @@ export const CardOnMap: React.FC<{
         eventDate={event.eventDate}
         eventDescription={event.description}
         imageUrl={event.previewUrlImage}
-        // onClose={onClose}
         siteUrl={siteUrl}
-        onClose={() => setCardData(null)}
+        onClose={onClose}
         cardData={cardData}
-        // isVisible={true}
-        // position={activeEvent.position}
-        // event={activeEvent.event}
-        // cardData={activeEvent.data}
       />
     </div>,
     mapWrapper
