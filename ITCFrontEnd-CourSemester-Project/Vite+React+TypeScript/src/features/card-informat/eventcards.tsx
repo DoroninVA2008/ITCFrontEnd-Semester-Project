@@ -61,7 +61,7 @@ export const EventCard: React.FC<EventCardProps> = ({
     }).replace(/\//g, '.');
   };
 
-  console.log(`ghtytgefsdbvfgvd: ${cardData?.siteUrl}`);
+  console.log(`ghtytgefsdbvfgvd: ${propSiteUrl}`);
 
   // Получаем актуальные данные (из cardData или из пропсов)
   const actualTitle = cardData?.title || eventTitle;
