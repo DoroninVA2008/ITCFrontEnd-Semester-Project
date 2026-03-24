@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
 import { createPortal } from 'react-dom'
 import { EventCard } from '../card-informat/eventcards'
 import { EventObject } from '../event-location/evenPositions'
-import { cards } from '../../app/saga/cons' // @ts-ignore
 import './eventcard.scss'
 
 export const CardOnMap: React.FC<{
@@ -11,19 +9,20 @@ export const CardOnMap: React.FC<{
   position: L.LatLng;
   event: EventObject;
   onClose: () => void;
-}> = ({ isVisible, event, onClose }) => {
+  cardData?: any;
+}> = ({ isVisible, event, onClose, cardData }) => {
   const [show, setShow] = useState(false);
-  // Добавляем проверку на существование state.card
-  const cardData = useSelector((state: any) => state.card?.cardData); 
-  const urlEvent = event.id - 1;
-  const siteUrl = cards[urlEvent];
-  const siteURL = event.siteUrl;
-  
+
+  const handleClose = () => {
+    setShow(false);
+    setTimeout(() => {
+      onClose();
+    }, 300);
+  };
+
   useEffect(() => {
     if (isVisible) {
       setShow(true);
-    } else {
-      setShow(false);
     }
   }, [isVisible]);
 
@@ -47,8 +46,8 @@ export const CardOnMap: React.FC<{
         eventDate={event.eventDate}
         eventDescription={event.description}
         imageUrl={event.previewUrlImage}
-        siteUrl={siteUrl}
-        onClose={onClose}
+        siteUrl={event.siteUrl}
+        onClose={handleClose}
         cardData={cardData}
       />
     </div>,

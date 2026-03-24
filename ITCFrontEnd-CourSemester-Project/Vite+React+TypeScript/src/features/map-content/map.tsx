@@ -58,7 +58,7 @@ export const Map: React.FC = () => {
             position={activeEvent.position}
             event={activeEvent.event}
             onClose={handleCardClose}
-            // cardData={activeEvent.data}
+            cardData={activeEvent.data}
           />
         )}
         <MapContainer

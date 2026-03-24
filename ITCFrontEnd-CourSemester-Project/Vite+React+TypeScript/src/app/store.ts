@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
 import { rootSaga } from './saga/rootSaga.ts'
 import { MainContent } from '../features/main-content'
+import cardReducer from './saga/cardSlice'
 
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
-    ...MainContent.reducer
+    ...MainContent.reducer,
+    card: cardReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -1,5 +1,5 @@
-﻿import React, { useState } from 'react'
-import { EventObject } from '../event-location/evenPositions' // @ts-ignore
+﻿import React from 'react'
+import { EventObject } from '../event-location/evenPositions'
 import './eventcard.scss'
 
 interface EventCardProps {
@@ -8,11 +8,11 @@ interface EventCardProps {
   eventDescription: string;
   imageUrl?: string;
   onClose: () => void;
-  siteUrl?: string; // Оставляем для обратной совместимости
+  siteUrl?: string;
   markerKey?: string;
   onMarkerClickClose?: (markerKey: string) => void;
-  closeDelay?: number; 
-  cardData?: any; // Здесь будут данные из API с полем siteUrl
+  closeDelay?: number;
+  cardData?: EventObject | null;
 }
 
 export const EventCard: React.FC<EventCardProps> = ({
@@ -24,43 +24,32 @@ export const EventCard: React.FC<EventCardProps> = ({
   onClose,
   markerKey,
   onMarkerClickClose,
-  closeDelay = 300,
   cardData,
 }) => {
-  const [isClosing, setIsClosing] = useState(false);
-
   const handleCloseClick = () => {
-    if (isClosing) return;
-
-    setIsClosing(true);
-
-    setTimeout(() => {
-      onClose();
-      if (markerKey && onMarkerClickClose) {
-        onMarkerClickClose(markerKey);
-      };
-      // EventCard.classList.add("is-closing");
-      setIsClosing(true);
-    }, closeDelay);
+    onClose();
+    if (markerKey && onMarkerClickClose) {
+      onMarkerClickClose(markerKey);
+    }
   };
 
-  const handleLearnMore = () => {
-    // Приоритет: сначала из cardData, потом из propSiteUrl
-    let url = cardData?.siteUrl || propSiteUrl;
+  // const handleLearnMore = () => {
+  //   // Приоритет: сначала из cardData, потом из propSiteUrl
+  //   let url = cardData?.siteUrl || propSiteUrl;
     
-    if (!url) {
-      console.warn('URL не найден');
-      return;
-    }
+  //   if (!url) {
+  //     console.warn('URL не найден');
+  //     return;
+  //   }
     
-    // Проверяем, что URL начинается с http:// или https://
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-      url = 'https://' + url;
-    }
+  //   // Проверяем, что URL начинается с http:// или https://
+  //   if (!url.startsWith('http://') && !url.startsWith('https://')) {
+  //     url = 'https://' + url;
+  //   }
     
-    // Открываем в новой вкладке
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
+  //   // Открываем в новой вкладке
+  //   window.open(url, '_blank', 'noopener,noreferrer');
+  // };
 
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
@@ -72,20 +61,21 @@ export const EventCard: React.FC<EventCardProps> = ({
     }).replace(/\//g, '.');
   };
 
+  console.log(`ghtytgefsdbvfgvd: ${cardData?.siteUrl}`);
+
   // Получаем актуальные данные (из cardData или из пропсов)
   const actualTitle = cardData?.title || eventTitle;
   const actualDescription = cardData?.description || eventDescription;
   const actualDate = cardData?.eventDate || eventDate;
-  const actualImageUrl = cardData?.imageUrl || imageUrl;
+  const actualImageUrl = cardData?.previewUrlImage || imageUrl;
   const actualSiteUrl = cardData?.siteUrl || propSiteUrl;
 
   return (
-    <div className={`event-tooltip-card ${isClosing ? 'is-closing' : ''}`}>
-      <button 
-        className="event-tooltip-close-btn" 
-        onClick={handleCloseClick} 
+    <div className="event-tooltip-card">
+      <button
+        className="event-tooltip-close-btn"
+        onClick={handleCloseClick}
         aria-label="Close"
-        disabled={isClosing}
       >
         &times;
       </button>
@@ -111,20 +101,14 @@ export const EventCard: React.FC<EventCardProps> = ({
           </span>
         </div>
       </div>
-      {actualSiteUrl !== undefined && (
-        <button 
-          className="event-tooltip-learn-more-btn" 
-          href={actualSiteUrl} 
-          onClick={handleLearnMore} // actualSiteUrl
-          disabled={!actualSiteUrl || isClosing}
-          style={{ 
-            opacity: actualSiteUrl ? 1 : 0.5, 
-            cursor: actualSiteUrl ? 'pointer' : 'not-allowed' 
-          }}
-        >
-          Узнать больше
-        </button>
-      )}
+      <a
+        className="event-tooltip-learn-more-btn"
+        href={actualSiteUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Узнать больше
+      </a>
       <div className="RightToolTyipe"></div>
     </div>
   );
