@@ -3,11 +3,11 @@ import { MapContainer, TileLayer } from 'react-leaflet'
 import L from 'leaflet'
 import { tiLayer } from '../../app/saga/cons.ts'
 import { CountryLabels } from '../layer-position/layers.tsx'
-import { MarkerWithPopup } from '../event-location/markers.tsx'
+import { MarkerWithPopup } from '../marker-location/markers.tsx'
 import { FilterButtonList } from '../filter-function/filters.tsx'
 import { EventFilterProvider } from '../filter-function/evenFilterProvider'
 import { CardOnMap } from '../card-informat/cardPosition'
-import { EventObject } from '../event-location/evenPositions.ts'
+import { EventObject } from '../marker-location/evenPositions.ts'
 import { cards } from '../../app/saga/cons.ts' // @ts-ignore
 import './map.scss'
 

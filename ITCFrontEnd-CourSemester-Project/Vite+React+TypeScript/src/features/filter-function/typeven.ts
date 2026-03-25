@@ -1,4 +1,4 @@
-import { EventType } from '../event-location/evenPositions'
+import { EventType } from '../marker-location/evenPositions'
 import { eventsListDates } from '../../app/saga/cons.ts'
 
 export interface FilterConfig {
@@ -119,7 +119,7 @@ export async function fetchEvents(): Promise<EventDates[]> {
         const timeoutId = setTimeout(() => controller.abort(), 10000);
 
         const response = await fetch(eventsListDates, {
-            method: 'POST',
+            method: 'GET',
             signal: controller.signal,
             mode: 'cors',
             headers: {
@@ -150,7 +150,7 @@ export async function fetchEventsByFilters(payload: FilterRequestData): Promise<
         console.log('Отправляемый payload на бэкенд:', payload); // Для отладки
 
         const response = await fetch(eventsListDates, {
-            method: 'POST',
+            method: 'GET',
             signal: controller.signal,
             mode: 'cors',
             headers: {

@@ -120,6 +120,10 @@ export const ContactModal: React.FC<ContactModalProps> = ({
       const res = await fetch(formApiUrl, {
         method: 'POST',
         body: formData,
+        headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'multipart/form-data'
+            }
       })
 
       if (!res.ok) {

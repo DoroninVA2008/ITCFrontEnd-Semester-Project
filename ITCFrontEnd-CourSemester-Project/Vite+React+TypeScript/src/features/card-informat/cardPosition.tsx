@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { EventCard } from '../card-informat/eventcards'
-import { EventObject } from '../event-location/evenPositions'
+import { EventObject } from '../marker-location/evenPositions' // @ts-ignore
 import './eventcard.scss'
 
 export const CardOnMap: React.FC<{
@@ -14,8 +14,8 @@ export const CardOnMap: React.FC<{
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
-    setShow(false);
     setTimeout(() => {
+      setShow(false);
       onClose();
     }, 300);
   };
@@ -37,7 +37,7 @@ export const CardOnMap: React.FC<{
         position: 'absolute',
         top: '0px',
         right: '0px',
-        pointerEvents: isVisible ? 'auto' : 'none',
+        pointerEvents: show ? 'auto' : 'none',
         zIndex: 100,
       }}
     >

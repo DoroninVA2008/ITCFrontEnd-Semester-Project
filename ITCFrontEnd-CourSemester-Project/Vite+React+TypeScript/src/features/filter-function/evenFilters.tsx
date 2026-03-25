@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
-import { EventObject } from '../event-location/evenPositions'
+import { EventObject } from '../marker-location/evenPositions'
 import { EventTypeItem, mapSelectedOptionsToEventTypeIds } from './typeven'
 
 export interface FilterState {

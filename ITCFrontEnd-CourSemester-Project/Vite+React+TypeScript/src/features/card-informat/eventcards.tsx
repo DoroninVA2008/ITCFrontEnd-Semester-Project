@@ -1,5 +1,5 @@
 ﻿import React from 'react'
-import { EventObject } from '../event-location/evenPositions'
+import { EventObject } from '../marker-location/evenPositions' // @ts-ignore
 import './eventcard.scss'
 
 interface EventCardProps {
@@ -12,7 +12,7 @@ interface EventCardProps {
   markerKey?: string;
   onMarkerClickClose?: (markerKey: string) => void;
   closeDelay?: number;
-  cardData?: EventObject | null;
+  cardData?: EventObject;
 }
 
 export const EventCard: React.FC<EventCardProps> = ({
@@ -84,7 +84,7 @@ export const EventCard: React.FC<EventCardProps> = ({
           {actualImageUrl ? (
             <img 
               src={actualImageUrl} 
-              alt={actualTitle} 
+              alt="Загрузка..."
               className="event-tooltip-image" 
             />
           ) : null}

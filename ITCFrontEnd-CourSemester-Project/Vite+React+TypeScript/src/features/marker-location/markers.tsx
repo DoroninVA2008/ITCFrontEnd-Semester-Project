@@ -1,8 +1,8 @@
 ﻿import React from 'react'
 import { EventMarker } from './eventmarkers'
 import { useEventFilterContext } from '../filter-function/evenFilterProvider'
-import L from 'leaflet'
-// import { handleMarkerClick } from './eventmarkers' // @ts-ignore
+// import { handleMarkerClick } from './eventmarkers'
+import L from 'leaflet' // @ts-ignore
 import './marker.scss'
 
 interface MarkerWithPopupProps {

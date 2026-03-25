@@ -2,12 +2,9 @@
 import { Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import { useDispatch } from 'react-redux'
-import { EventObject } from './evenPositions'
-// @ts-ignore
-import MarkerPolitTarget from '../../assets/MarkerPolitTarget.png'
-// @ts-ignore
-import MarkerSwordTarget from '../../assets/MarkerSwordTarget.png'
-// @ts-ignore
+import { EventObject } from './evenPositions' // @ts-ignore
+import MarkerPolitTarget from '../../assets/MarkerPolitTarget.png' // @ts-ignore
+import MarkerSwordTarget from '../../assets/MarkerSwordTarget.png' // @ts-ignore
 import iconShadow from '../../../public/marker-shadow.png'
 import { FETCH_CARD_DATA } from '../../app/saga/saga'
 import { CardOnMap } from '../card-informat/cardPosition'
@@ -205,7 +202,6 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
           </div>
         </Popup>
       </Marker>
-      
       {/* Рендерим карточку, если она видима */}
       {isCardVisible && clickedEvent && clickedPosition && (
         <CardOnMap
