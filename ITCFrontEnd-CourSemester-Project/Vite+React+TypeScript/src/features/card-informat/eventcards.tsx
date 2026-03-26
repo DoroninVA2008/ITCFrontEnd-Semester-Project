@@ -1,4 +1,4 @@
-﻿import React from 'react'
+﻿import React, { useState } from 'react'
 import { EventObject } from '../marker-location/evenPositions' // @ts-ignore
 import './eventcard.scss'
 
@@ -20,36 +20,21 @@ export const EventCard: React.FC<EventCardProps> = ({
   eventDate,
   eventDescription,
   imageUrl,
-  siteUrl: propSiteUrl, // Переименовываем, чтобы не путать
+  siteUrl: propSiteUrl,
   onClose,
   markerKey,
   onMarkerClickClose,
   cardData,
 }) => {
+
   const handleCloseClick = () => {
+    // Запускаем анимацию исчезания
     onClose();
+    
     if (markerKey && onMarkerClickClose) {
       onMarkerClickClose(markerKey);
     }
   };
-
-  // const handleLearnMore = () => {
-  //   // Приоритет: сначала из cardData, потом из propSiteUrl
-  //   let url = cardData?.siteUrl || propSiteUrl;
-    
-  //   if (!url) {
-  //     console.warn('URL не найден');
-  //     return;
-  //   }
-    
-  //   // Проверяем, что URL начинается с http:// или https://
-  //   if (!url.startsWith('http://') && !url.startsWith('https://')) {
-  //     url = 'https://' + url;
-  //   }
-    
-  //   // Открываем в новой вкладке
-  //   window.open(url, '_blank', 'noopener,noreferrer');
-  // };
 
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);

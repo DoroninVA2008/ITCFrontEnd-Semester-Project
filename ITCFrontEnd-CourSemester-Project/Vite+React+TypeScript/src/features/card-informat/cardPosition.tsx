@@ -12,10 +12,13 @@ export const CardOnMap: React.FC<{
   cardData?: any;
 }> = ({ isVisible, event, onClose, cardData }) => {
   const [show, setShow] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
   const handleClose = () => {
+    setIsClosing(true);
     setTimeout(() => {
       setShow(false);
+      setIsClosing(false);
       onClose();
     }, 300);
   };
@@ -23,6 +26,7 @@ export const CardOnMap: React.FC<{
   useEffect(() => {
     if (isVisible) {
       setShow(true);
+      setIsClosing(false);
     }
   }, [isVisible]);
 
@@ -32,12 +36,12 @@ export const CardOnMap: React.FC<{
 
   return createPortal(
     <div
-      className={`event-card-shell ${show ? 'is-visible' : 'is-hidden'}`}
+      className={`event-card-shell ${show ? 'is-visible' : 'is-hidden'} ${isClosing ? 'is-closing' : ''}`}
       style={{
         position: 'absolute',
         top: '0px',
         right: '0px',
-        pointerEvents: show ? 'auto' : 'none',
+        pointerEvents: show && !isClosing ? 'auto' : 'none',
         zIndex: 100,
       }}
     >
