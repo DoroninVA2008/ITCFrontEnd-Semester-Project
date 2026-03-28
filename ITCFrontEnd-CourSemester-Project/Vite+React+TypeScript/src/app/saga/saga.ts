@@ -39,7 +39,7 @@ function* fetchCardData(action: PayloadAction<number>): Generator<any, void, any
     const data: any = yield call([response, 'json']);
     yield put({
       type: FETCH_CARD_DATA_SUCCESS,
-      payload: data
+      payload: data.object
     });
   } catch (error: any) {
     yield put({

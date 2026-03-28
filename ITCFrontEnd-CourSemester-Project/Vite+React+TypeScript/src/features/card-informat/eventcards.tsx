@@ -1,5 +1,5 @@
 ﻿import React, { useState } from 'react'
-import { EventObject } from '../marker-location/evenPositions' // @ts-ignore
+import { EventObject } from './reurlcard' // @ts-ignore
 import './eventcard.scss'
 
 interface EventCardProps {
@@ -24,7 +24,7 @@ export const EventCard: React.FC<EventCardProps> = ({
   onClose,
   markerKey,
   onMarkerClickClose,
-  cardData,
+  cardData
 }) => {
 
   const handleCloseClick = () => {
@@ -46,9 +46,6 @@ export const EventCard: React.FC<EventCardProps> = ({
     }).replace(/\//g, '.');
   };
 
-  console.log(`ghtytgefsdbvfgvd: ${propSiteUrl}`);
-
-  // Получаем актуальные данные (из cardData или из пропсов)
   const actualTitle = cardData?.title || eventTitle;
   const actualDescription = cardData?.description || eventDescription;
   const actualDate = cardData?.eventDate || eventDate;
@@ -91,6 +88,7 @@ export const EventCard: React.FC<EventCardProps> = ({
         href={actualSiteUrl}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => console.log('siteUrl:', actualSiteUrl)}
       >
         Узнать больше
       </a>

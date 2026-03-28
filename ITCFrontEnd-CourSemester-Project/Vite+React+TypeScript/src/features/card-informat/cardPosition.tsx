@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import { EventCard } from '../card-informat/eventcards'
-import { EventObject } from '../marker-location/evenPositions' // @ts-ignore
+import { useSelector } from 'react-redux'
+import { EventCard } from './eventcards'
+import { EventObject } from './reurlcard' // @ts-ignore
 import './eventcard.scss'
 
 export const CardOnMap: React.FC<{
@@ -9,8 +10,8 @@ export const CardOnMap: React.FC<{
   position: L.LatLng;
   event: EventObject;
   onClose: () => void;
-  cardData?: any;
-}> = ({ isVisible, event, onClose, cardData }) => {
+}> = ({ isVisible, event, onClose }) => {
+  const cardData = useSelector((state: any) => state.card?.cardData);
   const [show, setShow] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -42,7 +43,7 @@ export const CardOnMap: React.FC<{
         top: '0px',
         right: '0px',
         pointerEvents: show && !isClosing ? 'auto' : 'none',
-        zIndex: 100,
+        zIndex: 1000,
       }}
     >
       <EventCard

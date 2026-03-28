@@ -1,4 +1,4 @@
-// import { watchFetchData } from '../../app/saga/saga'
+// @ts-ignore
 import { card, cards } from '../../app/saga/cons'
 
 export enum EventType {
@@ -22,7 +22,7 @@ export interface EventObject {
 
 type Coordinates = [number, number];
 
-class EventsDataService {
+export class EventsDataService {
     private static instance: EventsDataService;
     private _events: EventObject[] = [];
     private _eventsPosition: Map<string, Coordinates> = new Map();
@@ -108,24 +108,7 @@ class EventsDataService {
             }
 
             this._events = events;
-            this._eventsPosition.clear();
-
-            this._events.forEach((event) => {
-                const lat = parseFloat(event.latitude);
-                const lng = parseFloat(event.longitude);
-
-                if (!isNaN(lat) && !isNaN(lng)) {
-                    this._eventsPosition.set(event.id.toString(), [lat, lng]);
-                } else {
-                    console.warn(
-                        `[EventsDataService] Не удалось распарсить координаты для события ID: ${event.id}, ` +
-                        `Title: "${event.title}", Координаты: (${event.latitude}, ${event.longitude}), Сайт: "${event.siteUrl}"`
-                    );
-                }
-            });
-
             this._isLoaded = true;
-            console.log(`✅ Загружено событий: ${this._events.length}`);
         } catch (error) {
             console.error('❌ [EventsDataService] Ошибка при загрузке данных:', error);
             this._isLoaded = false;
@@ -134,15 +117,7 @@ class EventsDataService {
         } finally {
             this._loadingPromise = null;
         }
-    }
-
-    getEventPosition(eventId: number): Coordinates | undefined {
-        return this._eventsPosition.get(eventId.toString());
-    }
-
-    getEventById(eventId: number): EventObject | undefined {
-        return this._events.find(event => event.id === eventId);
-    }
+    } 
 }
 
 export const eventsDataService = EventsDataService.getInstance();

@@ -8,11 +8,13 @@ import MarkerSwordTarget from '../../assets/MarkerSwordTarget.png' // @ts-ignore
 import iconShadow from '../../../public/marker-shadow.png'
 import { FETCH_CARD_DATA } from '../../app/saga/saga'
 import { CardOnMap } from '../card-informat/cardPosition'
+import { EventsDataService } from '../card-informat/reurlcard'
 
 type EventMarkerProps = {
   event: EventObject
   markerKey: string
   isActive: boolean
+  data: EventsDataService
   onOpen: (markerKey: string, event: EventObject, position: L.LatLng) => void
   onClose: (markerKey: string) => void
 }
@@ -165,7 +167,16 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
         clearPopupCloseTimers();
         
         markerRef.current.openPopup();
-        console.log(`${event.siteUrl}`)
+        console.log(`Объекты события: {
+          Айдшник события: ${event.id},
+          Тип события: ${event.eventType},
+          Координаты: (Ш: ${event.latitude}, Д: ${event.longitude}),
+          Портрет: ${event.previewUrlImage},
+          Заголовок: "${event.title}",
+          Дата события: "${event.eventDate}",
+          Описание события: "${event.description}",
+          Сайт: ${event.siteUrl || 'не обнаружен'}
+        }`);
         // Показываем карточку
         setClickedEvent(event);
         setClickedPosition(markerLatLng);
@@ -202,7 +213,6 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
           </div>
         </Popup>
       </Marker>
-      {/* Рендерим карточку, если она видима */}
       {isCardVisible && clickedEvent && clickedPosition && (
         <CardOnMap
           isVisible={isCardVisible}
