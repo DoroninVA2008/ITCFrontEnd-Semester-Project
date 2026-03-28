@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useSelector } from 'react-redux'
 import { EventCard } from './eventcards'
@@ -14,6 +14,7 @@ export const CardOnMap: React.FC<{
   const cardData = useSelector((state: any) => state.card?.cardData);
   const [show, setShow] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const hasShownRef = useRef(false);
 
   const handleClose = () => {
     setIsClosing(true);
@@ -26,8 +27,16 @@ export const CardOnMap: React.FC<{
 
   useEffect(() => {
     if (isVisible) {
+      hasShownRef.current = true;
       setShow(true);
       setIsClosing(false);
+    } else if (hasShownRef.current) {
+      setIsClosing(true);
+      const timer = setTimeout(() => {
+        setShow(false);
+        setIsClosing(false);
+      }, 300);
+      return () => clearTimeout(timer);
     }
   }, [isVisible]);
 

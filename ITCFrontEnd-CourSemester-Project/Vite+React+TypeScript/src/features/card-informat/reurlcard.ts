@@ -92,7 +92,7 @@ export class EventsDataService {
                             eventDate: obj.eventDate,
                             eventType: obj.eventType,
                             previewUrlImage: obj.previewUrlImage,
-                            siteUrl: obj.siteUrl ?? ''
+                            siteUrl: obj.siteUrl ?? null
                         } as EventObject;
                     }) : null)
                     .catch(() => null)

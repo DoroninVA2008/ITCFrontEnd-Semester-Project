@@ -37,6 +37,7 @@ function* fetchCardData(action: PayloadAction<number>): Generator<any, void, any
   try {
     const response: Response = yield call(fetch, card(action.payload));
     const data: any = yield call([response, 'json']);
+    console.log(`[Card API] id: ${action.payload}, siteUrl: ${data.object?.siteUrl ?? 'null'}, typEvent: ${data.object?.eventType}, coords: (${data.object?.latitude}, ${data.object?.longitude})`, data.object);
     yield put({
       type: FETCH_CARD_DATA_SUCCESS,
       payload: data.object

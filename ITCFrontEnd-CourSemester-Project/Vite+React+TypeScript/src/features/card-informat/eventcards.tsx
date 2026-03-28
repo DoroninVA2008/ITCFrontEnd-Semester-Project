@@ -28,9 +28,8 @@ export const EventCard: React.FC<EventCardProps> = ({
 }) => {
 
   const handleCloseClick = () => {
-    // Запускаем анимацию исчезания
     onClose();
-    
+
     if (markerKey && onMarkerClickClose) {
       onMarkerClickClose(markerKey);
     }

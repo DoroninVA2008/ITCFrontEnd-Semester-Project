@@ -7,14 +7,12 @@ import './marker.scss'
 
 interface MarkerWithPopupProps {
   onMarkerOpen: (event: any, position: L.LatLng, markerKey: string) => void;
-  onMarkerClose: (markerKey: string) => void;
   activeMarkerKey: string | null;
 }
 
-export const MarkerWithPopup: React.FC<MarkerWithPopupProps> = ({ 
-  onMarkerOpen, 
-  onMarkerClose,
-  activeMarkerKey 
+export const MarkerWithPopup: React.FC<MarkerWithPopupProps> = ({
+  onMarkerOpen,
+  activeMarkerKey,
 }) => {
   const { filteredEvents, isLoading, error } = useEventFilterContext()
 
@@ -31,11 +29,9 @@ export const MarkerWithPopup: React.FC<MarkerWithPopupProps> = ({
             event={event}
             markerKey={markerKey}
             isActive={activeMarkerKey === markerKey}
-            onOpen={(openedMarkerKey, event, position) => 
+            onOpen={(openedMarkerKey, event, position) =>
               onMarkerOpen(event, position, openedMarkerKey)
             }
-            // onOpen={handleMarkerClick}
-            onClose={onMarkerClose}
           />
         )
       })}

@@ -29,11 +29,11 @@ $animation-duration: 0.3s;
   gap: 12px;
   opacity: 1;
 
-  // &.is-closing {
-  //   opacity: 0 !important;
-  //   transition: all $animation-duration ease !important;
-  //   pointer-events: none;
-  // }
+  &.is-closing {
+    opacity: 0 !important;
+    transition: all $animation-duration ease !important;
+    pointer-events: none;
+  }
 
   .event-tooltip-close-btn {
     position: absolute;

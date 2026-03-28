@@ -8,7 +8,6 @@ import { FilterButtonList } from '../filter-function/filters.tsx'
 import { EventFilterProvider } from '../filter-function/evenFilterProvider'
 import { CardOnMap } from '../card-informat/cardPosition'
 import { EventObject } from '../marker-location/evenPositions.ts'
-import { cards } from '../../app/saga/cons.ts' // @ts-ignore
 import './map.scss'
 
 const centmap: [number, number] = [68.751244, 98.618423]
@@ -27,22 +26,9 @@ export const Map: React.FC = () => {
   
   const mapRef = useRef<L.Map | null>(null)
 
-  const handleMarkerOpen = async (event: EventObject, position: L.LatLng, markerKey: string) => {
-  setActiveEvent({ event, position, markerKey, data: null })
-
-  try {
-    const response = await fetch(cards[event.id - 1])
-    if (!response.ok) throw new Error('Ошибка при загрузке данных карточки')
-    const data = await response.json()
-    setActiveEvent(prev => prev ? { ...prev, data } : null)
-  } catch (err) {
-    console.error('Ошибка:', err)
+  const handleMarkerOpen = (event: EventObject, position: L.LatLng, markerKey: string) => {
+    setActiveEvent({ event, position, markerKey, data: null })
   }
-}
-
-  const handleMarkerClose = useCallback((closedMarkerKey: string) => {
-    setActiveEvent(prev => prev?.markerKey === closedMarkerKey ? null : prev)
-  }, [])
 
   const handleCardClose = useCallback(() => {
     setActiveEvent(null)
@@ -58,7 +44,6 @@ export const Map: React.FC = () => {
             position={activeEvent.position}
             event={activeEvent.event}
             onClose={handleCardClose}
-            cardData={activeEvent.data}
           />
         )}
         <MapContainer
@@ -74,9 +59,8 @@ export const Map: React.FC = () => {
         >
           <TileLayer url={tiLayer} noWrap={false} opacity={0} />
           <CountryLabels />
-          <MarkerWithPopup 
+          <MarkerWithPopup
             onMarkerOpen={handleMarkerOpen}
-            onMarkerClose={handleMarkerClose}
             activeMarkerKey={activeEvent?.markerKey || null}
           />
         </MapContainer>

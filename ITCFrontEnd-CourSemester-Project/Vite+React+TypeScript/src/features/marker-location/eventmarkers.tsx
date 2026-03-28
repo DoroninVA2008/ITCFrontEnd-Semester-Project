@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef, useEffect, useMemo } from 'react'
+﻿import React, { useRef, useEffect, useMemo } from 'react'
 import { Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import { useDispatch } from 'react-redux'
@@ -7,7 +7,6 @@ import MarkerPolitTarget from '../../assets/MarkerPolitTarget.png' // @ts-ignore
 import MarkerSwordTarget from '../../assets/MarkerSwordTarget.png' // @ts-ignore
 import iconShadow from '../../../public/marker-shadow.png'
 import { FETCH_CARD_DATA } from '../../app/saga/saga'
-import { CardOnMap } from '../card-informat/cardPosition'
 import { EventsDataService } from '../card-informat/reurlcard'
 
 type EventMarkerProps = {
@@ -16,7 +15,6 @@ type EventMarkerProps = {
   isActive: boolean
   data: EventsDataService
   onOpen: (markerKey: string, event: EventObject, position: L.LatLng) => void
-  onClose: (markerKey: string) => void
 }
 
 const popupTimeOut = 100
@@ -50,12 +48,11 @@ const getIconByEventType = (eventType: number): L.Icon => {
   return iconMapping[eventType] || tragedyIcon
 }
 
-export const EventMarker: React.FC<EventMarkerProps> = ({ 
-  event, 
-  markerKey, 
-  isActive, 
+export const EventMarker: React.FC<EventMarkerProps> = ({
+  event,
+  markerKey,
+  isActive,
   onOpen,
-  onClose
 }) => {
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const fadeCloseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -65,9 +62,6 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
   const position = !isNaN(lat) && !isNaN(lng) ? ([lat, lng] as [number, number]) : null
   const markerLatLng = useMemo(() => (position ? L.latLng(position[0], position[1]) : null), [position])
   const dispatch = useDispatch()
-  const [isCardVisible, setIsCardVisible] = useState(false)
-  const [clickedEvent, setClickedEvent] = useState<EventObject | null>(null)
-  const [clickedPosition, setClickedPosition] = useState<L.LatLng | null>(null)
 
   if (!position || !markerLatLng) return null
 
@@ -86,10 +80,6 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
   useEffect(() => {
     if (!isActive) {
       markerRef.current?.closePopup()
-      // Закрываем карточку при деактивации
-      setIsCardVisible(false)
-      setClickedEvent(null)
-      setClickedPosition(null)
     }
   }, [isActive])
 
@@ -136,13 +126,6 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
     }, popupFadeDuration);
   };
 
-  const handleCardClose = () => {
-    setIsCardVisible(false);
-    setClickedEvent(null);
-    setClickedPosition(null);
-    onClose(markerKey);
-  };
-
   const eventHandlers = {
     mouseover: () => {
       if (markerRef.current) {
@@ -177,11 +160,6 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
           Описание события: "${event.description}",
           Сайт: ${event.siteUrl || 'не обнаружен'}
         }`);
-        // Показываем карточку
-        setClickedEvent(event);
-        setClickedPosition(markerLatLng);
-        setIsCardVisible(true);
-        
         // Вызываем onOpen и диспатчим запрос
         onOpen(markerKey, event, markerLatLng);
         dispatch({ type: FETCH_CARD_DATA, payload: event.id });
@@ -213,14 +191,6 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
           </div>
         </Popup>
       </Marker>
-      {isCardVisible && clickedEvent && clickedPosition && (
-        <CardOnMap
-          isVisible={isCardVisible}
-          position={clickedPosition}
-          event={clickedEvent}
-          onClose={handleCardClose}
-        />
-      )}
     </>
   )
 }
