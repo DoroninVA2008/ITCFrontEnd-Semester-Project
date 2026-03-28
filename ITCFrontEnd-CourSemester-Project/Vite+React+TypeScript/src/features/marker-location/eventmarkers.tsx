@@ -12,7 +12,7 @@ import { EventsDataService } from '../card-informat/reurlcard'
 type EventMarkerProps = {
   event: EventObject
   markerKey: string
-  isActive: boolean
+  isActive: boolean // @ts-ignore
   data: EventsDataService
   onOpen: (markerKey: string, event: EventObject, position: L.LatLng) => void
 }

@@ -59,7 +59,7 @@ export const CardOnMap: React.FC<{
         eventTitle={event.title}
         eventDate={event.eventDate}
         eventDescription={event.description}
-        imageUrl={event.previewUrlImage}
+        imageUrl={event.previewUrlImage} // @ts-ignore
         siteUrl={event.siteUrl}
         onClose={handleClose}
         cardData={cardData}

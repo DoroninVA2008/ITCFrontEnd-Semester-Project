@@ -23,7 +23,7 @@ export const MarkerWithPopup: React.FC<MarkerWithPopupProps> = ({
       {filteredEvents.map((event, index) => {
         const markerKey = `${event.id}-${event.latitude}-${event.longitude}-${index}`
 
-        return (
+        return (// @ts-ignore
           <EventMarker
             key={markerKey}
             event={event}

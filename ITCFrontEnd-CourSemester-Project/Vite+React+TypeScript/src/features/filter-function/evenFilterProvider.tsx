@@ -1,5 +1,5 @@
 import React, { createContext, useContext, ReactNode, useEffect, useMemo, useState, useCallback } from 'react';
-import { EventObject } from '../event-location/evenPositions';
+import { EventObject } from '../marker-location/evenPositions';
 import { useEventFilters, FilterState } from './evenFilters';
 import { fetchEvents, fetchEventsByFilters, buildFilterRequestData, // fetchEventTypes, 
 EventTypeItem } from './typeven';

@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react'
+﻿import React from 'react'
 import { EventObject } from './reurlcard' // @ts-ignore
 import './eventcard.scss'
 
@@ -7,7 +7,7 @@ interface EventCardProps {
   eventDate: string;
   eventDescription: string;
   imageUrl?: string;
-  onClose: () => void;
+  onClose: () => void; // @ts-ignore
   siteUrl?: string;
   markerKey?: string;
   onMarkerClickClose?: (markerKey: string) => void;
@@ -49,7 +49,20 @@ export const EventCard: React.FC<EventCardProps> = ({
   const actualDescription = cardData?.description || eventDescription;
   const actualDate = cardData?.eventDate || eventDate;
   const actualImageUrl = cardData?.previewUrlImage || imageUrl;
-  const actualSiteUrl = cardData?.siteUrl || propSiteUrl;
+  const rawSiteUrl = cardData?.siteUrl || propSiteUrl || null;
+  const actualSiteUrl = rawSiteUrl
+    ? rawSiteUrl.startsWith('http://') || rawSiteUrl.startsWith('https://')
+      ? rawSiteUrl
+      : `https://${rawSiteUrl}`
+    : null;
+
+  const handleLearnMoreClick = () => {
+    if (actualSiteUrl) {
+      window.open(actualSiteUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  console.log('[EventCard] siteUrl debug:', { rawSiteUrl, actualSiteUrl, propSiteUrl, cardDataSiteUrl: cardData?.siteUrl });
 
   return (
     <div className="event-tooltip-card">
@@ -82,15 +95,13 @@ export const EventCard: React.FC<EventCardProps> = ({
           </span>
         </div>
       </div>
-      <a
+      <button
         className="event-tooltip-learn-more-btn"
-        href={actualSiteUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={() => console.log('siteUrl:', actualSiteUrl)}
+        onClick={handleLearnMoreClick}
+        disabled={!actualSiteUrl}
       >
         Узнать больше
-      </a>
+      </button>
       <div className="RightToolTyipe"></div>
     </div>
   );

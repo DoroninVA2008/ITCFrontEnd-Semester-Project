@@ -4,8 +4,8 @@
   transition: opacity 0.3s ease, transform 0.3s ease;
 	
   &.event-marker-popup-fade-out {
-	opacity: 0;
-	transform: translateY(-6px);
+	  opacity: 0;
+	  transform: translateY(-6px);
   }
 }
 
@@ -14,8 +14,8 @@
   transition: all 0.3s ease;
 
   &:hover {
-	filter: brightness(0.8); 
-	transition: all 0.3s ease;
+	  filter: brightness(0.8); 
+	  transition: all 0.3s ease;
   }
 
   &:active,
@@ -23,6 +23,6 @@
   &.clicked,
   .marker.clicked {
   	filter: brightness(0.6);
-	transition: all 0.3s ease;
+	  transition: all 0.3s ease;
   }
 }

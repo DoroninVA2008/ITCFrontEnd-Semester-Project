@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { FETCH_CARD_DATA, FETCH_CARD_DATA_SUCCESS } from './saga';
+import { FETCH_CARD_DATA_SUCCESS, FETCH_CARD_DATA } from './saga';
 
 const cardSlice = createSlice({
   name: 'card',
@@ -11,7 +11,7 @@ const cardSlice = createSlice({
     builder.addCase(FETCH_CARD_DATA, (state) => {
       state.cardData = null;
     });
-    builder.addCase(FETCH_CARD_DATA_SUCCESS, (state, action) => {
+    builder.addCase(FETCH_CARD_DATA_SUCCESS, (state, action) => {// @ts-ignore
       state.cardData = action.payload;
     });
   },

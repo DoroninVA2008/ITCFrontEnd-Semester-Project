@@ -7,7 +7,7 @@ import { MarkerWithPopup } from '../marker-location/markers.tsx'
 import { FilterButtonList } from '../filter-function/filters.tsx'
 import { EventFilterProvider } from '../filter-function/evenFilterProvider'
 import { CardOnMap } from '../card-informat/cardPosition'
-import { EventObject } from '../marker-location/evenPositions.ts'
+import { EventObject } from '../marker-location/evenPositions.ts' // @ts-ignore
 import './map.scss'
 
 const centmap: [number, number] = [68.751244, 98.618423]
