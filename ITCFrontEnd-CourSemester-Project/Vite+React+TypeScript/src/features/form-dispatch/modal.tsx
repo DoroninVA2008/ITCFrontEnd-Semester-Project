@@ -5,11 +5,12 @@ import './modal.scss'
 
 interface SuggestEventModalProps {
   isOpen: boolean
+  isOpened: boolean
   onClose: () => void
   onReset?: () => void
 }
 
-export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, onClose }) => {
+export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, onClose, isOpened }) => {
   const [zipFile, setZipFile] = useState<File | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
@@ -20,6 +21,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
   const [description, setDescription] = useState('');
   const [eventType, setEventType] = useState<string | null>(null);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isTypevenOpen, setIsTypevenOpen] = useState(false);
   const formRef = useRef<HTMLFormElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const formApiUrl = formApi
@@ -166,6 +168,8 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
     </svg>
   )
 
+  // if (!isOpened) return null
+
   return (
     <>
       <div className={`modal-overlay ${isOpen ? 'open' : ''}`} onClick={(e) => e.stopPropagation()}>
@@ -215,103 +219,110 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
             </div>
 
             <div className="form-group" data-index="2">
-              <label>Тип события</label>
-              <div className="event-type-radios">
-                <div className="UpLabels">
-                <label className="radio-button" tabIndex={0} onFocus={(e) => {
-                  e.currentTarget.classList.add('focused');
-                }}
-                onBlur={(e) => {
-                  e.currentTarget.classList.remove('focused');
-                }}>
-                  <input 
-                    type="radio" 
-                    name="eventType" 
-                    value="military" 
-                    onChange={handleEventTypeChange} 
-                    // checked={eventType === 'military'}
-                    required 
-                  />
-                    <span className="radio-custom-label">Битвы</span>
-                    <span className="radio-circle"
-                    data-index="1"></span>
-                </label>
-                <label className="radio-button" tabIndex={0} onFocus={(e) => {
-                  e.currentTarget.classList.add('focused');
-                }}
-                onBlur={(e) => {
-                  e.currentTarget.classList.remove('focused');
-                }}>
-                  <input 
-                    type="radio" 
-                    name="eventType" 
-                    value="military"
-                    onChange={handleEventTypeChange} 
-                    // checked={eventType === 'military'}
-                    required 
-                  />
-                  <span className="radio-custom-label"
-                    data-index="2">Войны</span>
-                  <span className="radio-circle"></span>
-                </label>
-                <label className="radio-button" tabIndex={0} onFocus={(e) => {
-                  e.currentTarget.classList.add('focused');
-                }}
-                onBlur={(e) => {
-                  e.currentTarget.classList.remove('focused');
-                }}>
-                  <input 
-                    type="radio" 
-                    name="eventType" 
-                    value="political" 
-                    onChange={handleEventTypeChange} 
-                    // checked={eventType === 'political'}
-                    required 
-                  />
-                    <span className="radio-custom-label"
-                    data-index="3">Революции</span>
-                    <span className="radio-circle"></span>
-                </label>
+              <button
+                type="button"
+                className={`typeven ${isTypevenOpen ? 'clicked' : ''}`}
+                onClick={() => setIsTypevenOpen(prev => !prev)}
+              >
+                <div className={`shadewen ${isTypevenOpen ? 'clicked' : ''}`}>
+                  Тип события
+                  <summary className={isTypevenOpen ? 'rotated' : ''}>
+                    <svg width="24" height="24" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4.33337 9.75L13 18.4167L21.6667 9.75" stroke="#C09139" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </summary> 
                 </div>
-                <div className="DownLabels">
-                <label className="radio-button" tabIndex={0} onFocus={(e) => {
-                  e.currentTarget.classList.add('focused');
-                }}
-                onBlur={(e) => {
-                  e.currentTarget.classList.remove('focused');
-                }}>
-                  <input 
-                    type="radio" 
-                    name="eventType" 
-                    value="political"
-                    onChange={handleEventTypeChange} 
-                    // checked={eventType === 'political'}
-                    required 
-                  />
-                  <span className="radio-custom-label">Восстания</span>
-                  <span className="radio-circle"
-                    data-index="4"></span>
-                </label>
-                <label className="radio-button" tabIndex={0} onFocus={(e) => {
-                  e.currentTarget.classList.add('focused');
-                }}
-                onBlur={(e) => {
-                  e.currentTarget.classList.remove('focused');
-                }}>
-                  <input 
-                    type="radio" 
-                    name="eventType" 
-                    value="political"
-                    onChange={handleEventTypeChange} 
-                    // checked={eventType === 'political'}
-                    required 
-                  />
-                  <span className="radio-custom-label">Перевороты</span>
-                  <span className="radio-circle"
-                    data-index="5"></span>
-                </label>
-              </div>
-            </div>
+                <div className="event-type-radios" onClick={(e) => e.stopPropagation()}>
+                  <label className="radio-button" tabIndex={0} onFocus={(e) => {
+                    e.currentTarget.classList.add('focused');
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.classList.remove('focused');
+                  }}>
+                    <input
+                      type="radio"
+                      name="eventType"
+                      value="military"
+                      onChange={handleEventTypeChange}
+                      // checked={eventType === 'military'}
+                      required
+                    />
+                      <span className="radio-custom-label">Битвы</span>
+                      <span className="radio-circle"
+                      data-index="1"></span>
+                  </label>
+                  <label className="radio-button" tabIndex={0} onFocus={(e) => {
+                    e.currentTarget.classList.add('focused');
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.classList.remove('focused');
+                  }}>
+                    <input
+                      type="radio"
+                      name="eventType"
+                      value="military"
+                      onChange={handleEventTypeChange}
+                      // checked={eventType === 'military'}
+                      required
+                    />
+                    <span className="radio-custom-label"
+                      data-index="2">Войны</span>
+                    <span className="radio-circle"></span>
+                  </label>
+                  <label className="radio-button" tabIndex={0} onFocus={(e) => {
+                    e.currentTarget.classList.add('focused');
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.classList.remove('focused');
+                  }}>
+                    <input
+                      type="radio"
+                      name="eventType"
+                      value="political"
+                      onChange={handleEventTypeChange}
+                      // checked={eventType === 'political'}
+                      required
+                    />
+                      <span className="radio-custom-label" data-index="3">Революции</span>
+                      <span className="radio-circle"></span>
+                  </label>
+                  <label className="radio-button" tabIndex={0} onFocus={(e) => {
+                    e.currentTarget.classList.add('focused');
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.classList.remove('focused');
+                  }}>
+                    <input
+                      type="radio"
+                      name="eventType"
+                      value="political"
+                      onChange={handleEventTypeChange}
+                      // checked={eventType === 'political'}
+                      required
+                    />
+                    <span className="radio-custom-label">Восстания</span>
+                    <span className="radio-circle"
+                      data-index="4"></span>
+                  </label>
+                  <label className="radio-button" tabIndex={0} onFocus={(e) => {
+                    e.currentTarget.classList.add('focused');
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.classList.remove('focused');
+                  }}>
+                    <input
+                      type="radio"
+                      name="eventType"
+                      value="political"
+                      onChange={handleEventTypeChange}
+                      // checked={eventType === 'political'}
+                      required
+                    />
+                    <span className="radio-custom-label">Перевороты</span>
+                    <span className="radio-circle" data-index="5"></span>
+                  </label>
+                </div>
+              </button>
             </div>
             <div className="form-group file-upload-wrapper">
               <label htmlFor="file-upload-input" className="file-upload-label">Загрузка ZIP-архива</label>

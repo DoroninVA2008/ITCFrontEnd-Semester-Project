@@ -121,7 +121,7 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen }) => {
               name}
               <summary className={activeFilter === index ? 'rotated' : ''} data-index={index}>
                 <svg width="30" height="30" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4.33337 9.75L13 18.4167L21.6667 9.75" stroke="#C09139" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M4.33337 9.75L13 18.4167L21.6667 9.75" stroke="#C09139" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </summary> 
             </label>

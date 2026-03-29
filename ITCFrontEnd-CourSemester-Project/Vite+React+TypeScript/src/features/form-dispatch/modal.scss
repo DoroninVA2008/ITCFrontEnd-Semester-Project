@@ -7,6 +7,7 @@ $placeholder-color: #8c8c8c;
 $button-bg-color: #ffe082;
 $button-text-color: #1a1a1a;
 $close-button-color: rgba(212, 162, 68, 1);
+$glow-shadow: 0px 0px 10px 0px $border-color;
 $drop-zone-bg-color: #2c2c2c;
 $font-family: 'Cruinn'; 
 $font-weight: 100;
@@ -247,11 +248,80 @@ form {
       padding-bottom: 50px;
       min-height: 80px;
     }
+
+    .typeven {
+      background-color: transparent;
+      color: $text-color;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 0;
+      font-weight: $font-weight;
+      display: inline-flex;
+      flex-direction: column;
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      border: 2px solid $border-color;
+      text-align: left;
+      position: relative;
+
+      .event-type-radios {
+        display: none;
+      }
+
+      summary {
+        right: 20px;
+        bottom: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+
+        &.rotated {
+          rotate: 180deg;
+        }
+      }
+      
+
+      &.clicked {
+        box-shadow: $glow-shadow;
+        border: 2px solid $border-color;
+        border-bottom: 0px !important;
+        // backdrop-filter: blur(10px);
+        // -webkit-backdrop-filter: blur(10px);
+
+        .event-type-radios {
+          display: flex;
+          flex-direction: column;
+          position: absolute;
+          left: -2px;
+          width: calc(100% + 4px);
+          margin-top: 14px;
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border-radius: 10px;
+          padding: 12px 15px 12px 15px;
+          border-left: 2px solid $border-color;
+          border-bottom: 2px solid $border-color;
+          border-right: 2px solid $border-color;
+          box-shadow: $glow-shadow;
+          clip-path: inset(8px -10px -10px -10px);
+          gap: 8px;
+        }
+      }
+
+      &:hover {
+        box-shadow: $glow-shadow;
+        transition: all 0.3s ease;
+      }
+    }
   }
 }
 
 .event-type-radios {
-  gap: 20px; // Расстояние между радио-кнопками
+  gap: 8px; // Расстояние между радио-кнопками
 
   .radio-button {
     width: 100%;
@@ -295,13 +365,13 @@ form {
     .radio-circle {
       width: 18px;
       height: 18px;
-      margin-left: 20px;
+      right: 36px;
       border-radius: 50%;
-      border: 2px solid $border-color; // Ободок кружка по умолчанию
+      border: 2px solid $border-color;
       display: flex;
       justify-content: center;
       align-items: center;
-      position: relative;
+      position: absolute;
 
       &::after {
         content: '';
@@ -313,26 +383,6 @@ form {
         transform: scale(0);
         transition: opacity 0.2s ease, transform 0.2s ease;
       }
-    }
-  }
-
-  .UpLabels {
-    gap: 30px;
-    align-self: flex-end;
-    display: flex;
-
-    .radio-circle {
-      margin-left: 37px;
-    }
-  }
-
-  .DownLabels {
-    display: flex;
-    gap: 30px;
-    align-self: flex-end;
-
-    .radio-circle {
-      margin-left: 99px;
     }
   }
 }
