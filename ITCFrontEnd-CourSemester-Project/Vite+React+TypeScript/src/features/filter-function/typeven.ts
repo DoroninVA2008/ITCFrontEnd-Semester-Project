@@ -41,9 +41,9 @@ interface ApiResponse {
 }
 
 export interface FilterRequestData {
-    eventTypeIds: number[];
-    dateFrom: string;
-    dateTo: string;
+    eventTypeIds?: number[]; // int[]
+    dateFrom?: string;
+    dateTo?: string;
     // periodLabel: string | null;
 }
 
@@ -149,15 +149,22 @@ export async function fetchEventsByFilters(payload: FilterRequestData): Promise<
 
         console.log('Отправляемый payload на бэкенд:', payload); // Для отладки
 
-        const response = await fetch(eventsListDates, {
+        const params = new URLSearchParams();
+        if (payload.eventTypeIds && payload.eventTypeIds.length > 0) {
+            payload.eventTypeIds.forEach(id => params.append('eventTypeIds', String(id)));
+        }
+        if (payload.dateFrom) params.append('dateFrom', payload.dateFrom);
+        if (payload.dateTo) params.append('dateTo', payload.dateTo);
+
+        const url = `${eventsListDates}?${params.toString()}`;
+
+        const response = await fetch(url, {
             method: 'GET',
             signal: controller.signal,
             mode: 'cors',
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
+                'Accept': 'application/json'
+            }
         });
 
         clearTimeout(timeoutId);

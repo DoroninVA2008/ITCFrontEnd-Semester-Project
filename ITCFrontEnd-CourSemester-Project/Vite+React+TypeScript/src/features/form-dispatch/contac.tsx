@@ -122,7 +122,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
         body: formData,
         headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'multipart/form-data'
+                // 'Content-Type': 'multipart/form-data'
             }
       })
 

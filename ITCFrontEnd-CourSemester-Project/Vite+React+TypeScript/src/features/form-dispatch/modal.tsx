@@ -5,12 +5,11 @@ import './modal.scss'
 
 interface SuggestEventModalProps {
   isOpen: boolean
-  isOpened: boolean
   onClose: () => void
   onReset?: () => void
 }
 
-export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, onClose, isOpened }) => {
+export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, onClose }) => {
   const [zipFile, setZipFile] = useState<File | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)

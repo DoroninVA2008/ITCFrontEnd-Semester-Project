@@ -129,8 +129,11 @@ $animation-duration: 0.3s;
     cursor: pointer;
     text-align: center;
     transition: all $animation-duration ease;
-    margin-top: 80px;
+    margin-top: auto;
+    margin-bottom: 140px;
     text-decoration: none;
+    // display: grid;
+    // justify-content: space-between;
 
     &:hover {
       background-color: $button-hover-color;
