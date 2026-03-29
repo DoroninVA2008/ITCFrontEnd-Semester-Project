@@ -57,6 +57,7 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const fadeCloseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const markerRef = useRef<L.Marker | null>(null)
+  const isPinned = useRef(false)
   const lat = parseFloat(event.latitude)
   const lng = parseFloat(event.longitude)
   const position = !isNaN(lat) && !isNaN(lng) ? ([lat, lng] as [number, number]) : null
@@ -79,15 +80,21 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
 
   useEffect(() => {
     if (!isActive) {
+      isPinned.current = false
       markerRef.current?.closePopup()
     }
   }, [isActive])
 
   useEffect(() => {
-    return () => {
-      clearPopupCloseTimers();
-    };
-  }, []);
+  const el = markerRef.current?.getElement()
+  if (!el) return
+  if (isActive) {
+    el.classList.add('clicked')
+  } else {
+    el.classList.remove('clicked')
+  }
+}, [isActive])
+
 
   const clearPopupCloseTimers = () => {
     if (closeTimeoutRef.current) {
@@ -135,10 +142,12 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
       }
     },
     mouseout: () => {
+      if (isPinned.current) return
+
       if (closeTimeoutRef.current) {
         clearTimeout(closeTimeoutRef.current);
       }
-      
+
       closeTimeoutRef.current = setTimeout(() => {
         if (markerRef.current) {
           closePopupWithFade(markerRef.current);
@@ -148,7 +157,7 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
     click: () => {
       if (markerRef.current && markerLatLng) {
         clearPopupCloseTimers();
-        
+        isPinned.current = true
         markerRef.current.openPopup();
         console.log(`Объекты события: {
           Айдшник события: ${event.id},
@@ -160,6 +169,7 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
           Описание события: "${event.description}",
           Сайт: ${event.siteUrl || 'не обнаружен'}
         }`);
+        markerRef.current.getElement()?.classList.add('clicked')
         // Вызываем onOpen и диспатчим запрос
         onOpen(markerKey, event, markerLatLng);
         dispatch({ type: FETCH_CARD_DATA, payload: event.id });
