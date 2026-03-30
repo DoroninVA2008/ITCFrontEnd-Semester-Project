@@ -1,5 +1,5 @@
 import { EventType } from '../marker-location/evenPositions'
-import { eventsListDates } from '../../app/saga/cons.ts'
+import { eventsListDates } from '../../entities/cons'
 
 export interface FilterConfig {
   options: any;

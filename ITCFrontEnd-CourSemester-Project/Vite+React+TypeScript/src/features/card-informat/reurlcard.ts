@@ -1,5 +1,5 @@
 // @ts-ignore
-import { card, cards } from '../../app/saga/cons'
+import { card, cards } from '../../entities/cons'
 
 export enum EventType {
     Execution = 1,

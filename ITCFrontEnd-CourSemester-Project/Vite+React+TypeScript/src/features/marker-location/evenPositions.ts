@@ -1,5 +1,5 @@
 // import { watchFetchData } from '../../app/saga/saga'
-import { cards } from '../../app/saga/cons'
+import { cards } from '../../entities/cons'
 
 export enum EventType {
     Execution = 1,

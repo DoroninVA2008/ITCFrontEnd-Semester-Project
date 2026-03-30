@@ -1,7 +1,7 @@
 import { takeLatest, put, call } from 'redux-saga/effects'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { api } from '../../entities/api.ts'
-import { card } from './cons'
+import { card } from '../../entities/cons.ts'
 
 export interface FetchDataPayload {
   id?: number;

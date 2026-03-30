@@ -3,7 +3,7 @@ import { Header } from '../../widgets/header.tsx'
 import { SuggestEventModal } from '../../features/form-dispatch/modal.tsx'
 import { IndexContentComponent } from '../../features/main-content/ui/index-content.tsx' //@ts-ignore
 import './index.scss' //@ts-ignore
-import './mobile.scss'
+import '../../widgets/mobile.scss'
 
 export const Index: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

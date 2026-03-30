@@ -1,7 +1,10 @@
+$font-shrift: 'Cruinn', sans-serif;
+
 .leaflet-popup.event-marker-popup {
   opacity: 1;
   transform: translateY(0);
   transition: opacity 0.3s ease, transform 0.3s ease;
+  font-family: $font-shrift;
 	
   &.event-marker-popup-fade-out {
 	  opacity: 0;

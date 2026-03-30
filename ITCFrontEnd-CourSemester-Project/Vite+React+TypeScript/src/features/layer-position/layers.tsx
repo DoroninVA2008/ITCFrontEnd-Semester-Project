@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import L from 'leaflet'
 import { useMap } from 'react-leaflet'
-import { landGeoJSon } from '../../app/saga/cons.ts'
+import { landGeoJSon } from '../../entities/cons.ts'
 import { CountryLabelItem, getCountrySizeCategory, shouldShowLabel } from './zoom.tsx'
 import { countriesTranslation } from './countriesTranslation.ts'
 import { countriesPosition } from './countriesPosition.ts' // @ts-ignore

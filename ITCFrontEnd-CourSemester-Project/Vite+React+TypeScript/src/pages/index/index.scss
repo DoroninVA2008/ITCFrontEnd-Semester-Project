@@ -13,7 +13,7 @@ $font-shrift-weight: 300;
 
 @font-face {
   font-family: 'Cruinn';
-  src: url('../../../public/Cruinn/Cruinn Medium.ttf') format('truetype'), url('../../../public/Cruinn/Cruinn Regular.ttf') format('truetype');
+  src: url('../../assets/FontShrift/Cruinn/Cruinn Medium.ttf') format('truetype'), url('../../assets/FontShrift/Cruinn/Cruinn Regular.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap
@@ -21,20 +21,20 @@ $font-shrift-weight: 300;
 
 @font-face {
   font-family: 'Cruinn';
-  src: url('../../../public/Cruinn/Cruinn Light.ttf') format('truetype'), url('../../../public/Cruinn/Cruinn Thin.ttf') format('truetype');
+  src: url('../../assets/FontShrift/Cruinn/Cruinn Light.ttf') format('truetype'), url('../../assets/FontShrift/Cruinn/Cruinn Thin.ttf') format('truetype');
   font-weight: 300;
   font-style: normal;
   font-display: swap
 }
 
 * {
-  font-family: 'Cruinn', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box
 }
 
 body {
+  font-family: 'Cruinn', sans-serif;
   display: flex;
   justify-content: center;
   margin: 0;
@@ -99,6 +99,7 @@ header {
 
 header button,
 .RussianFon button {
+  font-family: $font-shrift;
   border-radius: 15px;
   font-weight: $font-shrift-weight !important;
   font-style: normal;

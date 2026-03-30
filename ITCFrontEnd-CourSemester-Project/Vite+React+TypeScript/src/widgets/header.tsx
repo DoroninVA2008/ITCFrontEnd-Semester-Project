@@ -1,7 +1,7 @@
 import React from 'react'
-import { Butoapp } from './butoapp'
-import { Buterm } from './buterm'
-import { Butoform } from './butoform'
+import { Butoapp } from '../entities/butoapp'
+import { Buterm } from '../entities/buterm'
+import { Butoform } from '../entities/butoform'
 
 export interface HeaderProps {
   onOpenModal: () => void

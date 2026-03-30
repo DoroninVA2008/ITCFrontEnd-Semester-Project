@@ -128,7 +128,7 @@ $font-weight: 100;
   border-radius: 50%;
   font-weight: 400;
   transition: all 0.3s ease;
-  font-family: 'Cruinn';
+  font-family: $font-family;
   
   &:hover, .remove-file-button:hover {
     color: $close-button-color;
@@ -224,6 +224,7 @@ form {
     input[type="date"],
     textarea {
       font-weight: $font-weight;
+      font-family: $font-family;
       display: inline-flex;
       flex-direction: column;
       width: 100%;
@@ -256,6 +257,7 @@ form {
       font-size: 16px;
       cursor: pointer;
       padding: 0;
+      font-family: $font-family;
       font-weight: $font-weight;
       display: inline-flex;
       flex-direction: column;
@@ -443,6 +445,7 @@ form {
       color: rgb(192, 145, 57);
       border: 1px solid rgb(192, 145, 57);
       border-radius: 15px;
+      font-family: $font-family;
       font-size: 14px;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -484,6 +487,7 @@ form {
   font-weight: 100;
   font-size: 20px;
   cursor: pointer; 
+  font-family: $font-family;
   user-select: none;
   padding: 20px 15px 20px 15px;
   border: 2px solid rgb(192, 145, 57);
@@ -510,6 +514,7 @@ form {
   cursor: pointer; 
   margin-top: 26px;
   user-select: none;
+  font-family: $font-family;
   padding: 20px 15px 20px 15px;
   border: 2px solid rgb(192, 145, 57);
   transition: all 0.3s ease;
@@ -542,6 +547,7 @@ form {
 #tg,
 textarea {
   font-weight: $font-weight;
+  font-family: $font-family;
   display: inline-flex;
   flex-direction: column;
   width: 100%;

@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { Header } from '../../widgets/header.tsx'
 import { SuggestEventModal } from '../../features/form-dispatch/modal.tsx'
 import { Map } from '../../features/map-content/map.tsx' // @ts-ignore
-import './mapp.scss'
+import './mapp.scss' // @ts-ignore
+import '../../widgets/mobile.scss'
 
 export const Mapp: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
