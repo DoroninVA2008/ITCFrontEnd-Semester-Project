@@ -6,6 +6,7 @@ import { store } from './store.ts'
 import { Index } from '../pages/index/index.tsx'
 import { Main } from '../pages/main/main.tsx'
 import { Mapp } from '../pages/map/mapp.tsx'
+import { LogIn } from '../pages/login/login.tsx'
 import { Admin } from '../pages/admin/admin.tsx'
 
 const rootElement = document.getElementById('root');
@@ -18,6 +19,7 @@ const rootElement = document.getElementById('root');
               <Route path="/" element={<Index />} />
               <Route path="/app" element={<Main />} />
               <Route path="/map" element={<Mapp />} />
+              <Route path="/log" element={<LogIn />} />
               <Route path="/adm" element={<Admin />} />
             </Routes>
           </BrowserRouter>

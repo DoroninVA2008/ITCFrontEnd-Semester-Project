@@ -1,4 +1,4 @@
-$hepander-color: #0F1B32;
+$headmer-color: #0F1B32;
 $target-color: #c09139;
 $hover-color: #805A13;
 $active-color: #48330C;
@@ -28,7 +28,7 @@ $font-shrift-weight: 300;
   font-display: swap
 }
 
-.AdminPage {
+.LoginPage {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,7 +40,7 @@ $font-shrift-weight: 300;
   height: 100vh;
   left: 0;
   font-family: $admpanel-font-shrift !important;
-  background-color: rgb(250, 250, 250);
+  background-color: rgb(232, 232, 232);
   opacity: 1; 
   position: relative;
   background-size: cover;
@@ -48,15 +48,15 @@ $font-shrift-weight: 300;
   background-position-x: center;
 }
 
-.Headmer {
+.Hepander {
   position: absolute;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: $hepander-color;
+  justify-content: flex-start;
+  background-color: $headmer-color;
   z-index: 1001;
   width: 100vw;
   height: 68px;
+  padding-top: 8px;
   top: 0;
   color: $text-color;
 
@@ -82,41 +82,9 @@ $font-shrift-weight: 300;
     font-weight: $font-shrift-weight !important;
     font-style: normal;
     font-size: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-top: 12px;
     letter-spacing: 0.2px;
     margin-left: 2px
-  }
-
-  & .butnav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    gap: 20px;
-    margin: 0 auto;
-  }
-
-  & button {
-    background: transparent;
-    border: transparent;
-    color: white;
-    font-family: $admpanel-font-shrift;
-    font-weight: 300 !important;
-    padding-left: 10px;
-    padding-right: 10px;
-    font-style: Regular;
-    font-size: 18px;
-    height: 46px;
-    line-height: 26px;
-    border-radius: 6px;
-    transition: $transition-ive;
-
-    &:hover {
-      background-color: rgb(51, 61, 81);
-      transition: $transition-ive;
-    }
   }
 }
 

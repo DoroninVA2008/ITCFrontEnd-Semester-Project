@@ -1,14 +1,12 @@
 import React from 'react'
 import { Butoapp } from '../entities/butoapp'
 import { Buterm } from '../entities/buterm'
-import { ButNav } from '../entities/butnav'
 
-export const Headmer: React.FC = () => {
+export const Hepander: React.FC = () => { // BuToApp, BuTerm
   return (
-    <div className="Headmer">
+    <div className="Hepander">
       <Butoapp />
       <Buterm />
-      <ButNav />
     </div>
   );
 };

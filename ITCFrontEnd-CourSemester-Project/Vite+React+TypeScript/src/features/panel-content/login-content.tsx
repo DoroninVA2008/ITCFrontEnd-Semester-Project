@@ -1,38 +1,43 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-export const AdminContentComponent: React.FC = () => {
+export const LogInContentComponent: React.FC = () => {
   return (
     <div className="AdminLogIn">
-      <h1>Вход</h1>
+      <h1>
+        Вход
+      </h1>
       <div className="admin-group">
         <div className="admin-login">
-          <label htmlFor="name">Логин</label>
+          <label htmlFor="name">
+            Логин
+          </label>
           <br />
           <input
             type="text"
             id="LogIn"
             name="login"
-            // placeholder="Введите название события"
-            // value={name}
-            // onChange={handleNameChange}
             required
           />
         </div>
         <div className="admin-login">
-          <label htmlFor="name">Пароль</label>
+          <label htmlFor="name">
+            Пароль
+          </label>
           <br />
           <input
             type="text"
             id="PassWord"
             name="password"
-            // placeholder="Введите название события"
-            // value={name}
-            // onChange={handleNameChange}
             required
           />
         </div>
       </div>
-      <button>Войти</button>
+      <Link to="/adm">
+        <button>
+          Войти
+        </button>
+      </Link>
     </div>
   );
 };
