@@ -1,4 +1,14 @@
+$headmer-color: #0F1B32;
+$target-color: #c09139;
+$hover-color: #805A13;
+$active-color: #48330C;
+$text-color: #fafafa;
+$popup-color: #2a1d15;
+$shadow-color: #d4a244;
+$backgroundOpacity-color: rgba(212, 162, 68, 0.1);
+$mapp-color: #2c4672;
 $transition-ive: all 0.3s ease;
+$font-shrift: 'Cruinn', sans-serif;
 $admpanel-font-shrift: 'Geist', sans-serif;
 $font-shrift-weight: 300;
 
@@ -36,6 +46,46 @@ $font-shrift-weight: 300;
   background-size: cover;
   background-repeat: no-repeat;
   background-position-x: center;
+}
+
+.headmer {
+  position: absolute;
+  display: flex;
+  justify-content: flex-start;
+  background-color: $headmer-color;
+  z-index: 1001;
+  width: 100vw;
+  height: 60px;
+  padding-top: 4px;
+  top: 0;
+  color: $text-color;
+
+  & a {
+    margin-left: 160px;
+    width: 50px;
+    height: 50px;
+    scale: (0.7);
+    filter: brightness(1);
+    transition: $transition-ive;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+
+    &:active {
+      filter: brightness(0.6);
+    }
+  }
+
+  & h1 {
+    font-family: $font-shrift;
+    font-weight: $font-shrift-weight !important;
+    font-style: normal;
+    font-size: 22px;
+    margin-top: 14px;
+    letter-spacing: 0.2px;
+    margin-left: 0px
+  }
 }
 
 .AdminLogIn {

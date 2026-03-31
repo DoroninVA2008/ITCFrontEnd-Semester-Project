@@ -8,7 +8,7 @@ export interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ onOpenModal }) => {
-  return(
+  return (
     <header>
       <Butoapp />
       <Buterm />

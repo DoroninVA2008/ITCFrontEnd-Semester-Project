@@ -1,5 +1,5 @@
 import React from 'react'
-import { Butomap } from '../butomap'
+import { Butomap } from '../../../entities/butomap'
 
 export const MainContentComponent: React.FC = () => {
   return (
