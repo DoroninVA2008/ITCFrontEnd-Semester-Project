@@ -1,10 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 // import { Link } from 'react-router-dom'
+import { mockRequests, RequestModal, Request } from './admreq'
+
+const statusLabel: Record<string, string> = {
+  published: 'Опубликовано',
+  review:    'На проверке',
+  rejected:  'Отклонено',
+  new:       'Новая',
+};
 
 export const AdminContentComponent: React.FC = () => {
+  const [selectedRequest, setSelectedRequest] = useState<Request | null>(null)
+
   return (
     <div className="AdminRequests">
-      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
+      {selectedRequest && (
+        <RequestModal request={selectedRequest} onClose={() => setSelectedRequest(null)} />
+      )}
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 26 26" fill="none">
         <path d="M4.3335 4.33335C4.3335 3.75872 4.56177 3.20762 4.9681 2.80129C5.37443 2.39496 5.92553 2.16669 6.50016 2.16669H15.1668C15.4541 2.16675 15.7296 2.28093 15.9327 2.4841L21.3494 7.90077C21.5526 8.10389 21.6668 8.37939 21.6668 8.66669V21.6667C21.6668 22.2413 21.4386 22.7924 21.0322 23.1987C20.6259 23.6051 20.0748 23.8334 19.5002 23.8334H6.50016C5.92553 23.8334 5.37443 23.6051 4.9681 23.1987C4.56177 22.7924 4.3335 22.2413 4.3335 21.6667V4.33335ZM19.0517 8.66669L15.1668 4.78185V8.66669H19.0517ZM13.0002 4.33335H6.50016V21.6667H19.5002V10.8334H14.0835C13.7962 10.8334 13.5206 10.7192 13.3175 10.5161C13.1143 10.3129 13.0002 10.0373 13.0002 9.75002V4.33335ZM8.66683 14.0834C8.66683 13.796 8.78097 13.5205 8.98413 13.3173C9.1873 13.1142 9.46285 13 9.75016 13H16.2502C16.5375 13 16.813 13.1142 17.0162 13.3173C17.2194 13.5205 17.3335 13.796 17.3335 14.0834C17.3335 14.3707 17.2194 14.6462 17.0162 14.8494C16.813 15.0525 16.5375 15.1667 16.2502 15.1667H9.75016C9.46285 15.1667 9.1873 15.0525 8.98413 14.8494C8.78097 14.6462 8.66683 14.3707 8.66683 14.0834ZM8.66683 18.4167C8.66683 18.1294 8.78097 17.8538 8.98413 17.6507C9.1873 17.4475 9.46285 17.3334 9.75016 17.3334H16.2502C16.5375 17.3334 16.813 17.4475 17.0162 17.6507C17.2194 17.8538 17.3335 18.1294 17.3335 18.4167C17.3335 18.704 17.2194 18.9796 17.0162 19.1827C16.813 19.3859 16.5375 19.5 16.2502 19.5H9.75016C9.46285 19.5 9.1873 19.3859 8.98413 19.1827C8.78097 18.9796 8.66683 18.704 8.66683 18.4167Z" fill="#555555"/>
       </svg>
       <h1>
@@ -14,29 +27,60 @@ export const AdminContentComponent: React.FC = () => {
         Управление заявками на добавление событий
       </p>
       <div className="admin-buttons">
-        <button>
-          Все
-        </button>
-        <button>
-          Новые
-        </button>
-        <button>
-          На проверке
-        </button>
-        <button>
-          Отклонено
-        </button>
-        <button>
-          Опубликовано
-        </button>
-        <span className="search">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.75021 1.66669C7.6207 1.66678 6.5076 1.93699 5.50376 2.45477C4.49992 2.97254 3.63446 3.72287 2.97957 4.64315C2.32469 5.56343 1.89939 6.62698 1.73913 7.74506C1.57888 8.86314 1.68834 10.0033 2.05836 11.0705C2.42838 12.1377 3.04825 13.1009 3.86624 13.8798C4.68423 14.6587 5.67663 15.2307 6.76064 15.548C7.84465 15.8654 8.98883 15.9189 10.0977 15.7041C11.2066 15.4893 12.2481 15.0125 13.1352 14.3134L16.1785 17.3567C16.3357 17.5085 16.5462 17.5925 16.7647 17.5906C16.9832 17.5887 17.1922 17.501 17.3467 17.3465C17.5012 17.192 17.5889 16.983 17.5908 16.7645C17.5927 16.546 17.5087 16.3355 17.3569 16.1784L14.3135 13.135C15.1369 12.0905 15.6495 10.8354 15.7928 9.51313C15.9361 8.1909 15.7042 6.85504 15.1237 5.65843C14.5433 4.46183 13.6376 3.45282 12.5105 2.74688C11.3833 2.04094 10.0802 1.6666 8.75021 1.66669ZM3.33354 8.75002C3.33354 7.31343 3.90423 5.93568 4.92005 4.91986C5.93587 3.90404 7.31362 3.33335 8.75021 3.33335C10.1868 3.33335 11.5646 3.90404 12.5804 4.91986C13.5962 5.93568 14.1669 7.31343 14.1669 8.75002C14.1669 10.1866 13.5962 11.5644 12.5804 12.5802C11.5646 13.596 10.1868 14.1667 8.75021 14.1667C7.31362 14.1667 5.93587 13.596 4.92005 12.5802C3.90423 11.5644 3.33354 10.1866 3.33354 8.75002Z" fill="#555555"/>
-          </svg>
-          <input type="search" placeholder="Поиск по названию, ID или отправителю" />
-        </span>
-        <div>
-          Найдено заявок: {/* countRequests */} 
+        <div className="admin-filters">
+          <button className="active">Все <span>8</span></button>
+          <button>Новые <span>2</span></button>
+          <button>На проверке <span>2</span></button>
+          <button>Отклонено <span>3</span></button>
+          <button>Опубликовано <span>1</span></button>
+          <span className="search">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fillRule="evenodd" clipRule="evenodd" d="M8.75021 1.66669C7.6207 1.66678 6.5076 1.93699 5.50376 2.45477C4.49992 2.97254 3.63446 3.72287 2.97957 4.64315C2.32469 5.56343 1.89939 6.62698 1.73913 7.74506C1.57888 8.86314 1.68834 10.0033 2.05836 11.0705C2.42838 12.1377 3.04825 13.1009 3.86624 13.8798C4.68423 14.6587 5.67663 15.2307 6.76064 15.548C7.84465 15.8654 8.98883 15.9189 10.0977 15.7041C11.2066 15.4893 12.2481 15.0125 13.1352 14.3134L16.1785 17.3567C16.3357 17.5085 16.5462 17.5925 16.7647 17.5906C16.9832 17.5887 17.1922 17.501 17.3467 17.3465C17.5012 17.192 17.5889 16.983 17.5908 16.7645C17.5927 16.546 17.5087 16.3355 17.3569 16.1784L14.3135 13.135C15.1369 12.0905 15.6495 10.8354 15.7928 9.51313C15.9361 8.1909 15.7042 6.85504 15.1237 5.65843C14.5433 4.46183 13.6376 3.45282 12.5105 2.74688C11.3833 2.04094 10.0802 1.6666 8.75021 1.66669ZM3.33354 8.75002C3.33354 7.31343 3.90423 5.93568 4.92005 4.91986C5.93587 3.90404 7.31362 3.33335 8.75021 3.33335C10.1868 3.33335 11.5646 3.90404 12.5804 4.91986C13.5962 5.93568 14.1669 7.31343 14.1669 8.75002C14.1669 10.1866 13.5962 11.5644 12.5804 12.5802C11.5646 13.596 10.1868 14.1667 8.75021 14.1667C7.31362 14.1667 5.93587 13.596 4.92005 12.5802C3.90423 11.5644 3.33354 10.1866 3.33354 8.75002Z" fill="#555555"/>
+            </svg>
+            <input type="search" placeholder="Поиск по названию, ID или отправителю" />
+          </span>
+        </div>
+        <div className="found-count">
+          Найдено заявок: <span className="countRequests">8</span>
+        </div>
+      </div>
+
+      <div className="requests-table">
+        <div className="requests-table__header">
+          <span>ID</span>
+          <span>Название события</span>
+          <span>Дата подачи</span>
+          <span>Статус</span>
+        </div>
+        {mockRequests.map((req) => (
+          <div className="requests-table__row" key={req.id} onClick={() => setSelectedRequest(req)} style={{ cursor: 'pointer' }}>
+            <span className="requests-table__id">{req.id}</span>
+            <span className="requests-table__title">{req.title}</span>
+            <span className="requests-table__date">{req.date}</span>
+            <span className={`requests-table__status requests-table__status--${req.status}`}>
+              •&nbsp; {statusLabel[req.status]}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <div className="requests-pagination">
+        <span className="requests-pagination__info">Показано 5 из 8 заявок</span>
+        <div className="requests-pagination__controls">
+          <button className="requests-pagination__nav" disabled>
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 1L1 6L6 11" stroke="#aaa" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            &nbsp;Назад
+          </button>
+          <button className="requests-pagination__page active">1</button>
+          <button className="requests-pagination__page">2</button>
+          <button className="requests-pagination__nav">
+            Вперёд&nbsp;
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L6 6L1 11" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
         </div>
       </div>
     </div>

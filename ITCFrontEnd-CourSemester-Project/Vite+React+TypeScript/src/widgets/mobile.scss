@@ -131,6 +131,36 @@ $font-shrift-weight: 300;
   #map {
     height: 980px !important;
   }
+
+  .AdminRequests {
+    top: 48px !important;
+    & > h1 {
+      font-size: 32px !important;
+    }
+
+    & .admin-buttons {
+      margin-top: 16px !important;
+    }
+
+    & .found-count {
+      margin-bottom: -10px !important;
+      margin-top: -10px !important
+    }
+
+    .requests-table {
+      &__header {
+        padding: 10px 20px !important;
+      }
+
+      &__row {
+        padding: 18px 20px !important;
+      }
+    }
+
+    .requests-pagination {
+      margin-top: 6px !important;
+    }
+  }
 }
 
 @media screen and (max-width: 1520px) {
