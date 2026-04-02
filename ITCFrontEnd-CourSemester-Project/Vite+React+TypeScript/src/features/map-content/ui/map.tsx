@@ -1,13 +1,13 @@
 ﻿import React, { useState, useCallback, useRef } from 'react'
 import { MapContainer, TileLayer } from 'react-leaflet'
 import L from 'leaflet'
-import { tiLayer } from '../../entities/cons.ts'
-import { CountryLabels } from '../layer-position/layers.tsx'
-import { MarkerWithPopup } from '../marker-location/markers.tsx'
-import { FilterButtonList } from '../filter-function/filters.tsx'
-import { EventFilterProvider } from '../filter-function/evenFilterProvider'
-import { CardOnMap } from '../card-informat/cardPosition'
-import { EventObject } from '../marker-location/evenPositions.ts' // @ts-ignore
+import { tiLayer } from '../../../entities/cons.ts'
+import { CountryLabels } from '../../layer-position/layers.tsx'
+import { MarkerWithPopup } from '../../marker-location/markers.tsx'
+import { FilterButtonList } from '../../filter-function/filters.tsx'
+import { EventFilterProvider } from '../../filter-function/evenFilterProvider'
+import { CardOnMap } from '../../card-informat/cardPosition'
+import { EventObject } from '../../marker-location/evenPositions.ts' // @ts-ignore
 import './map.scss'
 
 const centmap: [number, number] = [68.751244, 98.618423]
