@@ -135,7 +135,7 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
     handleClose()
   }
 
-  const requestFields = (
+  const renderRequestFields = (withDropdown: boolean) => (
     <>
       <h3 className="request-modal__section-heading">Описание события</h3>
       <p className="request-modal__description">{request.description}</p>
@@ -150,22 +150,24 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
           <span className="request-modal__label">Дата события</span>
           <span className="request-modal__value">{request.eventDate}</span>
         </div>
-        <div className="request-modal__field request-modal__field--select" ref={dropdownRef}>
-          <button
-            className={`request-modal__chevron${showEventTypeDropdown ? ' request-modal__chevron--open' : ''}`}
-            onClick={() => setShowEventTypeDropdown(v => !v)}
-          >
-            <svg width="26" height="26" viewBox="0 0 16 16" fill="none">
-              <path d="M4 6L8 10L12 6" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
+        <div className="request-modal__field request-modal__field--select" ref={withDropdown ? dropdownRef : undefined}>
+          {withDropdown && (
+            <button
+              className={`request-modal__chevron${showEventTypeDropdown ? ' request-modal__chevron--open' : ''}`}
+              onClick={() => setShowEventTypeDropdown(v => !v)}
+            >
+              <svg width="26" height="26" viewBox="0 0 16 16" fill="none">
+                <path d="M4 6L8 10L12 6" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+          )}
           <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 2C7.24 2 5 4.24 5 7C5 10.75 10 17 10 17C10 17 15 10.75 15 7C15 4.24 12.76 2 10 2Z" stroke="#555" strokeWidth="1.5"/>
             <circle cx="10" cy="7" r="2" stroke="#555" strokeWidth="1.5"/>
           </svg>
           <span className="request-modal__label">Тип события</span>
           <span className="request-modal__value">{selectedEventType}</span>
-          {showEventTypeDropdown && (
+          {withDropdown && showEventTypeDropdown && (
             <div className="event-type-dropdown">
               {EVENT_TYPES.map(type => (
                 <div
@@ -229,7 +231,7 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
         </div>
         <span className="request-modal__id">{request.id}</span>
 
-        {requestFields}
+        {renderRequestFields(false)}
 
         {!isVerified && !showRejectConfirm && (
           <button className="request-modal__verify" onClick={() => setIsVerified(true)}>Проверить</button>
@@ -299,7 +301,7 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
                 </span>
               </div>
               <span className="request-modal__id">{request.id}</span>
-              {requestFields}
+              {renderRequestFields(true)}
               <button className="approve-modal__confirm" onClick={handleApproveClose}>
                 Подтвердить
               </button>

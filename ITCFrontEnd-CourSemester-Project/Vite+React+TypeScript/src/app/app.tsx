@@ -8,6 +8,7 @@ import { Main } from '../pages/main/main.tsx'
 import { Mapp } from '../pages/map/mapp.tsx'
 import { LogIn } from '../pages/login/login.tsx'
 import { Admin } from '../pages/admin/admin.tsx'
+import { HisLog } from '../pages/hislog/hislog.tsx'
 
 const rootElement = document.getElementById('root');
   if (rootElement) {
@@ -21,6 +22,7 @@ const rootElement = document.getElementById('root');
               <Route path="/map" element={<Mapp />} />
               <Route path="/log" element={<LogIn />} />
               <Route path="/adm" element={<Admin />} />
+              <Route path="/his" element={<HisLog />} />
             </Routes>
           </BrowserRouter>
         </Provider>
