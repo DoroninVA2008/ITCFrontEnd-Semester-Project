@@ -420,7 +420,7 @@ $font-shrift-weight: 300;
   top: calc(100% + 4px);
   left: 0;
   right: 0;
-  background: #fff;
+  background: rgb(248, 248, 248);
   border: 1px solid #e5e5e5;
   border-radius: 10px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
@@ -435,11 +435,11 @@ $font-shrift-weight: 300;
     transition: background-color 0.15s ease;
 
     &:hover {
-      background-color: #f5f5f5;
+      background-color: rgb(232, 232, 232);
     }
 
     &--active {
-      background-color: #f0f0f0;
+      background-color: rgb(232, 232, 232);
       font-weight: 500;
     }
   }

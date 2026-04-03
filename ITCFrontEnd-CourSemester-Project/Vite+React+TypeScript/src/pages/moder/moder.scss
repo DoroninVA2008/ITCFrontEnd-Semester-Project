@@ -1,0 +1,188 @@
+$admpanel-font-shrift: 'Geist', sans-serif;
+$transition-ive: all 0.3s ease;
+
+.moder-content {
+  position: absolute;
+  top: 68px;
+  left: 0;
+  right: 0;
+  padding: 48px 166px;
+  font-family: $admpanel-font-shrift;
+
+  &__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+
+  &__title-block {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    & > svg {
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    & h1 {
+      font-size: 36px;
+      font-weight: 700 !important;
+      color: #1a1a1a;
+      margin: 0 0 4px 0;
+      line-height: 1.2;
+    }
+
+    & p {
+      font-size: 16px;
+      color: #888;
+      margin: 0;
+    }
+  }
+
+  &__add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-family: $admpanel-font-shrift;
+    font-size: 16px;
+    font-weight: 400 !important;
+    cursor: pointer;
+    transition: $transition-ive;
+    white-space: nowrap;
+
+    &:hover {
+      background: #333;
+    }
+  }
+}
+
+.moder-table {
+  border: 1px solid rgb(222, 222, 222);
+  border-radius: 10px;
+  overflow: hidden;
+  font-family: $admpanel-font-shrift;
+  font-size: 16px;
+
+  &__header,
+  &__row {
+    display: grid;
+    background-color: #fff;
+    grid-template-columns: 140px 1fr 240px 200px 180px 120px;
+    align-items: center;
+    padding: 28px 24px;
+  }
+
+  &__header {
+    font-weight: 500;
+    color: #888;
+    border-bottom: 1px solid rgb(222, 222, 222);
+  }
+
+  &__row {
+    background-color: #fff;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.15s ease;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: #fafafa;
+    }
+  }
+
+  &__id {
+    color: #888;
+  }
+
+  &__email {
+    color: #1a1a1a;
+  }
+
+  &__login {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgb(242, 242, 242);
+    border-radius: 8px;
+    padding: 6px 12px;
+    width: fit-content;
+    color: #1a1a1a;
+  }
+
+  &__copy-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: $transition-ive;
+    flex-shrink: 0;
+
+    &:hover {
+      background: #e0e0e0;
+    }
+  }
+
+  &__role {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    width: fit-content;
+    border: 1px solid transparent;
+
+    &--super_admin {
+      background-color: #eef3ff;
+      color: #3b5bdb;
+      border-color: #bac8ff;
+    }
+
+    &--moderator {
+      background-color: #e6f9f0;
+      color: #1a8a4a;
+      border-color: #b6ecd4;
+    }
+  }
+
+  &__date {
+    color: #555;
+    width: 140px;
+  }
+
+  &__actions {
+    display: flex;
+    margin-left: -40px;
+    justify-content: center;
+  }
+
+  &__dots-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: $transition-ive;
+
+    &:hover {
+      background: #f0f0f0;
+    }
+  }
+}

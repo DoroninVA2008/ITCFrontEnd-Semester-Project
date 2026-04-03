@@ -9,6 +9,7 @@ import { Mapp } from '../pages/map/mapp.tsx'
 import { LogIn } from '../pages/login/login.tsx'
 import { Admin } from '../pages/admin/admin.tsx'
 import { HisLog } from '../pages/hislog/hislog.tsx'
+import { Moder } from '../pages/moder/moder.tsx'
 
 const rootElement = document.getElementById('root');
   if (rootElement) {
@@ -23,6 +24,7 @@ const rootElement = document.getElementById('root');
               <Route path="/log" element={<LogIn />} />
               <Route path="/adm" element={<Admin />} />
               <Route path="/his" element={<HisLog />} />
+              <Route path="/mod" element={<Moder />} />
             </Routes>
           </BrowserRouter>
         </Provider>
