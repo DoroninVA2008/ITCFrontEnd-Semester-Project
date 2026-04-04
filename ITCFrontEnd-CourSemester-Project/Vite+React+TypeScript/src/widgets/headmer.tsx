@@ -2,6 +2,7 @@ import React from 'react'
 import { Butoapp } from '../entities/butoapp'
 import { Buterm } from '../entities/buterm'
 import { ButNav } from '../entities/butnav'
+import { ButoAcc } from '../entities/butacc'
 
 export const Headmer: React.FC = () => {
   return (
@@ -9,6 +10,7 @@ export const Headmer: React.FC = () => {
       <Butoapp />
       <Buterm />
       <ButNav />
+      <ButoAcc />
     </div>
   );
 };

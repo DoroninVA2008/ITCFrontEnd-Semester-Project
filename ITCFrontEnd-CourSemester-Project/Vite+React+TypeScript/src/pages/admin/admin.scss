@@ -97,6 +97,10 @@ $font-shrift-weight: 300;
     transform: translateX(-50%);
     gap: 20px;
 
+    & a {
+      display: contents;
+    }
+
     & button {
       background: transparent;
       border: transparent;
@@ -115,6 +119,72 @@ $font-shrift-weight: 300;
       &:hover {
         background-color: rgb(51, 61, 81);
         transition: $transition-ive;
+      }
+    }
+  }
+
+  & .butacc-wrap {
+    margin-left: auto;
+    margin-right: 160px;
+    position: relative;
+  }
+
+  & .butacc {
+    background: rgb(51, 61, 81);
+    border: transparent;
+    color: white;
+    font-family: $admpanel-font-shrift;
+    font-weight: 300 !important;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-style: Regular;
+    font-size: 18px;
+    text-align: center;
+    height: 43.7px;
+    line-height: 26px;
+    border-radius: 50%;
+    transition: $transition-ive;
+    cursor: pointer;
+  }
+
+  & .butacc-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+    // padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    z-index: 1100;
+
+    &__name {
+      font-family: $admpanel-font-shrift;
+      padding: 16px 20px;
+      font-size: 15px;
+      font-weight: 400;
+      color: #1a1a2e;  
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    &__logout {
+      background: transparent;
+      border: none;
+      border-top: 1px solid #e0e0e0;
+      padding: 12px 20px;
+      font-family: $admpanel-font-shrift;
+      font-size: 15px;
+      font-weight: 400;
+      color: #e53935;
+      text-align: left;
+      cursor: pointer;
+      transition: $transition-ive;
+
+      &:hover {
+        opacity: 0.75;
       }
     }
   }
@@ -931,7 +1001,7 @@ $font-shrift-weight: 300;
 
     & input {
       width: 100%;
-      padding: 15px 0 15px 0;
+      padding: 15px 0 15px 10px;
       border-radius: 16px;
       font-size: 24px;
       background-color: rgb(250, 250, 250);

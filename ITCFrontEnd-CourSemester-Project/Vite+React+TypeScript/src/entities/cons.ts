@@ -13,3 +13,7 @@ export var adminCard = (id: number) => `https://api.russia-heroes.ru/api/admin/r
 export const adminCards: string[] = Array.from({ length: 23 }, (_, i) => adminCard(i + 1));
 export var admins = 'https://api.russia-heroes.ru/api/admin/admins';
 export var DelAdmins = (id: number) => `https://api.russia-heroes.ru/api/admin/admins/${id}`;
+export var AddForm = (id: number) => `https://api.russia-heroes.ru/api/admin/requests/${id}/approve`;
+export var DelForm = (id: number) => `https://api.russia-heroes.ru/api/admin/requests/${id}/reject`;
+export var HisForm = 'https://api.russia-heroes.ru/api/admin/history';
+export var RolAdmins = (id: number) => `https://api.russia-heroes.ru/api/admin/admins/${id}/role`;
