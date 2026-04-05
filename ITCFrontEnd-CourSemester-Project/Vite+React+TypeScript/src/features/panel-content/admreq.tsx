@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react' // @ts-ignore
 import mapreqImg from '../../assets/mapreq.png'
+// import { Map } from '../map-content/ui/map.tsx'
 
 export interface Request {
   id: string
@@ -211,7 +212,7 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
   )
 
   return (
-    <div className={`request-modal__overlay${isClosing ? ' request-modal__overlay--closing' : ''}`} onClick={handleClose}>
+    <div className={`request-modal__overlay${isClosing ? ' request-modal__overlay--closing' : ''}`}>
       <div className={`request-modal${isClosing ? ' request-modal--closing' : ''}${isRequestFading ? ' request-modal--fading-for-approve' : ''}`} onClick={(e) => e.stopPropagation()}>
 
         <button className="request-modal__close" onClick={handleClose}>
