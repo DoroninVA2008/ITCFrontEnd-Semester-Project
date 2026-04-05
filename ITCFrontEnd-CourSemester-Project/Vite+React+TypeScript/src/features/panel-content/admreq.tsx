@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react' // @ts-ignore
 import mapreqImg from '../../assets/mapreq.png'
-// import { Map } from '../map-content/ui/map.tsx'
+import { AdMap } from './admap'
 
 export interface Request {
   id: string
@@ -289,8 +289,8 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
             </button>
 
             <div className="approve-modal__left">
-              <h3 className="approve-modal__map-heading">Выбор места</h3>
-              <img src={mapreqImg} alt="map" className="approve-modal__map" />
+              <h3 className="approve-modal__map-heading">Выбор места</h3> 
+              <AdMap />
             </div>
 
             <div className="approve-modal__right">
