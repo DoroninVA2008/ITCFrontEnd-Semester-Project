@@ -140,6 +140,10 @@ $font-shrift-weight: 300;
 
     & .admin-buttons {
       margin-top: 16px !important;
+
+      .admin-filters > button {
+        font-size: 16px !important;
+      }
     }
 
     & .found-count {

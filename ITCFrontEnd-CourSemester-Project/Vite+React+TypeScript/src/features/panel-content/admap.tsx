@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { MapContainer, TileLayer } from 'react-leaflet'
 import L from 'leaflet'
 import { tiLayer } from '../../entities/cons.ts'
-import { CountryLabels } from '../layer-position/layers.tsx'
+import { CountryLabels, CityLabels } from '../layer-position/layers.tsx'
 import { EventFilterProvider } from '../filter-function/evenFilterProvider'// @ts-ignore
 import '../map-content/ui/map.scss' // @ts-ignore
 import './admap.scss'
@@ -32,6 +32,7 @@ export const AdMap: React.FC = () => {
         >
           <TileLayer url={tiLayer} noWrap={false} opacity={0} />
           <CountryLabels />
+          <CityLabels />
         </MapContainer>
       </div>
     </EventFilterProvider>
