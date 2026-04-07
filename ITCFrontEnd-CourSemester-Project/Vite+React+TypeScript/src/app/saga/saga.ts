@@ -1,3 +1,7 @@
+// import { useEffect, useCallback } from 'react'
+// import { EventObject } from '../../features/marker-location/evenPositions'
+// import { fetchEvents } from '../../features/filter-function/typeven.ts'
+// import { setEvents, resetFilters, setIsLoading, setError } from '../../features/filter-function/evenFilterProvider/evenFilterProvider.tsx'
 import { takeLatest, put, call } from 'redux-saga/effects'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { api } from '../../entities/api.ts'
@@ -57,3 +61,26 @@ export function* watchFetchData(): Generator<any, void, any> {
 export function* watchFetchCardData(): Generator<any, void, any> {
   yield takeLatest(FETCH_CARD_DATA, fetchCardData);
 }
+
+  // export const loadInitialEvents = useCallback(async () => {
+  //   try {
+  //     setIsLoading(true);
+  //     setError(null);
+  //     const fetchedEvents = await fetchEvents();
+  //     setEvents(Array.isArray(fetchedEvents) ? (fetchedEvents as EventObject[]) : []);
+  //   } catch (err) {
+  //     console.error('Failed to load events:', err);
+  //     setError('Не удалось загрузить события');
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   loadInitialEvents();
+  // }, [loadInitialEvents]);
+
+  // export const resetAndReload = useCallback(async () => {
+  //   resetFilters();
+  //   await loadInitialEvents();
+  // }, [loadInitialEvents, resetFilters]);

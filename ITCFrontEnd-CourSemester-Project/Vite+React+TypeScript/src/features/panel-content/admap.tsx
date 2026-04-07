@@ -3,7 +3,7 @@ import { MapContainer, TileLayer } from 'react-leaflet'
 import L from 'leaflet'
 import { tiLayer } from '../../entities/cons.ts'
 import { CountryLabels, CityLabels } from '../layer-position/layers.tsx'
-import { EventFilterProvider } from '../filter-function/evenFilterProvider'// @ts-ignore
+import { EventFilterProvider } from '../filter-function/evenFilterProvider/evenFilterProvider.tsx'// @ts-ignore
 import '../map-content/ui/map.scss' // @ts-ignore
 import './admap.scss'
 

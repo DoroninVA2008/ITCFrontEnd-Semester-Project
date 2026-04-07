@@ -1,6 +1,6 @@
 ﻿import React from 'react'
 import { EventMarker } from './eventmarkers'
-import { useEventFilterContext } from '../filter-function/evenFilterProvider'
+import { useEventFilterContext } from '../filter-function/evenFilterProvider/evenFilterProvider'
 // import { handleMarkerClick } from './eventmarkers'
 import L from 'leaflet' // @ts-ignore
 import './marker.scss'

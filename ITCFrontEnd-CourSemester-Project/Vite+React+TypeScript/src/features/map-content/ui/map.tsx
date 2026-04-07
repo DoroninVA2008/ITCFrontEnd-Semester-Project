@@ -5,7 +5,7 @@ import { tiLayer } from '../../../entities/cons.ts'
 import { CountryLabels } from '../../layer-position/layers.tsx'
 import { MarkerWithPopup } from '../../marker-location/markers.tsx'
 import { FilterButtonList } from '../../filter-function/filters.tsx'
-import { EventFilterProvider } from '../../filter-function/evenFilterProvider'
+import { EventFilterProvider } from '../../filter-function/evenFilterProvider/evenFilterProvider.tsx'
 import { CardOnMap } from '../../card-informat/cardPosition'
 import { EventObject } from '../../marker-location/evenPositions.ts' // @ts-ignore
 import './map.scss'

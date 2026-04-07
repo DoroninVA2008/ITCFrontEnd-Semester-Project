@@ -1,8 +1,8 @@
-import React, { createContext, useContext, ReactNode, useEffect, useMemo, useState, useCallback } from 'react';
-import { EventObject } from '../marker-location/evenPositions';
-import { useEventFilters, FilterState } from './evenFilters';
-import { fetchEvents, fetchEventsByFilters, buildFilterRequestData, // fetchEventTypes, 
-EventTypeItem } from './typeven';
+import React, { createContext, useContext, ReactNode, useEffect, useMemo, useState, useCallback } from 'react'
+// import { resetAndReload, loadInitialEvents } from '../../../app/saga/saga'
+import { EventObject } from '../../marker-location/evenPositions'
+import { useEventFilters, FilterState } from '../evenFilters'
+import { fetchEvents, fetchEventsByFilters, buildFilterRequestData, EventTypeItem } from '../typeven'
 
 interface EventFilterContextType {
   filteredEvents: EventObject[];
@@ -33,8 +33,9 @@ interface EventFilterProviderProps {
 }
 
 export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ children }) => {
-  const [events, setEvents] = useState<EventObject[]>([]); // @ts-ignore
-  const [eventTypes, setEventTypes] = useState<EventTypeItem[]>([]);
+
+  const [events, setEvents] = useState<EventObject[]>([]);
+  const [eventTypes] = useState<EventTypeItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -66,13 +67,10 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ childr
     loadInitialEvents();
   }, [loadInitialEvents]);
 
-  // useEffect(() => {
-  //   const loadEventTypes = async () => {
-  //     const types = await fetchEventTypes();
-  //     setEventTypes(Array.isArray(types) ? types : []);
-  //   };
-  //   loadEventTypes();
-  // }, []);
+  const resetAndReload = useCallback(async () => {
+    resetFilters();
+    await loadInitialEvents();
+  }, [loadInitialEvents, resetFilters]);
 
   const applyFilters = useCallback(async () => {
     try {
@@ -114,11 +112,6 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ childr
       setIsLoading(false);
     }
   }, [setFilterState, eventTypes]);
-
-  const resetAndReload = useCallback(async () => {
-    resetFilters();
-    await loadInitialEvents();
-  }, [loadInitialEvents, resetFilters]);
 
   const contextValue = useMemo(() => ({
     filteredEvents,
