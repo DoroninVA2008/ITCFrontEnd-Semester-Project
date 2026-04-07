@@ -2,8 +2,10 @@ import React, { useRef } from 'react'
 import { MapContainer, TileLayer } from 'react-leaflet'
 import L from 'leaflet'
 import { tiLayer } from '../../entities/cons.ts'
-import { CountryLabels, CityLabels } from '../layer-position/layers.tsx'
-import { EventFilterProvider } from '../filter-function/evenFilterProvider/evenFilterProvider.tsx'// @ts-ignore
+import { LayerLabels } from '../layer-position/layers.tsx'
+import { CityLabels } from './cities.tsx'
+import { CountryLabels } from '../layer-position/countries.tsx'
+import { EventFilterProvider } from '../filter-function/evenFilterProvider/evenFilterProvider.tsx' // @ts-ignore
 import '../map-content/ui/map.scss' // @ts-ignore
 import './admap.scss'
 
@@ -15,7 +17,7 @@ const maxMapBounds: [number, number][] = [[-112, -169], [84, 192]]
 
 export const AdMap: React.FC = () => {
   const mapRef = useRef<L.Map | null>(null)
-
+  // https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
   return (
     <EventFilterProvider>
       <div id="admap-wrapper">
@@ -30,7 +32,8 @@ export const AdMap: React.FC = () => {
           maxBoundsViscosity={1.0}
           ref={mapRef}
         >
-          <TileLayer url={tiLayer} noWrap={false} opacity={0} />
+          <TileLayer url={tiLayer} noWrap={false} opacity={1} />
+          <LayerLabels />
           <CountryLabels />
           <CityLabels />
         </MapContainer>

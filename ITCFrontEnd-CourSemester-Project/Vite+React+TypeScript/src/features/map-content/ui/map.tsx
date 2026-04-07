@@ -2,11 +2,11 @@
 import { MapContainer, TileLayer } from 'react-leaflet'
 import L from 'leaflet'
 import { tiLayer } from '../../../entities/cons.ts'
-import { CountryLabels } from '../../layer-position/layers.tsx'
+import { LayerLabels } from '../../layer-position/layers.tsx'
 import { MarkerWithPopup } from '../../marker-location/markers.tsx'
 import { FilterButtonList } from '../../filter-function/filters.tsx'
 import { EventFilterProvider } from '../../filter-function/evenFilterProvider/evenFilterProvider.tsx'
-import { CardOnMap } from '../../card-informat/cardPosition'
+import { CardOnMap } from '../../card-information/cardPosition'
 import { EventObject } from '../../marker-location/evenPositions.ts' // @ts-ignore
 import './map.scss'
 
@@ -58,7 +58,7 @@ export const Map: React.FC = () => {
           ref={mapRef}
         >
           <TileLayer url={tiLayer} noWrap={false} opacity={0} />
-          <CountryLabels />
+          <LayerLabels />
           <MarkerWithPopup
             onMarkerOpen={handleMarkerOpen}
             activeMarkerKey={activeEvent?.markerKey || null}

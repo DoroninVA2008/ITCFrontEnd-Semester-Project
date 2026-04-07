@@ -3,47 +3,11 @@ import L from 'leaflet'
 import { useMap } from 'react-leaflet'
 import { landGeoJSon } from '../../entities/cons.ts'
 import { CountryLabelItem, getCountrySizeCategory, shouldShowLabel } from './zoom.tsx'
-import { countriesTranslation } from './countriesTranslation.ts'
-import { countriesPosition } from './countriesPosition.ts'
-import { citiesPosition, getCityZoomThreshold } from '../panel-content/citiesPosition.ts' // @ts-ignore
+import { centerRussiaOnMap, getCountryLabelPosition } from './countries.tsx'
+import { countriesTranslation } from './countriesTranslation.ts' // @ts-ignore
 import './countrie.scss'
 
-const centerRussiaOnMap = (geoData: any): any => {
-  if (!geoData) return geoData;
-  
-  const adjustedData = JSON.parse(JSON.stringify(geoData));
-  
-  adjustedData.features = adjustedData.features.map((feature: any) => {
-    const englishName = feature.properties.name || feature.properties.NAME || feature.properties.ADMIN || '';
-    const isRussia = englishName === 'Russia' || englishName === 'Russian Federation' || countriesTranslation[englishName] === 'Россия';
-    
-    if (isRussia && feature.geometry.type === 'MultiPolygon') {
-      feature.geometry.coordinates = feature.geometry.coordinates.map((polygon: any[][][]) => {
-        return polygon.map((ring: any[][]) => {
-          return ring.map((coord: any[]) => {
-            let [lng, lat] = coord;
-            if (lng < 0) {
-              return [lng + 360, lat];
-            }
-            return coord;
-          });
-        });
-      });
-    }
-    return feature;
-  });
-  return adjustedData;
-};
-
-const getCountryLabelPosition = (countryName: string, bounds: L.LatLngBounds): L.LatLng => {
-  if (countriesPosition[countryName]) {
-    const [lat, lng] = countriesPosition[countryName];
-    return L.latLng(lat, lng);
-  }
-  return bounds.getCenter();
-};
-
-export const CountryLabels: React.FC = () => {
+export const LayerLabels: React.FC = () => {
   const map = useMap();
   const [geoData, setGeoData] = useState<any>(null);
   const [currentZoom, setCurrentZoom] = useState(map.getZoom());
@@ -183,63 +147,6 @@ export const CountryLabels: React.FC = () => {
     
     countriesLayerRef.current = countriesLayer;
   }, [geoData, map]);
-
-  return null;
-};
-
-export const CityLabels: React.FC = () => {
-  const map = useMap();
-  const [currentZoom, setCurrentZoom] = useState(map.getZoom());
-  const markersRef = useRef<{ marker: L.Marker; threshold: number }[]>([]);
-
-  useEffect(() => {
-    const handleZoom = () => setCurrentZoom(map.getZoom());
-    map.on('zoomend', handleZoom);
-    return () => { map.off('zoomend', handleZoom); };
-  }, [map]);
-
-  useEffect(() => {
-    Object.entries(citiesPosition).forEach(([name, info]) => {
-      const [lat, lng] = info.coords;
-      const threshold = getCityZoomThreshold(info.type);
-      const isVisible = currentZoom >= threshold;
-
-      const marker = L.marker([lat, lng], {
-        icon: L.divIcon({
-          className: `city-label city-label-${info.type} ${isVisible ? 'is-visible' : 'is-hidden'}`,
-          html: `<div class="city-name">${name}</div>`,
-          iconSize: [120, 20],
-          iconAnchor: [60, 10],
-        }),
-        interactive: false,
-        zIndexOffset: 500,
-      });
-
-      marker.addTo(map);
-      markersRef.current.push({ marker, threshold });
-    });
-
-    return () => {
-      markersRef.current.forEach(({ marker }) => {
-        if (map.hasLayer(marker)) map.removeLayer(marker);
-      });
-      markersRef.current = [];
-    };
-  }, [map]);
-
-  useEffect(() => {
-    markersRef.current.forEach(({ marker, threshold }) => {
-      const el = marker.getElement();
-      if (!el) return;
-      if (currentZoom >= threshold) {
-        el.classList.add('is-visible');
-        el.classList.remove('is-hidden');
-      } else {
-        el.classList.add('is-hidden');
-        el.classList.remove('is-visible');
-      }
-    });
-  }, [currentZoom]);
 
   return null;
 };

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react' // @ts-ignore
 import mapreqImg from '../../assets/mapreq.png'
-import { AdMap } from './admap'
+import { AdMap } from '../place-selection/admap'
 
 export interface Request {
   id: string
@@ -276,7 +276,6 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
       {showApproveModal && (
         <div
           className={`approve-modal__overlay${isApproveClosing ? ' approve-modal__overlay--closing' : ''}`}
-          onClick={handleApproveClose}
         >
           <div
             className={`approve-modal${isApproveClosing ? ' approve-modal--closing' : ''}`}
