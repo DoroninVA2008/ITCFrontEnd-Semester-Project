@@ -2,7 +2,7 @@
 import { MapContainer, TileLayer } from 'react-leaflet'
 import L from 'leaflet'
 import { tiLayer } from '../../../entities/cons.ts'
-import { LayerLabels } from '../../layer-position/layers.tsx'
+import { LayersLabels } from '../../layer-position/layers.tsx'
 import { MarkerWithPopup } from '../../marker-location/markers.tsx'
 import { FilterButtonList } from '../../filter-function/filters.tsx'
 import { EventFilterProvider } from '../../filter-function/evenFilterProvider/evenFilterProvider.tsx'
@@ -58,7 +58,7 @@ export const Map: React.FC = () => {
           ref={mapRef}
         >
           <TileLayer url={tiLayer} noWrap={false} opacity={0} />
-          <LayerLabels />
+          <LayersLabels />
           <MarkerWithPopup
             onMarkerOpen={handleMarkerOpen}
             activeMarkerKey={activeEvent?.markerKey || null}

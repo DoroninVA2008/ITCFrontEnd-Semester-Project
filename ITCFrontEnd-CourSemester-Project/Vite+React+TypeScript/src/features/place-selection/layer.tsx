@@ -2,12 +2,12 @@ import React, { useEffect, useState, useRef, useCallback } from 'react'
 import L from 'leaflet'
 import { useMap } from 'react-leaflet'
 import { landGeoJSon } from '../../entities/cons.ts'
-import { CountryLabelItem, getCountrySizeCategory, shouldShowLabel } from './zoom.tsx'
-import { centerRussiaOnMap, getCountryLabelPosition } from './countries.tsx'
-import { countriesTranslation } from './countriesTranslation.ts' // @ts-ignore
-import './countrie.scss'
+import { CountryLabelItem, getCountrySizeCategory, shouldShowLabel } from '../layer-position/zoom.tsx'
+import { centerRussiaOnMap, getCountryLabelPosition } from '../layer-position/countries.tsx'
+import { countriesTranslation } from '../layer-position/countriesTranslation.ts' // @ts-ignore
+import '../layer-position/countrie.scss'
 
-export const LayersLabels: React.FC = () => {
+export const LayerLabels: React.FC = () => {
   const map = useMap();
   const [geoData, setGeoData] = useState<any>(null);
   const [currentZoom, setCurrentZoom] = useState(map.getZoom());
