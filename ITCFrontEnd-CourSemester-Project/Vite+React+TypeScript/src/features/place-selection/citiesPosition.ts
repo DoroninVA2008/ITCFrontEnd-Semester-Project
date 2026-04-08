@@ -4,13 +4,10 @@ export interface CityInfo {
   coords: [number, number]; // [lat, lng]
   type: CityType;
 }
-
 // mega   — мегаполисы (>10M жителей или глобально важные), показываются с zoom >= 4
 // capital — столицы стран,                                   показываются с zoom >= 5
 // major   — крупные нестоличные города,                      показываются с zoom >= 6
-
 export const citiesPosition: Record<string, CityInfo> = {
-  // ── МЕГАПОЛИСЫ ────────────────────────────────────────────────────────────
   'Токио':           { coords: [35.68,  139.69], type: 'mega' },
   'Дели':            { coords: [28.64,   77.22], type: 'mega' },
   'Шанхай':          { coords: [31.23,  121.47], type: 'mega' },

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Header } from '../../widgets/header.tsx'
-import { SuggestEventModal } from '../../features/form-dispatch/modal.tsx'
+import { SuggestEventModal } from '../../features/form-dispatch/form-design/modal.tsx'
 import { MainContentComponent } from '../../features/main-content/ui/main-content.tsx' // @ts-ignore
 import '../../widgets/mobile.scss' // @ts-ignore
 import './main.scss'

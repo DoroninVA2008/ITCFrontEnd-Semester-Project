@@ -20,7 +20,7 @@ type EventMarkerProps = {
 const popupTimeOut = 100
 const popupFadeDuration = 300
 
-const battleIcon = L.icon({
+export const battleIcon = L.icon({
   iconUrl: MarkerPolitTarget,
   shadowUrl: iconShadow,
   iconSize: [32, 48],
@@ -28,7 +28,7 @@ const battleIcon = L.icon({
   popupAnchor: [0, 4],
 })
 
-const tragedyIcon = L.icon({
+export const tragedyIcon = L.icon({
   iconUrl: MarkerSwordTarget,
   shadowUrl: iconShadow,
   iconSize: [32, 48],

@@ -1,24 +1,18 @@
 ﻿import React, { useState, useRef, useEffect } from 'react'
-import { SuccessModal } from './success' // @ts-ignore
+import { SuccessModal } from '../success'
+import { submitContactForm, type ContactEventPayload } from '../foreques' // @ts-ignore
 import './modal.scss'
 
-export interface ContactEventPayload {
-  name: string;
-  date: string;
-  description: string;
-  eventType: string;
-  zipFile?: File | null;
-}
+export type { ContactEventPayload }
 
 interface ContactModalProps {
   isOpen: boolean;
   onClose: () => void;
-  // остальные пропсы
   eventName?: string;
   onSuccess?: () => void;
   formApiUrl: string;
   eventPayload: ContactEventPayload;
-  onFormReset?: () => void; // проп для сброса формы
+  onFormReset?: () => void;
 }
 
 export const ContactModal: React.FC<ContactModalProps> = ({
@@ -39,33 +33,6 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   const [error, setError] = useState<string | null>(null)
   const emailRef = useRef<HTMLInputElement>(null)
   const tgRef = useRef<HTMLInputElement>(null)
-
-  const getEventTypeId = (value: string) => {
-    if (value === 'political') return 1
-    if (value === 'military') return 2
-    return null
-  }
-
-  const toIsoDate = (value: string) => {
-    const parts = value.split('.')
-    if (parts.length !== 3) return null
-    const [ddStr, mmStr, yyyyStr] = parts
-    const day = Number(ddStr);
-    const month = Number(mmStr);
-    const year = Number(yyyyStr);
-    if (
-      !Number.isInteger(day) ||
-      !Number.isInteger(month) ||
-      !Number.isInteger(year)
-    ) return null;
-    if (year < 1900 || year > 2100) return null;
-    if (month < 1 || month > 12) return null;
-    const daysInMonth = new Date(year, month, 0).getDate();
-    if (day < 1 || day > daysInMonth) return null;
-    const mm = String(month).padStart(2, '0');
-    const dd = String(day).padStart(2, '0');
-    return `${year}-${mm}-${dd}`;
-  }
 
   const handleClose = () => {
     setIsClosing(true);
@@ -92,48 +59,9 @@ export const ContactModal: React.FC<ContactModalProps> = ({
       return
     }
 
-    const eventDate = toIsoDate(eventPayload.date)
-    if (!eventDate) {
-      alert('Некорректная дата. Используйте формат ДД.ММ.ГГГГ!')
-      return
-    }
-
-    const eventTypeId = getEventTypeId(eventPayload.eventType)
-    if (!eventTypeId) {
-      alert('Некорректный тип события.')
-      return
-    }
-
-    const formData = new FormData()
-    formData.append('title', eventPayload.name)
-    formData.append('description', eventPayload.description)
-    if (eventPayload.zipFile) {
-      formData.append('archive', eventPayload.zipFile)
-    }
-    formData.append('email', email)
-    formData.append('telegramUsername', telegram)
-    formData.append('eventDate', eventDate)
-    formData.append('eventTypeId', String(eventTypeId))
-
     setIsSubmitting(true)
     try {
-      const res = await fetch(formApiUrl, {
-        method: 'POST',
-        body: formData,
-        headers: {
-                'Accept': 'application/json',
-                // 'Content-Type': 'multipart/form-data'
-            }
-      })
-
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`)
-      }
-
-      const data = await res.json()
-      if (data.message !== 'success') {
-        throw new Error('Unexpected response format')
-      }
+      await submitContactForm(formApiUrl, eventPayload, email, telegram)
 
       handleClose()
 

@@ -4,7 +4,7 @@ import L from 'leaflet'
 import { tiLayer } from '../../entities/cons.ts'
 import { LayerLabels } from './layer.tsx'
 import { CityLabels } from './cities.tsx'
-import { CountryLabels } from '../layer-position/countries.tsx'
+import { ReMarker } from './remarker.tsx'
 import { EventFilterProvider } from '../filter-function/evenFilterProvider/evenFilterProvider.tsx' // @ts-ignore
 import '../map-content/ui/map.scss' // @ts-ignore
 import './admap.scss'
@@ -15,7 +15,12 @@ const minZoom = 1
 const maxZoom = 12
 const maxMapBounds: [number, number][] = [[-112, -169], [84, 192]]
 
-export const AdMap: React.FC = () => {
+interface AdMapProps {
+  eventType?: number
+  onPositionChange?: (pos: L.LatLng | null) => void
+}
+
+export const AdMap: React.FC<AdMapProps> = ({ eventType = 1, onPositionChange }) => {
   const mapRef = useRef<L.Map | null>(null)
   // https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
   return (
@@ -34,8 +39,8 @@ export const AdMap: React.FC = () => {
         >
           <TileLayer url={tiLayer} noWrap={false} opacity={1} />
           <LayerLabels />
-          <CountryLabels geoData={undefined} map={new Map} currentZoom={0} />
           <CityLabels />
+          <ReMarker eventType={eventType} onPositionChange={onPositionChange} />
         </MapContainer>
       </div>
     </EventFilterProvider>

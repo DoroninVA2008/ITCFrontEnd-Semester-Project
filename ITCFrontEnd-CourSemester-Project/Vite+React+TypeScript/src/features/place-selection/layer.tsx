@@ -12,7 +12,6 @@ export const LayerLabels: React.FC = () => {
   const [geoData, setGeoData] = useState<any>(null);
   const [currentZoom, setCurrentZoom] = useState(map.getZoom());
   const allLabelsRef = useRef<CountryLabelItem[]>([]);
-  const countriesLayerRef = useRef<L.GeoJSON | null>(null);
   const isDataLoadedRef = useRef(false);
 
   useEffect(() => {
@@ -65,10 +64,6 @@ export const LayerLabels: React.FC = () => {
         }
       });
       allLabelsRef.current = [];
-      
-      if (countriesLayerRef.current && map.hasLayer(countriesLayerRef.current)) {
-        map.removeLayer(countriesLayerRef.current);
-      }
     };
   }, [map]);
 
@@ -127,26 +122,6 @@ export const LayerLabels: React.FC = () => {
       updateLabelsVisibility(currentZoom);
     }
   }, [currentZoom, geoData, updateLabelsVisibility]);
-
-  useEffect(() => {
-    if (!geoData) return;
-
-    if (countriesLayerRef.current && map.hasLayer(countriesLayerRef.current)) {
-      map.removeLayer(countriesLayerRef.current);
-    }
-    
-    const countriesLayer = L.geoJSON(geoData, {
-      style: {
-        fillColor: "#2C4672",
-        weight: 1.2,
-        color: "#2F3B54",
-        fillOpacity: 1,
-        opacity: 1
-      },
-    }).addTo(map);
-    
-    countriesLayerRef.current = countriesLayer;
-  }, [geoData, map]);
 
   return null;
 };

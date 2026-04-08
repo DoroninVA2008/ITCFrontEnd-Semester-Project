@@ -1,9 +1,8 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import L from 'leaflet'
 import { countriesPosition } from './countriesPosition.ts'
 import { countriesTranslation } from './countriesTranslation.ts'
 import { getCountrySizeCategory, shouldShowLabel } from './zoom.tsx'
-// import { getCountryLabelPosition } from './countries.tsx'
 
 // Экспортируем компонент
 export const CountryLabels: React.FC<{
@@ -13,6 +12,24 @@ export const CountryLabels: React.FC<{
 }> = ({ geoData, map, currentZoom }) => {
   const labelsRef = useRef<{ marker: L.Marker; englishName: string; russianName: string; bounds: any; sizeCategory: string }[]>([]);
 
+  const updateLabelsVisibility = useCallback((zoom: number) => {
+    labelsRef.current.forEach(item => {
+      const { marker, sizeCategory } = item;
+      const shouldBeVisible = shouldShowLabel(sizeCategory, zoom);
+      const divIconElement = marker.getElement();
+      if (divIconElement) {
+        if (shouldBeVisible) {
+          divIconElement.classList.add('is-visible');
+          divIconElement.classList.remove('is-hidden');
+        } else {
+          divIconElement.classList.add('is-hidden');
+          divIconElement.classList.remove('is-visible');
+        }
+      }
+    });
+  }, []);
+
+  // Создаём метки только когда меняется geoData или map
   useEffect(() => {
     if (!geoData || !map) return;
 
@@ -35,12 +52,9 @@ export const CountryLabels: React.FC<{
         const sizeCategory = getCountrySizeCategory(bounds);
         const labelPosition = getCountryLabelPosition(englishName, bounds);
 
-        const initialVisibility = shouldShowLabel(sizeCategory, currentZoom);
-        const initialClassName = initialVisibility ? 'is-visible' : 'is-hidden';
-
         const label = L.marker(labelPosition, {
           icon: L.divIcon({
-            className: `country-label country-label-${sizeCategory} ${initialClassName}`,
+            className: `country-label country-label-${sizeCategory} is-hidden`,
             html: `<div class="country-name">${russianName}</div>`,
             iconSize: [100, 20],
             iconAnchor: [50, 10]
@@ -55,26 +69,15 @@ export const CountryLabels: React.FC<{
         console.log('Ошибка при создании метки:', russianName, error);
       }
     });
-    // Обновляем видимость при зуме
-    const updateLabelsVisibility = () => {
-      labelsRef.current.forEach(item => {
-        const { marker, sizeCategory } = item;
-        const shouldBeVisible = shouldShowLabel(sizeCategory, currentZoom);
-        const divIconElement = marker.getElement();
-        if (divIconElement) {
-          if (shouldBeVisible) {
-            divIconElement.classList.add('is-visible');
-            divIconElement.classList.remove('is-hidden');
-          } else {
-            divIconElement.classList.add('is-hidden');
-            divIconElement.classList.remove('is-visible');
-          }
-        }
-      });
-    };
-    updateLabelsVisibility();
 
-  }, [geoData, map, currentZoom]);
+    updateLabelsVisibility(currentZoom);
+  }, [geoData, map]);
+
+  // Обновляем видимость при каждом изменении зума (без пересоздания маркеров)
+  useEffect(() => {
+    if (!geoData || labelsRef.current.length === 0) return;
+    updateLabelsVisibility(currentZoom);
+  }, [currentZoom, geoData, updateLabelsVisibility]);
 
   return null;
 };

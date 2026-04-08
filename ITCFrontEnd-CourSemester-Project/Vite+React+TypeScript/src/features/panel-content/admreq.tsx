@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react' // @ts-ignore
 import mapreqImg from '../../assets/mapreq.png'
+import L from 'leaflet'
 import { AdMap } from '../place-selection/admap'
+import { submitMarkerReview } from '../place-selection/requiew'
 
 export interface Request {
   id: string
@@ -79,6 +81,14 @@ interface RequestModalProps {
 
 const EVENT_TYPES = ['Битва', 'Война', 'Революция', 'Восстания', 'Переворот']
 
+const EVENT_TYPE_MAP: Record<string, number> = {
+  'Битва':     1,
+  'Война':     2,
+  'Революция': 3,
+  'Восстания': 4,
+  'Переворот': 5,
+}
+
 const STATUS_LABEL: Record<string, string> = {
   published: 'Опубликовано',
   review:    'На проверке',
@@ -96,6 +106,7 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
   const [isRequestFading, setIsRequestFading] = useState(false)
   const [showEventTypeDropdown, setShowEventTypeDropdown] = useState(false)
   const [selectedEventType, setSelectedEventType] = useState(request.eventType)
+  const [markerPos, setMarkerPos] = useState<L.LatLng | null>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -112,6 +123,22 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
   const handleApproveOpen = () => {
     setIsRequestFading(true)
     setShowApproveModal(true)
+  }
+
+  const handleApproveConfirm = async () => {
+    if (!markerPos) return
+    try {
+      await submitMarkerReview(
+        request.id,
+        markerPos.lat,
+        markerPos.lng,
+        EVENT_TYPE_MAP[selectedEventType] ?? 1
+      )
+    } catch (err) {
+      console.error(err)
+    }
+    handleApproveClose()
+    handleClose()
   }
 
   const handleApproveClose = () => {
@@ -289,7 +316,7 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
 
             <div className="approve-modal__left">
               <h3 className="approve-modal__map-heading">Выбор места</h3> 
-              <AdMap />
+              <AdMap eventType={EVENT_TYPE_MAP[selectedEventType] ?? 1} onPositionChange={setMarkerPos} />
             </div>
 
             <div className="approve-modal__right">
@@ -302,7 +329,7 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
               </div>
               <span className="request-modal__id">{request.id}</span>
               {renderRequestFields(true)}
-              <button className="approve-modal__confirm" onClick={handleApproveClose}>
+              <button className="approve-modal__confirm" onClick={handleApproveConfirm} disabled={!markerPos}>
                 Подтвердить
               </button>
             </div>
