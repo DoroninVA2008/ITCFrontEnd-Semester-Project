@@ -131,7 +131,7 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
       await submitMarkerReview(
         request.id,
         markerPos.lat,
-        markerPos.lng,
+        markerPos.lng, // @ts-ignore
         EVENT_TYPE_MAP[selectedEventType] ?? 1
       )
     } catch (err) {

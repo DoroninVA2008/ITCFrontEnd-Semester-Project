@@ -14,7 +14,7 @@ export const CountryLabels: React.FC<{
 
   const updateLabelsVisibility = useCallback((zoom: number) => {
     labelsRef.current.forEach(item => {
-      const { marker, sizeCategory } = item;
+      const { marker, sizeCategory } = item; // @ts-ignore
       const shouldBeVisible = shouldShowLabel(sizeCategory, zoom);
       const divIconElement = marker.getElement();
       if (divIconElement) {
