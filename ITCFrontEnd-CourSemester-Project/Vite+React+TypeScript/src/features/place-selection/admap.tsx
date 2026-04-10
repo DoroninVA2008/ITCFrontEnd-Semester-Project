@@ -11,8 +11,8 @@ import './admap.scss'
 
 const centmap: [number, number] = [68.751244, 8.618423]
 const zoom = 2
-const minZoom = 1
-const maxZoom = 12
+const minZoom = 2
+const maxZoom = 8
 const maxMapBounds: [number, number][] = [[-112, -169], [84, 192]]
 
 interface AdMapProps {

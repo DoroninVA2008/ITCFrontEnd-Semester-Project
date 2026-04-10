@@ -93,7 +93,7 @@ export const LayerLabels: React.FC = () => {
         const label = L.marker(labelPosition, {
           icon: L.divIcon({
             className: `country-label country-label-${sizeCategory} ${initialClassName}`,
-            html: `<div class="country-name">${russianName}</div>`,
+            html: `<div class="councitry-name">${russianName}</div>`,
             iconSize: [100, 20],
             iconAnchor: [50, 10]
           }),
