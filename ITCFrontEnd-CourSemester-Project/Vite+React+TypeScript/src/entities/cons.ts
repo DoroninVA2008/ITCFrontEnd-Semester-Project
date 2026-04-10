@@ -1,4 +1,4 @@
-export var tiLayer = 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png';
+export var tiLayer = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}'; // https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png
 export var landGeoJSon = 'https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson'; // ./src/entities/countries.geojson
 export var checkBack = 'https://api.russia-heroes.ru/api/ping'; // ./src/entities/ping.json
 export var eventsListDates = 'https://api.russia-heroes.ru/api/objects'; // ./src/entities/objects.json
