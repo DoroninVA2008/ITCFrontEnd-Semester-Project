@@ -2,10 +2,10 @@ import React, { useEffect, useState, useRef, useCallback } from 'react'
 import L from 'leaflet'
 import { useMap } from 'react-leaflet'
 import { landGeoJSon } from '../../entities/cons.ts'
-import { CountryLabelItem, getCountrySizeCategory, shouldShowLabel } from '../layer-position/zoom.tsx'
-import { centerRussiaOnMap, getCountryLabelPosition } from '../layer-position/countries.tsx'
-import { countriesTranslation } from '../layer-position/countriesTranslation.ts' // @ts-ignore
-import '../layer-position/countrie.scss'
+import { CountryLabelItem, getCountrySizeCategory, shouldShowLabel } from '../map-content/layer-position/zoom.tsx'
+import { centerRussiaOnMap, getCountryLabelPosition } from '../map-content/layer-position/countries.tsx'
+import { countriesTranslation } from '../map-content/layer-position/countriesTranslation.ts' // @ts-ignore
+import '../map-content/layer-position/countrie.scss'
 
 export const LayerLabels: React.FC = () => {
   const map = useMap();

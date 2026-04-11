@@ -1,5 +1,5 @@
 ﻿import React, { useState, useRef, useEffect } from 'react'
-import { formApi } from '../../../entities/cons'
+import { formApi } from '../../entities/cons'
 import { ContactModal, type ContactEventPayload } from './contac' // @ts-ignore
 import './modal.scss'
 

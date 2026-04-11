@@ -2,7 +2,7 @@
 import { MapContainer, TileLayer } from 'react-leaflet'
 import L from 'leaflet'
 import { tiLayer } from '../../../entities/cons.ts'
-import { LayersLabels } from '../../layer-position/layers.tsx'
+import { LayersLabels } from '../layer-position/layers.tsx'
 import { MarkerWithPopup } from '../../marker-location/markers.tsx'
 import { FilterButtonList } from '../../filter-function/filters.tsx'
 import { EventFilterProvider } from '../../filter-function/evenFilterProvider/evenFilterProvider.tsx'

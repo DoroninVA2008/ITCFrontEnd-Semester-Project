@@ -1,6 +1,6 @@
 ﻿import React, { useState, useRef, useEffect } from 'react'
-import { SuccessModal } from '../success'
-import { submitContactForm, type ContactEventPayload } from '../foreques' // @ts-ignore
+import { SuccessModal } from '../form-dispatch/success'
+import { submitContactForm, type ContactEventPayload } from '../form-dispatch/foreques' // @ts-ignore
 import './modal.scss'
 
 export type { ContactEventPayload }

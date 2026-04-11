@@ -1,15 +1,17 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useAdminLogin } from '../admin-connection/login'
 
 export const LogInContentComponent: React.FC = () => {
+  const { login, setLogin, password, setPassword, error, loading, handleLogin } = useAdminLogin();
+
   return (
-    <div className="AdminLogIn">
+    <form className="AdminLogIn" onSubmit={handleLogin}>
       <h1>
         Вход
       </h1>
       <div className="admin-group">
         <div className="admin-login">
-          <label htmlFor="name">
+          <label htmlFor="LogIn">
             Логин
           </label>
           <br />
@@ -17,27 +19,30 @@ export const LogInContentComponent: React.FC = () => {
             type="text"
             id="LogIn"
             name="login"
+            value={login}
+            onChange={(e) => setLogin(e.target.value)}
             required
           />
         </div>
         <div className="admin-login">
-          <label htmlFor="name">
+          <label htmlFor="PassWord">
             Пароль
           </label>
           <br />
           <input
-            type="text"
+            type="password"
             id="PassWord"
             name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
       </div>
-      <Link to="/adm">
-        <button>
-          Войти
-        </button>
-      </Link>
-    </div>
+      {error && <p className="login-error">{error}</p>}
+      <button type="submit" disabled={loading}>
+        {loading ? 'Вход...' : 'Войти'}
+      </button>
+    </form>
   );
 };
