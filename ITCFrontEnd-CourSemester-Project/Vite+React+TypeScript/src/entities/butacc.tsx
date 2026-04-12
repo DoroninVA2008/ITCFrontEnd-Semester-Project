@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useAdminLogout } from '../features/admin-connection/logout'
 
 export const ButoAcc: React.FC = () => {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
-  const navigate = useNavigate()
+  const { handleLogout } = useAdminLogout()
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -16,17 +16,12 @@ export const ButoAcc: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  const username = localStorage.getItem('username') || 'Admin'
-
-  const handleLogout = () => {
-    localStorage.removeItem('username')
-    navigate('/log')
-  }
+  const username = localStorage.getItem('username') || 'admin'
 
   return (
     <div className="butacc-wrap" ref={ref}>
       <button className="butacc" onClick={() => setOpen(prev => !prev)}>
-        AC
+        AT
       </button>
       {open && (
         <div className="butacc-dropdown">

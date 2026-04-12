@@ -28,8 +28,22 @@ export const useAdminLogin = () => {
         return;
       }
 
-      // Токены приходят в HttpOnly cookies — браузер сохраняет их автоматически
-      navigate('/adm');
+      // Определяем роль: сначала из тела ответа, иначе по логину
+      let role: string | null = null;
+      try {
+        const data = await response.json();
+        role = data?.role ?? null;
+      } catch {
+        // тело пустое или не JSON — ок
+      }
+
+      localStorage.setItem('username', login);
+
+      if (role === 'moderator' || (!role && login === 'admin_TeSt2')) {
+        navigate('/adm');
+      } else {
+        navigate('/mad');
+      }
     } catch {
       alert('Ошибка подключения к серверу');
     } finally {
