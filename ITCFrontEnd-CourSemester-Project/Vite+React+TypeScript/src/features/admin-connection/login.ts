@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { adminLogIn } from '../../entities/cons';
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { adminLogIn } from '../../entities/cons'
 
 export const useAdminLogin = () => {
   const [login, setLogin] = useState('');

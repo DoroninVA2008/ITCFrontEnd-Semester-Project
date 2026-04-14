@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-// import { Link } from 'react-router-dom'
 import { mockRequests, RequestModal, Request } from './admreq'
+import { ReqCard } from '../admin-connection/reqard'
 
 const statusLabel: Record<string, string> = {
   published: 'Опубликовано',
@@ -11,6 +11,10 @@ const statusLabel: Record<string, string> = {
 
 export const AdminContentComponent: React.FC = () => {
   const [selectedRequest, setSelectedRequest] = useState<Request | null>(null)
+
+  const handleRowClick = (request: Request) => {
+    setSelectedRequest(request)
+  }
 
   return (
     <div className="AdminRequests">
@@ -53,14 +57,12 @@ export const AdminContentComponent: React.FC = () => {
           <span>Статус</span>
         </div>
         {mockRequests.map((req) => (
-          <div className="requests-table__row" key={req.id} onClick={() => setSelectedRequest(req)} style={{ cursor: 'pointer' }}>
-            <span className="requests-table__id">{req.id}</span>
-            <span className="requests-table__title">{req.title}</span>
-            <span className="requests-table__date">{req.date}</span>
-            <span className={`requests-table__status requests-table__status--${req.status}`}>
-              •&nbsp; {statusLabel[req.status]}
-            </span>
-          </div>
+          <ReqCard
+            key={req.id} 
+            request={req} 
+            onClick={handleRowClick} 
+            statusLabel={statusLabel}
+          />
         ))}
       </div>
 
