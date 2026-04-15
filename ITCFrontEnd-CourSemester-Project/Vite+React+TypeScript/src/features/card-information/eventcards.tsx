@@ -1,5 +1,5 @@
 ﻿import React from 'react'
-import { EventObject } from './reurlcard' // @ts-ignore
+import { EventObject, formatDate } from './reurlcard' // @ts-ignore
 import './eventcard.scss'
 
 interface EventCardProps {
@@ -33,16 +33,6 @@ export const EventCard: React.FC<EventCardProps> = ({
     if (markerKey && onMarkerClickClose) {
       onMarkerClickClose(markerKey);
     }
-  };
-
-  const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) return dateString;
-    return date.toLocaleDateString('ru-RU', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    }).replace(/\//g, '.');
   };
 
   const actualTitle = cardData?.title || eventTitle;

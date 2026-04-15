@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import L from 'leaflet'
-import { Request } from '../panel-content/admreq'
+import { Request } from './reques'
 import { AdMap } from '../place-selection/admap'
 import { submitMarkerReview } from '../place-selection/requiew'
 

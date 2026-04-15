@@ -1,16 +1,21 @@
-import React, { useState } from 'react'
-import { mockRequests, RequestModal, Request } from './admreq'
+import React, { useState, useEffect } from 'react'
+import { RequestModal, Request } from './admreq'
 import { ReqCard } from '../admin-connection/reqard'
+import { fetchRequests } from '../admin-connection/reques'
 
-const statusLabel: Record<string, string> = {
-  published: 'Опубликовано',
-  review:    'На проверке',
-  rejected:  'Отклонено',
-  new:       'Новая',
-};
+const PAGE_SIZE = 5
 
 export const AdminContentComponent: React.FC = () => {
   const [selectedRequest, setSelectedRequest] = useState<Request | null>(null)
+  const [requests, setRequests] = useState<Request[]>([])
+  const [currentPage, setCurrentPage] = useState(1)
+
+  useEffect(() => {
+    fetchRequests().then(setRequests)
+  }, [])
+
+  const totalPages = Math.max(1, Math.ceil(requests.length / PAGE_SIZE))
+  const pagedRequests = requests.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
 
   const handleRowClick = (request: Request) => {
     setSelectedRequest(request)
@@ -32,7 +37,7 @@ export const AdminContentComponent: React.FC = () => {
       </p>
       <div className="admin-buttons">
         <div className="admin-filters">
-          <button className="active">Все <span>8</span></button>
+          <button className="active">Все <span>{requests.length}</span></button>
           <button>Новые <span>2</span></button>
           <button>На проверке <span>2</span></button>
           <button>Отклонено <span>3</span></button>
@@ -45,7 +50,7 @@ export const AdminContentComponent: React.FC = () => {
           </span>
         </div>
         <div className="found-count">
-          Найдено заявок: <span className="countRequests">8</span>
+          Найдено заявок: <span className="countRequests">{requests.length}</span>
         </div>
       </div>
 
@@ -56,31 +61,49 @@ export const AdminContentComponent: React.FC = () => {
           <span>Дата подачи</span>
           <span>Статус</span>
         </div>
-        {mockRequests.map((req) => (
+        {pagedRequests.map((req) => (
           <ReqCard
-            key={req.id} 
-            request={req} 
-            onClick={handleRowClick} 
-            statusLabel={statusLabel}
+            key={req.id}
+            request={req}
+            onClick={handleRowClick}
           />
         ))}
       </div>
 
       <div className="requests-pagination">
-        <span className="requests-pagination__info">Показано 5 из 8 заявок</span>
+        <span className="requests-pagination__info">
+          Показано {pagedRequests.length} из {requests.length} заявок
+        </span>
         <div className="requests-pagination__controls">
-          <button className="requests-pagination__nav" disabled>
+          <button
+            className="requests-pagination__nav"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(p => p - 1)}
+          >
             <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 1L1 6L6 11" stroke="#aaa" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M6 1L1 6L6 11" stroke={currentPage === 1 ? '#aaa' : '#555'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             &nbsp;Назад
           </button>
-          <button className="requests-pagination__page active">1</button>
-          <button className="requests-pagination__page">2</button>
-          <button className="requests-pagination__nav">
+
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+            <button
+              key={page}
+              className={`requests-pagination__page${currentPage === page ? ' active' : ''}`}
+              onClick={() => setCurrentPage(page)}
+            >
+              {page}
+            </button>
+          ))}
+
+          <button
+            className="requests-pagination__nav"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(p => p + 1)}
+          >
             Вперёд&nbsp;
             <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 1L6 6L1 11" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M1 1L6 6L1 11" stroke={currentPage === totalPages ? '#aaa' : '#555'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
         </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Request } from '../panel-content/admreq'
+import { Request } from './reques'
 
 const STATUS_LABEL: Record<string, string> = {
   published: 'Опубликовано',
@@ -12,8 +12,11 @@ interface RequestModalContentProps {
   request: Request
   isVerified: boolean
   showRejectConfirm: boolean
+  rejectComment: string
+  onCommentChange: (value: string) => void
   onVerify: () => void
   onReject: () => void
+  onRejectConfirm: () => void
   onApprove: () => void
 }
 
@@ -21,8 +24,11 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
   request,
   isVerified,
   showRejectConfirm,
+  rejectComment,
+  onCommentChange,
   onVerify,
   onReject,
+  onRejectConfirm,
   onApprove,
 }) => {
   const renderRequestFields = () => (
@@ -118,6 +124,20 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
               Одобрить
             </button>
           </div>
+        </>
+      )}
+
+      {showRejectConfirm && (
+        <>
+          <textarea
+            className="request-modal__comment"
+            placeholder="Введите комментарий"
+            value={rejectComment}
+            onChange={(e) => onCommentChange(e.target.value)}
+          />
+          <button className="request-modal__confirm" onClick={onRejectConfirm}>
+            Подтвердить
+          </button>
         </>
       )}
     </>

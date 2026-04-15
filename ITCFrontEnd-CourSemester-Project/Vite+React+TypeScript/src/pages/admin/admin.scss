@@ -35,9 +35,9 @@ $font-shrift-weight: 300;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: auto;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   left: 0;
   font-family: $admpanel-font-shrift !important;
   background-color: rgb(250, 250, 250);
@@ -374,7 +374,6 @@ $font-shrift-weight: 300;
     &__status {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
       padding: 4px 10px;
       border-radius: 6px;
       border: 1px solid;
@@ -397,13 +396,14 @@ $font-shrift-weight: 300;
       }
 
       &--new {
-        background-color: #eef3ff;
-        color: #3b5bdb;
+        background-color: #e6f9f0;
+        color: #1a8a4a;
+        border-color: #b6ecd4;
       }
     }
 
     &__dot {
-      width: 7px;
+      width: 4px;
       height: 7px;
       border-radius: 50%;
       flex-shrink: 0;
@@ -411,7 +411,7 @@ $font-shrift-weight: 300;
       .requests-table__status--published & { background-color: #1a8a4a; }
       .requests-table__status--review &    { background-color: #b07000; }
       .requests-table__status--rejected &  { background-color: #c0392b; }
-      .requests-table__status--new &       { background-color: #3b5bdb; }
+      .requests-table__status--new &       { background-color: #1a8a4a; }
     }
   }
 
@@ -820,9 +820,9 @@ $font-shrift-weight: 300;
       border-color: #f5b7b1;
     }
     &--new {
-      background-color: #eef3ff;
-      color: #3b5bdb;
-      border-color: #bac8ff;
+      background-color: #e6f9f0;
+      color: #1a8a4a;
+      border-color: #b6ecd4;
     }
   }
 
@@ -835,7 +835,7 @@ $font-shrift-weight: 300;
     .request-modal__status-badge--published & { background-color: #1a8a4a; }
     .request-modal__status-badge--review &    { background-color: #b07000; }
     .request-modal__status-badge--rejected &  { background-color: #c0392b; }
-    .request-modal__status-badge--new &       { background-color: #3b5bdb; }
+    .request-modal__status-badge--new &       { background-color: #1a8a4a; }
   }
 
   &__verify {
@@ -972,6 +972,106 @@ $font-shrift-weight: 300;
     &::placeholder {
       color: #aaa;
       transition: all 0.3s ease;
+    }
+
+    &:focus {
+      border-color: #aaa;
+    }
+  }
+
+  &__confirm {
+    width: 100%;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 16px;
+    font-family: $admpanel-font-shrift;
+    font-size: 17px;
+    font-weight: 400 !important;
+    cursor: pointer;
+    transition: $transition-ive;
+
+    &:hover {
+      background: #333;
+    }
+  }
+}
+
+.reject-modal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px;
+  width: 460px;
+  max-width: calc(100vw - 32px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: modal-in 0.25s ease;
+
+  &--closing {
+    animation: modal-out 0.25s ease forwards;
+  }
+
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2500;
+    animation: modal-overlay-in 0.25s ease;
+
+    &--closing {
+      animation: modal-overlay-out 0.25s ease forwards;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: $transition-ive;
+
+    &:hover {
+      background: #f0f0f0;
+    }
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 700 !important;
+    color: #1a1a1a;
+    margin: 0;
+    padding-right: 32px;
+  }
+
+  &__comment {
+    width: 100%;
+    min-height: 110px;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-family: $admpanel-font-shrift;
+    font-size: 15px;
+    color: #1a1a1a;
+    resize: vertical;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+
+    &::placeholder {
+      color: #aaa;
     }
 
     &:focus {
