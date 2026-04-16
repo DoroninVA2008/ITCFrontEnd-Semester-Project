@@ -5,11 +5,11 @@ import './hislog.scss'
 import { useAdminRefresh } from '../../features/admin-connection/login-function/refresh.ts'
 
 export const HisLog: React.FC = () => {
-  useAdminRefresh()
+  const { ready } = useAdminRefresh()
   return (
     <div className="HislogPage">
       <Headmer />
-      <HisLogContentComponent />
+      {ready && <HisLogContentComponent />}
     </div>
   )
 }

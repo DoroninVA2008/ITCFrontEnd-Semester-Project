@@ -6,11 +6,11 @@ import './moder.scss'
 import { useAdminRefresh } from '../../features/admin-connection/login-function/refresh.ts'
 
 export const Moder: React.FC = () => {
-  useAdminRefresh()
+  const { ready } = useAdminRefresh()
   return (
     <div className="AdminPage">
       <Headmer />
-      <ModerContentComponent />
+      {ready && <ModerContentComponent />}
     </div>
   )
 }

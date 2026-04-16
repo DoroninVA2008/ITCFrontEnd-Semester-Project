@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import L from 'leaflet'
-import { Request } from '../reques'
+import { Request } from './reques'
 import { AdMap } from '../../place-selection/admap'
 import { submitMarkerReview } from '../../place-selection/requiew'
 
@@ -58,7 +58,7 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({ request, onClose, on
       await submitMarkerReview(
         request.id,
         markerPos.lat,
-        markerPos.lng,
+        markerPos.lng, // @ts-ignore
         EVENT_TYPE_MAP[selectedEventType] ?? 1
       )
     } catch (err) {

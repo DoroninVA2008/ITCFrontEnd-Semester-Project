@@ -1,5 +1,5 @@
 import React from 'react'
-import { Request } from '../reques'
+import { Request } from './reques'
 
 export const formatDate = (dateString: string): string => {
   const date = new Date(dateString)

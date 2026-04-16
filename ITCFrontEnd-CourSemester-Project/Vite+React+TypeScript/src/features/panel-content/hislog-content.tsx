@@ -56,15 +56,7 @@ export const HisLogContentComponent: React.FC = () => {
             {paged.map(entry => (
               <div key={entry.id} className="hislog__entry">
                 <div className="hislog__dot" />
-                <HisLogCard
-                  action={entry.action}
-                  actionLabel={entry.actionLabel}
-                  date={entry.date}
-                  title={entry.title}
-                  requestId={entry.requestId}
-                  description={entry.description}
-                  moderator={entry.moderator}
-                />
+                <HisLogCard entry={entry} />
               </div>
             ))}
           </div><div className="hislog__pagination">

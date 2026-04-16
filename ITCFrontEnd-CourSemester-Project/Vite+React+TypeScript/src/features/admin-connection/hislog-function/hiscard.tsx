@@ -1,26 +1,14 @@
 import React from 'react'
-
-type ActionType = 'rejected' | 'approved' | 'review'
+import { formatDate } from '../admin-function/reqard'
+import { LogEntry } from './hisreques'
 
 interface HisLogCardProps {
-  action: ActionType
-  actionLabel: string
-  date: string
-  title: string
-  requestId: string
-  description: string
-  moderator: string
+  entry: LogEntry
 }
 
-export const HisLogCard: React.FC<HisLogCardProps> = ({
-  action,
-  actionLabel,
-  date,
-  title,
-  requestId,
-  description,
-  moderator,
-}) => (
+export const HisLogCard: React.FC<HisLogCardProps> = ({ entry }) => {
+  const { action, actionLabel, date, title, requestId, description, moderator } = entry
+  return (
   <div className="hislog__card">
     <div className="hislog__card-top">
       <span className={`hislog__badge hislog__badge--${action}`}>{actionLabel}</span>
@@ -29,7 +17,7 @@ export const HisLogCard: React.FC<HisLogCardProps> = ({
           <circle cx="10" cy="10" r="7.5" stroke="#888" strokeWidth="1.5" />
           <path d="M10 6V10.5L13 13" stroke="#888" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
-        <span>{date}</span>
+        <span>{formatDate(date)}</span>
       </div>
     </div>
     <div className="hislog__title-row">
@@ -48,4 +36,5 @@ export const HisLogCard: React.FC<HisLogCardProps> = ({
       <span>{moderator}</span>
     </div>
   </div>
-)
+  )
+}

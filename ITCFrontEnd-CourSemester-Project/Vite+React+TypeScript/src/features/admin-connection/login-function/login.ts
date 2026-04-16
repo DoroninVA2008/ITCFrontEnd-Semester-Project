@@ -39,7 +39,7 @@ export const useAdminLogin = () => {
 
       localStorage.setItem('username', login);
 
-      if (role === 'moderator' || (!role && login === 'admin_TeSt2')) {
+      if (role === 'super_admin' || (!role && login === 'admin_TeSt')) {
         navigate('/adm');
       } else {
         navigate('/mad');

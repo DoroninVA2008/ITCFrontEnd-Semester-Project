@@ -1,5 +1,5 @@
 import { adminCard } from '../../../entities/cons'
-import { Request } from '../reques'
+import { Request } from './reques'
 
 export const fetchRequestCard = async (id: string | number): Promise<Request | null> => {
     try {

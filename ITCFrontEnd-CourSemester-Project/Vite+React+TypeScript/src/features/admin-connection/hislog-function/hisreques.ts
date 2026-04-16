@@ -1,4 +1,4 @@
-import { HisForm, adminReFresh } from '../../../entities/cons'
+import { HisForm } from '../../../entities/cons'
 
 type ActionType = 'rejected' | 'approved' | 'review'
 
@@ -50,22 +50,10 @@ const parseHistory = async (response: Response): Promise<LogEntry[]> => {
 
 export const fetchHistory = async (): Promise<LogEntry[]> => {
   try {
-    let response = await fetch(HisForm, {
+    const response = await fetch(HisForm, {
       method: 'GET',
       credentials: 'include',
     })
-
-    if (response.status === 403) {
-      const refreshResp = await fetch(adminReFresh, {
-        method: 'POST',
-        credentials: 'include',
-      })
-      if (!refreshResp.ok) throw new Error(`Refresh failed: HTTP ${refreshResp.status}`)
-      response = await fetch(HisForm, {
-        method: 'GET',
-        credentials: 'include',
-      })
-    }
 
     if (!response.ok) throw new Error(`HTTP ${response.status}`)
     return parseHistory(response)
