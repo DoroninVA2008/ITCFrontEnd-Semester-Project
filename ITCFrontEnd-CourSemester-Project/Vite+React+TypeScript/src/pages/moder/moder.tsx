@@ -3,7 +3,7 @@ import { Headmer } from '../../widgets/headmer.tsx'
 import { ModerContentComponent } from '../../features/panel-content/moder-content.tsx' // @ts-ignore
 import '../admin/admin.scss' // @ts-ignore
 import './moder.scss'
-import { useAdminRefresh } from '../../features/admin-connection/refresh'
+import { useAdminRefresh } from '../../features/admin-connection/login-function/refresh.ts'
 
 export const Moder: React.FC = () => {
   useAdminRefresh()

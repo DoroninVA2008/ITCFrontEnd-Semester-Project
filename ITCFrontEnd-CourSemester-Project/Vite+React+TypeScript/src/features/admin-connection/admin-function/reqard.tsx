@@ -1,7 +1,7 @@
 import React from 'react'
-import { Request } from './reques'
+import { Request } from '../reques'
 
-const formatDate = (dateString: string): string => {
+export const formatDate = (dateString: string): string => {
   const date = new Date(dateString)
   if (isNaN(date.getTime())) return dateString
   const datePart = date.toLocaleDateString('ru-RU', {

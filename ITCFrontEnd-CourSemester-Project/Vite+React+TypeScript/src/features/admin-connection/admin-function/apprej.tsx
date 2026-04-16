@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import L from 'leaflet'
-import { Request } from './reques'
-import { AdMap } from '../place-selection/admap'
-import { submitMarkerReview } from '../place-selection/requiew'
+import { Request } from '../reques'
+import { AdMap } from '../../place-selection/admap'
+import { submitMarkerReview } from '../../place-selection/requiew'
 
 interface ApproveModalProps {
   request: Request
@@ -18,6 +18,13 @@ const EVENT_TYPE_MAP: Record<string, number> = {
   'Восстания': 4,
   'Переворот': 5,
 }
+const EVENT_TYPE_ID_MAP: Record<number, string> = {
+  1: 'Битва',
+  2: 'Война',
+  3: 'Революция',
+  4: 'Восстания',
+  5: 'Переворот',
+}
 const STATUS_LABEL: Record<string, string> = {
   published: 'Опубликовано',
   review: 'На проверке',
@@ -28,7 +35,9 @@ const STATUS_LABEL: Record<string, string> = {
 export const ApproveModal: React.FC<ApproveModalProps> = ({ request, onClose, onConfirm }) => {
   const [isClosing, setIsClosing] = useState(false)
   const [showEventTypeDropdown, setShowEventTypeDropdown] = useState(false)
-  const [selectedEventType, setSelectedEventType] = useState(request.eventType)
+  const [selectedEventType, setSelectedEventType] = useState(
+    EVENT_TYPE_ID_MAP[Number(request.eventType)] ?? request.eventType
+  )
   const [markerPos, setMarkerPos] = useState<L.LatLng | null>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
 

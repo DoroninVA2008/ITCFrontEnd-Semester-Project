@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { adminLogOut } from '../../entities/cons';
+import { adminLogOut } from '../../../entities/cons';
 
 export const useAdminLogout = () => {
   const navigate = useNavigate();

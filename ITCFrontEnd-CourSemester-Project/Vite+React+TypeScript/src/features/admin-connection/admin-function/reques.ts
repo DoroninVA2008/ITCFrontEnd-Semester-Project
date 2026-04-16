@@ -1,4 +1,5 @@
-import { adminList } from '../../entities/cons'
+import { adminList } from '../../../entities/cons'
+
 export interface Request {
   id: string
   title: string
@@ -38,7 +39,7 @@ export const fetchRequests = async (): Promise<Request[]> => {
             status: item.status ?? 'new',
             description: item.description ?? '',
             eventDate: item.event_date ?? item.eventDate ?? '',
-            eventType: item.event_type ?? item.eventType ?? '',
+            eventType: item.event_type ?? item.eventTypeId ?? '',
             telegram: item.telegram ?? '',
             email: item.email ?? '',
         }));

@@ -1,5 +1,34 @@
 import React from 'react'
-import { Request } from './reques'
+import { Request } from '../reques'
+
+const formatEventDate = (dateString: string): string => {
+  const date = new Date(dateString)
+  if (isNaN(date.getTime())) return dateString
+  const parts = date.toLocaleDateString('ru-RU', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).replace(' г.', '').split(' ')
+  if (parts.length === 3) {
+    parts[1] = parts[1].charAt(0).toUpperCase() + parts[1].slice(1)
+  }
+  return parts.join(' ')
+}
+
+const formatFetchDate = (dateString: string): string => {
+  const date = new Date(dateString)
+  if (isNaN(date.getTime())) return dateString
+  const datePart = date.toLocaleDateString('ru-RU', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).replace(' г.', '')
+  const timePart = date.toLocaleTimeString('ru-RU', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+  return `${datePart}, ${timePart}`
+}
 
 const STATUS_LABEL: Record<string, string> = {
   published: 'Опубликовано',
@@ -44,7 +73,7 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
             <path d="M7 2V5M13 2V5" stroke="#555" strokeWidth="1.5" strokeLinecap="round"/>
           </svg>
           <span className="request-modal__label">Дата события</span>
-          <span className="request-modal__value">{request.eventDate}</span>
+          <span className="request-modal__value">{formatEventDate(request.eventDate)}</span>
         </div>
         
         <div className="request-modal__field">
@@ -81,7 +110,7 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
           <path d="M10 6V10.5L13 13" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
         <span className="request-modal__label">Дата подачи заявки</span>
-        <span className="request-modal__value">{request.date}</span>
+        <span className="request-modal__value">{formatFetchDate(request.date)}</span>
       </div>
     </>
   )

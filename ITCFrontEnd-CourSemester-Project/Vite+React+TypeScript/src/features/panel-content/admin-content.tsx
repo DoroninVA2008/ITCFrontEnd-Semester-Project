@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { RequestModal, Request } from './admreq'
-import { ReqCard } from '../admin-connection/reqard'
-import { fetchRequests } from '../admin-connection/reques'
+import { ReqCard } from '../admin-connection/admin-function/reqard'
+import { fetchRequests } from '../admin-connection/admin-function/reques'
+import { fetchRequestCard } from '../admin-connection/admin-function/cardreques'
 
 const PAGE_SIZE = 5
 
@@ -17,8 +18,9 @@ export const AdminContentComponent: React.FC = () => {
   const totalPages = Math.max(1, Math.ceil(requests.length / PAGE_SIZE))
   const pagedRequests = requests.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
 
-  const handleRowClick = (request: Request) => {
-    setSelectedRequest(request)
+  const handleRowClick = async (request: Request) => {
+    const detailed = await fetchRequestCard(request.id)
+    setSelectedRequest(detailed ?? request)
   }
 
   return (

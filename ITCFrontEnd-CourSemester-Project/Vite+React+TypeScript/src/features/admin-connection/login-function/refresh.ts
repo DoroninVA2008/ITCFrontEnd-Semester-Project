@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { adminReFresh } from '../../entities/cons';
+import { adminReFresh } from '../../../entities/cons';
 
 export const useAdminRefresh = () => {
   const navigate = useNavigate();

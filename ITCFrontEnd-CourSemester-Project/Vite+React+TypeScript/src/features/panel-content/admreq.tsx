@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { RequestModalContent } from '../admin-connection/reqmodal'
-import { ApproveModal } from '../admin-connection/apprej'
+import { RequestModalContent } from '../admin-connection/admin-function/reqmodal'
+import { ApproveModal } from '../admin-connection/admin-function/apprej'
 
 export interface Request {
   id: string
