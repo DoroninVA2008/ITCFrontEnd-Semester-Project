@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { ModerCard, Moderator, RoleType, ROLE_LABEL } from '../admin-connection/moder-function/modcard'
-import { fetchModerators } from '../admin-connection/moder-function/modreques'
+import { fetchModerators, createAdmin, deleteAdmin, changeAdminRole, CreateAdminResult } from '../admin-connection/moder-function/modreques'
 
 export const ModerContentComponent: React.FC = () => {
   const [moderators, setModerators] = useState<Moderator[]>([])
@@ -20,6 +20,9 @@ export const ModerContentComponent: React.FC = () => {
   const [addEmail, setAddEmail] = useState('')
   const [addRole, setAddRole] = useState<RoleType>('super_admin')
   const [addRoleDropdownOpen, setAddRoleDropdownOpen] = useState(false)
+  const [addLoading, setAddLoading] = useState(false)
+  const [addError, setAddError] = useState<string | null>(null)
+  const [addCreated, setAddCreated] = useState<CreateAdminResult | null>(null)
   const menuRef = useRef<HTMLDivElement | null>(null)
 
   const closeMenu = (id: string) => {
@@ -34,7 +37,26 @@ export const ModerContentComponent: React.FC = () => {
 
   const closeAddModer = () => {
     setAddModerClosing(true)
-    setTimeout(() => { setAddModerOpen(false); setAddModerClosing(false) }, 300)
+    setTimeout(() => {
+      setAddModerOpen(false)
+      setAddModerClosing(false)
+      setAddCreated(null)
+      setAddError(null)
+    }, 300)
+  }
+
+  const handleCreateAdmin = async () => {
+    setAddLoading(true)
+    setAddError(null)
+    try {
+      const result = await createAdmin(addEmail, addRole)
+      setAddCreated(result)
+      fetchModerators().then(setModerators)
+    } catch (err: any) {
+      setAddError(err?.message ?? 'Ошибка создания администратора')
+    } finally {
+      setAddLoading(false)
+    }
   }
 
   const openChangeRole = (mod: Moderator) => {
@@ -53,6 +75,26 @@ export const ModerContentComponent: React.FC = () => {
     document.addEventListener('mousedown', handle)
     return () => document.removeEventListener('mousedown', handle)
   }, [openMenuId])
+
+  const handleChangeRole = async () => {
+    if (!changeRoleMod) return
+    try {
+      await changeAdminRole(changeRoleMod.id, selectedRole)
+      setModerators(prev => prev.map(m => m.id === changeRoleMod.id ? { ...m, role: selectedRole } : m))
+      closeChangeRole()
+    } catch (err: any) {
+      console.error('Ошибка изменения роли:', err?.message)
+    }
+  }
+
+  const handleDelete = async (mod: Moderator) => {
+    try {
+      await deleteAdmin(mod.id)
+      setModerators(prev => prev.filter(m => m.id !== mod.id))
+    } catch (err: any) {
+      console.error('Ошибка удаления:', err?.message)
+    }
+  }
 
   const handleCopy = (login: string) => {
     navigator.clipboard.writeText(login)
@@ -102,6 +144,7 @@ export const ModerContentComponent: React.FC = () => {
               onMenuToggle={setOpenMenuId}
               onMenuClose={closeMenu}
               onChangeRole={openChangeRole}
+              onDelete={handleDelete}
             />
           ))}
         </div>
@@ -155,7 +198,7 @@ export const ModerContentComponent: React.FC = () => {
                 <button className="role-modal__cancel" onClick={closeChangeRole}>
                   Отмена
                 </button>
-                <button className="role-modal__save">
+                <button className="role-modal__save" onClick={handleChangeRole}>
                   Сохранить
                 </button>
               </div>
@@ -214,18 +257,35 @@ export const ModerContentComponent: React.FC = () => {
                   </div>
                 )}
               </div>
-              <div className="role-modal__actions">
-                <button className="role-modal__cancel" onClick={closeAddModer}>
-                  Отмена
-                </button>
-                <button
-                  className="role-modal__save"
-                  disabled={!addEmail.includes('@')}
-                  style={{ opacity: addEmail.includes('@') ? 1 : 0.5, cursor: addEmail.includes('@') ? 'pointer' : 'default' }}
-                >
-                  Создать
-                </button>
-              </div>
+              {addError && (
+                <p className="role-modal__error">{addError}</p>
+              )}
+              {addCreated ? (
+                <>
+                  <div className="role-modal__created">
+                    <p>Логин: <strong>{addCreated.login}</strong></p>
+                    <p>Пароль: <strong>{addCreated.password}</strong></p>
+                    <p className="role-modal__created-warn">Сохраните данные — повторно получить не получится</p>
+                  </div>
+                  <button className="role-modal__save" onClick={closeAddModer}>
+                    Закрыть
+                  </button>
+                </>
+              ) : (
+                <div className="role-modal__actions">
+                  <button className="role-modal__cancel" onClick={closeAddModer}>
+                    Отмена
+                  </button>
+                  <button
+                    className="role-modal__save"
+                    disabled={!addEmail.includes('@') || addLoading}
+                    style={{ opacity: addEmail.includes('@') ? 1 : 0.5, cursor: addEmail.includes('@') ? 'pointer' : 'default' }}
+                    onClick={handleCreateAdmin}
+                  >
+                    {addLoading ? '...' : 'Создать'}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}

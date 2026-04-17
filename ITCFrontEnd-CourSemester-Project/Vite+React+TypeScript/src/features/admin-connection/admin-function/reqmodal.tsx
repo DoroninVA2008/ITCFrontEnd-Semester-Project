@@ -15,7 +15,7 @@ export const formatEventDate = (dateString: string): string => {
   return parts.join(' ')
 }
 
-const formatFetchDate = (dateString: string): string => {
+export const formatFetchDate = (dateString: string): string => {
   const date = new Date(dateString)
   if (isNaN(date.getTime())) return dateString
   const datePart = date.toLocaleDateString('ru-RU', {
@@ -82,7 +82,7 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
             <circle cx="10" cy="7" r="2" stroke="#555" strokeWidth="1.5"/>
           </svg>
           <span className="request-modal__label">Тип события</span>
-          <span className="request-modal__value">{request.eventType}</span>
+          <span className="request-modal__value">{request.eventTypeId}</span>
         </div>
         
         <div className="request-modal__field">

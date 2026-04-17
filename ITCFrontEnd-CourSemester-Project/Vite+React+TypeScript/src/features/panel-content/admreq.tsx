@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { RequestModalContent } from '../admin-connection/admin-function/reqmodal'
 import { ApproveModal } from '../admin-connection/admin-function/apprej'
+import { rejectRequest } from '../admin-connection/moder-function/modreques'
 
 export interface Request {
   id: string
@@ -107,7 +108,12 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
     handleClose()
   }
 
-  const handleRejectConfirm = () => {
+  const handleRejectConfirm = async () => {
+    try {
+      await rejectRequest(request.id, rejectComment)
+    } catch (err: any) {
+      console.error('Ошибка отклонения:', err?.message)
+    }
     handleClose()
   }
 

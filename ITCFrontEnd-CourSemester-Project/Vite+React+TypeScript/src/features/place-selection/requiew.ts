@@ -1,4 +1,4 @@
-import { adminReview } from '../../entities/cons'
+import { adminReview, PublForm } from '../../entities/cons'
 
 export const submitMarkerReview = async (
   // id: string | number,
@@ -6,7 +6,7 @@ export const submitMarkerReview = async (
   lng: number,
   eventTypeId: number
 ): Promise<void> => {// const numId = typeof id === 'string' ? parseInt(id, 1) : id;
-  const response = await fetch(adminReview(1), {
+  const response = await fetch(PublForm(1), {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',

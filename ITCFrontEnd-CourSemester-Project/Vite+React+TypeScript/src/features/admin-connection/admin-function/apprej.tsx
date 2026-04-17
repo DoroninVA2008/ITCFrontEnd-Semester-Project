@@ -3,6 +3,7 @@ import L from 'leaflet'
 import { Request } from './reques'
 import { AdMap } from '../../place-selection/admap'
 import { submitMarkerReview } from '../../place-selection/requiew'
+import { formatEventDate, formatFetchDate } from './reqmodal'
 
 interface ApproveModalProps {
   request: Request
@@ -36,7 +37,7 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({ request, onClose, on
   const [isClosing, setIsClosing] = useState(false)
   const [showEventTypeDropdown, setShowEventTypeDropdown] = useState(false)
   const [selectedEventType, setSelectedEventType] = useState(
-    EVENT_TYPE_ID_MAP[Number(request.eventType)] ?? request.eventType
+    EVENT_TYPE_ID_MAP[Number(request.eventTypeId)] ?? request.eventTypeId
   )
   const [markerPos, setMarkerPos] = useState<L.LatLng | null>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
@@ -88,7 +89,7 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({ request, onClose, on
             <path d="M7 2V5M13 2V5" stroke="#555" strokeWidth="1.5" strokeLinecap="round"/>
           </svg>
           <span className="request-modal__label">Дата события</span>
-          <span className="request-modal__value">{request.eventDate}</span>
+          <span className="request-modal__value">{formatEventDate(request.eventDate)}</span>
         </div>
         
         <div className="request-modal__field request-modal__field--select" ref={dropdownRef}>
@@ -146,7 +147,7 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({ request, onClose, on
           <path d="M10 6V10.5L13 13" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
         <span className="request-modal__label">Дата подачи заявки</span>
-        <span className="request-modal__value">{request.date}</span>
+        <span className="request-modal__value">{formatFetchDate(request.date)}</span>
       </div>
     </>
   )
@@ -175,9 +176,9 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({ request, onClose, on
           </div>
           <span className="request-modal__id">{request.id}</span>
           {renderRequestFields()}
-          <button className="approve-modal__confirm" onClick={handleConfirm} disabled={!markerPos}>
-            Подтвердить
-          </button>
+            <button className="approve-modal__confirm" onClick={handleConfirm} disabled={!markerPos}>
+              Подтвердить
+            </button>
         </div>
       </div>
     </div>

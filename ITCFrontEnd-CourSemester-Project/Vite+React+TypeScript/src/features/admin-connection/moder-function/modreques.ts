@@ -1,5 +1,54 @@
-import { admins } from '../../../entities/cons'
+import { admins, DelAdmins, RolAdmins, DelForm } from '../../../entities/cons'
 import { Moderator, RoleType } from './modcard'
+
+export interface CreateAdminResult {
+  login: string
+  password: string
+}
+
+export const createAdmin = async (email: string, role: RoleType): Promise<CreateAdminResult> => {
+  const response = await fetch(admins, {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, role }),
+  })
+  if (!response.ok) throw new Error(`HTTP ${response.status}`)
+  const json = await response.json()
+  console.log('[createAdmin] response:', json)
+  return { login: json.login, password: json.password }
+}
+
+export const deleteAdmin = async (id: string | number): Promise<void> => {
+  const response = await fetch(DelAdmins(Number(id)), {
+    method: 'DELETE',
+    credentials: 'include',
+  })
+  if (!response.ok) throw new Error(`HTTP ${response.status}`)
+  console.log('[deleteAdmin] response:', await response.json())
+}
+
+export const changeAdminRole = async (id: string | number, role: RoleType): Promise<void> => {
+  const response = await fetch(RolAdmins(Number(id)), {
+    method: 'PATCH',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ role }),
+  })
+  if (!response.ok) throw new Error(`HTTP ${response.status}`)
+  console.log('[changeAdminRole] response:', await response.json())
+}
+
+export const rejectRequest = async (id: string | number, comment: string): Promise<void> => {
+  const response = await fetch(DelForm(Number(id)), {
+    method: 'PATCH',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ comment }),
+  })
+  if (!response.ok) throw new Error(`HTTP ${response.status}`)
+  console.log('[rejectRequest] response:', await response.json())
+}
 
 export const fetchModerators = async (): Promise<Moderator[]> => {
   try {

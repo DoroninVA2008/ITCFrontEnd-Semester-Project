@@ -23,6 +23,13 @@ const statusLabel: Record<string, string> = {
   rejected:  'Отклонено',
 }
 
+const statusColor: Record<string, string> = {
+  review:    'rgba(230, 199, 143, 1)',
+  rejected:  'rgba(236, 147, 159, 1)',
+  published: 'rgba(143, 205, 143, 1)',
+}
+
+
 interface RequestRowProps {
   request: Request
   onClick: (request: Request) => void
@@ -44,7 +51,10 @@ export const ReqCard: React.FC<RequestRowProps> = ({ request, onClick }) => {
       <span className="requests-table__date">
         {formatDate(request.date)}
       </span>
-      <span className={`requests-table__status requests-table__status--${request.status}`}>
+      <span
+        className="requests-table__status"
+        style={{ backgroundColor: statusColor[request.status] }}
+      >
         •&nbsp; <span className="requests-table__dot" />
         {statusLabel[request.status] ?? request.status}
       </span>

@@ -35,16 +35,13 @@ export const RejectConfirmModal: React.FC<RejectConfirmModalProps> = ({
             <path d="M15 5L5 15M5 5L15 15" stroke="#1a1a1a" strokeWidth="1.8" strokeLinecap="round"/>
           </svg>
         </button>
-        
         <h3 className="reject-modal__title">Отклонить заявку</h3>
-        
         <textarea
           className="reject-modal__comment"
           placeholder="Введите комментарий"
           value={comment}
           onChange={(e) => onCommentChange(e.target.value)}
         />
-        
         <button className="reject-modal__confirm" onClick={handleConfirm}>
           Подтвердить
         </button>

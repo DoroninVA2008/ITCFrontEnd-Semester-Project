@@ -76,12 +76,12 @@ $admpanel-font-shrift: 'Geist', sans-serif;
   }
 
   &__search {
-    width: 420px;
+    width: 480px;
     padding: 9px 14px 9px 36px;
     border: 1.5px solid #d9d9d9;
     border-radius: 8px;
     font-family: $admpanel-font-shrift;
-    font-size: 14px;
+    font-size: 16px;
     color: #1a1a1a;
     background: rgb(242, 242, 242);
     outline: none;
@@ -167,9 +167,10 @@ $admpanel-font-shrift: 'Geist', sans-serif;
 
   &__badge {
     font-size: 13px;
-    font-weight: 500;
-    padding: 3px 10px;
+    font-weight: 700;
+    padding: 6px 10px;
     border-radius: 6px;
+    background: rgb(242, 242, 242);
 
     &--rejected {
       color: #c0392b;
@@ -192,7 +193,7 @@ $admpanel-font-shrift: 'Geist', sans-serif;
     align-items: center;
     gap: 5px;
     color: #888;
-    font-size: 13px;
+    font-size: 16px;
   }
 
   &__title-row {
@@ -202,13 +203,13 @@ $admpanel-font-shrift: 'Geist', sans-serif;
   }
 
   &__title {
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 500;
     color: #1a1a1a;
   }
 
   &__req-id {
-    font-size: 13px;
+    font-size: 18px;
     color: #888;
     font-weight: 400;
   }
@@ -225,7 +226,8 @@ $admpanel-font-shrift: 'Geist', sans-serif;
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 13px;
+    font-size: 18px;
+    font-weight: 100;
     color: #888;
     padding-left: 32px;
   }

@@ -27,7 +27,7 @@ export const fetchRequestCard = async (id: string | number): Promise<Request | n
             status: r.status ?? 'new',
             description: r.description ?? '',
             eventDate: r.event_date ?? r.eventDate ?? '',
-            eventType: r.event_type ?? r.eventType ?? r.event_type_id ?? '',
+            eventTypeId: r.event_type ?? r.eventType ?? r.event_type_id ?? '',
             telegram: r.telegram ?? r.telegramUsername ?? r.telegram_username ?? '',
             email: r.email ?? '',
         }

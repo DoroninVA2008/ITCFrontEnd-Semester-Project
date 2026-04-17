@@ -7,7 +7,7 @@ export interface Request {
   status: string
   description: string
   eventDate: string
-  eventType: string
+  eventTypeId: string
   telegram: string
   email: string
 }
@@ -64,7 +64,7 @@ export const fetchRequests = async (params: FetchRequestsParams = {}): Promise<F
                 status: item.status ?? 'new',
                 description: item.description ?? '',
                 eventDate: item.event_date ?? item.eventDate ?? '',
-                eventType: item.event_type ?? item.eventTypeId ?? '',
+                eventTypeId: item.event_type ?? item.eventTypeId ?? '',
                 telegram: item.telegram ?? '',
                 email: item.email ?? '',
             })),
