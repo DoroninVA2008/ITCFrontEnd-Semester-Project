@@ -41,6 +41,7 @@ export const RejectConfirmModal: React.FC<RejectConfirmModalProps> = ({
           placeholder="Введите комментарий"
           value={comment}
           onChange={(e) => onCommentChange(e.target.value)}
+          required
         />
         <button className="reject-modal__confirm" onClick={handleConfirm}>
           Подтвердить

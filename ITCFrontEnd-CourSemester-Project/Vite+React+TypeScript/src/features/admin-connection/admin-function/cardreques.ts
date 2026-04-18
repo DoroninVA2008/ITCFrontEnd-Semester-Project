@@ -18,6 +18,7 @@ export const fetchRequestCard = async (id: string | number): Promise<Request | n
             eventType: item.request.event_type ?? item.request.eventType,
             telegram: item.request.telegram,
             email: item.request.email,
+            siteUrl: item.request.siteUrl ?? '',
         })
         const r = item.request ?? item
         return {
@@ -27,9 +28,10 @@ export const fetchRequestCard = async (id: string | number): Promise<Request | n
             status: r.status ?? 'new',
             description: r.description ?? '',
             eventDate: r.event_date ?? r.eventDate ?? '',
-            eventTypeId: r.event_type ?? r.eventType ?? r.event_type_id ?? '',
+            eventTypeId: r.eventTypeId ?? r.event_type_id ?? r.event_type ?? r.eventType ?? '',
             telegram: r.telegram ?? r.telegramUsername ?? r.telegram_username ?? '',
             email: r.email ?? '',
+            siteUrl: r.siteUrl ?? r.site_url ?? r.url ?? r.website ?? r.preview_url ?? '',
         }
     } catch (err) {
         console.error(`Ошибка загрузки заявки #${id}:`, err)

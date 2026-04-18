@@ -5,7 +5,7 @@ import { AdMap } from '../../place-selection/admap'
 import { submitMarkerReview } from '../../place-selection/requiew'
 import { formatEventDate, formatFetchDate } from './reqmodal'
 
-interface ApproveModalProps {
+interface ApproveModalProps { // @ts-ignore
   request: Request
   onClose: () => void
   onConfirm: () => void

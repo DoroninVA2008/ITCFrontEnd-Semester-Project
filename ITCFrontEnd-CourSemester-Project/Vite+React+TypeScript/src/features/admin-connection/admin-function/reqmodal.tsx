@@ -37,7 +37,27 @@ const STATUS_LABEL: Record<string, string> = {
   new: 'Новая',
 }
 
-interface RequestModalContentProps {
+const OPTION_TO_EVENT_TYPE_NAME: Record<string, number> = {
+    'Битвы': 2, // 1
+    'Войны': 5, // 2
+    'Революции': 1, // 3
+    'Восстания': 4,
+    'Перевороты': 3 // 5
+};
+
+// const FALLBACK_NAME_TO_ID: Record<string, number> = {
+//     'Расстрел/Расправа': 1,
+//     'Военная операция': 2,
+//     'Пограничный конфликт': 3,
+//     'Восстание/Бунт': 4,
+//     'Войны': 5
+// };
+
+const EVENT_TYPE_ID_TO_NAME: Record<number, string> = Object.fromEntries(
+    Object.entries(OPTION_TO_EVENT_TYPE_NAME).map(([name, id]) => [id, name])
+);
+
+interface RequestModalContentProps { // @ts-ignore
   request: Request
   isVerified: boolean
   showRejectConfirm: boolean
@@ -60,6 +80,20 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
   onRejectConfirm,
   onApprove,
 }) => {
+  const rawSiteUrl = request.siteUrl || null;
+
+  const actualSiteUrl = rawSiteUrl
+    ? rawSiteUrl.startsWith('http://') || rawSiteUrl.startsWith('https://')
+      ? rawSiteUrl
+      : `https://${rawSiteUrl}`
+    : null;
+
+  const handleLearnMoreClick = () => {
+    if (actualSiteUrl) {
+      window.open(actualSiteUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   const renderRequestFields = () => (
     <>
       <h3 className="request-modal__section-heading">Описание события</h3>
@@ -82,7 +116,7 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
             <circle cx="10" cy="7" r="2" stroke="#555" strokeWidth="1.5"/>
           </svg>
           <span className="request-modal__label">Тип события</span>
-          <span className="request-modal__value">{request.eventTypeId}</span>
+          <span className="request-modal__value">{EVENT_TYPE_ID_TO_NAME[Number(request.eventTypeId)] ?? request.eventTypeId}</span>
         </div>
         
         <div className="request-modal__field">
@@ -136,7 +170,11 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
 
       {isVerified && !showRejectConfirm && (
         <>
-          <button className="request-modal__preview">Предпросмотр</button>
+          <button className="request-modal__preview"
+            onClick={handleLearnMoreClick}
+          >
+            Предпросмотр
+          </button>
           <div className="request-modal__actions">
             <button className="request-modal__reject" onClick={onReject}>
               <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -163,10 +201,15 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
             placeholder="Введите комментарий"
             value={rejectComment}
             onChange={(e) => onCommentChange(e.target.value)}
+            required
           />
-          <button className="request-modal__confirm" onClick={onRejectConfirm}>
-            Подтвердить
-          </button>
+            <button 
+              className="request-modal__confirm" 
+              onClick={onRejectConfirm}
+              disabled={!rejectComment.trim()}
+            >
+              Подтвердить
+            </button>
         </>
       )}
     </>

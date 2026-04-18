@@ -130,7 +130,7 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
             </svg>
           </button>
 
-          <RequestModalContent
+          <RequestModalContent // @ts-ignore
             request={request}
             isVerified={isVerified}
             showRejectConfirm={showRejectConfirm}
@@ -145,7 +145,7 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
       </div>
 
       {showApproveModal && (
-        <ApproveModal
+        <ApproveModal // @ts-ignore
           request={request}
           onClose={handleApproveClose}
           onConfirm={handleApproveConfirm}

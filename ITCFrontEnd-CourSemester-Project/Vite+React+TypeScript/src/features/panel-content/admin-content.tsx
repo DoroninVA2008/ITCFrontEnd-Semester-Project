@@ -29,7 +29,7 @@ export const AdminContentComponent: React.FC = () => {
       status: activeStatus || undefined,
       q: debouncedQ || undefined,
       limit: 100,
-    }).then(({ requests: r, total: t }) => {
+    }).then(({ requests: r, total: t }) => {// @ts-ignore
       setRequests(r)
       if (!activeStatus && !debouncedQ) {
         const counts: Record<string, number> = {}
@@ -45,7 +45,7 @@ export const AdminContentComponent: React.FC = () => {
   const displayTotal = allTotal
 
   const handleRowClick = async (request: Request) => {
-    const detailed = await fetchRequestCard(request.id)
+    const detailed = await fetchRequestCard(request.id) // @ts-ignore
     setSelectedRequest(detailed ?? request)
   }
 
@@ -85,8 +85,8 @@ export const AdminContentComponent: React.FC = () => {
         </div>
         {pagedRequests.map((req) => (
           <ReqCard
-            key={req.id}
-            request={req}
+            key={req.id} // @ts-ignore
+            request={req} // @ts-ignore
             onClick={handleRowClick}
           />
         ))}

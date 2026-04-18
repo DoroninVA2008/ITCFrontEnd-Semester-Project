@@ -1,4 +1,4 @@
-import { adminReview, PublForm } from '../../entities/cons'
+import { PublForm } from '../../entities/cons'
 
 export const submitMarkerReview = async (
   // id: string | number,

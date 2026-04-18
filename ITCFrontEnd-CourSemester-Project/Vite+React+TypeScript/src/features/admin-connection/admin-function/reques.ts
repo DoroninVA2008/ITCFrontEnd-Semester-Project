@@ -10,6 +10,7 @@ export interface Request {
   eventTypeId: string
   telegram: string
   email: string
+  siteUrl: string
 }
 
 export interface FetchRequestsParams {
@@ -67,6 +68,7 @@ export const fetchRequests = async (params: FetchRequestsParams = {}): Promise<F
                 eventTypeId: item.event_type ?? item.eventTypeId ?? '',
                 telegram: item.telegram ?? '',
                 email: item.email ?? '',
+                siteUrl: item.siteUrl ?? item.site_url ?? item.url ?? item.website ?? item.preview_url ?? '',
             })),
             total,
         }
