@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
-import { rootSaga } from './saga/rootSaga.ts'
+import rootSaga from './saga/rootSaga'
 import { MainContent } from '../features/main-content'
 import cardReducer from './saga/cardSlice'
 
