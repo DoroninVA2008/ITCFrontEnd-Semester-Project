@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { adminReFresh } from '../../../entities/cons';
 
 // Глобальное состояние для предотвращения множественных запросов
@@ -17,7 +17,7 @@ const onRefreshComplete = (success: boolean) => {
 };
 
 export const useAdminRefresh = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [ready, setReady] = useState(false);
   const accessTimerRef = useRef<NodeJS.Timeout | null>(null);
   const refreshTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -51,7 +51,7 @@ export const useAdminRefresh = () => {
 
         if (response.status === 401) {
           console.log('refresh_token отсутствует или невалиден');
-          // navigate('/log');
+          navigate('/log');
           onRefreshComplete(false);
           resolve(false);
           return;
