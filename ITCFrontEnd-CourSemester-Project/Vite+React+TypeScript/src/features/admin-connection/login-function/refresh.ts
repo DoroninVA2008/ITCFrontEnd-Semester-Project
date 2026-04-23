@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { adminReFresh } from '../../../entities/cons';
+import { adminReFresh } from '../../../entities/cons'
 
 // Глобальное состояние для предотвращения множественных запросов
 let isRefreshing = false;
@@ -19,8 +19,8 @@ const onRefreshComplete = (success: boolean) => {
 export const useAdminRefresh = () => {
   const navigate = useNavigate();
   const [ready, setReady] = useState(false);
-  const accessTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const refreshTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const accessTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const refreshTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isMountedRef = useRef(true);
 
   const refreshTokens = async (): Promise<boolean> => {

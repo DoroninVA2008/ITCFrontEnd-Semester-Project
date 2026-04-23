@@ -57,10 +57,9 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({ request, onClose, on
     if (!markerPos) return
     try {
       await submitMarkerReview(
-        request.id,
+        Number(request.id),
         markerPos.lat,
-        markerPos.lng, // @ts-ignore
-        EVENT_TYPE_MAP[selectedEventType] ?? 1
+        markerPos.lng,
       )
     } catch (err) {
       console.error(err)

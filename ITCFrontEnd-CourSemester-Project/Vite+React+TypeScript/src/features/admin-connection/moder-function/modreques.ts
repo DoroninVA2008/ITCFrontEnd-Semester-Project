@@ -1,4 +1,4 @@
-import { admins, DelAdmins, RolAdmins, DelForm } from '../../../entities/cons'
+import { admins, DelAdmins, RolAdmins, DelForm, adminReview, AddForm } from '../../../entities/cons'
 import { Moderator, RoleType } from './modcard'
 
 export interface CreateAdminResult {
@@ -37,6 +37,26 @@ export const changeAdminRole = async (id: string | number, role: RoleType): Prom
   })
   if (!response.ok) throw new Error(`HTTP ${response.status}`)
   console.log('[changeAdminRole] response:', await response.json())
+}
+
+export const reviewRequest = async (id: string | number): Promise<void> => {
+  const response = await fetch(adminReview(Number(id)), {
+    method: 'PATCH',
+    credentials: 'include',
+  })
+  if (!response.ok) throw new Error(`HTTP ${response.status}`)
+  console.log('[reviewRequest] response:', await response.json())
+}
+
+export const approveRequest = async (id: string | number, eventTypeId: number): Promise<void> => {
+  const response = await fetch(AddForm(Number(id)), {
+    method: 'PATCH',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ eventTypeId }),
+  })
+  if (!response.ok) throw new Error(`HTTP ${response.status}`)
+  console.log('[approveRequest] response:', await response.json())
 }
 
 export const rejectRequest = async (id: string | number, comment: string): Promise<void> => {

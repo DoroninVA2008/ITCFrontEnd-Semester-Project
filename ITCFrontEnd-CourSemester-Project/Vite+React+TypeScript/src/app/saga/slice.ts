@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { adminLoginReducer } from '../../features/admin-connection/login-function/ui/slice'
+// import { adminLoginReducer } from '../../features/admin-connection/login-function/ui/slice'
 
 const initialState = {
   rootappsite: [],
@@ -20,7 +20,7 @@ const eventsSlice = createSlice({
     setEvents(state, action) {
       state.event = action.payload;
     },
-  adminLogin: adminLoginReducer,
+  // adminLogin: adminLoginReducer,
     // другие редьюсеры
   }
 });

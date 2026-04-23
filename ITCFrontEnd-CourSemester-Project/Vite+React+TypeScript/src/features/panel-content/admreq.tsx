@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { RequestModalContent } from '../admin-connection/admin-function/reqmodal'
 import { ApproveModal } from '../admin-connection/admin-function/apprej'
-import { rejectRequest } from '../admin-connection/moder-function/modreques'
+import { rejectRequest, reviewRequest, approveRequest } from '../admin-connection/moder-function/modreques'
 
 export interface Request {
   id: string
@@ -92,7 +92,12 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
     setTimeout(onClose, 300)
   }
 
-  const handleApproveOpen = () => {
+  const handleApproveOpen = async () => {
+    try {
+      await approveRequest(request.id, Number((request as any).eventTypeId) || 1)
+    } catch (err: any) {
+      console.error('Ошибка одобрения:', err?.message)
+    }
     setIsRequestFading(true)
     setShowApproveModal(true)
   }
@@ -106,6 +111,15 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
     setShowApproveModal(false)
     setIsRequestFading(false)
     handleClose()
+  }
+
+  const handleVerify = async () => {
+    try {
+      await reviewRequest(request.id)
+    } catch (err: any) {
+      console.error('Ошибка взятия в работу:', err?.message)
+    }
+    setIsVerified(true)
   }
 
   const handleRejectConfirm = async () => {
@@ -136,7 +150,7 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
             showRejectConfirm={showRejectConfirm}
             rejectComment={rejectComment}
             onCommentChange={setRejectComment}
-            onVerify={() => setIsVerified(true)}
+            onVerify={handleVerify}
             onReject={() => setShowRejectConfirm(true)}
             onRejectConfirm={handleRejectConfirm}
             onApprove={handleApproveOpen}

@@ -1,16 +1,15 @@
 import { PublForm } from '../../entities/cons'
 
 export const submitMarkerReview = async (
-  // id: string | number,
+  id: number,
   lat: number,
   lng: number,
-  eventTypeId: number
-): Promise<void> => {// const numId = typeof id === 'string' ? parseInt(id, 1) : id;
-  const response = await fetch(PublForm(1), {
+): Promise<void> => {
+  const response = await fetch(PublForm(id), {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
-    body: JSON.stringify({ lat, lng, event_type: eventTypeId }),
+    body: JSON.stringify({ latitude: lat, longitude: lng }),
   })
   if (!response.ok) {
     throw new Error(`submitMarkerReview failed: ${response.status}`)
