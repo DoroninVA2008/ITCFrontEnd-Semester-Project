@@ -19,6 +19,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
   const [date, setDate] = useState('')
   const [description, setDescription] = useState('');
   const [eventType, setEventType] = useState<string | null>(null);
+  const [eventTypeLabel, setEventTypeLabel] = useState<string | null>(null);
   const [isFormValid, setIsFormValid] = useState(false);
   const [isTypevenOpen, setIsTypevenOpen] = useState(false);
   const formRef = useRef<HTMLFormElement>(null)
@@ -53,6 +54,8 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
   
   const handleEventTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEventType(e.target.value);
+    if (e.target.dataset.label) setEventTypeLabel(e.target.dataset.label);
+    setIsTypevenOpen(false);
   };
   
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -224,7 +227,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                 onClick={() => setIsTypevenOpen(prev => !prev)}
               >
                 <div className={`shadewen ${isTypevenOpen ? 'clicked' : ''}`}>
-                  Тип события
+                  {eventTypeLabel ?? 'Выберите тип'}
                   <summary className={isTypevenOpen ? 'rotated' : ''}>
                     <svg width="24" height="24" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M4.33337 9.75L13 18.4167L21.6667 9.75" stroke="#C09139" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -242,11 +245,11 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                       type="radio"
                       name="eventType"
                       value="military"
+                      data-label="Битва"
                       onChange={handleEventTypeChange}
-                      // checked={eventType === 'military'}
                       required
                     />
-                      <span className="radio-custom-label">Битвы</span>
+                      <span className="radio-custom-label">Битва</span>
                       <span className="radio-circle"
                       data-index="1"></span>
                   </label>
@@ -260,12 +263,12 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                       type="radio"
                       name="eventType"
                       value="military"
+                      data-label="Война"
                       onChange={handleEventTypeChange}
-                      // checked={eventType === 'military'}
                       required
                     />
                     <span className="radio-custom-label"
-                      data-index="2">Войны</span>
+                      data-index="2">Война</span>
                     <span className="radio-circle"></span>
                   </label>
                   <label className="radio-button" tabIndex={0} onFocus={(e) => {
@@ -278,11 +281,11 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                       type="radio"
                       name="eventType"
                       value="political"
+                      data-label="Революция"
                       onChange={handleEventTypeChange}
-                      // checked={eventType === 'political'}
                       required
                     />
-                      <span className="radio-custom-label" data-index="3">Революции</span>
+                      <span className="radio-custom-label" data-index="3">Революция</span>
                       <span className="radio-circle"></span>
                   </label>
                   <label className="radio-button" tabIndex={0} onFocus={(e) => {
@@ -295,11 +298,11 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                       type="radio"
                       name="eventType"
                       value="political"
+                      data-label="Восстание"
                       onChange={handleEventTypeChange}
-                      // checked={eventType === 'political'}
                       required
                     />
-                    <span className="radio-custom-label">Восстания</span>
+                    <span className="radio-custom-label">Восстание</span>
                     <span className="radio-circle"
                       data-index="4"></span>
                   </label>
@@ -313,11 +316,11 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                       type="radio"
                       name="eventType"
                       value="political"
+                      data-label="Переворот"
                       onChange={handleEventTypeChange}
-                      // checked={eventType === 'political'}
                       required
                     />
-                    <span className="radio-custom-label">Перевороты</span>
+                    <span className="radio-custom-label">Переворот</span>
                     <span className="radio-circle" data-index="5"></span>
                   </label>
                 </div>

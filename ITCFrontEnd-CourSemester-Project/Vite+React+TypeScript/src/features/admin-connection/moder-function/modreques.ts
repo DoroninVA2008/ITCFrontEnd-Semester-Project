@@ -1,5 +1,6 @@
 import { admins, DelAdmins, RolAdmins, DelForm, adminReview, AddForm } from '../../../entities/cons'
 import { Moderator, RoleType } from './modcard'
+import { showErrorAlert } from '../admin-function/errorAlert'
 
 export interface CreateAdminResult {
   login: string
@@ -13,7 +14,10 @@ export const createAdmin = async (email: string, role: RoleType): Promise<Create
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, role }),
   })
-  if (!response.ok) throw new Error(`HTTP ${response.status}`)
+  if (!response.ok) {
+    showErrorAlert(response.status)
+    throw new Error(`HTTP ${response.status}`)
+  }
   const json = await response.json()
   console.log('[createAdmin] response:', json)
   return { login: json.login, password: json.password }
@@ -24,7 +28,10 @@ export const deleteAdmin = async (id: string | number): Promise<void> => {
     method: 'DELETE',
     credentials: 'include',
   })
-  if (!response.ok) throw new Error(`HTTP ${response.status}`)
+  if (!response.ok) {
+    showErrorAlert(response.status)
+    throw new Error(`HTTP ${response.status}`)
+  }
   console.log('[deleteAdmin] response:', await response.json())
 }
 
@@ -35,7 +42,10 @@ export const changeAdminRole = async (id: string | number, role: RoleType): Prom
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ role }),
   })
-  if (!response.ok) throw new Error(`HTTP ${response.status}`)
+  if (!response.ok) {
+    showErrorAlert(response.status)
+    throw new Error(`HTTP ${response.status}`)
+  }
   console.log('[changeAdminRole] response:', await response.json())
 }
 
@@ -44,7 +54,10 @@ export const reviewRequest = async (id: string | number): Promise<void> => {
     method: 'PATCH',
     credentials: 'include',
   })
-  if (!response.ok) throw new Error(`HTTP ${response.status}`)
+  if (!response.ok) {
+    showErrorAlert(response.status)
+    throw new Error(`HTTP ${response.status}`)
+  }
   console.log('[reviewRequest] response:', await response.json())
 }
 
@@ -55,7 +68,10 @@ export const approveRequest = async (id: string | number, eventTypeId: number): 
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ eventTypeId }),
   })
-  if (!response.ok) throw new Error(`HTTP ${response.status}`)
+  if (!response.ok) {
+    showErrorAlert(response.status)
+    throw new Error(`HTTP ${response.status}`)
+  }
   console.log('[approveRequest] response:', await response.json())
 }
 
@@ -66,7 +82,10 @@ export const rejectRequest = async (id: string | number, comment: string): Promi
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ comment }),
   })
-  if (!response.ok) throw new Error(`HTTP ${response.status}`)
+  if (!response.ok) {
+    showErrorAlert(response.status)
+    throw new Error(`HTTP ${response.status}`)
+  }
   console.log('[rejectRequest] response:', await response.json())
 }
 
@@ -76,7 +95,10 @@ export const fetchModerators = async (): Promise<Moderator[]> => {
       method: 'GET',
       credentials: 'include',
     })
-    if (!response.ok) throw new Error(`HTTP ${response.status}`)
+    if (!response.ok) {
+      showErrorAlert(response.status)
+      throw new Error(`HTTP ${response.status}`)
+    }
     const json = await response.json()
     console.log('[fetchModerators] raw response:', json)
     const data: any[] = Array.isArray(json)

@@ -43,8 +43,6 @@ export const statusClass: Record<string, string> = {
   'Одобрена':      'approved',
 }
 
-
-
 interface RequestRowProps {
   request: Request
   onClick: (request: Request) => void

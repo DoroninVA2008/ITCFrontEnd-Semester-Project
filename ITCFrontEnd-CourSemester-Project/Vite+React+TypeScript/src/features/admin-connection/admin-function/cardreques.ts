@@ -1,4 +1,5 @@
 import { adminCard } from '../../../entities/cons'
+import { showErrorAlert } from './errorAlert'
 import { Request } from './reques'
 
 export const fetchRequestCard = async (id: string | number): Promise<Request | null> => {
@@ -7,7 +8,10 @@ export const fetchRequestCard = async (id: string | number): Promise<Request | n
             method: 'GET',
             credentials: 'include',
         })
-        if (!response.ok) throw new Error(`HTTP ${response.status}`)
+        if (!response.ok) {
+            showErrorAlert(response.status)
+            throw new Error(`HTTP ${response.status}`)
+        }
         const item = await response.json()
         console.log('[fetchRequestCard] raw response:', item)
         console.log('[fetchRequestCard] mapped fields:', {

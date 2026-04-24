@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { showErrorAlert } from './errorAlert'
 import L from 'leaflet'
 import { Request } from './reques'
 import { AdMap } from '../../place-selection/admap'
@@ -63,6 +64,10 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({ request, onClose, on
         markerPos.lng,
       )
     } catch (err) {
+      if (err instanceof Error) {
+        const match = err.message.match(/HTTP (\d+)/)
+        if (match) showErrorAlert(Number(match[1]))
+      }
       console.error(err)
     }
     setIsClosing(true)
