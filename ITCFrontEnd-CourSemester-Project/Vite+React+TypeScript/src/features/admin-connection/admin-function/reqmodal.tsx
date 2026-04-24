@@ -1,5 +1,6 @@
 import React from 'react'
 import { Request } from './reques'
+import { statusClass } from './reqard'
 
 export const formatEventDate = (dateString: string): string => {
   const date = new Date(dateString)
@@ -154,7 +155,7 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
       <div className="request-modal__header-row">
         <h2 className="request-modal__title">{request.title}</h2>
         {(isVerified || showRejectConfirm) && (
-          <span className={`request-modal__status-badge request-modal__status-badge--${showRejectConfirm ? 'rejected' : request.status}`}>
+          <span className={`request-modal__status-badge request-modal__status-badge--${showRejectConfirm ? 'rejected' : (statusClass[request.status] ?? request.status)}`}>
             <span className="request-modal__status-dot" />
             {showRejectConfirm ? STATUS_LABEL['rejected'] : (STATUS_LABEL[request.status] ?? request.status)}
           </span>

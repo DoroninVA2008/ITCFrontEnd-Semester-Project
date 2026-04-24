@@ -400,6 +400,11 @@ $font-shrift-weight: 300;
         color: #1a8a4a;
         border-color: #b6ecd4;
       }
+
+      &--approved {
+        background-color: rgb(0, 100, 210, 0.15);
+        color: rgb(0, 100, 210);
+      }
     }
 
     &__dot {
@@ -412,6 +417,7 @@ $font-shrift-weight: 300;
       .requests-table__status--review &    { background-color: #b07000; }
       .requests-table__status--rejected &  { background-color: #c0392b; }
       .requests-table__status--new &       { background-color: #1a8a4a; }
+      .requests-table__status--approved &  { background-color: rgb(0, 100, 210); }
     }
   }
 
@@ -824,6 +830,11 @@ $font-shrift-weight: 300;
       color: #1a8a4a;
       border-color: #b6ecd4;
     }
+    &--approved {
+      background-color: #e8f0fe;
+      color: #1a56db;
+      border-color: #b3c9f9;
+    }
   }
 
   &__status-dot {
@@ -836,6 +847,7 @@ $font-shrift-weight: 300;
     .request-modal__status-badge--review &    { background-color: #b07000; }
     .request-modal__status-badge--rejected &  { background-color: #c0392b; }
     .request-modal__status-badge--new &       { background-color: #1a8a4a; }
+    .request-modal__status-badge--approved &  { background-color: #1a56db; }
   }
 
   &__verify {

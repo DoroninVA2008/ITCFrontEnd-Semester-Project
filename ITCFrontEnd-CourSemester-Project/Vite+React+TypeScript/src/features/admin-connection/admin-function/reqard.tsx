@@ -17,17 +17,32 @@ export const formatDate = (dateString: string): string => {
 }
 
 const statusLabel: Record<string, string> = {
-  new:       'Новая',
-  review:    'На проверке',
-  published: 'Опубликовано',
-  rejected:  'Отклонено',
+  new:             'Новая',
+  review:          'На проверке',
+  published:       'Опубликовано',
+  rejected:        'Отклонено',
+  'Новая':         'Новая',
+  'На проверке':   'На проверке',
+  'Опубликовано':  'Опубликовано',
+  'Опубликована':  'Опубликовано',
+  'Отклонена':     'Отклонено',
+  'Одобрена':      'Одобрена',
 }
 
-const statusColor: Record<string, string> = {
-  review:    'rgba(230, 199, 143, 1)',
-  rejected:  'rgba(236, 147, 159, 1)',
-  published: 'rgba(143, 205, 143, 1)',
+export const statusClass: Record<string, string> = {
+  new:             'new',
+  review:          'review',
+  published:       'published',
+  rejected:        'rejected',
+  'Новая':         'new',
+  'На проверке':   'review',
+  'Опубликовано':  'published',
+  'Опубликована':  'published',
+  'Отклонено':     'rejected',
+  'Отклонена':     'rejected',
+  'Одобрена':      'approved',
 }
+
 
 
 interface RequestRowProps {
@@ -51,13 +66,11 @@ export const ReqCard: React.FC<RequestRowProps> = ({ request, onClick }) => {
       <span className="requests-table__date">
         {formatDate(request.date)}
       </span>
-      <span
-        className="requests-table__status"
-        style={{ backgroundColor: statusColor[request.status] }}
-      >
-        •&nbsp; <span className="requests-table__dot" />
-        {statusLabel[request.status] ?? request.status}
-      </span>
+      <span className={`requests-table__status requests-table__status--${statusClass[request.status] ?? request.status}`}>
+        •&nbsp; 
+          <span className="requests-table__dot" />
+            {statusLabel[request.status] ?? request.status}
+        </span>
     </div>
   )
 }

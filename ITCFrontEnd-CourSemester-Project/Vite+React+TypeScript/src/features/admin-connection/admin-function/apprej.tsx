@@ -4,6 +4,7 @@ import { Request } from './reques'
 import { AdMap } from '../../place-selection/admap'
 import { submitMarkerReview } from '../../place-selection/requiew'
 import { formatEventDate, formatFetchDate } from './reqmodal'
+import { statusClass } from './reqard'
 
 interface ApproveModalProps { // @ts-ignore
   request: Request
@@ -168,7 +169,7 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({ request, onClose, on
         <div className="approve-modal__right">
           <div className="request-modal__header-row">
             <h2 className="request-modal__title">{request.title}</h2>
-            <span className={`request-modal__status-badge request-modal__status-badge--${request.status}`}>
+            <span className={`request-modal__status-badge request-modal__status-badge--${statusClass[request.status] ?? request.status}`}>
               <span className="request-modal__status-dot" />
               {STATUS_LABEL[request.status] ?? request.status}
             </span>
