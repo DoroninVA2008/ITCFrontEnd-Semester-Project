@@ -1,5 +1,4 @@
 import { adminList } from '../../../entities/cons'
-import { showErrorAlert } from './errorAlert'
 
 export interface Request {
   id: string
@@ -41,7 +40,6 @@ export const fetchRequests = async (params: FetchRequestsParams = {}): Promise<F
             credentials: 'include',
         });
         if (!response.ok) {
-            showErrorAlert(response.status)
             throw new Error(`HTTP ${response.status}`)
         }
         const json = await response.json();

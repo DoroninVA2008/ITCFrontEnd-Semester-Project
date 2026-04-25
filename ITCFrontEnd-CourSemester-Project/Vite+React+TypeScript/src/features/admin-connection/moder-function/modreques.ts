@@ -1,6 +1,5 @@
 import { admins, DelAdmins, RolAdmins, DelForm, adminReview, AddForm } from '../../../entities/cons'
 import { Moderator, RoleType } from './modcard'
-import { showErrorAlert } from '../admin-function/errorAlert'
 
 export interface CreateAdminResult {
   login: string
@@ -15,7 +14,6 @@ export const createAdmin = async (email: string, role: RoleType): Promise<Create
     body: JSON.stringify({ email, role }),
   })
   if (!response.ok) {
-    showErrorAlert(response.status)
     throw new Error(`HTTP ${response.status}`)
   }
   const json = await response.json()
@@ -29,7 +27,6 @@ export const deleteAdmin = async (id: string | number): Promise<void> => {
     credentials: 'include',
   })
   if (!response.ok) {
-    showErrorAlert(response.status)
     throw new Error(`HTTP ${response.status}`)
   }
   console.log('[deleteAdmin] response:', await response.json())
@@ -43,7 +40,6 @@ export const changeAdminRole = async (id: string | number, role: RoleType): Prom
     body: JSON.stringify({ role }),
   })
   if (!response.ok) {
-    showErrorAlert(response.status)
     throw new Error(`HTTP ${response.status}`)
   }
   console.log('[changeAdminRole] response:', await response.json())
@@ -55,7 +51,6 @@ export const reviewRequest = async (id: string | number): Promise<void> => {
     credentials: 'include',
   })
   if (!response.ok) {
-    showErrorAlert(response.status)
     throw new Error(`HTTP ${response.status}`)
   }
   console.log('[reviewRequest] response:', await response.json())
@@ -69,7 +64,6 @@ export const approveRequest = async (id: string | number, eventTypeId: number): 
     body: JSON.stringify({ eventTypeId }),
   })
   if (!response.ok) {
-    showErrorAlert(response.status)
     throw new Error(`HTTP ${response.status}`)
   }
   console.log('[approveRequest] response:', await response.json())
@@ -83,7 +77,6 @@ export const rejectRequest = async (id: string | number, comment: string): Promi
     body: JSON.stringify({ comment }),
   })
   if (!response.ok) {
-    showErrorAlert(response.status)
     throw new Error(`HTTP ${response.status}`)
   }
   console.log('[rejectRequest] response:', await response.json())
@@ -96,7 +89,7 @@ export const fetchModerators = async (): Promise<Moderator[]> => {
       credentials: 'include',
     })
     if (!response.ok) {
-      showErrorAlert(response.status)
+      // showErrorAlert(response.status)
       throw new Error(`HTTP ${response.status}`)
     }
     const json = await response.json()

@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { showErrorAlert } from './errorAlert'
 import L from 'leaflet'
 import { Request } from './reques'
 import { AdMap } from '../../place-selection/admap'
@@ -29,10 +28,16 @@ const EVENT_TYPE_ID_MAP: Record<number, string> = {
   5: 'Переворот',
 }
 const STATUS_LABEL: Record<string, string> = {
-  published: 'Опубликовано',
-  review: 'На проверке',
-  rejected: 'Отклонено',
-  new: 'Новая',
+  published:       'Опубликовано',
+  review:          'На проверке',
+  rejected:        'Отклонено',
+  new:             'Новая',
+  'Опубликовано':  'Опубликовано',
+  'Опубликована':  'Опубликовано',
+  'Отклонено':     'Отклонено',
+  'Отклонена':     'Отклонено',
+  'На проверке':   'На проверке',
+  'Новая':         'Новая',
 }
 
 export const ApproveModal: React.FC<ApproveModalProps> = ({ request, onClose, onConfirm }) => {
@@ -64,10 +69,6 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({ request, onClose, on
         markerPos.lng,
       )
     } catch (err) {
-      if (err instanceof Error) {
-        const match = err.message.match(/HTTP (\d+)/)
-        if (match) showErrorAlert(Number(match[1]))
-      }
       console.error(err)
     }
     setIsClosing(true)

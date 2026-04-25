@@ -11,6 +11,13 @@ export default defineConfig({
   server: {
     port: 1447,
     open: true,
-    host: true
+    host: true,
+    proxy: {
+      '/api': {
+        target: 'https://api.russia-heroes.ru',
+        changeOrigin: true,
+        secure: true,
+      }
+    }
   }
 })

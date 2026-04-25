@@ -32,10 +32,16 @@ export const formatFetchDate = (dateString: string): string => {
 }
 
 const STATUS_LABEL: Record<string, string> = {
-  published: 'Опубликовано',
-  review: 'На проверке',
-  rejected: 'Отклонено',
-  new: 'Новая',
+  published:       'Опубликовано',
+  review:          'На проверке',
+  rejected:        'Отклонено',
+  new:             'Новая',
+  'Опубликовано':  'Опубликовано',
+  'Опубликована':  'Опубликовано',
+  'Отклонено':     'Отклонено',
+  'Отклонена':     'Отклонено',
+  'На проверке':   'На проверке',
+  'Новая':         'Новая',
 }
 
 const OPTION_TO_EVENT_TYPE_NAME: Record<string, number> = {
@@ -103,9 +109,9 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
       <div className="request-modal__grid">
         <div className="request-modal__field">
           <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="3" y="4" width="14" height="13" rx="2" stroke="#555" strokeWidth="1.5"/>
-            <path d="M3 8H17" stroke="#555" strokeWidth="1.5"/>
-            <path d="M7 2V5M13 2V5" stroke="#555" strokeWidth="1.5" strokeLinecap="round"/>
+            <rect x="3" y="4" width="14" height="13" rx="2" stroke="#555" strokeWidth="1.5" />
+            <path d="M3 8H17" stroke="#555" strokeWidth="1.5" />
+            <path d="M7 2V5M13 2V5" stroke="#555" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
           <span className="request-modal__label">Дата события</span>
           <span className="request-modal__value">{formatEventDate(request.eventDate)}</span>
@@ -154,10 +160,10 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
     <>
       <div className="request-modal__header-row">
         <h2 className="request-modal__title">{request.title}</h2>
-          {(isVerified || showRejectConfirm) && (
+          {(isVerified || showRejectConfirm || statusClass[request.status] === 'rejected') && (
             <span className={`request-modal__status-badge request-modal__status-badge--${showRejectConfirm ? 'rejected' : (statusClass[request.status] ?? request.status)}`}>
               <span className="request-modal__status-dot" />
-                {showRejectConfirm ? STATUS_LABEL['rejected'] : STATUS_LABEL['rejected']}
+                {showRejectConfirm ? STATUS_LABEL['rejected'] : (STATUS_LABEL[request.status] ?? request.status)}
             </span>
           )}
       </div>
@@ -165,31 +171,31 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
 
       {renderRequestFields()}
 
-      {!isVerified && !showRejectConfirm && (
+      {!isVerified && !showRejectConfirm && statusClass[request.status] !== 'rejected' && (
         <button className="request-modal__verify" onClick={onVerify}>Проверить</button>
       )}
 
       {isVerified && !showRejectConfirm && (
         <>
-          <button className="request-modal__preview"
-            onClick={handleLearnMoreClick}
-          >
-            Предпросмотр
-          </button>
+          {statusClass[request.status] !== 'published' && (
+            <button className="request-modal__preview" onClick={handleLearnMoreClick}>
+              Предпросмотр
+            </button>
+          )}
           <div className="request-modal__actions">
             <button className="request-modal__reject" onClick={onReject}>
               <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="1.6"/>
                 <path d="M13 7L7 13M7 7L13 13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
               </svg>
-              Отклонить
+              {statusClass[request.status] === 'published' ? 'Удалить' : 'Отклонить'}
             </button>
             <button className="request-modal__approve" onClick={onApprove}>
               <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="1.6"/>
                 <path d="M6.5 10.5L9 13L13.5 8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              Одобрить
+              {statusClass[request.status] === 'published' ? 'Редактировать' : 'Одобрить'}
             </button>
           </div>
         </>

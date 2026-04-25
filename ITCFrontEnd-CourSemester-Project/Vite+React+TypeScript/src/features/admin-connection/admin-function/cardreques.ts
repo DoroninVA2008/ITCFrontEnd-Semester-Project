@@ -1,5 +1,4 @@
 import { adminCard } from '../../../entities/cons'
-import { showErrorAlert } from './errorAlert'
 import { Request } from './reques'
 
 export const fetchRequestCard = async (id: string | number): Promise<Request | null> => {
@@ -9,7 +8,6 @@ export const fetchRequestCard = async (id: string | number): Promise<Request | n
             credentials: 'include',
         })
         if (!response.ok) {
-            showErrorAlert(response.status)
             throw new Error(`HTTP ${response.status}`)
         }
         const item = await response.json()

@@ -26,6 +26,7 @@ const statusLabel: Record<string, string> = {
   'Опубликовано':  'Опубликовано',
   'Опубликована':  'Опубликовано',
   'Отклонена':     'Отклонено',
+  'Отклонено':     'Отклонено',
   'Одобрена':      'Одобрена',
 }
 
@@ -41,6 +42,7 @@ export const statusClass: Record<string, string> = {
   'Отклонено':     'rejected',
   'Отклонена':     'rejected',
   'Одобрена':      'approved',
+  'Одобрено':      'approved',
 }
 
 interface RequestRowProps {

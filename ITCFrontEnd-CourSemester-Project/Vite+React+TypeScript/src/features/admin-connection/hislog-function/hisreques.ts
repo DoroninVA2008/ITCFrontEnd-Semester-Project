@@ -1,5 +1,4 @@
 import { HisForm } from '../../../entities/cons'
-import { showErrorAlert } from '../admin-function/errorAlert'
 
 type ActionType = 'rejected' | 'approved' | 'review'
 
@@ -57,7 +56,6 @@ export const fetchHistory = async (params: FetchHistoryParams = {}): Promise<Fet
       credentials: 'include',
     })
     if (!response.ok) {
-      showErrorAlert(response.status)
       throw new Error(`HTTP ${response.status}`)
     }
 
