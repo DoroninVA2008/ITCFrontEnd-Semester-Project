@@ -3,6 +3,7 @@ import L from 'leaflet'
 import { Request } from './reques'
 import { AdMap } from '../../place-selection/admap'
 import { submitMarkerReview } from '../../place-selection/requiew'
+import { updateObjectCoordinates } from './corup'
 import { formatEventDate, formatFetchDate } from './reqmodal'
 import { statusClass } from './reqard'
 
@@ -60,14 +61,24 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({ request, onClose, on
     return () => document.removeEventListener('mousedown', handleOutside)
   }, [showEventTypeDropdown])
 
+  const PUBLISHED_STATUSES = new Set(['published', 'Опубликовано', 'Опубликована'])
+
   const handleConfirm = async () => {
     if (!markerPos) return
     try {
-      await submitMarkerReview(
-        Number(request.id),
-        markerPos.lat,
-        markerPos.lng,
-      )
+      if (PUBLISHED_STATUSES.has(request.status)) {
+        await updateObjectCoordinates({
+          id: Number(request.id),
+          latitude: markerPos.lat,
+          longitude: markerPos.lng,
+        })
+      } else {
+        await submitMarkerReview(
+          Number(request.id),
+          markerPos.lat,
+          markerPos.lng,
+        )
+      }
     } catch (err) {
       console.error(err)
     }

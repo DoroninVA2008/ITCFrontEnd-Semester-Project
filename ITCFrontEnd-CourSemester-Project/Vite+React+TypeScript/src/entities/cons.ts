@@ -20,5 +20,7 @@ export var PublForm = (id: number) => `${B}/api/admin/requests/${id}/publish`
 export var DelForm = (id: number) => `${B}/api/admin/requests/${id}/reject`
 export var HisForm = `${B}/api/admin/history`
 export var admins = `${B}/api/admin/admins`
+export var DelEven = (id: number) => `${B}/api/admin/requests/${id}/object`
+export var UpdEven = (id: number) => `${B}/api/admin/requests/${id}/object/coordinates`
 export var DelAdmins = (id: number) => `${B}/api/admin/admins/${id}`
 export var RolAdmins = (id: number) => `${B}/api/admin/admins/${id}/role`

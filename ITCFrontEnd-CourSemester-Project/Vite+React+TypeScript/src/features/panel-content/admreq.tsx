@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { RequestModalContent } from '../admin-connection/admin-function/reqmodal'
 import { ApproveModal } from '../admin-connection/admin-function/apprej'
 import { rejectRequest, reviewRequest, approveRequest } from '../admin-connection/moder-function/modreques'
+import { deleteObject } from '../admin-connection/admin-function/cordel'
 
 export interface Request {
   id: string
@@ -122,11 +123,17 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
     setIsVerified(true)
   }
 
+  const PUBLISHED_STATUSES = new Set(['published', 'Опубликовано', 'Опубликована'])
+
   const handleRejectConfirm = async () => {
     try {
-      await rejectRequest(request.id, rejectComment)
+      if (PUBLISHED_STATUSES.has(request.status)) {
+        await deleteObject(Number(request.id))
+      } else {
+        await rejectRequest(request.id, rejectComment)
+      }
     } catch (err: any) {
-      console.error('Ошибка отклонения:', err?.message)
+      console.error('Ошибка:', err?.message)
     }
     handleClose()
   }
