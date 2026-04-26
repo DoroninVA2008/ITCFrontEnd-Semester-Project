@@ -138,6 +138,12 @@ $font-shrift-weight: 300;
     }
   }
 
+  .requests-table {
+    &__header, &__row{
+      grid-template-columns: 120px 1fr 280px 300px !important;
+    }
+  }
+
   .AdminRequests {
     top: 48px !important;
 

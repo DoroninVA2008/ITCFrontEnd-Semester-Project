@@ -1,5 +1,4 @@
-const B = import.meta.env.VITE_API_BASE ?? ''
-
+const B = import.meta.env.VITE_API_BASE ?? '' // https://api.russia-heroes.ru/
 export var tiLayer = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}'
 export var landGeoJSon = 'https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson'
 export var checkBack = `${B}/api/ping`
