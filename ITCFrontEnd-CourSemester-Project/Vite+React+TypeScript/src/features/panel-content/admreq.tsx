@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { RequestModalContent } from '../admin-connection/admin-function/reqmodal'
 import { ApproveModal } from '../admin-connection/admin-function/apprej'
-import { rejectRequest, reviewRequest, approveRequest } from '../admin-connection/moder-function/modreques'
+import { rejectRequest, reviewRequest } from '../admin-connection/moder-function/modreques'
 import { deleteObject } from '../admin-connection/admin-function/cordel'
 
 export interface Request {
@@ -87,18 +87,29 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
   const [rejectComment, setRejectComment] = useState('')
   const [showApproveModal, setShowApproveModal] = useState(false)
   const [isRequestFading, setIsRequestFading] = useState(false)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [isDeleteClosing, setIsDeleteClosing] = useState(false)
 
   const handleClose = () => {
     setIsClosing(true)
     setTimeout(onClose, 300)
   }
 
-  const handleApproveOpen = async () => {
-    try {
-      await approveRequest(request.id, Number((request as any).eventTypeId) || 1)
-    } catch (err: any) {
-      console.error('Ошибка одобрения:', err?.message)
-    }
+  const handleDeleteOpen = () => { setIsDeleteClosing(false); setShowDeleteConfirm(true) }
+  const handleDeleteClose = () => {
+    setIsDeleteClosing(true)
+    setTimeout(() => { setShowDeleteConfirm(false); setIsDeleteClosing(false) }, 250)
+  }
+  const handleDeleteConfirm = async () => {
+    setIsDeleteClosing(true)
+    setTimeout(async () => {
+      setShowDeleteConfirm(false)
+      setIsDeleteClosing(false)
+      await handleRejectConfirm()
+    }, 250)
+  }
+
+  const handleApproveOpen = () => {
     setIsRequestFading(true)
     setShowApproveModal(true)
   }
@@ -161,7 +172,18 @@ export const RequestModal: React.FC<RequestModalProps> = ({ request, onClose }) 
             onReject={() => setShowRejectConfirm(true)}
             onRejectConfirm={handleRejectConfirm}
             onApprove={handleApproveOpen}
+            onDeleteClick={handleDeleteOpen}
           />
+
+          {showDeleteConfirm && (
+            <div className={`delete-confirm${isDeleteClosing ? ' delete-confirm--closing' : ''}`}>
+              <p className="delete-confirm__text">Вы уверены что хотите удалить?</p>
+              <div className="delete-confirm__actions">
+                <button className="delete-confirm__no" onClick={handleDeleteClose}>Нет</button>
+                <button className="delete-confirm__yes" onClick={handleDeleteConfirm}>Да</button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

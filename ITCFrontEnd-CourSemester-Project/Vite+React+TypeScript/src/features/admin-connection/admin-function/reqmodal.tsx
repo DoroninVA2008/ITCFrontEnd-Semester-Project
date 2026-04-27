@@ -74,6 +74,7 @@ interface RequestModalContentProps { // @ts-ignore
   onReject: () => void
   onRejectConfirm: () => void
   onApprove: () => void
+  onDeleteClick: () => void
 }
 
 export const RequestModalContent: React.FC<RequestModalContentProps> = ({
@@ -86,6 +87,7 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
   onReject,
   onRejectConfirm,
   onApprove,
+  onDeleteClick,
 }) => {
   const rawSiteUrl = request.siteUrl || null;
 
@@ -177,8 +179,8 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
 
       {statusClass[request.status] === 'published' && !showRejectConfirm && (
         <div className="request-modal__actions">
-          <button className="request-modal__reject" 
-              onClick={onRejectConfirm}>
+          <button className="request-modal__reject"
+              onClick={onDeleteClick}>
             <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="1.6"/>
               <path d="M13 7L7 13M7 7L13 13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
