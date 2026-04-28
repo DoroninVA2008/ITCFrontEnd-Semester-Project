@@ -8,10 +8,10 @@ const PAGE_SIZE = 9
 
 export const HisLogContentComponent: React.FC = () => {
   const [entries, setEntries] = useState<LogEntry[]>([])
-  const [total, setTotal]     = useState(0)
+  const [total, setTotal] = useState(0)
   const [loading, setLoading] = useState(true)
-  const [search, setSearch]   = useState('')
-  const [page, setPage]       = useState(1)
+  const [search, setSearch] = useState('')
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
     setLoading(true)
@@ -36,13 +36,10 @@ export const HisLogContentComponent: React.FC = () => {
         <h1>История изменений</h1>
         <p>Все действия модераторов по заявкам</p>
       </div>
-
       <HisSearch value={search} onChange={handleSearch} />
-
       <p className="hislog__count">
         Всего записей:&nbsp;<strong>{total}</strong>
       </p>
-
       {loading ? (
         <div className="hislog__loading">Загрузка...</div>
       ) : (

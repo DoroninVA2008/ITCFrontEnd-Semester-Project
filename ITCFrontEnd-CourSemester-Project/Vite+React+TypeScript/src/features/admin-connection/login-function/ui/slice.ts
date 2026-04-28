@@ -72,6 +72,3 @@ export const {
 
 export const adminLoginReducer = adminLoginSlice.reducer;
 
-// Action types for saga
-export const ADMIN_LOGIN_REQUEST = 'adminLogin/loginRequest';
-export const ADMIN_LOGOUT = 'adminLogin/logout';

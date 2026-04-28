@@ -4,10 +4,6 @@ import { fetchModerators, createAdmin, deleteAdmin, changeAdminRole, CreateAdmin
 
 export const ModerContentComponent: React.FC = () => {
   const [moderators, setModerators] = useState<Moderator[]>([])
-
-  useEffect(() => {
-    fetchModerators().then(setModerators)
-  }, [])
   const [copied, setCopied] = useState<string | null>(null)
   const [openMenuId, setOpenMenuId] = useState<string | null>(null)
   const [menuClosing, setMenuClosing] = useState<string | null>(null)
@@ -24,6 +20,10 @@ export const ModerContentComponent: React.FC = () => {
   const [addError, setAddError] = useState<string | null>(null)
   const [addCreated, setAddCreated] = useState<CreateAdminResult | null>(null)
   const menuRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    fetchModerators().then(setModerators)
+  }, [])
 
   const closeMenu = (id: string) => {
     setMenuClosing(id)

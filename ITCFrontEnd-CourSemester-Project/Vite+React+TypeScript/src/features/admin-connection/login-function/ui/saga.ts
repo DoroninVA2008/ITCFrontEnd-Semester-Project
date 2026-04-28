@@ -4,7 +4,7 @@ import { adminLogIn } from '../../../../entities/cons'
 import { 
   loginSuccess, 
   loginFailure,
-  ADMIN_LOGIN_REQUEST,
+  loginRequest,
 } from './slice'
 import { selectLogin, selectPassword } from './selectors'
 
@@ -62,7 +62,7 @@ function* handleAdminLogin(): Generator<any, void, any> {
 }
 
 export function* watchAdminLogin(): Generator<any, void, any> {
-  yield takeLatest(ADMIN_LOGIN_REQUEST, handleAdminLogin);
+  yield takeLatest(loginRequest, handleAdminLogin);
 }
 
 // Экспортируем для добавления в rootSaga
