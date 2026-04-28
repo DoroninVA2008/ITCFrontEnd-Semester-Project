@@ -1,4 +1,4 @@
-import { RootState } from '../../../../app/store'
+import { RootState } from '../../../../../app/store';
 
 export const selectLogin = (state: RootState) => state.adminLogin.login;
 export const selectPassword = (state: RootState) => state.adminLogin.password;

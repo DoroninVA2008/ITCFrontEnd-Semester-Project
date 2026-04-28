@@ -71,4 +71,3 @@ export const {
 } = adminLoginSlice.actions;
 
 export const adminLoginReducer = adminLoginSlice.reducer;
-

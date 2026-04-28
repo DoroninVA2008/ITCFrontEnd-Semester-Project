@@ -162,7 +162,7 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
     <>
       <div className="request-modal__header-row">
         <h2 className="request-modal__title">{request.title}</h2>
-          {(isVerified || showRejectConfirm || statusClass[request.status] === 'rejected' || statusClass[request.status] === 'published') && (
+          {(isVerified || showRejectConfirm || statusClass[request.status] === 'rejected' || statusClass[request.status] === 'published' || statusClass[request.status] === 'review') && (
             <span className={`request-modal__status-badge request-modal__status-badge--${showRejectConfirm ? 'rejected' : (statusClass[request.status] ?? request.status)}`}>
               <span className="request-modal__status-dot" />
                 {showRejectConfirm ? STATUS_LABEL['rejected'] : (STATUS_LABEL[request.status] ?? request.status)}
@@ -173,7 +173,7 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
 
       {renderRequestFields()}
 
-      {!isVerified && !showRejectConfirm && statusClass[request.status] !== 'rejected' && statusClass[request.status] !== 'published' && (
+      {!isVerified && !showRejectConfirm && statusClass[request.status] !== 'rejected' && statusClass[request.status] !== 'published' && statusClass[request.status] !== 'review' && (
         <button className="request-modal__verify" onClick={onVerify}>Проверить</button>
       )}
 
@@ -197,7 +197,7 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
         </div>
       )}
 
-      {isVerified && !showRejectConfirm && statusClass[request.status] !== 'published' && (
+      {(isVerified || statusClass[request.status] === 'review') && !showRejectConfirm && statusClass[request.status] !== 'published' && (
         <>
           {statusClass[request.status] !== 'published' && (
             <button className="request-modal__preview" onClick={handleLearnMoreClick}>

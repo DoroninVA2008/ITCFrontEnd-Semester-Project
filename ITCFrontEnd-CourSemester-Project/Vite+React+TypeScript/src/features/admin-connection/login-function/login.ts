@@ -1,55 +1,45 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { adminLogIn } from '../../../entities/cons'
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setLogin, setPassword, loginRequest } from './ui/login/slice';
+import {
+  selectLogin,
+  selectPassword,
+  selectLoading,
+  selectError,
+  selectIsAuthenticated,
+  selectRole,
+} from './ui/login/selectors';
 
 export const useAdminLogin = () => {
-  const [login, setLogin] = useState('');
-  const [password, setPassword] = useState('');
-  const [error] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+  const login = useSelector(selectLogin);
+  const password = useSelector(selectPassword);
+  const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const role = useSelector(selectRole);
 
-    try {
-      console.log('Отправляем:', JSON.stringify({ login, password }));
-      const response = await fetch(adminLogIn, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ login, password }),
-      });
-
-      if (response.status === 401) {
-        console.log('Неверный логин или пароль');
-        alert('Неверный логин или пароль');
-        return;
-      }
-
-      // Определяем роль: сначала из тела ответа, иначе по логину
-      let role: string | null = null;
-      try {
-        const data = await response.json();
-        role = data?.role ?? null;
-      } catch {
-        // тело пустое или не JSON — ок
-      }
-
-      localStorage.setItem('username', login);
-
-      if (role === 'super_admin' || (!role && login === 'admin_TeSt')) {
-        navigate('/adm');
-      } else {
-        navigate('/mad');
-      }
-    } catch {
-      alert('Ошибка подключения к серверу');
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(role === 'super_admin' ? '/adm' : '/mad');
     }
+  }, [isAuthenticated, role, navigate]);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    dispatch(loginRequest());
   };
 
-  return { login, setLogin, password, setPassword, error, loading, handleLogin };
+  return {
+    login,
+    setLogin: (v: string) => dispatch(setLogin(v)),
+    password,
+    setPassword: (v: string) => dispatch(setPassword(v)),
+    error,
+    loading,
+    handleLogin,
+  };
 };

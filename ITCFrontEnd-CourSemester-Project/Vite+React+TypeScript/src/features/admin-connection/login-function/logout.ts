@@ -1,20 +1,23 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { adminLogOut } from '../../../entities/cons';
+import { logoutRequest, logoutReset } from './ui/logout/slice';
+import { selectLogoutCompleted } from './ui/logout/selectors';
 
 export const useAdminLogout = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const completed = useSelector(selectLogoutCompleted);
 
-  const handleLogout = async () => {
-    try {
-      await fetch(adminLogOut, {
-        method: 'POST',
-        credentials: 'include',
-      });
-    } catch {
-      console.log('Ошибка при выходе из аккаунта');
-    } finally {
+  useEffect(() => {
+    if (completed) {
+      dispatch(logoutReset());
       navigate('/log');
     }
+  }, [completed, dispatch, navigate]);
+
+  const handleLogout = () => {
+    dispatch(logoutRequest());
   };
 
   return { handleLogout };
