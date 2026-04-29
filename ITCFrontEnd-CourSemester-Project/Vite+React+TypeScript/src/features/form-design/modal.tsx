@@ -22,6 +22,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
   const [eventTypeLabel, setEventTypeLabel] = useState<string | null>(null);
   const [isFormValid, setIsFormValid] = useState(false);
   const [isTypevenOpen, setIsTypevenOpen] = useState(false);
+  const [isSubmitClosing, setIsSubmitClosing] = useState(false);
   const formRef = useRef<HTMLFormElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const formApiUrl = formApi
@@ -98,8 +99,12 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
       zipFile: zipFile!,
     })
 
-    onClose()
-    setTimeout(() => setShowSuccessModal(true), 300)
+    setIsSubmitClosing(true)
+    setTimeout(() => {
+      setIsSubmitClosing(false)
+      onClose()
+      setShowSuccessModal(true)
+    }, 300) // 500
   }
 
   const handleCloseSuccessModal = () => {
@@ -174,7 +179,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
 
   return (
     <>
-      <div className={`modal-overlay ${isOpen ? 'open' : ''}`} onClick={(e) => e.stopPropagation()}>
+      <div className={`modal-overlay ${isOpen && !isSubmitClosing ? 'open' : ''} ${isSubmitClosing ? 'submit-closing' : ''}`} onClick={(e) => e.stopPropagation()}>
         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
           <button className="modal-close" onClick={handleCloseMainModal}>×</button>
 

@@ -1,9 +1,22 @@
+import L from 'leaflet'
+import { EventObject } from '../marker-location/evenPositions'
+
+export interface ActiveEventData {
+  event: EventObject
+  position: L.LatLng
+  markerKey: string
+}
+
 export interface MapState {
-  activeEventId: number | null
+  activeEvent: ActiveEventData | null
   filteredEventTypes: number[]
 }
 
 export const initialState: MapState = {
-  activeEventId: null,
+  activeEvent: null,
   filteredEventTypes: [],
 }
+
+export type MapAction =
+  | { type: 'SET_ACTIVE_EVENT'; payload: ActiveEventData | null }
+  | { type: 'TOGGLE_FILTER'; payload: number }

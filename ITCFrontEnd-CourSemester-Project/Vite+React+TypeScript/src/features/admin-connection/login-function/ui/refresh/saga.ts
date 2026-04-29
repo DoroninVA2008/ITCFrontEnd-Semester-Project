@@ -1,6 +1,6 @@
-import { takeLatest, put, call } from 'redux-saga/effects';
-import { adminReFresh } from '../../../../../entities/cons';
-import { refreshRequest, refreshSuccess, refreshUnauthorized } from './slice';
+import { takeLatest, put, call } from 'redux-saga/effects'
+import { adminReFresh } from '../../../../../entities/cons'
+import { refreshRequest, refreshSuccess, refreshUnauthorized } from './slice'
 
 function* handleAdminRefresh(): Generator<any, void, any> {
   try {

@@ -10,6 +10,11 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, onR
   const [isClosing, setIsClosing] = useState(false);
 
   const handleClose = () => {
+    if (onReset) {
+      setTimeout(() => {
+        onReset();
+      }, 300)
+    }
     setIsClosing(true);
     setTimeout(() => {
       setIsClosing(false);
@@ -18,6 +23,7 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, onR
   };
 
   const handleReturnToMap = () => {
+    window.open('https://t.me/russia_heroes_bot', '_blank');
     if (onReset) {
       setTimeout(() => {
         onReset();
@@ -61,7 +67,7 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, onR
         </p>
         <div className="success-actions">
           <button className="submit-btn-active" onClick={handleReturnToMap}>
-            Вернуться к карте
+            Привязать телеграм
           </button>
         </div>
       </div>

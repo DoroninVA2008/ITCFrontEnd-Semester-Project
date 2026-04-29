@@ -1,7 +1,7 @@
-import { takeLatest, put, call, select } from 'redux-saga/effects';
-import { adminLogIn } from '../../../../../entities/cons';
-import { loginSuccess, loginFailure, loginRequest } from './slice';
-import { selectLogin, selectPassword } from './selectors';
+import { takeLatest, put, call, select } from 'redux-saga/effects'
+import { adminLogIn } from '../../../../../entities/cons'
+import { loginSuccess, loginFailure, loginRequest } from './slice'
+import { selectLogin, selectPassword } from './selectors'
 
 function* handleAdminLogin(): Generator<any, void, any> {
   try {

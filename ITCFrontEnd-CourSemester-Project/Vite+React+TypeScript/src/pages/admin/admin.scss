@@ -469,6 +469,17 @@ $font-shrift-weight: 300;
       }
     }
 
+    &__ellipsis {
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #aaa;
+      user-select: none;
+    }
+
     &__page {
       width: 36px;
       height: 36px;

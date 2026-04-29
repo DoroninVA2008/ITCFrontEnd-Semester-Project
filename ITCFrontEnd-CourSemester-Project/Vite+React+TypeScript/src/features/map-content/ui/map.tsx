@@ -1,4 +1,4 @@
-﻿import React, { useState, useCallback, useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { MapContainer, TileLayer } from 'react-leaflet'
 import L from 'leaflet'
 import { tiLayer } from '../../../entities/cons.ts'
@@ -8,6 +8,7 @@ import { FilterButtonList } from '../../filter-function/filters.tsx'
 import { EventFilterProvider } from '../../filter-function/evenFilterProvider/evenFilterProvider.tsx'
 import { CardOnMap } from '../../card-information/cardPosition'
 import { EventObject } from '../../marker-location/evenPositions.ts' // @ts-ignore
+import { MapProvider, useMapContext } from '../providecons.tsx'
 import './map.scss'
 
 const centmap: [number, number] = [68.751244, 98.618423]
@@ -16,55 +17,57 @@ const minZoom = 3
 const maxZoom = 12
 const maxMapBounds: [number, number][] = [[-112, -169], [84, 192]]
 
-export const Map: React.FC = () => {
-  const [activeEvent, setActiveEvent] = useState<{
-    event: EventObject;
-    position: L.LatLng;
-    markerKey: string;
-    data: any
-  } | null>(null)
-  
+const MapContent: React.FC = () => {
   const mapRef = useRef<L.Map | null>(null)
+  const { activeEvent, activeMarkerKey, dispatch } = useMapContext()
 
   const handleMarkerOpen = (event: EventObject, position: L.LatLng, markerKey: string) => {
-    setActiveEvent({ event, position, markerKey, data: null })
+    dispatch({ type: 'SET_ACTIVE_EVENT', payload: { event, position, markerKey } })
   }
 
   const handleCardClose = useCallback(() => {
-    setActiveEvent(null)
-  }, [])
+    dispatch({ type: 'SET_ACTIVE_EVENT', payload: null })
+  }, [dispatch])
 
   return (
+    <div id="map-wrapper">
+      <FilterButtonList />
+      {activeEvent && (
+        <CardOnMap
+          isVisible={true}
+          position={activeEvent.position}
+          event={activeEvent.event}
+          onClose={handleCardClose}
+        />
+      )}
+      <MapContainer
+        id="map"
+        center={centmap}
+        zoom={zoom}
+        minZoom={minZoom}
+        maxZoom={maxZoom}
+        scrollWheelZoom={true}
+        maxBounds={maxMapBounds}
+        maxBoundsViscosity={1.0}
+        ref={mapRef}
+      >
+        <TileLayer url={tiLayer} noWrap={false} opacity={0} />
+        <LayersLabels />
+        <MarkerWithPopup
+          onMarkerOpen={handleMarkerOpen}
+          activeMarkerKey={activeMarkerKey}
+        />
+      </MapContainer>
+    </div>
+  )
+}
+
+export const Map: React.FC = () => {
+  return (
     <EventFilterProvider>
-      <div id="map-wrapper">
-        <FilterButtonList />
-        {activeEvent && (
-          <CardOnMap
-            isVisible={true}
-            position={activeEvent.position}
-            event={activeEvent.event}
-            onClose={handleCardClose}
-          />
-        )}
-        <MapContainer
-          id="map"
-          center={centmap}
-          zoom={zoom}
-          minZoom={minZoom}
-          maxZoom={maxZoom}
-          scrollWheelZoom={true}
-          maxBounds={maxMapBounds}
-          maxBoundsViscosity={1.0}
-          ref={mapRef}
-        >
-          <TileLayer url={tiLayer} noWrap={false} opacity={0} />
-          <LayersLabels />
-          <MarkerWithPopup
-            onMarkerOpen={handleMarkerOpen}
-            activeMarkerKey={activeEvent?.markerKey || null}
-          />
-        </MapContainer>
-      </div>
+      <MapProvider>
+        <MapContent />
+      </MapProvider>
     </EventFilterProvider>
   )
 }

@@ -158,14 +158,28 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
     </>
   )
 
+  const isNewStatus = statusClass[request.status] === 'new'
+
+  const badgeClass = showRejectConfirm
+    ? 'rejected'
+    : (isVerified && isNewStatus)
+      ? 'review'
+      : (statusClass[request.status] ?? request.status)
+
+  const badgeLabel = showRejectConfirm
+    ? STATUS_LABEL['rejected']
+    : (isVerified && isNewStatus)
+      ? STATUS_LABEL['review']
+      : (STATUS_LABEL[request.status] ?? request.status)
+
   return (
     <>
       <div className="request-modal__header-row">
         <h2 className="request-modal__title">{request.title}</h2>
           {(isVerified || showRejectConfirm || statusClass[request.status] === 'rejected' || statusClass[request.status] === 'published' || statusClass[request.status] === 'review') && (
-            <span className={`request-modal__status-badge request-modal__status-badge--${showRejectConfirm ? 'rejected' : (statusClass[request.status] ?? request.status)}`}>
+            <span className={`request-modal__status-badge request-modal__status-badge--${badgeClass}`}>
               <span className="request-modal__status-dot" />
-                {showRejectConfirm ? STATUS_LABEL['rejected'] : (STATUS_LABEL[request.status] ?? request.status)}
+              {badgeLabel}
             </span>
           )}
       </div>

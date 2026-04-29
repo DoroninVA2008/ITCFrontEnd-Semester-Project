@@ -25,6 +25,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   onFormReset, // новый проп
 }) => {
   const [isClosing, setIsClosing] = useState(false)
+  const [isSubmitClosing, setIsSubmitClosing] = useState(false)
   const [email, setEmail] = useState('');
   const [telegram, setTelegram] = useState('');
   const [isSuccessModalOpen, setSuccessModalOpen] = useState(false)
@@ -63,12 +64,13 @@ export const ContactModal: React.FC<ContactModalProps> = ({
     try {
       await submitContactForm(formApiUrl, eventPayload, email, telegram)
 
-      handleClose()
-
+      setIsSubmitClosing(true)
       setTimeout(() => {
+        setIsSubmitClosing(false)
+        onClose()
         setSuccessModalOpen(true)
         if (onSuccess) onSuccess()
-      }, 300)
+      }, 300) // 500
     } catch (err) {
       console.error('Ошибка при отправке:', err)
       alert('Не удалось отправить заявку. Проверьте данные и попробуйте ещё раз!')
@@ -89,8 +91,8 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   return (
     <>
       <div
-        className={`modal-overlay ${(isOpen && !isClosing) ? 'open' : 'close'}`}
-        style={{ display: isOpen || isClosing ? 'flex' : 'none' }}
+        className={`modal-overlay ${(isOpen && !isClosing && !isSubmitClosing) ? 'open' : ''} ${isClosing ? 'close' : ''} ${isSubmitClosing ? 'submit-closing' : ''}`}
+        style={{ display: isOpen || isClosing || isSubmitClosing ? 'flex' : 'none' }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal-content success-modal" onClick={(e) => e.stopPropagation()}>

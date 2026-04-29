@@ -1,7 +1,7 @@
-import { takeLatest, put, call } from 'redux-saga/effects';
-import { adminLogOut } from '../../../../../entities/cons';
-import { logoutRequest, logoutSuccess } from './slice';
-import { logout } from '../login/slice';
+import { takeLatest, put, call } from 'redux-saga/effects'
+import { adminLogOut } from '../../../../../entities/cons'
+import { logoutRequest, logoutSuccess } from './slice'
+import { logout } from '../login/slice'
 
 function* handleAdminLogout(): Generator<any, void, any> {
   try {
