@@ -32,12 +32,10 @@ export const ActiveFilterDropdown: React.FC<ActiveFilterDropdownProps> = ({
   const [minInputValue, setMinInputValue] = useState('0862')
   const [maxInputValue, setMaxInputValue] = useState('2026')
 
-  // Функция для форматирования года с ведущими нулями до 4 знаков
   const formatYearWithLeadingZeros = (year: number): string => {
     return year.toString().padStart(4, '0')
   }
 
-  // Функция для отображения года в UI (с "н.в." для 2026)
   const formatYearForDisplay = (year: number): string => {
     if (year === 2026) return 'н.в.'
     return formatYearWithLeadingZeros(year)
@@ -64,14 +62,11 @@ export const ActiveFilterDropdown: React.FC<ActiveFilterDropdownProps> = ({
     let value = minInputValue.replace(/[^\d]/g, '')
     let numValue = value ? parseInt(value, 10) : 862
 
-    // Ограничение диапазона
     numValue = Math.min(Math.max(numValue, 862), periodRange.max - 1)
 
-    // Форматирование для отображения
     const formattedForDisplay = formatYearForDisplay(numValue)
     setMinInputValue(formattedForDisplay)
     
-    // Передаем ЧИСЛО (не строку) - форматирование будет в typeven.ts
     onPeriodChange(numValue, periodRange.max)
   }
   const handleMaxInputBlur = () => {
@@ -80,11 +75,9 @@ export const ActiveFilterDropdown: React.FC<ActiveFilterDropdownProps> = ({
 
     numValue = Math.min(Math.max(numValue, periodRange.min + 1), 2026)
 
-    // Форматирование для отображения
     const formattedForDisplay = formatYearForDisplay(numValue)
     setMaxInputValue(formattedForDisplay)
     
-    // Передаем ЧИСЛО (не строку) - форматирование будет в typeven.ts
     onPeriodChange(periodRange.min, numValue)
   }
 

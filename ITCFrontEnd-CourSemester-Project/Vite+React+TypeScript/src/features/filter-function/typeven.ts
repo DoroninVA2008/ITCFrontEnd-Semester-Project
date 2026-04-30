@@ -1,5 +1,4 @@
 import { EventType } from '../marker-location/evenPositions'
-import { eventsListDates } from '../../entities/cons'
 
 export interface FilterConfig {
   options: any;
@@ -36,7 +35,7 @@ export interface DateRange {
     dateTo: string;
 }
 
-interface ApiResponse {
+export interface ApiResponse {
     objects: EventDates[];
 }
 
@@ -85,7 +84,6 @@ export const mapSelectedOptionsToEventTypeIds = (
         .filter((id): id is number => typeof id === 'number');
 };
 
-// Новая функция для форматирования года с ведущими нулями до 4 знаков
 const formatYearForApi = (year: number): string => {
     return year.toString().padStart(4, '0');
 };
@@ -101,7 +99,6 @@ export const buildFilterRequestData = (params: {
         params.eventTypes ?? []
     );
 
-    // Форматируем годы с ведущими нулями для API
     const formattedMinYear = formatYearForApi(params.periodRange.min);
     const formattedMaxYear = formatYearForApi(params.periodRange.max);
 
@@ -112,72 +109,3 @@ export const buildFilterRequestData = (params: {
         // periodLabel: params.selectedPeriod,
     };
 };
-
-export async function fetchEvents(): Promise<EventDates[]> {
-    try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000);
-
-        const response = await fetch(eventsListDates, {
-            method: 'GET',
-            signal: controller.signal,
-            mode: 'cors',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        });
-
-        clearTimeout(timeoutId);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);}
-        const data: ApiResponse = await response.json();
-        if (!data || !Array.isArray(data.objects)) {
-            return [];
-        }
-        return data.objects;
-    } catch (error) {
-        console.error('Failed to fetch events:', error);
-        return [];
-    }
-}
-
-export async function fetchEventsByFilters(payload: FilterRequestData): Promise<EventDates[]> {
-    try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000);
-
-        console.log('Отправляемый payload на бэкенд:', payload); // Для отладки
-
-        const params = new URLSearchParams();
-        if (payload.eventTypeIds && payload.eventTypeIds.length > 0) {
-            payload.eventTypeIds.forEach(id => params.append('eventTypeIds', String(id)));
-        }
-        if (payload.dateFrom) params.append('dateFrom', payload.dateFrom);
-        if (payload.dateTo) params.append('dateTo', payload.dateTo);
-
-        const url = `${eventsListDates}?${params.toString()}`;
-
-        const response = await fetch(url, {
-            method: 'GET',
-            signal: controller.signal,
-            mode: 'cors',
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-
-        clearTimeout(timeoutId);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: ApiResponse = await response.json();
-        if (!data || !Array.isArray(data.objects)) {
-            return [];
-        }
-        return data.objects;
-    } catch (error) {
-        console.error('Failed to fetch events by filters:', error);
-        return [];
-    }
-}

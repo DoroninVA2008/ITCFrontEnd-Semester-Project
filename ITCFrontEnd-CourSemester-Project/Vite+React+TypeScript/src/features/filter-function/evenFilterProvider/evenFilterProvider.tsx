@@ -2,7 +2,8 @@ import React, { createContext, useContext, ReactNode, useEffect, useMemo, useSta
 // import { resetAndReload, loadInitialEvents } from '../../../app/saga/saga'
 import { EventObject } from '../../marker-location/evenPositions'
 import { useEventFilters, FilterState } from '../evenFilters'
-import { fetchEvents, fetchEventsByFilters, buildFilterRequestData, EventTypeItem } from '../typeven'
+import { buildFilterRequestData, EventTypeItem } from '../typeven'
+import { fetchEvents, fetchEventsByFilters } from './saga'
 
 interface EventFilterContextType {
   filteredEvents: EventObject[];
