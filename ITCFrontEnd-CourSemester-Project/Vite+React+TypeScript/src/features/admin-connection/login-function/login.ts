@@ -1,15 +1,8 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { setLogin, setPassword, loginRequest } from './ui/login/slice';
-import {
-  selectLogin,
-  selectPassword,
-  selectLoading,
-  selectError,
-  selectIsAuthenticated,
-  selectRole,
-} from './ui/login/selectors';
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { setLogin, setPassword, loginRequest } from './ui/login/slice'
+import { selectLogin, selectPassword, selectLoading, selectError, selectIsAuthenticated, selectRole} from './ui/login/selectors'
 
 export const useAdminLogin = () => {
   const dispatch = useDispatch();

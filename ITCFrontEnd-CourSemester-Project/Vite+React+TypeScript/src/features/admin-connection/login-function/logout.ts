@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { logoutRequest, logoutReset } from './ui/logout/slice';
-import { selectLogoutCompleted } from './ui/logout/selectors';
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { logoutRequest, logoutReset } from './ui/logout/slice'
+import { selectLogoutCompleted } from './ui/logout/selectors'
 
 export const useAdminLogout = () => {
   const dispatch = useDispatch();

@@ -6,6 +6,7 @@ import cardReducer from './saga/cardSlice'
 import { adminLoginReducer } from '../features/admin-connection/login-function/ui/login/slice'
 import { adminLogoutReducer } from '../features/admin-connection/login-function/ui/logout/slice'
 import { adminRefreshReducer } from '../features/admin-connection/login-function/ui/refresh/slice'
+import { Auth } from '../features/auth'
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -16,6 +17,7 @@ export const store = configureStore({
     adminLogin: adminLoginReducer,
     adminLogout: adminLogoutReducer,
     adminRefresh: adminRefreshReducer,
+    ...Auth.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

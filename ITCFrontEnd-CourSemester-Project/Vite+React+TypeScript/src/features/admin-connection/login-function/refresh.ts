@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { refreshRequest } from './ui/refresh/slice';
-import { selectRefreshReady, selectRefreshUnauthorized } from './ui/refresh/selectors';
+import { useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { refreshRequest } from './ui/refresh/slice'
+import { selectRefreshReady, selectRefreshUnauthorized } from './ui/refresh/selectors'
 
 export const useAdminRefresh = () => {
   const dispatch = useDispatch();
