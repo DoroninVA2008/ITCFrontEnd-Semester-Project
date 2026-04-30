@@ -1,5 +1,5 @@
-import { name, reducer, actions } from "./slice";
-import { authInit } from "./saga";
+import { name, reducer, actions } from './slice'
+import { authInit } from './saga'
 
 export const Auth = {
     sagas: {

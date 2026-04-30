@@ -1,9 +1,9 @@
 import { takeLatest, put, call, select } from 'redux-saga/effects'
-import { adminLogIn, adminLogOut } from '../../entities/cons'
+import { adminLogIn, adminLogOut } from '../../../../entities/cons'
 import { actions } from './slice'
-import { logout } from '../admin-connection/login-function/ui/login/slice'
+import { logout } from '../login/slice'
 import { selectLogin, selectPassword } from './selectors'
-import { logoutRequest, logoutSuccess } from '../admin-connection/login-function/ui/logout/slice'
+import { logoutRequest, logoutSuccess } from '../logout/slice'
 
 function* handleAdminLogin(): Generator<any, void, any> {
   try {

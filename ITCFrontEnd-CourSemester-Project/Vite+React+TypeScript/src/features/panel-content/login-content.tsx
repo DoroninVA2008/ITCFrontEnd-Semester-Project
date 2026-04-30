@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAdminLogin } from '../admin-connection/login-function/login'
+import { useAdminLogin } from '../admin-connection/login-function/ui/login'
 
 export const LogInContentComponent: React.FC = () => {
   const { login, setLogin, password, setPassword, error, loading, handleLogin } = useAdminLogin();

@@ -1,5 +1,5 @@
 import { takeLatest, put, call, select } from 'redux-saga/effects'
-import { adminLogIn } from '../../../../../entities/cons'
+import { adminLogIn } from '../../../../entities/cons'
 import { loginSuccess, loginFailure, loginRequest } from './slice'
 import { selectLogin, selectPassword } from './selectors'
 
