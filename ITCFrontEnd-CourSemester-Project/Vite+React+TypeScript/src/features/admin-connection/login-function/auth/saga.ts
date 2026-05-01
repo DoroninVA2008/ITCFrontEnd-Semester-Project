@@ -1,9 +1,7 @@
-import { takeLatest, put, call, select } from 'redux-saga/effects'
-import { adminLogIn, adminLogOut } from '../../../../entities/cons'
+import { takeLatest, takeLeading, put, call, select } from 'redux-saga/effects'
+import { adminLogIn, adminLogOut, adminReFresh } from '../../../../entities/cons'
 import { actions } from './slice'
-import { logout } from '../login/slice'
 import { selectLogin, selectPassword } from './selectors'
-import { logoutRequest, logoutSuccess } from '../logout/slice'
 
 function* handleAdminLogin(): Generator<any, void, any> {
   try {
@@ -54,12 +52,39 @@ function* handleAdminLogout(): Generator<any, void, any> {
   } catch {
     console.log('Ошибка при выходе из аккаунта');
   } finally {
-    yield put(logout());
-    yield put(logoutSuccess());
+    yield put(actions.logout());
+    yield put(actions.logoutSuccess());
+  }
+}
+
+function* handleAdminRefresh(): Generator<any, void, any> {
+  try {
+    const response: Response = yield call(fetch, adminReFresh, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (response.status === 401) {
+      console.log('refresh_token отсутствует или невалиден');
+      yield put(actions.refreshUnauthorized());
+      return;
+    }
+
+    if (!response.ok) {
+      console.log('Ошибка при обновлении токенов:', response.status);
+      return;
+    }
+
+    console.log('Токены успешно обновлены');
+    yield put(actions.refreshSuccess());
+  } catch (error) {
+    console.log('Ошибка сети при обновлении токенов:', error);
   }
 }
 
 export function* authInit(): Generator<any, void, any> {
   yield takeLatest(actions.loginRequest, handleAdminLogin);
-  yield takeLatest(logoutRequest, handleAdminLogout);
+  yield takeLatest(actions.logoutRequest, handleAdminLogout);
+  yield takeLeading(actions.refreshRequest, handleAdminRefresh);
 }

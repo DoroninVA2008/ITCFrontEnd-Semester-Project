@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface AdminLoginState {
+interface AuthState {
   login: string;
   password: string;
   loading: boolean;
@@ -8,9 +8,13 @@ interface AdminLoginState {
   isAuthenticated: boolean;
   role: string | null;
   username: string | null;
+  logoutLoading: boolean;
+  logoutCompleted: boolean;
+  refreshReady: boolean;
+  refreshUnauthorized: boolean;
 }
 
-const initialState: AdminLoginState = {
+const initialState: AuthState = {
   login: '',
   password: '',
   loading: false,
@@ -18,9 +22,13 @@ const initialState: AdminLoginState = {
   isAuthenticated: false,
   role: null,
   username: localStorage.getItem('username'),
+  logoutLoading: false,
+  logoutCompleted: false,
+  refreshReady: false,
+  refreshUnauthorized: false,
 };
 
-export const {name, reducer, actions} = createSlice({
+export const { name, reducer, actions } = createSlice({
   name: 'auth',
   initialState,
   reducers: {
@@ -56,6 +64,32 @@ export const {name, reducer, actions} = createSlice({
     },
     clearError: (state) => {
       state.error = null;
+    },
+    logoutRequest: (state) => {
+      state.logoutLoading = true;
+      state.logoutCompleted = false;
+    },
+    logoutSuccess: (state) => {
+      state.logoutLoading = false;
+      state.logoutCompleted = true;
+    },
+    logoutReset: (state) => {
+      state.logoutCompleted = false;
+    },
+    refreshRequest: (state) => {
+      state.refreshUnauthorized = false;
+    },
+    refreshSuccess: (state) => {
+      state.refreshReady = true;
+      state.refreshUnauthorized = false;
+    },
+    refreshUnauthorized: (state) => {
+      state.refreshReady = false;
+      state.refreshUnauthorized = true;
+    },
+    refreshReset: (state) => {
+      state.refreshReady = false;
+      state.refreshUnauthorized = false;
     },
   },
 });

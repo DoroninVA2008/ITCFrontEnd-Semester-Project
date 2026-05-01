@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { refreshRequest } from '../refresh/slice'
-import { selectRefreshReady, selectRefreshUnauthorized } from '../refresh/selectors'
+import { actions } from '../auth/slice'
+import { selectRefreshReady, selectRefreshUnauthorized } from '../auth/selectors'
 
 export const useAdminRefresh = () => {
   const dispatch = useDispatch();
@@ -13,11 +13,11 @@ export const useAdminRefresh = () => {
   const unauthorized = useSelector(selectRefreshUnauthorized);
 
   useEffect(() => {
-    dispatch(refreshRequest());
+    dispatch(actions.refreshRequest());
 
     timerRef.current = setInterval(() => {
       console.log('Обновление токенов (15 минут)');
-      dispatch(refreshRequest());
+      dispatch(actions.refreshRequest());
     }, 15 * 60 * 1000);
 
     return () => {

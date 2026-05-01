@@ -3,9 +3,6 @@ import createSagaMiddleware from 'redux-saga'
 import rootSaga from './saga/rootSaga'
 import { MainContent } from '../features/main-content'
 import cardReducer from './saga/cardSlice'
-import { adminLoginReducer } from '../features/admin-connection/login-function/login/slice'
-import { adminLogoutReducer } from '../features/admin-connection/login-function/logout/slice'
-import { adminRefreshReducer } from '../features/admin-connection/login-function/refresh/slice'
 import { Auth } from '../features/admin-connection/login-function/auth'
 
 const sagaMiddleware = createSagaMiddleware();
@@ -14,10 +11,7 @@ export const store = configureStore({
   reducer: {
     ...MainContent.reducer,
     card: cardReducer,
-    adminLogin: adminLoginReducer,
-    adminLogout: adminLogoutReducer,
-    adminRefresh: adminRefreshReducer,
-    ...Auth.reducer
+    ...Auth.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

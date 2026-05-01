@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { setLogin, setPassword, loginRequest } from '../login/slice'
-import { selectLogin, selectPassword, selectLoading, selectError, selectIsAuthenticated, selectRole} from '../login/selectors'
+import { actions } from '../auth/slice'
+import { selectLogin, selectPassword, selectLoading, selectError, selectIsAuthenticated, selectRole } from '../auth/selectors'
 
 export const useAdminLogin = () => {
   const dispatch = useDispatch();
@@ -23,14 +23,14 @@ export const useAdminLogin = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(loginRequest());
+    dispatch(actions.loginRequest());
   };
 
   return {
     login,
-    setLogin: (v: string) => dispatch(setLogin(v)),
+    setLogin: (v: string) => dispatch(actions.setLogin(v)),
     password,
-    setPassword: (v: string) => dispatch(setPassword(v)),
+    setPassword: (v: string) => dispatch(actions.setPassword(v)),
     error,
     loading,
     handleLogin,

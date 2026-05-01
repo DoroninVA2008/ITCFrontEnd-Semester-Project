@@ -4,17 +4,9 @@
 // import { setEvents, resetFilters, setIsLoading, setError } from '../../features/filter-function/evenFilterProvider/evenFilterProvider.tsx'
 import { takeLatest, put, call } from 'redux-saga/effects'
 import { PayloadAction } from '@reduxjs/toolkit'
-import { api } from '../../entities/api.ts'
-import { card } from '../../entities/cons.ts'
+import { api, FetchDataPayload, DataResponse } from '../../entities/api.ts'
 
-export interface FetchDataPayload {
-  id?: number;
-  url?: string;
-}
-
-export interface DataResponse {
-  data: any;
-}
+export type { FetchDataPayload, DataResponse }
 
 const FETCH_DATA = 'FETCH_DATA'; export const FETCH_CARD_DATA = 'FETCH_CARD_DATA';
 const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS'; export const FETCH_CARD_DATA_SUCCESS = 'FETCH_CARD_DATA_SUCCESS';
@@ -39,8 +31,7 @@ function* fetchData(action: PayloadAction<FetchDataPayload>): Generator<any, voi
 
 function* fetchCardData(action: PayloadAction<number>): Generator<any, void, any> {
   try {
-    const response: Response = yield call(fetch, card(action.payload));
-    const data: any = yield call([response, 'json']);
+    const data: any = yield call(api.fetchCard, action.payload);
     console.log(`[Card API] id: ${action.payload}, siteUrl: ${data.object?.siteUrl ?? 'null'}, typEvent: ${data.object?.eventType}, coords: (${data.object?.latitude}, ${data.object?.longitude})`, data.object);
     yield put({
       type: FETCH_CARD_DATA_SUCCESS,
