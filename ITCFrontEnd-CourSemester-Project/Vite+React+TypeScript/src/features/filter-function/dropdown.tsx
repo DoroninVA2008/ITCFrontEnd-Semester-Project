@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react'
+﻿import React, { useState, useEffect, useRef } from 'react'
 import { ActiveFilterDropdown } from './activedropdown'
 import { FilterConfig, HistoricalPeriod } from './typeven'
 import { useEventFilterContext } from './evenFilterProvider/evenFilterProvider' // @ts-ignore
@@ -11,6 +11,23 @@ interface FilterDropdownProps {
 }
 
 export const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen }) => {
+  const [opacity, setOpacity] = useState(0)
+  const [pointerEvents, setPointerEvents] = useState<React.CSSProperties['pointerEvents']>('none')
+  const hasBeenOpenedRef = useRef(false)
+
+  useEffect(() => {
+    if (isOpen) {
+      hasBeenOpenedRef.current = true
+      setPointerEvents('auto')
+      const frame = requestAnimationFrame(() => setOpacity(1))
+      return () => cancelAnimationFrame(frame)
+    }
+    if (!hasBeenOpenedRef.current) return
+    setOpacity(0)
+    const timer = setTimeout(() => setPointerEvents('none'), 500)
+    return () => clearTimeout(timer)
+  }, [isOpen])
+
   const [activeFilter, setActiveFilter] = useState<number | null>(null)
   const [selectedOptions, setSelectedOptions] = useState<{[key: string]: boolean}>({})
   const [periodRange, setPeriodRange] = useState({ min: 862, max: 2026 })
@@ -107,11 +124,12 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen }) => {
 }
 
   return (
-    <div className={`FilterDropdown ${isOpen ? 'clicked' : 'doublclicked'}`}>
+    <div className="FilterDropdown" style={{ opacity, pointerEvents, transition: 'opacity 0.5s ease' }}>
       {filters.map((filter, index) => (
         <div key={index} className="FilterItemWrapper">
           <div 
-            className={`FilterItem ${activeFilter === index ? 'active' : ''}`} 
+            className={`FilterItem ${activeFilter === index ? 'active' : ''}`}
+            style={{ opacity, pointerEvents, transition: 'opacity 0.5s ease' }} 
             onClick={() => handleFilterClick(index)}
           >
             <label className="DropdownLabel">

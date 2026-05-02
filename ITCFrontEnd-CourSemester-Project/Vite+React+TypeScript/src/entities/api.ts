@@ -9,7 +9,7 @@ export interface DataResponse {
   data: any;
 }
 
-export const api = {
+export const api = {// @ts-ignore
   fetchData: async (payload: FetchDataPayload): Promise<DataResponse> => {
     // const url = payload.url ?? (payload.id !== undefined ? card(payload.id) : '');
     const response = await fetch(apiServer);

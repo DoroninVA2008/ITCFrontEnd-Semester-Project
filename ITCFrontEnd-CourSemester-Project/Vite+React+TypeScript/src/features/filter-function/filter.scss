@@ -19,7 +19,7 @@ $font-shrift-weight: 300;
 }
 
 .FilterList.clicked {
-  transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease, box-shadow 0.5s ease;
   position: absolute;
   z-index: 1;
   // width: 404px;
@@ -94,31 +94,15 @@ $font-shrift-weight: 300;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   padding: 15px;
-  z-index: 2;
-  transition: all 0.3s ease !important;
-  opacity: 0;
-  pointer-events: none;
   max-height: 69vh;
   overflow-y: auto;
   scrollbar-width: none; /* Для Firefox */
   -ms-overflow-style: none; /* Для Internet Explorer и Edge */
-  
+
   &::-webkit-scrollbar {
     display: none; /* Для Chrome, Safari и Opera */
     width: 0;
     background: transparent;
-  }
-  
-  &.clicked {
-    opacity: 1;
-    transition: all 0.3s ease !important;
-    pointer-events: all;
-  }
-
-  &.doublclicked {
-    transition: all 0.3s ease !important;
-    opacity: 0;
-    pointer-events: none;
   }
 }
 
