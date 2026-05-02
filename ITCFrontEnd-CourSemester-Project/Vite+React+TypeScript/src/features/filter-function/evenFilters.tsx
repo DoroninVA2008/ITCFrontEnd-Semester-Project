@@ -42,10 +42,10 @@ export const useEventFilters = ({ events, eventTypes, onFilteredEventsChange }: 
       if (eventYear === null) return false;
 
       const dateMatch = eventYear >= filterState.periodRange.min && 
-                       eventYear <= filterState.periodRange.max;
+        eventYear <= filterState.periodRange.max;
       
       const typeMatch = selectedEventTypes.length === 0 || 
-                       selectedEventTypes.includes(event.eventType);
+        selectedEventTypes.includes(event.eventType);
       
       let periodMatch = true;
       if (filterState.selectedPeriod) {

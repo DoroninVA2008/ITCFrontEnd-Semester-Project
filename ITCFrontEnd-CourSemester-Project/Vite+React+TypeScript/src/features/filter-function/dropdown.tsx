@@ -106,8 +106,6 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen }) => {
   }
 }
 
-  if (!isOpen) return null
-
   return (
     <div className={`FilterDropdown ${isOpen ? 'clicked' : 'doublclicked'}`}>
       {filters.map((filter, index) => (
