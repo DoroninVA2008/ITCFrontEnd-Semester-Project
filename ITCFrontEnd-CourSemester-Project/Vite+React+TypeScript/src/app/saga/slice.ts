@@ -4,26 +4,33 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   rootappsite: [],
   header: [],
+  index: [],
   main: [],
   mapp: [],
   layer: [],
-  event: [],
+  marker: [],
   filter: [],
   form: [],
-  card: []
+  card: [],
+  panel: [],
+  login: [],
+  admin: [],
+  hislog: [],
+  moder: [],
+  addmapp: []
 };
 
-const eventsSlice = createSlice({
-  name: 'event',
+const markersSlice = createSlice({
+  name: 'marker',
   initialState,
   reducers: {
     setEvents(state, action) {
-      state.event = action.payload;
+      state.marker = action.payload;
     },
   // adminLogin: adminLoginReducer,
     // другие редьюсеры
   }
 });
 
-export const { setEvents } = eventsSlice.actions;
-export default eventsSlice.reducer;
+export const { setEvents } = markersSlice.actions;
+export default markersSlice.reducer;

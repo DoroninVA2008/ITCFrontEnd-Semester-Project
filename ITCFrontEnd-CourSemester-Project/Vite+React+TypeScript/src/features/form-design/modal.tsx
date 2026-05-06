@@ -255,8 +255,6 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                       required
                     />
                       <span className="radio-custom-label">Битва</span>
-                      <span className="radio-circle"
-                      data-index="1"></span>
                   </label>
                   <label className="radio-button" tabIndex={0} onFocus={(e) => {
                     e.currentTarget.classList.add('focused');
@@ -274,7 +272,6 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                     />
                     <span className="radio-custom-label"
                       data-index="2">Война</span>
-                    <span className="radio-circle"></span>
                   </label>
                   <label className="radio-button" tabIndex={0} onFocus={(e) => {
                     e.currentTarget.classList.add('focused');
@@ -291,7 +288,6 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                       required
                     />
                       <span className="radio-custom-label" data-index="3">Революция</span>
-                      <span className="radio-circle"></span>
                   </label>
                   <label className="radio-button" tabIndex={0} onFocus={(e) => {
                     e.currentTarget.classList.add('focused');
@@ -308,8 +304,6 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                       required
                     />
                     <span className="radio-custom-label">Восстание</span>
-                    <span className="radio-circle"
-                      data-index="4"></span>
                   </label>
                   <label className="radio-button" tabIndex={0} onFocus={(e) => {
                     e.currentTarget.classList.add('focused');
@@ -326,7 +320,6 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                       required
                     />
                     <span className="radio-custom-label">Переворот</span>
-                    <span className="radio-circle" data-index="5"></span>
                   </label>
                 </div>
               </button>

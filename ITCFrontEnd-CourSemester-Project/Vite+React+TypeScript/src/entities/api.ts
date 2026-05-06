@@ -1,4 +1,4 @@
-import { card, apiServer } from './cons'
+import { card, apiServer, checkBack } from './cons'
 
 export interface FetchDataPayload {
   id?: number;
@@ -27,3 +27,16 @@ export const api = {// @ts-ignore
     return response.json();
   }
 };
+
+(async () => {
+  try {
+    const res = await fetch(checkBack);
+    if (res.status === 200) {
+      console.log(`Server: ${checkBack} — status ${res.status} OK`);
+    } else {
+      console.warn(`Server responded with unexpected status ${res.status}`);
+    }
+  } catch (e) {
+    console.error(`Server unreachable: ${checkBack}`, e);
+  }
+})();
