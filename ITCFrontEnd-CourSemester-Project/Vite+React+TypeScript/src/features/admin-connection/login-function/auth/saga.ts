@@ -45,15 +45,19 @@ function* handleAdminLogin(): Generator<any, void, any> {
 
 function* handleAdminLogout(): Generator<any, void, any> {
   try {
-    yield call(fetch, adminLogOut, {
+    const response = yield call(fetch, adminLogOut, {
       method: 'POST',
       credentials: 'include',
     });
+
+    if (response.ok) { //?
+      yield put(actions.logoutSuccess())
+    }
   } catch {
     console.log('Ошибка при выходе из аккаунта');
   } finally {
-    yield put(actions.logout());
-    yield put(actions.logoutSuccess());
+    // yield put(actions.logout()); //reset ?
+    // yield put(actions.logoutSuccess());
   }
 }
 

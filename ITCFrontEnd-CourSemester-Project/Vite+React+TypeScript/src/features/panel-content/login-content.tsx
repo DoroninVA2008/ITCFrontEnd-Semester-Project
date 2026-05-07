@@ -2,6 +2,7 @@ import React from 'react'
 import { useAdminLogin } from '../admin-connection/login-function/ui/login'
 
 export const LogInContentComponent: React.FC = () => {
+  // Удаляешь и меняешь на useSelector(selector login frature) || dispatch(action login feature) (useDispatch)
   const { login, setLogin, password, setPassword, error, loading, handleLogin } = useAdminLogin();
 
   return (

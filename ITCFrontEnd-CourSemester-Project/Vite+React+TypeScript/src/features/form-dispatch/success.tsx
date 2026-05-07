@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 interface SuccessModalProps {
   isOpen: boolean;
-  onClose: () => void;            // Коллбэк при закрытии
-  onReset?: () => void;           // Коллбэк для сброса формы (опционально)
+  onClose: () => void;
+  onReset?: () => void;
 }
 
 export const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, onReset }) => {
