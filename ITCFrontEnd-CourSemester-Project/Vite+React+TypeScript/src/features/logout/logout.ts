@@ -11,6 +11,7 @@ export const useAdminLogout = () => {
 
   useEffect(() => {
     if (completed) {
+      dispatch(actions.logout());
       dispatch(actions.logoutReset());
       navigate('/log');
     }

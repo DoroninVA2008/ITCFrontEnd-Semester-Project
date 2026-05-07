@@ -3,7 +3,7 @@ import createSagaMiddleware from 'redux-saga'
 import rootSaga from './saga/rootSaga'
 import { MainContent } from '../features/main-content'
 import cardReducer from './saga/cardSlice'
-import { Auth } from '../features/admin-connection/login-function/auth'
+import { Auth } from '../features/auth'
 
 const sagaMiddleware = createSagaMiddleware();
 

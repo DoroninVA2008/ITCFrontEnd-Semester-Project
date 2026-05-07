@@ -1,5 +1,5 @@
 import { takeLatest, takeLeading, put, call, select } from 'redux-saga/effects'
-import { adminLogIn, adminLogOut, adminReFresh } from '../../../../entities/cons'
+import { adminLogIn, adminLogOut, adminReFresh } from '../../entities/cons'
 import { actions } from './slice'
 import { selectLogin, selectPassword } from './selectors'
 
@@ -45,19 +45,14 @@ function* handleAdminLogin(): Generator<any, void, any> {
 
 function* handleAdminLogout(): Generator<any, void, any> {
   try {
-    const response = yield call(fetch, adminLogOut, {
+    yield call(fetch, adminLogOut, {
       method: 'POST',
       credentials: 'include',
     });
-
-    if (response.ok) { //?
-      yield put(actions.logoutSuccess())
-    }
   } catch {
     console.log('Ошибка при выходе из аккаунта');
   } finally {
-    // yield put(actions.logout()); //reset ?
-    // yield put(actions.logoutSuccess());
+    yield put(actions.logoutSuccess());
   }
 }
 

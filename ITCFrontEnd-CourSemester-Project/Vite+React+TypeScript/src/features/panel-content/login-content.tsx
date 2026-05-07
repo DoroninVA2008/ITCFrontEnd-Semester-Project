@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAdminLogin } from '../admin-connection/login-function/ui/login'
+import { useAdminLogin } from '../login/login'
 
 export const LogInContentComponent: React.FC = () => {
   // Удаляешь и меняешь на useSelector(selector login frature) || dispatch(action login feature) (useDispatch)
