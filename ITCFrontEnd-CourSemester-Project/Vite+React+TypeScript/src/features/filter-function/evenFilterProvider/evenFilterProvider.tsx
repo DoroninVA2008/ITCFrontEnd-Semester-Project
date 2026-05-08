@@ -3,7 +3,7 @@ import React, { createContext, useContext, ReactNode, useEffect, useMemo, useSta
 import { EventObject } from '../../marker-location/evenPositions'
 import { useEventFilters, FilterState } from '../evenFilters'
 import { buildFilterRequestData, EventTypeItem } from '../typeven'
-import { fetchEvents, fetchEventsByFilters } from './saga'
+import { fetchEventsAPI, fetchEventsByFiltersAPI } from './saga'
 
 interface EventFilterContextType {
   filteredEvents: EventObject[];
@@ -54,7 +54,7 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ childr
     try {
       setIsLoading(true);
       setError(null);
-      const fetchedEvents = await fetchEvents();
+      const fetchedEvents = await fetchEventsAPI();
       setEvents(Array.isArray(fetchedEvents) ? (fetchedEvents as EventObject[]) : []);
     } catch (err) {
       console.error('Failed to load events:', err);
@@ -83,7 +83,7 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ childr
         selectedPeriod: filterState.selectedPeriod,
         eventTypes
       });
-      const fetchedEvents = await fetchEventsByFilters(payload);
+      const fetchedEvents = await fetchEventsByFiltersAPI(payload);
       setEvents(Array.isArray(fetchedEvents) ? (fetchedEvents as EventObject[]) : []);
     } catch (err) {
       console.error('Failed to apply filters:', err);
@@ -104,7 +104,7 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({ childr
         selectedPeriod: nextState.selectedPeriod,
         eventTypes
       });
-      const fetchedEvents = await fetchEventsByFilters(payload);
+      const fetchedEvents = await fetchEventsByFiltersAPI(payload);
       setEvents(Array.isArray(fetchedEvents) ? (fetchedEvents as EventObject[]) : []);
     } catch (err) {
       console.error('Failed to apply filters:', err);
