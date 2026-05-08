@@ -24,7 +24,7 @@ const toIsoDate = (value: string): string | null => {
     !Number.isInteger(month) ||
     !Number.isInteger(year)
   ) return null
-  if (year < 1900 || year > 2100) return null
+  if (year < 862 || year > 2026) return null
   if (month < 1 || month > 12) return null
   const daysInMonth = new Date(year, month, 0).getDate()
   if (day < 1 || day > daysInMonth) return null
@@ -51,6 +51,12 @@ export const submitContactForm = async (
     return
   }
 
+  const MAX_FILE_SIZE = 350 * 1024 * 1024 // 350 МБ
+  if (eventPayload.zipFile && eventPayload.zipFile.size > MAX_FILE_SIZE) {
+    alert('Необходим сайт в ZIP-архиве с размером менее 350 МБ. Внутри архива в корне или на первом уровне вложенности должен быть index.html.')
+    return
+  }
+
   const formData = new FormData()
   formData.append('title', eventPayload.name)
   formData.append('description', eventPayload.description)
@@ -71,7 +77,14 @@ export const submitContactForm = async (
   })
 
   if (!res.ok) {
-    throw new Error(`HTTP error! status: ${res.status}`)
+    let serverMessage = ''
+    try {
+      const errBody = await res.json()
+      serverMessage = errBody?.message || errBody?.error || JSON.stringify(errBody)
+    } catch {
+      serverMessage = await res.text().catch(() => '')
+    }
+    throw new Error(serverMessage || `HTTP error! status: ${res.status}`)
   }
 
   const data = await res.json()

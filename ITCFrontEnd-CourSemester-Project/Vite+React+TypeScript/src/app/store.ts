@@ -4,6 +4,7 @@ import rootSaga from './saga/rootSaga'
 import { MainContent } from '../features/main-content'
 import cardReducer from './saga/cardSlice'
 import { Auth } from '../features/auth'
+import { FormDesign } from '../features/form-design'
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -12,6 +13,7 @@ export const store = configureStore({
     ...MainContent.reducer,
     card: cardReducer,
     ...Auth.reducer,
+    ...FormDesign.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
