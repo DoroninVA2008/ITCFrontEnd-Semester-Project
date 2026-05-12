@@ -1,14 +1,18 @@
-import React, { InputEvent } from 'react'
-import { useAdminLogin } from '../login/login'
-import { useDispatch, useSelector } from 'react-redux';
-import { LoginFeature } from '../login';
+import React //, { InputEvent } 
+from 'react'
+import { useAdminLogin } from '../login-old/login'
+import { useDispatch, useSelector } from 'react-redux'
+import { LoginFeature } from '../login'
 
 export const LogInContentComponent: React.FC = () => {
   // Удаляешь и меняешь на useSelector(selector login frature) || dispatch(action login feature) (useDispatch)
   // const { login, setLogin, password, setPassword, error, loading, handleLogin } = useAdminLogin();
   const login = useSelector(LoginFeature.selectors.selectLogin)
-
-  const dispatch = useDispatch();
+  const password = useSelector(LoginFeature.selectors.selectPassword)
+  const error = useSelector(LoginFeature.selectors.selectError)
+  const loading = useSelector(LoginFeature.selectors.selectLoading) // Заменить
+  const { setPassword, handleLogin } = useAdminLogin()
+  const dispatch = useDispatch()
   
   const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(LoginFeature.actions.setLogin(e.target.value))

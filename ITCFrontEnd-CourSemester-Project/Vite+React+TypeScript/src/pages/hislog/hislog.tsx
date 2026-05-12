@@ -2,7 +2,7 @@ import React from 'react'
 import { Headmer } from '../../widgets/headmer.tsx'
 import { HisLogContentComponent } from '../../features/panel-content/hislog-content.tsx' // @ts-ignore
 import './hislog.scss'
-import { useAdminRefresh } from '../../features/refresh/refresh.ts'
+import { useAdminRefresh } from '../../features/refresh-old/refresh.ts' // Исправить
 
 export const HisLog: React.FC = () => {
   const { ready } = useAdminRefresh()

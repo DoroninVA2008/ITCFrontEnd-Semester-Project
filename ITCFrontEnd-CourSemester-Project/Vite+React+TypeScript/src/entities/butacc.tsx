@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { useAdminLogout } from '../features/logout/logout'
+import { useAdminLogout } from '../features/logout-old/logout' // Исправить
 
 export const ButoAcc: React.FC = () => {
   const [open, setOpen] = useState(false)

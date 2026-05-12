@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { actions } from '../auth/slice'
-import { selectRefreshReady, selectRefreshUnauthorized } from '../auth/selectors'
+import { actions } from '../refresh/slice'
+import { selectRefreshReady, selectRefreshUnauthorized, selectIsAuthenticated } from '../refresh/selectors'
 
 export const useAdminRefresh = () => {
   const dispatch = useDispatch();
@@ -11,12 +11,18 @@ export const useAdminRefresh = () => {
 
   const ready = useSelector(selectRefreshReady);
   const unauthorized = useSelector(selectRefreshUnauthorized);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
   useEffect(() => {
-    dispatch(actions.refreshRequest());
+    if (isAuthenticated) {
+      // Пользователь только что залогинился — токены свежие, refresh не нужен
+      dispatch(actions.refreshSuccess());
+    } else {
+      // Перезагрузка страницы — восстанавливаем сессию через куки
+      dispatch(actions.refreshRequest());
+    }
 
     timerRef.current = setInterval(() => {
-      console.log('Обновление токенов (15 минут)');
       dispatch(actions.refreshRequest());
     }, 15 * 60 * 1000);
 

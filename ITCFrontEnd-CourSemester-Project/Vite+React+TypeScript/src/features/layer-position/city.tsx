@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react'
 import L from 'leaflet'
 import { useMap } from 'react-leaflet'
-import { citiesPosition, getCityZoomThreshold } from './citiesPosition.ts'
+import { cityPosition, getCityZoomThreshold } from './cityPosition.ts'
 
-export const CitiesLabels: React.FC = () => {
+export const CityLabels: React.FC = () => {
   const map = useMap();
   const [currentZoom, setCurrentZoom] = useState(map.getZoom());
   const markersRef = useRef<{ marker: L.Marker; threshold: number }[]>([]);
@@ -15,7 +15,7 @@ export const CitiesLabels: React.FC = () => {
   }, [map]);
 
   useEffect(() => {
-    Object.entries(citiesPosition).forEach(([name, info]) => {
+    Object.entries(cityPosition).forEach(([name, info]) => {
       const [lat, lng] = info.coords;
       const threshold = getCityZoomThreshold(info.type);
       const isVisible = currentZoom >= threshold;
@@ -23,7 +23,7 @@ export const CitiesLabels: React.FC = () => {
       const marker = L.marker([lat, lng], {
         icon: L.divIcon({
           className: `city-label city-label-${info.type} ${isVisible ? 'is-visible' : 'is-hidden'}`,
-          html: `<div class="city-name">${name}</div>`,
+          html: `<div class="cities-name">${name}</div>`,
           iconSize: [120, 20],
           iconAnchor: [60, 10],
         }),

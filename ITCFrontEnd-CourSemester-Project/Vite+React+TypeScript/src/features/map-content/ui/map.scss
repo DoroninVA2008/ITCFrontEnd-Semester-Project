@@ -22,6 +22,25 @@
 	display: none;
 }
 
+.cities-name {
+  opacity: 1;
+  transform: scale(0.8);
+  pointer-events: none;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: white;
+  font-weight: 10;
+  font-family: 'Cruinn';
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+	font-size: 18px;
+	color: #fff;
+    white-space: nowrap;
+    pointer-events: none;
+    text-align: center;
+    display: inline-block;
+	}
+
 .leaflet-pane,
 .leaflet-tile,
 .leaflet-marker-icon,

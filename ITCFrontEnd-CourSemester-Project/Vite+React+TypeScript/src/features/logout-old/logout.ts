@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { actions } from '../auth/slice'
-import { selectLogoutCompleted } from '../auth/selectors'
+import { actions } from '../logout/slice'
+import { selectLogoutCompleted } from '../logout/selectors'
 
 export const useAdminLogout = () => {
   const dispatch = useDispatch();

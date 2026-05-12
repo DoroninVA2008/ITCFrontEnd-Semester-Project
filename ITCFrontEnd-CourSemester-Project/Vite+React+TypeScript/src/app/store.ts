@@ -3,7 +3,7 @@ import createSagaMiddleware from 'redux-saga'
 import rootSaga from './saga/rootSaga'
 import { MainContent } from '../features/main-content'
 import cardReducer from './saga/cardSlice'
-import { Auth } from '../features/auth'
+import { LoginFeature } from '../features/login'
 import { FormDesign } from '../features/form-design'
 
 const sagaMiddleware = createSagaMiddleware();
@@ -12,7 +12,7 @@ export const store = configureStore({
   reducer: {
     ...MainContent.reducer,
     card: cardReducer,
-    ...Auth.reducer,
+    ...LoginFeature.reducer,
     ...FormDesign.reducer,
   },
   middleware: (getDefaultMiddleware) =>

@@ -2,7 +2,7 @@ import React from 'react'
 import { Heamoder } from '../../widgets/heamoder.tsx' // @ts-ignore
 import '../../widgets/mobile.scss'
 import { AdminContentComponent } from '../../features/panel-content/admin-content.tsx'
-import { useAdminRefresh } from '../../features/refresh/refresh.ts'
+import { useAdminRefresh } from '../../features/refresh-old/refresh.ts' // Исправить
 
 export const Madder: React.FC = () => {
   useAdminRefresh()

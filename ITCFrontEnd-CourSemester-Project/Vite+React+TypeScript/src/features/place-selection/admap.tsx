@@ -3,7 +3,7 @@ import { MapContainer, TileLayer } from 'react-leaflet'
 import L from 'leaflet'
 import { tiLayer } from '../../entities/cons.ts'
 import { LayerLabels } from './layer.tsx'
-import { CityLabels } from './cities.tsx'
+import { CitiesLabels } from './cities.tsx'
 import { ReMarker } from './remarker.tsx'
 import { EventFilterProvider } from '../filter-function/ui/evenFilterProvider/evenFilterProvider.tsx' // @ts-ignore
 import '../map-content/ui/map.scss' // @ts-ignore
@@ -39,7 +39,7 @@ export const AdMap: React.FC<AdMapProps> = ({ eventType = 1, onPositionChange })
         >
           <TileLayer url={tiLayer} noWrap={false} opacity={1} />
           <LayerLabels />
-          <CityLabels />
+          <CitiesLabels />
           <ReMarker eventType={eventType} onPositionChange={onPositionChange} />
         </MapContainer>
       </div>

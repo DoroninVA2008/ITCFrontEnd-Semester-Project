@@ -1,12 +1,12 @@
 import { takeLatest, takeLeading, put, call, select } from 'redux-saga/effects'
 import { adminLogIn, adminLogOut, adminReFresh } from '../../entities/cons'
 import { actions } from './slice'
-import { selectLogin, selectPassword } from './selectors'
+import { selectors } from './selectors'
 
 function* handleAdminLogin(): Generator<any, void, any> {
   try {
-    const login: string = yield select(selectLogin);
-    const password: string = yield select(selectPassword);
+    const login: string = yield select(selectors.selectLogin);
+    const password: string = yield select(selectors.selectPassword);
 
     console.log('Отправляем:', JSON.stringify({ login, password }));
 
@@ -25,17 +25,16 @@ function* handleAdminLogin(): Generator<any, void, any> {
     let role: string | null = null;
     try {
       const data: any = yield call([response, 'json']);
+      console.log('Сервер вернул данные:', data);
       role = data?.role ?? null;
     } catch {
       // тело пустое или не JSON — ок
     }
 
+    console.log('Роль от сервера:', role);
     localStorage.setItem('username', login);
 
-    const finalRole =
-      role === 'super_admin' || (!role && login === 'admin_TeSt')
-        ? 'super_admin'
-        : role || 'admin';
+    const finalRole = role || 'super_admin';
 
     yield put(actions.loginSuccess({ role: finalRole, username: login }));
   } catch {

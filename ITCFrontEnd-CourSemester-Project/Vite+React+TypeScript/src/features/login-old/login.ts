@@ -1,23 +1,25 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { actions } from '../auth/slice'
-import { selectLogin, selectPassword, selectLoading, selectError, selectIsAuthenticated, selectRole } from '../auth/selectors'
+import { actions } from '../login/slice'
+import { selectors } from '../login/selectors'
 
 export const useAdminLogin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const login = useSelector(selectLogin);
-  const password = useSelector(selectPassword);
-  const loading = useSelector(selectLoading);
-  const error = useSelector(selectError);
-  const isAuthenticated = useSelector(selectIsAuthenticated);
-  const role = useSelector(selectRole);
+  const login = useSelector(selectors.selectLogin);
+  const password = useSelector(selectors.selectPassword);
+  const loading = useSelector(selectors.selectLoading);
+  const error = useSelector(selectors.selectError);
+  const isAuthenticated = useSelector(selectors.selectIsAuthenticated);
+  const role = useSelector(selectors.selectRole);
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(role === 'super_admin' ? '/adm' : '/mad');
+      if (role === 'moderator') navigate('/mad');
+      if (role === 'super_admin') navigate('/adm');
+      // else navigate('/adm');
     }
   }, [isAuthenticated, role, navigate]);
 
