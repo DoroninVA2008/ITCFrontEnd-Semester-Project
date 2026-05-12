@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { EventType } from '../marker-location/evenPositions'
+import { EventType } from '../../marker-location/evenPositions'
 
 interface FilterContextType {
   selectedTypes: Set<EventType>;

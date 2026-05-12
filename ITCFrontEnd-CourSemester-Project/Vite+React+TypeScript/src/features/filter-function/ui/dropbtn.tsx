@@ -17,12 +17,12 @@ export const SubDropdownBtn: React.FC<SubDropdownBtnProps> = ({
   onCheckboxChange,
 }) => {
   const handleClick = () => {
-    onClick() // Всегда вызываем, без проверок
+    onClick()
   }
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation()
-    onCheckboxChange() // Всегда вызываем, без проверок
+    onCheckboxChange()
   }
 
   const handleCheckboxClick = (e: React.MouseEvent) => {
@@ -32,7 +32,7 @@ export const SubDropdownBtn: React.FC<SubDropdownBtnProps> = ({
   const buttonClasses = [
     'SubDropdownBtn',
     isSelected ? 'selected' : '',
-    !isInRange ? 'out-of-range' : '' // Только для визуала
+    !isInRange ? 'out-of-range' : ''
   ].filter(Boolean).join(' ')
 
   return (

@@ -1,10 +1,10 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { cards } from '../../entities/cons';
-import { EventObject } from './reurlcard';
+import { call, put, takeLatest } from 'redux-saga/effects'
+import { cards } from '../../entities/cons'
+import { EventObject } from './ui/reurlcard'
 
-export const FETCH_ALL_EVENTS = 'FETCH_ALL_EVENTS';
-export const FETCH_ALL_EVENTS_SUCCESS = 'FETCH_ALL_EVENTS_SUCCESS';
-export const FETCH_ALL_EVENTS_FAILURE = 'FETCH_ALL_EVENTS_FAILURE';
+export const FETCH_ALL_EVENTS = 'FETCH_ALL_EVENTS'
+export const FETCH_ALL_EVENTS_SUCCESS = 'FETCH_ALL_EVENTS_SUCCESS'
+export const FETCH_ALL_EVENTS_FAILURE = 'FETCH_ALL_EVENTS_FAILURE'
 
 async function fetchAllEvents(): Promise<EventObject[]> {
     const controller = new AbortController();

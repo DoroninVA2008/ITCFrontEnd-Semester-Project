@@ -1,6 +1,6 @@
 import { createSlice, createSelector, PayloadAction } from '@reduxjs/toolkit'
 import { EventObject } from '../marker-location/evenPositions'
-import { EventTypeItem, mapSelectedOptionsToEventTypeIds } from './typeven'
+import { EventTypeItem, mapSelectedOptionsToEventTypeIds } from './ui/typeven'
 
 export interface FilterState {
   selectedOptions: { [key: string]: boolean };

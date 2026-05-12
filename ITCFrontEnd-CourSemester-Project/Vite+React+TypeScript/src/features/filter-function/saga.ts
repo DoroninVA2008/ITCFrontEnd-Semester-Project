@@ -1,17 +1,15 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { PayloadAction } from '@reduxjs/toolkit'
-import { ApiResponse, EventDates, FilterRequestData, buildFilterRequestData } from '../typeven'
-import { eventsListDates } from '../../../entities/cons'
+import { ApiResponse, EventDates, FilterRequestData, buildFilterRequestData } from './ui/typeven'
+import { eventsListDates } from '../../entities/cons'
 import {
   setEvents,
   setIsLoading,
   setError,
   resetFilterState,
   ApplyFiltersPayload,
-} from '../slice'
-import { EventObject } from '../../marker-location/evenPositions'
-
-// ---- API функции ----
+} from './slice'
+import { EventObject } from '../marker-location/evenPositions'
 
 export async function fetchEventsAPI(): Promise<EventDates[]> {
   try {

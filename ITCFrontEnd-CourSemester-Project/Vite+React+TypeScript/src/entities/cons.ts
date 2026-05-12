@@ -1,6 +1,6 @@
 export const apiServer = 'https://api.russia-heroes.ru' // import.meta.env.VITE_API_BASE ?? 
 export var tiLayer = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}'
-export var landGeoJSon = 'https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson' // ./src/features/map-content/layer-position/countries.geojson
+export var landGeoJSon = 'https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson' // ./src/features/layer-position/countries.geojson
 export var checkBack = `${apiServer}/api/ping`
 export var eventsListDates = `${apiServer}/api/objects`
 export var card = (id: number) => `${apiServer}/api/objects/${id}`

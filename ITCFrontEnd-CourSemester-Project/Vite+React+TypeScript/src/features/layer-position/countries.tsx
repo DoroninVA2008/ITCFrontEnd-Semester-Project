@@ -4,7 +4,6 @@ import { countriesPosition } from './countriesPosition.ts'
 import { countriesTranslation } from './countriesTranslation.ts'
 import { getCountrySizeCategory, shouldShowLabel } from './zoom.tsx'
 
-// Экспортируем компонент
 export const CountryLabels: React.FC<{
   geoData: any,
   map: L.Map,
@@ -29,11 +28,9 @@ export const CountryLabels: React.FC<{
     });
   }, []);
 
-  // Создаём метки только когда меняется geoData или map
   useEffect(() => {
     if (!geoData || !map) return;
 
-    // Удаляем старые метки
     labelsRef.current.forEach(item => {
       if (map.hasLayer(item.marker)) {
         map.removeLayer(item.marker);
@@ -41,7 +38,6 @@ export const CountryLabels: React.FC<{
     });
     labelsRef.current = [];
 
-    // Создаём новые метки
     geoData.features.forEach((feature: any) => {
       const englishName = feature.properties.name || feature.properties.NAME || feature.properties.ADMIN || 'Неизвестная страна';
       const russianName = countriesTranslation[englishName] || englishName;
@@ -73,7 +69,6 @@ export const CountryLabels: React.FC<{
     updateLabelsVisibility(currentZoom);
   }, [geoData, map]);
 
-  // Обновляем видимость при каждом изменении зума (без пересоздания маркеров)
   useEffect(() => {
     if (!geoData || labelsRef.current.length === 0) return;
     updateLabelsVisibility(currentZoom);

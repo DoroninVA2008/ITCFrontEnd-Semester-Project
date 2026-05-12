@@ -100,19 +100,17 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({ isOpen }) => {
   const handleApplyFilters = async () => {
   console.log('Применяются фильтры с periodRange (числа):', periodRange)
   
-  // Проверяем, есть ли выбранные опции
   const hasSelectedOptions = Object.values(selectedOptions).some(value => value === true)
   const hasSelectedPeriod = selectedPeriod !== null
   const hasCustomPeriodRange = periodRange.min !== 862 || periodRange.max !== 2026
   
-  // Если ни один фильтр не выбран
   if (!hasSelectedOptions && !hasSelectedPeriod && !hasCustomPeriodRange) {
     console.log('Ни один фильтр не выбран, скрываем все маркеры')
     await applyFiltersWith({
       selectedOptions: {}, // @ts-ignore
-      periodRange: { min: null, max: null }, // или специальное значение для скрытия всех
+      periodRange: { min: null, max: null },
       selectedPeriod: null,
-      hideAllMarkers: true // Добавляем флаг для скрытия всех маркеров
+      hideAllMarkers: true
     })
   } else {
     await applyFiltersWith({

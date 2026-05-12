@@ -1,4 +1,4 @@
-import { EventType } from '../marker-location/evenPositions'
+import { EventType } from '../../marker-location/evenPositions'
 
 export interface FilterConfig {
   options: any;

@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { InputEvent } from 'react'
 import { useAdminLogin } from '../login/login'
+import { useDispatch, useSelector } from 'react-redux';
+import { LoginFeature } from '../login';
 
 export const LogInContentComponent: React.FC = () => {
   // Удаляешь и меняешь на useSelector(selector login frature) || dispatch(action login feature) (useDispatch)
-  const { login, setLogin, password, setPassword, error, loading, handleLogin } = useAdminLogin();
+  // const { login, setLogin, password, setPassword, error, loading, handleLogin } = useAdminLogin();
+  const login = useSelector(LoginFeature.selectors.selectLogin)
 
+  const dispatch = useDispatch();
+  
+  const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(LoginFeature.actions.setLogin(e.target.value))
+  }
   return (
     <form className="AdminLogIn" onSubmit={handleLogin}>
       <h1>
@@ -21,7 +29,7 @@ export const LogInContentComponent: React.FC = () => {
             id="LogIn"
             name="login"
             value={login}
-            onChange={(e) => setLogin(e.target.value)}
+            onChange={handleLoginChange}
             required
           />
         </div>

@@ -5,7 +5,7 @@ import { tiLayer } from '../../entities/cons.ts'
 import { LayerLabels } from './layer.tsx'
 import { CityLabels } from './cities.tsx'
 import { ReMarker } from './remarker.tsx'
-import { EventFilterProvider } from '../filter-function/evenFilterProvider/evenFilterProvider.tsx' // @ts-ignore
+import { EventFilterProvider } from '../filter-function/ui/evenFilterProvider/evenFilterProvider.tsx' // @ts-ignore
 import '../map-content/ui/map.scss' // @ts-ignore
 import './admap.scss'
 

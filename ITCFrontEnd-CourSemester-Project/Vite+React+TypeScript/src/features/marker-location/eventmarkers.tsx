@@ -7,7 +7,7 @@ import MarkerPolitTarget from '../../assets/MarkerPolitTarget.png' // @ts-ignore
 import MarkerSwordTarget from '../../assets/MarkerSwordTarget.png' // @ts-ignore
 import iconShadow from '../../assets/marker-shadow.png'
 import { FETCH_CARD_DATA } from '../../app/saga/saga'
-import { EventsDataService } from '../card-information/reurlcard'
+// import { EventsDataService } from '../card-information/ui/reurlcard'
 
 type EventMarkerProps = {
   event: EventObject
