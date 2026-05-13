@@ -33,6 +33,12 @@ export const useAdminRefresh = () => {
 
   useEffect(() => {
     if (unauthorized) {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+      dispatch(actions.logout());
+      dispatch(actions.refreshReset());
       navigate('/log');
     }
   }, [unauthorized, navigate]);

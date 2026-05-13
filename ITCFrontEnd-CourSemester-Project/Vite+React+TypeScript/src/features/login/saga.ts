@@ -1,5 +1,5 @@
 import { takeLatest, takeLeading, put, call, select } from 'redux-saga/effects'
-import { adminLogIn, adminLogOut, adminReFresh } from '../../entities/cons'
+import { adminLogIn, adminLogOut, adminReFresh, admins } from '../../entities/cons'
 import { actions } from './slice'
 import { selectors } from './selectors'
 
@@ -25,16 +25,27 @@ function* handleAdminLogin(): Generator<any, void, any> {
     let role: string | null = null;
     try {
       const data: any = yield call([response, 'json']);
-      console.log('Сервер вернул данные:', data);
-      role = data?.role ?? null;
+      role = data?.role ?? data?.type ?? data?.userRole ?? null;
     } catch {
       // тело пустое или не JSON — ок
     }
 
-    console.log('Роль от сервера:', role);
+    if (!role) {
+      try {
+        const check: Response = yield call(fetch, admins, {
+          method: 'GET',
+          credentials: 'include',
+        });
+        role = check.ok ? 'super_admin' : check.status === 403 ? 'moderator' : null;
+      } catch {
+        // нет связи — роль не определена
+      }
+    }
+
+    console.log('[LOGIN] role:', role);
     localStorage.setItem('username', login);
 
-    const finalRole = role || 'super_admin';
+    const finalRole = role;
 
     yield put(actions.loginSuccess({ role: finalRole, username: login }));
   } catch {
@@ -65,6 +76,11 @@ function* handleAdminRefresh(): Generator<any, void, any> {
 
     if (response.status === 401) {
       console.log('refresh_token отсутствует или невалиден');
+      try {
+        yield call(fetch, adminLogOut, { method: 'POST', credentials: 'include' });
+      } catch {
+        // куки уже невалидны — игнорируем
+      }
       yield put(actions.refreshUnauthorized());
       return;
     }

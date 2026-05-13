@@ -16,11 +16,8 @@ export const useAdminLogin = () => {
   const role = useSelector(selectors.selectRole);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      if (role === 'moderator') navigate('/mad');
-      if (role === 'super_admin') navigate('/adm');
-      // else navigate('/adm');
-    }
+    if (!isAuthenticated || !role) return;
+    navigate(role === 'moderator' ? '/mad' : role === 'super_admin' ? '/adm' : '/log');
   }, [isAuthenticated, role, navigate]);
 
   const handleLogin = (e: React.FormEvent) => {

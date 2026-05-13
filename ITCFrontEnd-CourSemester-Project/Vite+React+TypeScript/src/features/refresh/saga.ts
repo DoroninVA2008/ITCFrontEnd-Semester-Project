@@ -33,9 +33,9 @@ function* handleAdminLogin(): Generator<any, void, any> {
     localStorage.setItem('username', login);
 
     const finalRole =
-      role === 'super_admin' || (!role && login === 'admin_TeSt')
+      role === 'super_admin' || (!role && login === 'super_admin')
         ? 'super_admin'
-        : role || 'admin';
+        : role || 'moderator';
 
     yield put(actions.loginSuccess({ role: finalRole, username: login }));
   } catch {
