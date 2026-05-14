@@ -15,10 +15,8 @@ export const useAdminRefresh = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      // Пользователь только что залогинился — токены свежие, refresh не нужен
       dispatch(actions.refreshSuccess());
     } else {
-      // Перезагрузка страницы — восстанавливаем сессию через куки
       dispatch(actions.refreshRequest());
     }
 
