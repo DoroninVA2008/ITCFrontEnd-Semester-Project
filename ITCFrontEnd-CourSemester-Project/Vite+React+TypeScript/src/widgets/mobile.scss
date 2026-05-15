@@ -203,6 +203,7 @@ $font-shrift-weight: 300;
   }
   
   .RussianFon button {
+    position: absolute !important;
     bottom: calc(-96vh + 20px) !important
   }
 }
@@ -794,6 +795,7 @@ $font-shrift-weight: 300;
   header a {
     margin-left: 100px !important
   }
+
   header button {
     justify-content: center;
     right: 152px !important;
@@ -1033,6 +1035,7 @@ $font-shrift-weight: 300;
   }
 
   .RussianFon button {
+    position: absolute !important;
     bottom: 12px !important;
   }
 }
@@ -1044,9 +1047,9 @@ $font-shrift-weight: 300;
     right: 90px !important
   }
 
-  header img {
-    margin-left: 156px !important
-  }
+  // header img {
+  //   margin-left: 156px !important
+  // }
 
   header h1 {
     margin-left: 110px !important
@@ -1073,7 +1076,7 @@ $font-shrift-weight: 300;
   }
 
   .RussianFon h3 {
-    max-width: 440px !important;
+    max-width: 240px !important;
     font-size: 4px !important;
     line-height: 12px !important;
   }
@@ -1157,5 +1160,302 @@ header h1 {margin-left: 70px !important}}
 
   header img {
     margin-left: 4px !important
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .Headmer, .Heamoder {
+    & > a { margin-left: 40px; }
+    & .butacc-wrap { margin-right: 40px; }
+    & .butnav { gap: 6px; }
+    & .butnav button { font-size: 16px; padding: 0 8px; }
+  }
+
+  .Hepander > a { margin-left: 40px; }
+
+  .AdminRequests { padding: 40px 40px !important; }
+
+  .moder-content { padding: 40px 40px !important; }
+}
+
+@media screen and (max-width: 860px) {
+  .Headmer, .Heamoder {
+    & > a { margin-left: 24px; }
+    & .butacc-wrap { margin-right: 24px; }
+    & .butnav { gap: 2px; }
+    & .butnav button { font-size: 14px; padding: 0 6px; height: 40px; }
+  }
+
+  .Hepander > a { margin-left: 24px; }
+
+  .AdminRequests {
+    padding: 32px 24px !important;
+    & > h1 { font-size: 26px !important; }
+  }
+
+  .moder-content {
+    padding: 32px 24px !important;
+    &__title-block h1 { font-size: 26px !important; }
+  }
+
+  .moder-table {
+    overflow-x: auto;
+    &__header, &__row {
+      grid-template-columns: 100px 1fr 180px 160px 140px 90px !important;
+      padding: 16px 14px !important;
+      font-size: 14px !important;
+    }
+  }
+
+  .requests-table {
+    overflow-x: auto;
+    &__header, &__row {
+      grid-template-columns: 100px 1fr 200px 200px !important;
+      padding: 14px 14px !important;
+      font-size: 14px !important;
+    }
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .Headmer, .Heamoder {
+    height: 56px !important;
+
+    & > a {
+      margin-left: 16px;
+      width: 36px !important;
+      height: 36px !important;
+    }
+
+    & h1 { font-size: 18px; margin-left: 6px; }
+
+    & .butnav {
+      gap: 0;
+      & button {
+        font-size: 13px;
+        padding: 0 5px;
+        height: 36px;
+        border-radius: 4px;
+      }
+    }
+
+    & .butacc-wrap { margin-right: 16px; }
+
+    & .butacc {
+      font-size: 15px;
+      height: 36px;
+      padding-left: 8px;
+      padding-right: 4px;
+    }
+  }
+
+  .Hepander {
+    height: 56px !important;
+    & > a { margin-left: 16px; width: 36px !important; height: 36px !important; }
+    & h1 { font-size: 18px; }
+  }
+
+  .LoginPage {
+    align-items: center;
+    padding: 0 16px;
+    overflow-y: auto !important;
+    padding-top: 72px !important;
+    padding-bottom: 24px !important;
+    box-sizing: border-box;
+  }
+
+  .AdminLogIn {
+    width: 100% !important;
+    max-width: 440px;
+    gap: 16px;
+
+    & h1 { font-size: 22px; }
+
+    .admin-group {
+      gap: 14px;
+
+      & input {
+        font-size: 17px !important;
+        padding: 12px 10px !important;
+        border-radius: 12px;
+      }
+    }
+
+    & button {
+      font-size: 16px !important;
+      padding: 14px 0 !important;
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+  }
+
+  .AdminRequests {
+    top: 56px !important;
+    padding: 24px 16px !important;
+
+    & > h1 { font-size: 22px !important; }
+
+    & > p { font-size: 14px !important; margin-top: 6px !important; }
+
+    .admin-buttons {
+      margin-top: 20px !important;
+      gap: 14px !important;
+
+      .admin-filters {
+        flex-wrap: wrap;
+        gap: 8px !important;
+
+        & > button {
+          font-size: 13px !important;
+          padding: 5px 8px !important;
+        }
+
+        .search {
+          width: 100%;
+          padding: 6px 10px;
+          flex: 1;
+
+          & input[type="search"] {
+            width: 100% !important;
+            font-size: 14px !important;
+          }
+        }
+      }
+
+      .found-count { font-size: 13px !important; }
+    }
+
+    .requests-table {
+      margin-top: 20px !important;
+      overflow-x: auto;
+
+      &__header, &__row {
+        grid-template-columns: 70px 1fr 130px 140px !important;
+        font-size: 13px !important;
+        padding: 10px 12px !important;
+      }
+    }
+
+    .requests-pagination {
+      flex-wrap: wrap;
+      gap: 10px !important;
+      margin-top: 12px !important;
+
+      &__info { font-size: 13px !important; }
+      &__nav { font-size: 14px !important; }
+      &__page { font-size: 14px !important; }
+    }
+  }
+
+  .moder-content {
+    top: 56px !important;
+    padding: 24px 16px !important;
+
+    &__top { flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+
+    &__title-block {
+      h1 { font-size: 22px !important; }
+      p  { font-size: 13px !important; }
+    }
+
+    &__add-btn {
+      font-size: 14px !important;
+      padding: 10px 14px !important;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .moder-table {
+    overflow-x: auto;
+
+    &__header, &__row {
+      grid-template-columns: 70px 1fr 150px 130px 110px 70px !important;
+      font-size: 13px !important;
+      padding: 12px 10px !important;
+    }
+  }
+
+  .approve-modal {
+    grid-template-columns: 1fr !important;
+    width: calc(100vw - 24px) !important;
+    max-height: calc(100vh - 24px) !important;
+
+    &__left {
+      max-width: 100% !important;
+      padding: 16px !important;
+    }
+
+    &__right { padding: 16px !important; }
+  }
+
+  .request-modal {
+    padding: 24px 16px !important;
+    width: calc(100vw - 24px) !important;
+
+    &__grid { grid-template-columns: 1fr !important; }
+    &__actions { grid-template-columns: 1fr !important; }
+  }
+
+  .reject-modal {
+    padding: 24px 16px !important;
+    width: calc(100vw - 24px) !important;
+  }
+
+  .role-modal {
+    padding: 20px 16px !important;
+    width: calc(100vw - 24px) !important;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .Headmer, .Heamoder {
+    & h1 { display: none; }
+
+    & .butnav button {
+      font-size: 12px;
+      padding: 0 4px;
+      height: 32px;
+    }
+  }
+
+  .AdminRequests {
+    padding: 18px 12px !important;
+
+    & > h1 { font-size: 19px !important; }
+
+    .admin-buttons .admin-filters {
+      flex-direction: column;
+      align-items: stretch;
+
+      & > button { width: 100%; justify-content: center; }
+    }
+
+    .requests-table {
+      &__header, &__row {
+        grid-template-columns: 54px 1fr 110px 120px !important;
+        font-size: 12px !important;
+        padding: 8px 10px !important;
+      }
+    }
+  }
+
+  .moder-content {
+    padding: 18px 12px !important;
+    &__title-block h1 { font-size: 19px !important; }
+  }
+
+  .moder-table {
+    &__header, &__row {
+      grid-template-columns: 54px 1fr 120px 110px 90px 60px !important;
+      font-size: 12px !important;
+      padding: 10px 8px !important;
+    }
+  }
+
+  .AdminLogIn {
+    & h1 { font-size: 19px; }
+    .admin-group input { font-size: 15px !important; }
+    & button { font-size: 15px !important; }
   }
 }
