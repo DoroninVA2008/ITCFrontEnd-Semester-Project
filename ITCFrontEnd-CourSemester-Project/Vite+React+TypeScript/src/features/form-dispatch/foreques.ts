@@ -28,9 +28,10 @@ const toIsoDate = (value: string): string | null => {
   if (month < 1 || month > 12) return null
   const daysInMonth = new Date(year, month, 0).getDate()
   if (day < 1 || day > daysInMonth) return null
+  const yyyy = String(year).padStart(4, '0')
   const mm = String(month).padStart(2, '0')
   const dd = String(day).padStart(2, '0')
-  return `${year}-${mm}-${dd}`
+  return `${yyyy}-${mm}-${dd}`
 }
 
 export const submitContactForm = async (
