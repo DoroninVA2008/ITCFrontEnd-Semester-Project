@@ -1,6 +1,7 @@
 import { adminList } from '../../../entities/cons'
 
 export interface Request {
+  adminComment: string
   id: string
   title: string
   date: string
@@ -11,6 +12,7 @@ export interface Request {
   telegram: string
   email: string
   siteUrl: string
+  comment?: string
 }
 
 export interface FetchRequestsParams {
@@ -71,6 +73,8 @@ export const fetchRequests = async (params: FetchRequestsParams = {}): Promise<F
                 telegram: item.telegram ?? '',
                 email: item.email ?? '',
                 siteUrl: item.siteUrl ?? item.site_url ?? item.url ?? item.website ?? item.preview_url ?? '',
+                comment: item.adminComment ?? item.comment ?? item.rejection_comment ?? item.reject_comment ?? item.reason ?? '',
+                adminComment: item.adminComment ?? item.comment ?? item.rejection_comment ?? item.reject_comment ?? item.reason ?? ''
             })),
             total,
         }

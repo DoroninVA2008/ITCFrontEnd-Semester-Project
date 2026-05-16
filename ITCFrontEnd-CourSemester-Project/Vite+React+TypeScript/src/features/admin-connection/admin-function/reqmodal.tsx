@@ -64,7 +64,7 @@ const EVENT_TYPE_ID_TO_NAME: Record<number, string> = Object.fromEntries(
     Object.entries(OPTION_TO_EVENT_TYPE_NAME).map(([name, id]) => [id, name])
 );
 
-interface RequestModalContentProps { // @ts-ignore
+interface RequestModalContentProps {
   request: Request
   isVerified: boolean
   showRejectConfirm: boolean
@@ -186,6 +186,17 @@ export const RequestModalContent: React.FC<RequestModalContentProps> = ({
       <span className="request-modal__id">{request.id}</span>
 
       {renderRequestFields()}
+
+      {statusClass[request.status] === 'rejected' && (
+        <div className="request-modal__rejection-reason">
+          <span className="request-modal__rejection-reason-label">
+            Причина отклонения:&nbsp;
+            <span className="request-modal__rejection-reason-text">
+              {request.comment || request.adminComment || 'Не указана'}
+            </span>
+          </span>
+        </div>
+      )}
 
       {!isVerified && !showRejectConfirm && statusClass[request.status] !== 'rejected' && statusClass[request.status] !== 'published' && statusClass[request.status] !== 'review' && (
         <button className="request-modal__verify" onClick={onVerify}>Проверить</button>

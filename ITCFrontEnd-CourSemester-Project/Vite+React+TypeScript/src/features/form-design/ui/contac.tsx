@@ -53,6 +53,10 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onS
     return () => clearTimeout(t)
   }, [submitDone])
 
+  useEffect(() => {
+    if (error) alert(error)
+  }, [error])
+
   const handleSend = () => {
     if (isSubmitting) return
     dispatch(actions.submitRequest())
@@ -107,7 +111,6 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onS
             >
               {isSubmitting ? 'Отправка...' : 'Отправить заявку'}
             </button>
-            {error && <p className="form-error">{error}</p>}
           </div>
         </div>
       </div>

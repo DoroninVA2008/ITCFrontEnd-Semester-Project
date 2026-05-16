@@ -739,7 +739,7 @@ $font-shrift-weight: 300;
   }
 
   .RussianText {
-    top: 18vh !important;
+    top: 50px !important;
   }
 
   .RussianFon button {
@@ -1010,25 +1010,29 @@ $font-shrift-weight: 300;
 
   .RussianFon {
     height: 380px;
-    margin-top: 200px !important
+    margin-top: 120px !important
   }
 
   .RussianText {
     margin-left: -124px;
   }
   
-  .RussianFon h1 {letter-spacing: 2px !important;
+  .RussianFon h1,
+  .RussianFon h4 {
+    letter-spacing: 2px !important;
     font-size: 20px !important;
     line-height: 28px !important;
   }
 
-  .RussianFon h2 {letter-spacing: 1px !important;
+  .RussianFon h2,
+  .RussianFon h5 {letter-spacing: 1px !important;
     max-width: 160px !important;
     font-size: 10px !important;
     line-height: 14px !important;
   }
 
-  .RussianFon h3 {
+  .RussianFon h3,
+  .RussianFon h6 {
     max-width: 440px !important;
     font-size: 4px !important;
     line-height: 16px !important;
@@ -1036,7 +1040,8 @@ $font-shrift-weight: 300;
 
   .RussianFon button {
     position: absolute !important;
-    bottom: 12px !important;
+    margin-top: 1000px !important;
+    bottom: 20px !important;
   }
 }
 
@@ -1055,12 +1060,13 @@ $font-shrift-weight: 300;
     margin-left: 110px !important
   }
 
-  .RussianFon {
-    height: 350px;
-    margin-top: 210px !important;
-  }
+  // .RussianFon {
+  //   height: 350px;
+  //   // margin-top: 210px !important;
+  // }
 
   .RussianText {
+    margin-top: -0px !important;
     margin-left: -124px;
   }
   
