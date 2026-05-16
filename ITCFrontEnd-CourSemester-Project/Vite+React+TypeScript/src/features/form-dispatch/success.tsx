@@ -51,8 +51,8 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, onR
         </p>
         <p className="modal-description3 modal-descriptions">
           После рассмотрения вы получите уведомление:<br />
-          в <u>Telegram</u> - на указанный вами username;<br />
-          на электронную почту - на указанный email.
+          в <u>Telegram</u> - на указанный вами псевдоним;<br />
+          на электронную почту - на указанный адрес.
         </p>
         <p className="modal-description4 modal-descriptions">
           Статусы, о которых мы сообщим:

@@ -213,7 +213,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
               >
                 {UploadIcon}
                 <p className="drop-zone-text">Выберите файл или перетащите его сюда.</p>
-                <p className="file-format-info">Допустимый формат: .zip</p>
+                <p className="file-format-info">Формат: .zip · Максимум 350 МБ · В корне архива должен быть index.html</p>
                 <input
                   type="file"
                   id="file-upload-input"
