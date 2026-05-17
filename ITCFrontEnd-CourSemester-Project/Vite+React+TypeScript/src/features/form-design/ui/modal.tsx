@@ -135,7 +135,12 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                   name="name"
                   placeholder="Введите название события"
                   value={name}
-                  onChange={(e) => dispatch(actions.setName(e.target.value))}
+                  onChange={(e) => {
+                    if (e.target.value.length <= 100) {
+                      dispatch(actions.setName(e.target.value))
+                    }
+                  }}
+                  maxLength={100}
                   required
                 />
               </div>
@@ -159,7 +164,12 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                 name="description"
                 placeholder="Кратко опишите событие"
                 value={description}
-                onChange={(e) => dispatch(actions.setDescription(e.target.value))}
+                onChange={(e) => {
+                  if (e.target.value.length <= 450) {
+                    dispatch(actions.setDescription(e.target.value))
+                  }
+                }}
+                maxLength={450}
                 required
               />
             </div>
