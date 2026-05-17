@@ -132,6 +132,34 @@ $font-shrift-weight: 300;
     height: 980px !important;
   }
 
+  .event-tooltip-image-placeholder {
+      height: 260px !important;
+      margin-top: 0px !important;
+    }
+
+  .event-tooltip-title {
+        font-size: 18px !important;
+        margin-top: 24px !important;
+      }
+
+      .event-tooltip-date {
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        margin-top: 28px !important;
+        right: 40px !important;
+      }
+
+  .event-tooltip-description {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    margin-top: 10px !important;
+    margin-bottom: 0px !important;
+  }
+
+  .event-tooltip-learn-more-btn {
+    margin-top: auto !important;
+  }
+
   .moder-table {
     &__header, &__row{
       grid-template-columns: 100px 1fr 240px 200px 180px 120px !important;
