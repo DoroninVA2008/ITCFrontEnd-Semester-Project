@@ -120,7 +120,23 @@ $font-shrift: 'Cruinn', sans-serif;
     letter-spacing: 1.8px;
     margin-top: 20px;
     margin-bottom: 20px;
-  }
+    max-height: 220px;
+    overflow-y: auto;
+    
+    // Для красивого скролла (опционально)
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 3px;
+    }
+}
 
   .event-tooltip-learn-more-btn {
     background-color: $button-color;
@@ -138,7 +154,7 @@ $font-shrift: 'Cruinn', sans-serif;
     margin-bottom: 160px;
     text-decoration: none;
     // display: grid;
-    // justify-content: space-between;
+    justify-content: space-between;
 
     &:hover {
       background-color: $button-hover-color;
