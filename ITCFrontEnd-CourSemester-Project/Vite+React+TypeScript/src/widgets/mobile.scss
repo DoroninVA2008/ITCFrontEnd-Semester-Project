@@ -128,8 +128,12 @@ $font-shrift-weight: 300;
     // height: 800px
   }
 
-  #map {
-    height: 980px !important;
+  // #map {
+  //   height: 980px !important;
+  // }
+
+  .team-list {
+    gap: 0.6rem !important;
   }
 
   .event-tooltip-image-placeholder {
