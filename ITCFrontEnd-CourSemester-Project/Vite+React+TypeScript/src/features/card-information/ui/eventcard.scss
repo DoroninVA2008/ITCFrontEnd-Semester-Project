@@ -19,6 +19,7 @@ $font-shrift: 'Cruinn', sans-serif;
   z-index: 1000;
   width: auto;
   height: 100vh;
+  overflow-y: hidden;
   transition: all $animation-duration ease;
   background-color: $card-bg-color;
   padding: 36px;
@@ -123,7 +124,6 @@ $font-shrift: 'Cruinn', sans-serif;
     max-height: 220px;
     overflow-y: auto;
     
-    // Для красивого скролла (опционально)
     &::-webkit-scrollbar {
         width: 4px;
     }

@@ -30,10 +30,10 @@ export const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
       const minPercent = ((minVal - min) / (max - min)) * 100;
       const maxPercent = ((maxVal - min) / (max - min)) * 100;
       
-      const thumbWidth = 17;
+      const thumbWidth = 40;
       const sliderWidth = rangeTrackRef.current.parentElement?.offsetWidth || 100;
       
-      const thumbOffset = (thumbWidth / sliderWidth) * 7;
+      const thumbOffset = (thumbWidth / sliderWidth) * 20;
       
       const correctedMinPercent = Math.max(0, minPercent - thumbOffset);
       const correctedMaxPercent = Math.min(100, maxPercent + thumbOffset);

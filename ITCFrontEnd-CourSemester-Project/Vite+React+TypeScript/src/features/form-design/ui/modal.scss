@@ -400,8 +400,8 @@ form {
     }
 
     &:focus {
-    outline: none; // Убираем стандартный outline
-  }
+      outline: none
+    }
 
     .radio-custom-label {
       color: $text-color;
@@ -559,6 +559,7 @@ form {
   transition: all 0.3s ease;
   color: rgb(250, 250, 250);
   background-color: rgb(192, 145, 57);
+  
   &:hover{ 
     box-shadow: 0px 0px 10px 0px rgb(192, 145, 57);
     transition: all 0.3s ease;

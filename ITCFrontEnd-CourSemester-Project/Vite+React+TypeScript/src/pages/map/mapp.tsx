@@ -19,7 +19,7 @@ export const Mapp: React.FC = () => {
         onClose={closeModal}
       />
       <Map />
-      <Footer />
+      <Footer collapsible />
     </div>
   );
 };

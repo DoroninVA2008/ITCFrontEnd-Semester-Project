@@ -193,7 +193,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
                     <input type="radio" name="eventType" value="military" data-label="Битва" onChange={handleEventTypeChange} required />
                     <span className="radio-custom-label">Битва</span>
                   </label>
-                  <label className="radio-button" tabIndex={0} onFocus={(e) => e.currentTarget.classList.add('focused')} onBlur={(e) => e.currentTarget.classList.remove('focused')}>
+                  <label className="radio-button" data-index="3" tabIndex={0} onFocus={(e) => e.currentTarget.classList.add('focused')} onBlur={(e) => e.currentTarget.classList.remove('focused')}>
                     <input type="radio" name="eventType" value="military" data-label="Война" onChange={handleEventTypeChange} required />
                     <span className="radio-custom-label" data-index="2">Война</span>
                   </label>
