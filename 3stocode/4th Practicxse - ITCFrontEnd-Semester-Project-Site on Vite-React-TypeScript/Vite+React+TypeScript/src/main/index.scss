@@ -1,0 +1,65 @@
+:root {--ckara-color: #8B4513;
+  --vanilla-color: #FAEBD7;
+  --chocko-color: #362519;}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--vanilla-color);
+}
+
+h1 {color: var(--vanilla-color);
+  width: 100vw;
+  margin-bottom: 0.4em;
+  background: linear-gradient(135deg, var(--ckara-color), var(--chocko-color));
+  font-size: 3rem;}
+
+h1 a {color: var(--vanilla-color);
+  transition: all 0.3s ease;
+  text-decoration: underline}
+
+h1 a:hover {color: var(--ckara-color);
+  transition: all 0.3s ease}
+
+h1 a:active {color: var(--chocko-color);
+  transition: all 0.3s ease}
+
+label button {transition: all 0.3s ease;
+  color: var(--ckara-color)}
+
+label button:hover,
+label button:active {transition: all 0.3s ease;
+  color: var(--chocko-color)}
+
+    .App {
+      text-align: center;
+    }
+     
+    .App-logo {
+      height: 40vmin;
+      pointer-events: none;
+    }
+     
+    .App-header {
+      background-color: #282c34;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: calc(10px + 2vmin);
+      color: white;
+    }
+     
+    .App-link {
+      color: #61dafb;
+    }

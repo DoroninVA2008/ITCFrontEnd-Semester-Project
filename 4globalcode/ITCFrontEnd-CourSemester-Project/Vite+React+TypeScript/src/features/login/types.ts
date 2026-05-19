@@ -1,0 +1,13 @@
+export interface AuthState {
+  login: string;
+  password: string;
+  loading: boolean;
+  error: string | null;
+  isAuthenticated: boolean;
+  role: string | null;
+  username: string | null;
+  logoutLoading: boolean;
+  logoutCompleted: boolean;
+  refreshReady: boolean;
+  refreshUnauthorized: boolean;
+}
