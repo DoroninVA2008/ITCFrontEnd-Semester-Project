@@ -27,7 +27,6 @@ function* handleAdminLogin(): Generator<any, void, any> {
       const data: any = yield call([response, 'json']);
       role = data?.role ?? data?.type ?? data?.userRole ?? null;
     } catch {
-      // тело пустое или не JSON — ок
     }
 
     if (!role) {
@@ -38,7 +37,6 @@ function* handleAdminLogin(): Generator<any, void, any> {
         });
         role = check.ok ? 'super_admin' : check.status === 403 ? 'moderator' : null;
       } catch {
-        // нет связи — роль не определена
       }
     }
 
@@ -79,7 +77,6 @@ function* handleAdminRefresh(): Generator<any, void, any> {
       try {
         yield call(fetch, adminLogOut, { method: 'POST', credentials: 'include' });
       } catch {
-        // куки уже невалидны — игнорируем
       }
       yield put(actions.refreshUnauthorized());
       return;

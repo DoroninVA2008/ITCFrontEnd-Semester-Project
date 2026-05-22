@@ -10,4 +10,5 @@ export interface AuthState {
   logoutCompleted: boolean;
   refreshReady: boolean;
   refreshUnauthorized: boolean;
+  navigateTo: string | null;
 }

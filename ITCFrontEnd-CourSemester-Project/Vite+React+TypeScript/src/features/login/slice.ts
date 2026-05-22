@@ -13,6 +13,7 @@ const initialState: AuthState = {
   logoutCompleted: false,
   refreshReady: false,
   refreshUnauthorized: false,
+  navigateTo: null,
 };
 
 export const { name, reducer, actions } = createSlice({
@@ -35,6 +36,10 @@ export const { name, reducer, actions } = createSlice({
       state.role = action.payload.role;
       state.username = action.payload.username;
       state.error = null;
+      state.navigateTo = 
+        action.payload.role === 'moderator' ? '/mad' : 
+        action.payload.role === 'super_admin' ? '/adm' : 
+        '/log';
     },
     loginFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
@@ -47,10 +52,14 @@ export const { name, reducer, actions } = createSlice({
       state.username = null;
       state.login = '';
       state.password = '';
+      state.navigateTo = null;
       localStorage.removeItem('username');
     },
     clearError: (state) => {
       state.error = null;
+    },
+    clearNavigateTo: (state) => {
+      state.navigateTo = null;
     },
     logoutRequest: (state) => {
       state.logoutLoading = true;

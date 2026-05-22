@@ -1,5 +1,4 @@
 // import { RootState } from '../../app/store'
-
 import { name } from './slice'
 import { AuthState } from './types'
 
@@ -19,6 +18,7 @@ const selectLogoutLoading = (state: State) => state.auth.logoutLoading;
 const selectLogoutCompleted = (state: State) => state.auth.logoutCompleted;
 const selectRefreshReady = (state: State) => state.auth.refreshReady;
 const selectRefreshUnauthorized = (state: State) => state.auth.refreshUnauthorized;
+const selectNavigateTo = (state: State) => state.auth.navigateTo;
 
 export const selectors = {
     selectLogin,
@@ -33,4 +33,5 @@ export const selectors = {
     selectLogoutCompleted,
     selectRefreshReady,
     selectRefreshUnauthorized,
+    selectNavigateTo,
 }
