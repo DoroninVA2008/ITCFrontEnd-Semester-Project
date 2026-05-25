@@ -1,18 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-
-interface AuthState {
-  login: string;
-  password: string;
-  loading: boolean;
-  error: string | null;
-  isAuthenticated: boolean;
-  role: string | null;
-  username: string | null;
-  logoutLoading: boolean;
-  logoutCompleted: boolean;
-  refreshReady: boolean;
-  refreshUnauthorized: boolean;
-}
+import { AuthState } from '../login/types'
 
 const initialState: AuthState = {
   login: '',
@@ -26,6 +13,7 @@ const initialState: AuthState = {
   logoutCompleted: false,
   refreshReady: false,
   refreshUnauthorized: false,
+  navigateTo: null,
 };
 
 export const { name, reducer, actions } = createSlice({
@@ -72,9 +60,13 @@ export const { name, reducer, actions } = createSlice({
     logoutSuccess: (state) => {
       state.logoutLoading = false;
       state.logoutCompleted = true;
+      state.navigateTo = '/log'; // добавляем редирект на логин
     },
     logoutReset: (state) => {
       state.logoutCompleted = false;
+    },
+    clearNavigateTo: (state) => {
+      state.navigateTo = null;
     },
     refreshRequest: (state) => {
       state.refreshUnauthorized = false;
