@@ -1,4 +1,4 @@
-export const apiServer = 'https://api.russia-heroes.ru' // import.meta.env.VITE_API_BASE ?? 
+export const apiServer = 'http://10.3.15.182:7666' // import.meta.env.VITE_API_BASE ??
 export var tiLayer = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}'
 export var landGeoJSon = 'https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson' // ./src/features/layer-position/countries.geojson
 export var checkBack = `${apiServer}/api/ping`
