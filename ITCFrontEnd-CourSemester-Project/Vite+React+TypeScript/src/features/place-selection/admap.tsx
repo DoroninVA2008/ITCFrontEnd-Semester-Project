@@ -37,7 +37,7 @@ export const AdMap: React.FC<AdMapProps> = ({ eventType = 1, onPositionChange })
           maxBoundsViscosity={1.0}
           ref={mapRef}
         >
-          <TileLayer url={tiLayer} noWrap={false} opacity={1} />
+          <TileLayer url={tiLayer} noWrap={false} opacity={1} maxNativeZoom={6} />
           <LayerLabels />
           <CitiesLabels />
           <ReMarker eventType={eventType} onPositionChange={onPositionChange} />

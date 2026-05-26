@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { actions } from '../features/login/slice' // или '../features/auth'
+import { actions } from '../features/logout/slice' // или '../features/auth'
 import { selectors } from '../features/login/selectors'
 
 export const ButoAcc: React.FC = () => {

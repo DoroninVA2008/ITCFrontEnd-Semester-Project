@@ -9,7 +9,7 @@ export default defineConfig({
     }
   },
   server: {
-    port: 1447, // 2005
+    port: 3000, // 2005
     open: true,
     host: true,
     proxy: {

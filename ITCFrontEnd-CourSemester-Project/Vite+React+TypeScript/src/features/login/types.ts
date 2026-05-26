@@ -11,4 +11,5 @@ export interface AuthState {
   refreshReady: boolean;
   refreshUnauthorized: boolean;
   navigateTo: string | null;
+  auth: null;
 }

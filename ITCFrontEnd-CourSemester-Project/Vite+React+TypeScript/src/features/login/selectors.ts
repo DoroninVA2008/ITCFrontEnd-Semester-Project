@@ -1,4 +1,5 @@
 // import { RootState } from '../../app/store'
+import { createSelector } from '@reduxjs/toolkit'
 import { name } from './slice'
 import { AuthState } from './types'
 
@@ -6,19 +7,21 @@ interface State {
     [name]: AuthState
 }
 
-const selectLogin = (state: State) => state.auth.login;
-const selectPassword = (state: State) => state.auth.password;
-const selectLoading = (state: State) => state.auth.loading;
-const selectError = (state: State) => state.auth.error;
-const selectIsAuthenticated = (state: State) => state.auth.isAuthenticated;
-const selectRole = (state: State) => state.auth.role;
-const selectUsername = (state: State) => state.auth.username;
-const selectAdminLoginState = (state: State) => state.auth;
-const selectLogoutLoading = (state: State) => state.auth.logoutLoading;
-const selectLogoutCompleted = (state: State) => state.auth.logoutCompleted;
-const selectRefreshReady = (state: State) => state.auth.refreshReady;
-const selectRefreshUnauthorized = (state: State) => state.auth.refreshUnauthorized;
-const selectNavigateTo = (state: State) => state.auth.navigateTo;
+const root = (state: State) => state[name]
+
+const selectLogin = createSelector(root, rootData => rootData?.login ?? '');
+const selectPassword = createSelector(root, rootData => rootData?.password ?? '');
+const selectLoading = createSelector(root, rootData => rootData?.loading ?? false);
+const selectError = createSelector(root, rootData => rootData?.error ?? null);
+const selectIsAuthenticated = createSelector(root, rootData => rootData?.isAuthenticated ?? false);
+const selectRole = createSelector(root, rootData => rootData?.role ?? null);
+const selectUsername = createSelector(root, rootData => rootData?.username ?? null);
+const selectAdminLoginState = createSelector(root, rootData => rootData?.auth ?? null);
+const selectLogoutLoading = createSelector(root, rootData => rootData?.logoutLoading ?? false);
+const selectLogoutCompleted = createSelector(root, rootData => rootData?.logoutCompleted ?? false);
+const selectRefreshReady = createSelector(root, rootData => rootData?.refreshReady ?? false); // ← ключевое исправление
+const selectRefreshUnauthorized = createSelector(root, rootData => rootData?.refreshUnauthorized ?? false);
+const selectNavigateTo = createSelector(root, rootData => rootData?.navigateTo ?? null);
 
 export const selectors = {
     selectLogin,
@@ -34,4 +37,4 @@ export const selectors = {
     selectRefreshReady,
     selectRefreshUnauthorized,
     selectNavigateTo,
-}
+};

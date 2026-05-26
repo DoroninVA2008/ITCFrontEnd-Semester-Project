@@ -14,10 +14,11 @@ const initialState: AuthState = {
   refreshReady: false,
   refreshUnauthorized: false,
   navigateTo: null,
+  auth: null
 };
 
 export const { name, reducer, actions } = createSlice({
-  name: 'auth',
+  name: 'login',
   initialState,
   reducers: {
     setLogin: (state, action: PayloadAction<string>) => {
