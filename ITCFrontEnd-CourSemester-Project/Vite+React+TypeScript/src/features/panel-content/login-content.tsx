@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { LoginFeature } from '../login'
+import { LogInFeature } from '../login'
 
 export const LogInContentComponent: React.FC = () => {
   // Удаляешь и меняешь на useSelector(selector login frature) || dispatch(action login feature) (useDispatch)
@@ -9,22 +9,22 @@ export const LogInContentComponent: React.FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
 
-  const login = useSelector(LoginFeature.selectors.selectLogin);
-  const password = useSelector(LoginFeature.selectors.selectPassword);
-  const error = useSelector(LoginFeature.selectors.selectError);
-  const loading = useSelector(LoginFeature.selectors.selectLoading);
-  const navigateTo = useSelector(LoginFeature.selectors.selectNavigateTo);
+  const login = useSelector(LogInFeature.selectors.selectLogin);
+  const password = useSelector(LogInFeature.selectors.selectPassword);
+  const error = useSelector(LogInFeature.selectors.selectError);
+  const loading = useSelector(LogInFeature.selectors.selectLoading);
+  const navigateTo = useSelector(LogInFeature.selectors.selectNavigateTo);
   
   useEffect(() => {
     if (navigateTo) {
       navigate(navigateTo);
-      dispatch(LoginFeature.actions.clearNavigateTo());
+      dispatch(LogInFeature.actions.clearNavigateTo());
     }
   }, [navigateTo, navigate, dispatch]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(LoginFeature.actions.loginRequest());
+    dispatch(LogInFeature.actions.loginRequest());
   };
 
   return (
@@ -39,7 +39,7 @@ export const LogInContentComponent: React.FC = () => {
             id="LogIn"
             name="login"
             value={login}
-            onChange={(e) => dispatch(LoginFeature.actions.setLogin(e.target.value))}
+            onChange={(e) => dispatch(LogInFeature.actions.setLogin(e.target.value))}
             required
           />
         </div>
@@ -51,7 +51,7 @@ export const LogInContentComponent: React.FC = () => {
             id="PassWord"
             name="password"
             value={password}
-            onChange={(e) => dispatch(LoginFeature.actions.setPassword(e.target.value))}
+            onChange={(e) => dispatch(LogInFeature.actions.setPassword(e.target.value))}
             required
           />
         </div>

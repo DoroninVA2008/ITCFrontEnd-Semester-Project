@@ -1,12 +1,12 @@
 import { takeLatest, takeLeading, put, call, select } from 'redux-saga/effects'
 import { adminLogIn, adminLogOut, adminReFresh } from '../../entities/cons'
 import { actions } from './slice'
-import { selectLogin, selectPassword } from './selectors'
+import { selectors } from './selectors'
 
 function* handleAdminLogin(): Generator<any, void, any> {
   try {
-    const login: string = yield select(selectLogin);
-    const password: string = yield select(selectPassword);
+    const login: string = yield select(selectors.selectLogin);
+    const password: string = yield select(selectors.selectPassword);
 
     console.log('Отправляем:', JSON.stringify({ login, password }));
 

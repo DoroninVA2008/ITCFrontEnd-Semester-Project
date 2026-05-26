@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AuthState } from '../login/types'
 
+export const name = 'logout'
+
 const initialState: AuthState = {
   login: '',
   password: '',
@@ -14,10 +16,11 @@ const initialState: AuthState = {
   refreshReady: false,
   refreshUnauthorized: false,
   navigateTo: null,
+  auth: null
 };
 
-export const { name, reducer, actions } = createSlice({
-  name: 'auth',
+export const { reducer, actions } = createSlice({
+  name,
   initialState,
   reducers: {
     setLogin: (state, action: PayloadAction<string>) => {
@@ -60,13 +63,9 @@ export const { name, reducer, actions } = createSlice({
     logoutSuccess: (state) => {
       state.logoutLoading = false;
       state.logoutCompleted = true;
-      state.navigateTo = '/log'; // добавляем редирект на логин
     },
     logoutReset: (state) => {
       state.logoutCompleted = false;
-    },
-    clearNavigateTo: (state) => {
-      state.navigateTo = null;
     },
     refreshRequest: (state) => {
       state.refreshUnauthorized = false;

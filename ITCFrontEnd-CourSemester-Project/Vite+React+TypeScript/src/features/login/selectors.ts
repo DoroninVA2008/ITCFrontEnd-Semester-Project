@@ -4,7 +4,7 @@ import { name } from './slice'
 import { AuthState } from './types'
 
 interface State {
-    [name]: AuthState
+    [name]: AuthState | undefined
 }
 
 const root = (state: State) => state[name]
@@ -19,7 +19,7 @@ const selectUsername = createSelector(root, rootData => rootData?.username ?? nu
 const selectAdminLoginState = createSelector(root, rootData => rootData?.auth ?? null);
 const selectLogoutLoading = createSelector(root, rootData => rootData?.logoutLoading ?? false);
 const selectLogoutCompleted = createSelector(root, rootData => rootData?.logoutCompleted ?? false);
-const selectRefreshReady = createSelector(root, rootData => rootData?.refreshReady ?? false); // ← ключевое исправление
+const selectRefreshReady = createSelector(root, rootData => rootData?.refreshReady ?? false);
 const selectRefreshUnauthorized = createSelector(root, rootData => rootData?.refreshUnauthorized ?? false);
 const selectNavigateTo = createSelector(root, rootData => rootData?.navigateTo ?? null);
 

@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { actions } from '../features/logout/slice' // или '../features/auth'
-import { selectors } from '../features/login/selectors'
+import { LogOutFeature } from '../features/logout' // или '../features/auth'
 
 export const ButoAcc: React.FC = () => {
   const dispatch = useDispatch();
@@ -13,20 +12,18 @@ export const ButoAcc: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const isOpenRef = useRef(false);
   
-  const logoutCompleted = useSelector(selectors.selectLogoutCompleted);
-  const navigateTo = useSelector(selectors.selectNavigateTo);
+  const logoutCompleted = useSelector((state: any) => state.auth.logoutCompleted);
 
   useEffect(() => {
-    if (logoutCompleted && navigateTo) {
-      dispatch(actions.logout());
-      dispatch(actions.logoutReset());
-      navigate(navigateTo);
-      dispatch(actions.clearNavigateTo());
+    if (logoutCompleted) {
+      dispatch(LogOutFeature.actions.logout());
+      dispatch(LogOutFeature.actions.logoutReset());
+      navigate('/log');
     }
-  }, [logoutCompleted, navigateTo, dispatch, navigate]);
+  }, [logoutCompleted, dispatch, navigate]);
 
   const handleLogout = () => {
-    dispatch(actions.logoutRequest());
+    dispatch(LogOutFeature.actions.logoutRequest());
   };
 
   const closeDropdown = () => {
@@ -77,4 +74,4 @@ export const ButoAcc: React.FC = () => {
       )}
     </div>
   );
-}
+};
