@@ -11,8 +11,7 @@ export const ButoAcc: React.FC = () => {
   const [closing, setClosing] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const isOpenRef = useRef(false);
-  
-  const logoutCompleted = useSelector((state: any) => state.auth.logoutCompleted);
+  const logoutCompleted = useSelector((state: any) => state.logout.logoutCompleted);
 
   useEffect(() => {
     if (logoutCompleted) {

@@ -1,4 +1,5 @@
 export interface AuthState {
+  navigateToLogin: any;
   login: string;
   password: string;
   loading: boolean;

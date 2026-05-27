@@ -7,7 +7,7 @@ function* handleAdminLogin(): Generator<any, void, any> {
   try {
     const login: string = yield select(selectors.selectLogin);
     const password: string = yield select(selectors.selectPassword);
-
+    
     console.log('Отправляем:', JSON.stringify({ login, password }));
 
     const response: Response = yield call(fetch, adminLogIn, {
@@ -45,14 +45,18 @@ function* handleAdminLogin(): Generator<any, void, any> {
 
 function* handleAdminLogout(): Generator<any, void, any> {
   try {
-    yield call(fetch, adminLogOut, {
+    const response: Response = yield call(fetch, adminLogOut, {
       method: 'POST',
       credentials: 'include',
     });
-  } catch {
-    console.log('Ошибка при выходе из аккаунта');
-  } finally {
+    
+    console.log('Logout response status:', response.status);
+    
     yield put(actions.logoutSuccess());
+    console.log('logoutSuccess dispatched');
+    
+  } catch (error) {
+    console.log('Ошибка при выходе из аккаунта:', error);
   }
 }
 

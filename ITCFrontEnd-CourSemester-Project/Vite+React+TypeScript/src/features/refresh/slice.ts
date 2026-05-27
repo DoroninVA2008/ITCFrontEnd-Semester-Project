@@ -12,6 +12,7 @@ interface AuthState {
   logoutCompleted: boolean;
   refreshReady: boolean;
   refreshUnauthorized: boolean;
+  navigateToLogin: boolean;
 }
 
 const initialState: AuthState = {
@@ -26,6 +27,7 @@ const initialState: AuthState = {
   logoutCompleted: false,
   refreshReady: false,
   refreshUnauthorized: false,
+  navigateToLogin: false,
 };
 
 export const { name, reducer, actions } = createSlice({
@@ -76,6 +78,8 @@ export const { name, reducer, actions } = createSlice({
     logoutReset: (state) => {
       state.logoutCompleted = false;
     },
+    startRefreshTimer: () => {},
+    stopRefreshTimer: () => {},
     refreshRequest: (state) => {
       state.refreshUnauthorized = false;
     },
@@ -86,10 +90,15 @@ export const { name, reducer, actions } = createSlice({
     refreshUnauthorized: (state) => {
       state.refreshReady = false;
       state.refreshUnauthorized = true;
+      state.navigateToLogin = true;
     },
     refreshReset: (state) => {
       state.refreshReady = false;
       state.refreshUnauthorized = false;
+      state.navigateToLogin = false;
+    },
+    clearNavigateToLogin: (state) => {
+      state.navigateToLogin = false;
     },
   },
 });

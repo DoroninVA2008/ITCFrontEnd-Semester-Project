@@ -12,3 +12,4 @@ export const selectLogoutLoading = (state: RootState) => state.auth.logoutLoadin
 export const selectLogoutCompleted = (state: RootState) => state.auth.logoutCompleted;
 export const selectRefreshReady = (state: RootState) => state.auth.refreshReady;
 export const selectRefreshUnauthorized = (state: RootState) => state.auth.refreshUnauthorized;
+export const selectNavigateToLogin = (state: RootState) => state.auth.navigateToLogin; // navigateTo

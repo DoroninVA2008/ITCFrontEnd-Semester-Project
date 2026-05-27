@@ -1,6 +1,7 @@
 import { all, fork } from 'redux-saga/effects'
 import { watchFetchData, watchFetchCardData } from './saga'
 import { LogInFeature } from '../../features/login'
+import { LogOutFeature } from '../../features/logout'
 import { FormDesign } from '../../features/form-design'
 import { watchFetchAllEvents } from '../../features/card-information/saga'
 
@@ -9,6 +10,7 @@ export default function* rootSaga() {
     watchFetchData(),
     watchFetchCardData(),
     fork(LogInFeature.sagas.init),
+    fork(LogOutFeature.sagas.init),
     fork(FormDesign.sagas.init),
     watchFetchAllEvents(),
   ]);
