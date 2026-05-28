@@ -11,9 +11,11 @@ const root = (state: State) => state[name]
 const selectRefreshReady = createSelector(root, rootData => rootData?.refreshReady ?? false)
 const selectRefreshUnauthorized = createSelector(root, rootData => rootData?.refreshUnauthorized ?? false)
 const selectIsAuthenticated = createSelector(root, rootData => rootData?.isAuthenticated ?? false)
+const selectNavigateToLogin = createSelector(root, rootData => rootData?.navigateToLogin ?? false)
 
 export const selectors = {
     selectRefreshReady,
     selectRefreshUnauthorized,
-    selectIsAuthenticated
+    selectIsAuthenticated,
+    selectNavigateToLogin
 };

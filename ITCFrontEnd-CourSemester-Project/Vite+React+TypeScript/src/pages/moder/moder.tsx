@@ -6,11 +6,11 @@ import './moder.scss'
 import { useAdminReFresh } from '../../features/refresh/saga.ts' // Исправить
 
 export const Moder: React.FC = () => {
-  const { ready } = useAdminReFresh()
+  useAdminReFresh()
   return (
     <div className="AdminPage">
       <Headmer />
-      {ready && <ModerContentComponent />}
+      <ModerContentComponent />
     </div>
   )
 }

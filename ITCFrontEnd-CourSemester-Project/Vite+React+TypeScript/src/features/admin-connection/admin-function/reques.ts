@@ -1,4 +1,5 @@
 import { adminList } from '../../../entities/cons'
+import { useNavigate } from 'react-router-dom'
 
 export interface Request {
   adminComment: string
@@ -28,6 +29,7 @@ export interface FetchRequestsResult {
 }
 
 export const fetchRequests = async (params: FetchRequestsParams = {}): Promise<FetchRequestsResult> => {
+    const navigate = useNavigate();
     try {
         const query = new URLSearchParams()
         if (params.status) query.set('status', params.status)
@@ -80,6 +82,7 @@ export const fetchRequests = async (params: FetchRequestsParams = {}): Promise<F
         }
     } catch (err) {
         console.error('Ошибка загрузки заявок:', err);
+        navigate('/log');
         return { requests: [], total: 0 }
     }
 }

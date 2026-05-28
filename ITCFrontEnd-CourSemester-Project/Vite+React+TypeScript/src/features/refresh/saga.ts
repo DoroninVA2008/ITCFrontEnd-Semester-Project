@@ -11,16 +11,19 @@ export const useAdminReFresh = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const ready = useSelector((state: any) => state.auth.refreshReady);
-  const navigateToLogin = useSelector((state: any) => state.auth.navigateToLogin);
+  const ready = useSelector(selectors.selectRefreshReady);
+  const isAuthenticated = useSelector(selectors.selectIsAuthenticated);
+  const navigateToLogin = useSelector(selectors.selectNavigateToLogin);
 
   useEffect(() => {
-    dispatch(ReFreshFeature.actions.startRefreshTimer());
+    if (isAuthenticated) {
+      dispatch(ReFreshFeature.actions.startRefreshTimer());
+    }
 
     return () => {
       dispatch(ReFreshFeature.actions.stopRefreshTimer());
     };
-  }, [dispatch]);
+  }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
     if (navigateToLogin) {
@@ -29,7 +32,7 @@ export const useAdminReFresh = () => {
     }
   }, [navigateToLogin, dispatch, navigate]);
 
-  return { ready } as const;
+  return { ready, isAuthenticated } as const;
 };
 
 function* handleAdminReFresh(): Generator<any, void, any> {
@@ -48,28 +51,51 @@ function* handleAdminReFresh(): Generator<any, void, any> {
 
     if (!response.ok) {
       console.log('Ошибка при обновлении токенов:', response.status);
+      if (response.status === 403 || response.status === 500) {
+        yield put(actions.refreshUnauthorized());
+      }
       return;
     }
 
+    const data = yield response.json();
     console.log('Токены успешно обновлены');
+    
     yield put(actions.refreshSuccess());
+    
+    if (data.role && data.username) {
+      yield put(actions.loginSuccess({ 
+        role: data.role, 
+        username: data.username 
+      }));
+    }
   } catch (error) {
     console.log('Ошибка сети при обновлении токенов:', error);
+    yield put(actions.refreshUnauthorized());
   }
 }
 
 function* handleStartReFreshTimer(): Generator<any, void, any> {
   const isAuthenticated: boolean = yield select(selectors.selectIsAuthenticated);
   
-  if (isAuthenticated) {
-    yield put(actions.refreshSuccess());
-  } else {
-    yield put(actions.refreshRequest());
+  if (!isAuthenticated) {
+    return;
+  }
+  
+  yield put(actions.refreshRequest());
+  
+  const { success, unauthorized } = yield race({
+    success: take(actions.refreshSuccess),
+    unauthorized: take(actions.refreshUnauthorized),
+    timeout: delay(5000)
+  });
+
+  if (unauthorized || !success) {
+    return;
   }
 
   while (true) {
     const { stopped } = yield race({
-      timeout: delay(15 * 60 * 1000),
+      timeout: delay(15 * 60 * 1000), // 15 минут
       stopped: take(actions.stopRefreshTimer),
     });
 
@@ -80,9 +106,13 @@ function* handleStartReFreshTimer(): Generator<any, void, any> {
 }
 
 function* handleReFreshUnauthorized(): Generator<any, void, any> {
+  console.log('handleReFreshUnauthorized: очистка состояния');
+  const navigate = useNavigate();
+  navigate('/log');
   yield put(actions.stopRefreshTimer());
   yield put(actions.logout());
   yield put(actions.refreshReset());
+  yield put(actions.setNavigateToLogin());
 }
 
 export function* ReFreshInit(): Generator<any, void, any> {

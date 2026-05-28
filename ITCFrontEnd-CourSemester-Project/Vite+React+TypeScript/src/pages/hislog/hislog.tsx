@@ -5,11 +5,11 @@ import './hislog.scss'
 import { useAdminReFresh } from '../../features/refresh/saga.ts' // Исправить
 
 export const HisLog: React.FC = () => {
-  const { ready } = useAdminReFresh()
+  useAdminReFresh()
   return (
     <div className="HislogPage">
       <Headmer />
-      {ready && <HisLogContentComponent />}
+      <HisLogContentComponent />
     </div>
   )
 }

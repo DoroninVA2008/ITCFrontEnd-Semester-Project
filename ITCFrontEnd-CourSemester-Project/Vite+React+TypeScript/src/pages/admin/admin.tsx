@@ -6,11 +6,11 @@ import './admin.scss'
 import { useAdminReFresh } from '../../features/refresh/saga.ts' // Исправить
 
 export const Admin: React.FC = () => {
-  const { ready } = useAdminReFresh()
+  useAdminReFresh()
   return (
     <div className="AdminPage">
       <Headmer />
-      {ready && <AdminContentComponent />}
+      <AdminContentComponent />
     </div>
   );
 }

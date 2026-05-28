@@ -54,7 +54,7 @@ export const ButoAcc: React.FC = () => {
     }
   };
 
-  const username = localStorage.getItem('username') || 'admin';
+  const username = localStorage.getItem('username') || 'Unauthorized_AdModer';
   const parts = username.split('_');
   const secondInitial = parts[1]?.[0]?.toUpperCase() ?? 'T';
 
