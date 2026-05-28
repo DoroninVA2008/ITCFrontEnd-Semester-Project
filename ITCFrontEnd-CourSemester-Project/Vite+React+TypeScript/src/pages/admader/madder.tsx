@@ -2,10 +2,10 @@ import React from 'react'
 import { Heamoder } from '../../widgets/heamoder.tsx' // @ts-ignore
 import '../../widgets/mobile.scss'
 import { AdminContentComponent } from '../../features/panel-content/admin-content.tsx'
-import { useAdminRefresh } from '../../features/refresh-old/refresh.ts' // Исправить
+import { useAdminReFresh } from '../../features/refresh/saga.ts' // Исправить
 
 export const Madder: React.FC = () => {
-  useAdminRefresh()
+  useAdminReFresh()
   return (
     <div className="AdminPage">
       <Heamoder />

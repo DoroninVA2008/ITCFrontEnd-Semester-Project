@@ -2,12 +2,12 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { takeLatest, takeLeading, put, call, select, delay, race, take } from 'redux-saga/effects'
-import { adminLogIn, adminLogOut, adminReFresh } from '../../entities/cons'
+import { adminReFresh } from '../../entities/cons'
 import { actions } from './slice'
-import { selectLogin, selectPassword, selectIsAuthenticated } from './selectors'
-import { Auth } from './index'
+import { selectors } from './selectors'
+import { ReFreshFeature } from './index'
 
-export const useAdminRefresh = () => {
+export const useAdminReFresh = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -15,16 +15,16 @@ export const useAdminRefresh = () => {
   const navigateToLogin = useSelector((state: any) => state.auth.navigateToLogin);
 
   useEffect(() => {
-    dispatch(Auth.actions.startRefreshTimer());
+    dispatch(ReFreshFeature.actions.startRefreshTimer());
 
     return () => {
-      dispatch(Auth.actions.stopRefreshTimer());
+      dispatch(ReFreshFeature.actions.stopRefreshTimer());
     };
   }, [dispatch]);
 
   useEffect(() => {
     if (navigateToLogin) {
-      dispatch(Auth.actions.clearNavigateToLogin());
+      dispatch(ReFreshFeature.actions.clearNavigateToLogin());
       navigate('/log');
     }
   }, [navigateToLogin, dispatch, navigate]);
@@ -32,60 +32,7 @@ export const useAdminRefresh = () => {
   return { ready } as const;
 };
 
-function* handleAdminLogin(): Generator<any, void, any> {
-  try {
-    const login: string = yield select(selectLogin);
-    const password: string = yield select(selectPassword);
-
-    console.log('Отправляем:', JSON.stringify({ login, password }));
-
-    const response: Response = yield call(fetch, adminLogIn, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ login, password }),
-    });
-
-    if (response.status === 401) {
-      yield put(actions.loginFailure('Неверный логин или пароль'));
-      return;
-    }
-
-    let role: string | null = null;
-    try {
-      const data: any = yield call([response, 'json']);
-      role = data?.role ?? null;
-    } catch {
-      // тело пустое или не JSON — ок
-    }
-
-    localStorage.setItem('username', login);
-
-    const finalRole =
-      role === 'super_admin' || (!role && login === 'super_admin')
-        ? 'super_admin'
-        : role || 'moderator';
-
-    yield put(actions.loginSuccess({ role: finalRole, username: login }));
-  } catch {
-    yield put(actions.loginFailure('Ошибка подключения к серверу'));
-  }
-}
-
-function* handleAdminLogout(): Generator<any, void, any> {
-  try {
-    yield call(fetch, adminLogOut, {
-      method: 'POST',
-      credentials: 'include',
-    });
-  } catch {
-    console.log('Ошибка при выходе из аккаунта');
-  } finally {
-    yield put(actions.logoutSuccess());
-  }
-}
-
-function* handleAdminRefresh(): Generator<any, void, any> {
+function* handleAdminReFresh(): Generator<any, void, any> {
   try {
     const response: Response = yield call(fetch, adminReFresh, {
       method: 'POST',
@@ -111,8 +58,8 @@ function* handleAdminRefresh(): Generator<any, void, any> {
   }
 }
 
-function* handleStartRefreshTimer(): Generator<any, void, any> {
-  const isAuthenticated: boolean = yield select(selectIsAuthenticated);
+function* handleStartReFreshTimer(): Generator<any, void, any> {
+  const isAuthenticated: boolean = yield select(selectors.selectIsAuthenticated);
   
   if (isAuthenticated) {
     yield put(actions.refreshSuccess());
@@ -132,16 +79,14 @@ function* handleStartRefreshTimer(): Generator<any, void, any> {
   }
 }
 
-function* handleRefreshUnauthorized(): Generator<any, void, any> {
+function* handleReFreshUnauthorized(): Generator<any, void, any> {
   yield put(actions.stopRefreshTimer());
   yield put(actions.logout());
   yield put(actions.refreshReset());
 }
 
-export function* authInit(): Generator<any, void, any> {
-  yield takeLatest(actions.loginRequest, handleAdminLogin);
-  yield takeLatest(actions.logoutRequest, handleAdminLogout);
-  yield takeLeading(actions.refreshRequest, handleAdminRefresh);
-  yield takeLatest(actions.startRefreshTimer, handleStartRefreshTimer);
-  yield takeLatest(actions.refreshUnauthorized, handleRefreshUnauthorized);
+export function* ReFreshInit(): Generator<any, void, any> {
+  yield takeLeading(actions.refreshRequest, handleAdminReFresh);
+  yield takeLatest(actions.startRefreshTimer, handleStartReFreshTimer);
+  yield takeLatest(actions.refreshUnauthorized, handleReFreshUnauthorized);
 }

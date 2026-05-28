@@ -3,10 +3,10 @@ import { Headmer } from '../../widgets/headmer.tsx'
 import { ModerContentComponent } from '../../features/panel-content/moder-content.tsx' // @ts-ignore
 import '../admin/admin.scss' // @ts-ignore
 import './moder.scss'
-import { useAdminRefresh } from '../../features/refresh-old/refresh.ts' // Исправить
+import { useAdminReFresh } from '../../features/refresh/saga.ts' // Исправить
 
 export const Moder: React.FC = () => {
-  const { ready } = useAdminRefresh()
+  const { ready } = useAdminReFresh()
   return (
     <div className="AdminPage">
       <Headmer />

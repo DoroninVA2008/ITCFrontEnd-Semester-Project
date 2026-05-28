@@ -1,4 +1,3 @@
-// import { RootState } from '../../app/store'
 import { createSelector } from '@reduxjs/toolkit'
 import { name } from './slice'
 import { AuthState } from './types'
@@ -16,7 +15,6 @@ const selectError = createSelector(root, rootData => rootData?.error ?? null);
 const selectIsAuthenticated = createSelector(root, rootData => rootData?.isAuthenticated ?? false);
 const selectRole = createSelector(root, rootData => rootData?.role ?? null);
 const selectUsername = createSelector(root, rootData => rootData?.username ?? null);
-const selectAdminLoginState = createSelector(root, rootData => rootData?.auth ?? null);
 const selectLogoutLoading = createSelector(root, rootData => rootData?.logoutLoading ?? false);
 const selectLogoutCompleted = createSelector(root, rootData => rootData?.logoutCompleted ?? false);
 const selectRefreshReady = createSelector(root, rootData => rootData?.refreshReady ?? false);
@@ -31,7 +29,6 @@ export const selectors = {
     selectIsAuthenticated,
     selectRole,
     selectUsername,
-    selectAdminLoginState,
     selectLogoutLoading,
     selectLogoutCompleted,
     selectRefreshReady,

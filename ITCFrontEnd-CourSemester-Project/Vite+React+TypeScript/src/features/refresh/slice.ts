@@ -1,19 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-
-interface AuthState {
-  login: string;
-  password: string;
-  loading: boolean;
-  error: string | null;
-  isAuthenticated: boolean;
-  role: string | null;
-  username: string | null;
-  logoutLoading: boolean;
-  logoutCompleted: boolean;
-  refreshReady: boolean;
-  refreshUnauthorized: boolean;
-  navigateToLogin: boolean;
-}
+import { AuthState } from '../login/types'
 
 const initialState: AuthState = {
   login: '',
@@ -28,6 +14,8 @@ const initialState: AuthState = {
   refreshReady: false,
   refreshUnauthorized: false,
   navigateToLogin: false,
+  navigateTo: null,
+  auth: null
 };
 
 export const { name, reducer, actions } = createSlice({
