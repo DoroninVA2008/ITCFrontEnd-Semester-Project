@@ -94,9 +94,20 @@ export const { reducer, actions } = createSlice({
     },
     clearNavigateToLogin: (state) => {
       state.navigateToLogin = false;
+      state.navigateTo = '/log';
     },
     setNavigateToLogin: (state) => {
       state.navigateToLogin = true;
+      state.navigateTo = '/log';
+    },
+    forceLogoutAndRedirect: (state) => {
+      state.isAuthenticated = false;
+      state.role = null;
+      state.username = null;
+      state.refreshReady = false;
+      state.navigateToLogin = true;
+      state.navigateTo = '/log';
+      localStorage.removeItem('username');
     },
   },
 });

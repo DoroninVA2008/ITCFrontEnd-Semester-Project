@@ -49,6 +49,7 @@ export const { reducer, actions } = createSlice({
       state.loading = false;
       state.error = action.payload;
       state.isAuthenticated = false;
+      state.navigateTo = '/log';
     },
     clearError: (state) => {
       state.error = null;
@@ -77,6 +78,7 @@ export const { reducer, actions } = createSlice({
     refreshUnauthorized: (state) => {
       state.refreshReady = false;
       state.refreshUnauthorized = true;
+      state.navigateTo = '/log';
     },
     refreshReset: (state) => {
       state.refreshReady = false;

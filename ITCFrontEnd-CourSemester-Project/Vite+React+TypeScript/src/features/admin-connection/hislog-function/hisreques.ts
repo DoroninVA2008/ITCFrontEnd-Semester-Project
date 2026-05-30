@@ -8,16 +8,24 @@ const ACTION_LABEL: Record<ActionType, string> = {
   review:   'Взята на проверку',
 }
 
-// бэк может вернуть как английский ключ, так и русскую строку
 const ACTION_TYPE_MAP: Record<string, ActionType> = {
-  approved:      'approved',
-  rejected:      'rejected',
-  review:        'review',
-  'Одобрена':    'approved',
-  'Одобрено':    'approved',
-  'Отклонена':   'rejected',
-  'Отклонено':   'rejected',
+  'approved': 'approved',
+  'rejected': 'rejected',
+  'review': 'review',
+  'Одобрена': 'approved',
+  'Одобрено': 'approved',
+  'Одобрен': 'approved',
+  'Отклонена': 'rejected',
+  'Отклонено': 'rejected',
+  'Отклонен': 'rejected',
   'На проверке': 'review',
+  'На проверку': 'review',
+  'В проверке': 'review',
+  'одобрена': 'approved',
+  'одобрено': 'approved',
+  'отклонена': 'rejected',
+  'отклонено': 'rejected',
+  'на проверке': 'review',
 }
 
 export interface LogEntry {
@@ -72,16 +80,30 @@ export const fetchHistory = async (params: FetchHistoryParams = {}): Promise<Fet
     const total: number = typeof json?.total === 'number' ? json.total : data.length
 
     const entries = data.map((item): LogEntry => {
-      const action = ACTION_TYPE_MAP[item.action ?? ''] ?? 'review'
+      let rawAction = item.action ?? item.status ?? item.type ?? 'review'
+      
+      rawAction = String(rawAction).trim()
+      
+      let action: ActionType = ACTION_TYPE_MAP[rawAction] ?? 'approved'
+      
+      if (!ACTION_TYPE_MAP[rawAction]) {
+        const lowerAction = rawAction.toLowerCase()
+        if (lowerAction.includes('одобр')) action = 'approved'
+        else if (lowerAction.includes('откл')) action = 'rejected'
+        else if (lowerAction.includes('провер')) action = 'review'
+      }
+      
+      console.log(`[fetchHistory] action mapping: "${rawAction}" -> "${action}"`)
+      
       return {
-        id:           String(item.id),
+        id:           String(item.id || item._id || Date.now()),
         action,
-        actionLabel:  ACTION_LABEL[action] ?? item.action ?? action,
-        requestTitle: item.requestTitle  ?? item.request_title  ?? '',
-        requestId:    String(item.requestId ?? item.request_id ?? ''),
-        comment:      item.comment       ?? item.description    ?? '',
-        adminLogin:   item.adminLogin    ?? item.admin_login    ?? item.moderator ?? '',
-        date:         item.createdAt     ?? item.created_at     ?? item.date      ?? '',
+        actionLabel:  ACTION_LABEL[action] ?? rawAction ?? action,
+        requestTitle: item.requestTitle  ?? item.request_title  ?? item.title ?? '',
+        requestId:    String(item.requestId ?? item.request_id ?? item.id ?? ''),
+        comment:      item.comment       ?? item.description    ?? item.note ?? '',
+        adminLogin:   item.adminLogin    ?? item.admin_login    ?? item.moderator ?? item.admin ?? '',
+        date:         item.createdAt     ?? item.created_at     ?? item.date ?? item.timestamp ?? new Date().toISOString(),
       }
     })
 

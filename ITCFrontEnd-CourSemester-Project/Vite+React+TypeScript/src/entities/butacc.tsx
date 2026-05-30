@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { LogOutFeature } from '../features/logout' // или '../features/auth'
+import { LogOutFeature } from '../features/logout'
 
 export const ButoAcc: React.FC = () => {
   const dispatch = useDispatch();
@@ -54,14 +54,15 @@ export const ButoAcc: React.FC = () => {
     }
   };
 
-  const username = localStorage.getItem('username') || 'Unauthorized_AdModer';
+  const username = localStorage.getItem('username') || 'UnAuthorized_AdModer';
   const parts = username.split('_');
-  const secondInitial = parts[1]?.[0]?.toUpperCase() ?? 'T';
+  const firstInitial = parts[0]?.[0]?.toUpperCase() ?? 'A';
+  const secondInitial = parts[1]?.[0]?.toUpperCase() ?? 'A';
 
   return (
     <div className="butacc-wrap" ref={ref}>
       <button className="butacc" onClick={handleToggle}>
-        A{secondInitial}
+        {firstInitial}{secondInitial}
       </button>
       {(open || closing) && (
         <div className={`butacc-dropdown${closing ? ' butacc-dropdown--closing' : ''}`}>

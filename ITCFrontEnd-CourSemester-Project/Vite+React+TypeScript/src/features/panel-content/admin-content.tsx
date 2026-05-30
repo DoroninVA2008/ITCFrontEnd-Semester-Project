@@ -23,22 +23,33 @@ export const AdminContentComponent: React.FC = () => {
     return () => clearTimeout(timer)
   }, [searchQ])
 
-  useEffect(() => {
-    setCurrentPage(1)
-    fetchRequests({
-      status: activeStatus || undefined,
-      q: debouncedQ || undefined,
-      limit: 100,
-    }).then(({ requests: r, total: t }) => {// @ts-ignore
-      setRequests(r)
-      if (!activeStatus && !debouncedQ) {
-        const counts: Record<string, number> = {}
-        r.forEach(req => { counts[req.status] = (counts[req.status] || 0) + 1 })
-        setStatusCounts(counts)
-        setAllTotal(t || r.length)
+useEffect(() => {
+  setCurrentPage(1)
+  const loadRequests = async () => {
+    try {
+      const result = await fetchRequests({
+        status: activeStatus || undefined,
+        q: debouncedQ || undefined,
+        limit: 100,
+      })
+      if (result && result.requests) {
+        setRequests(result.requests)
+        if (!activeStatus && !debouncedQ) {
+          const counts: Record<string, number> = {}
+          result.requests.forEach((req: Request) => { 
+            counts[req.status] = (counts[req.status] || 0) + 1 
+          })
+          setStatusCounts(counts)
+          setAllTotal(result.total || result.requests.length)
+        }
       }
-    })
-  }, [activeStatus, debouncedQ])
+    } catch (error) {
+      console.error('Ошибка загрузки заявок:', error)
+    }
+  }
+  
+  loadRequests()
+}, [activeStatus, debouncedQ])
 
   const totalPages = Math.max(1, Math.ceil(requests.length / PAGE_SIZE))
   const pagedRequests = requests.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)

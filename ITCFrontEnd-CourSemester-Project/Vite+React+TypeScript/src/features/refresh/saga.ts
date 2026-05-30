@@ -5,7 +5,6 @@ import { takeLatest, takeLeading, put, call, select, delay, race, take } from 'r
 import { adminReFresh } from '../../entities/cons'
 import { actions } from './slice'
 import { selectors } from './selectors'
-import { ReFreshFeature } from './index'
 
 export const useAdminReFresh = () => {
   const dispatch = useDispatch();
@@ -17,17 +16,17 @@ export const useAdminReFresh = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      dispatch(ReFreshFeature.actions.startRefreshTimer());
+      dispatch(actions.startRefreshTimer());
     }
 
     return () => {
-      dispatch(ReFreshFeature.actions.stopRefreshTimer());
+      dispatch(actions.stopRefreshTimer());
     };
   }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
     if (navigateToLogin) {
-      dispatch(ReFreshFeature.actions.clearNavigateToLogin());
+      dispatch(actions.clearNavigateToLogin());
       navigate('/log');
     }
   }, [navigateToLogin, dispatch, navigate]);
@@ -45,14 +44,14 @@ function* handleAdminReFresh(): Generator<any, void, any> {
 
     if (response.status === 401) {
       console.log('refresh_token отсутствует или невалиден');
-      yield put(actions.refreshUnauthorized());
+      yield put(actions.forceLogoutAndRedirect()); // Используем новый экшен
       return;
     }
 
     if (!response.ok) {
       console.log('Ошибка при обновлении токенов:', response.status);
       if (response.status === 403 || response.status === 500) {
-        yield put(actions.refreshUnauthorized());
+        yield put(actions.forceLogoutAndRedirect());
       }
       return;
     }
@@ -70,7 +69,7 @@ function* handleAdminReFresh(): Generator<any, void, any> {
     }
   } catch (error) {
     console.log('Ошибка сети при обновлении токенов:', error);
-    yield put(actions.refreshUnauthorized());
+    yield put(actions.forceLogoutAndRedirect());
   }
 }
 
@@ -107,12 +106,8 @@ function* handleStartReFreshTimer(): Generator<any, void, any> {
 
 function* handleReFreshUnauthorized(): Generator<any, void, any> {
   console.log('handleReFreshUnauthorized: очистка состояния');
-  const navigate = useNavigate();
-  navigate('/log');
   yield put(actions.stopRefreshTimer());
-  yield put(actions.logout());
-  yield put(actions.refreshReset());
-  yield put(actions.setNavigateToLogin());
+  yield put(actions.forceLogoutAndRedirect()); // Используем новый экшен
 }
 
 export function* ReFreshInit(): Generator<any, void, any> {
