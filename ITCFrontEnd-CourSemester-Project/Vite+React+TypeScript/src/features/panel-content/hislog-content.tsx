@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react' // @ts-ignore
+import React, { useState, useEffect } from 'react'
 import '../../pages/hislog/hislog.scss'
+import { useNavigate } from 'react-router-dom'
 import { HisLogCard } from '../admin-connection/hislog-function/hiscard'
 import { fetchHistory, LogEntry } from '../admin-connection/hislog-function/hisreques'
 import { HisSearch } from '../admin-connection/hislog-function/hisearch'
@@ -12,15 +13,20 @@ export const HisLogContentComponent: React.FC = () => {
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
+  const navigate = useNavigate()
 
   useEffect(() => {
     setLoading(true)
-    fetchHistory({ q: search || undefined, page, limit: PAGE_SIZE }).then(({ entries, total }) => {
-      setEntries(entries)
-      setTotal(total)
-      setLoading(false)
-    })
-  }, [search, page])
+    fetchHistory({ q: search || undefined, page, limit: PAGE_SIZE })
+      .then(({ entries, total }) => {
+        setEntries(entries)
+        setTotal(total)
+        setLoading(false)
+      })
+      .catch(() => {
+        navigate('/log')
+      })
+  }, [search, page, navigate])
 
   const totalPages = Math.ceil(total / PAGE_SIZE)
 

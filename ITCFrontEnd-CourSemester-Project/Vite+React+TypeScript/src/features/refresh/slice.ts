@@ -30,10 +30,6 @@ export const { reducer, actions } = createSlice({
     setPassword: (state, action: PayloadAction<string>) => {
       state.password = action.payload;
     },
-    loginRequest: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
     loginSuccess: (state, action: PayloadAction<{ role: string | null; username: string }>) => {
       state.loading = false;
       state.isAuthenticated = true;
@@ -41,35 +37,6 @@ export const { reducer, actions } = createSlice({
       state.username = action.payload.username;
       state.error = null;
       state.navigateToLogin = false;
-    },
-    loginFailure: (state, action: PayloadAction<string>) => {
-      state.loading = false;
-      state.error = action.payload;
-      state.isAuthenticated = false;
-      state.navigateToLogin = true;
-    },
-    logout: (state) => {
-      state.isAuthenticated = false;
-      state.role = null;
-      state.username = null;
-      state.login = '';
-      state.password = '';
-      state.refreshReady = false;
-      localStorage.removeItem('username');
-    },
-    clearError: (state) => {
-      state.error = null;
-    },
-    logoutRequest: (state) => {
-      state.logoutLoading = true;
-      state.logoutCompleted = false;
-    },
-    logoutSuccess: (state) => {
-      state.logoutLoading = false;
-      state.logoutCompleted = true;
-    },
-    logoutReset: (state) => {
-      state.logoutCompleted = false;
     },
     startRefreshTimer: () => {},
     stopRefreshTimer: () => {},

@@ -44,7 +44,7 @@ function* handleAdminReFresh(): Generator<any, void, any> {
 
     if (response.status === 401) {
       console.log('refresh_token отсутствует или невалиден');
-      yield put(actions.forceLogoutAndRedirect()); // Используем новый экшен
+      yield put(actions.forceLogoutAndRedirect());
       return;
     }
 
@@ -107,7 +107,7 @@ function* handleStartReFreshTimer(): Generator<any, void, any> {
 function* handleReFreshUnauthorized(): Generator<any, void, any> {
   console.log('handleReFreshUnauthorized: очистка состояния');
   yield put(actions.stopRefreshTimer());
-  yield put(actions.forceLogoutAndRedirect()); // Используем новый экшен
+  yield put(actions.forceLogoutAndRedirect());
 }
 
 export function* ReFreshInit(): Generator<any, void, any> {
