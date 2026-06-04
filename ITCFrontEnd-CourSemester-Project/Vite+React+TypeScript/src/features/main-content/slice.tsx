@@ -8,7 +8,7 @@ export interface TitleHState {
 }
 
 const initialState: TitleHState = {// @ts-ignore
-  title1: <h1>Россия — <br /> страна героев</h1>,// @ts-ignore
+  title1: <h1>Россия —<br />страна героев</h1>,// @ts-ignore
   title2: <h2>Интерактивная карта исторических<br />событий</h2>,// @ts-ignore
   title3: <h3>Исследуйте историю. Сохраняйте память. Добавляйте события на общую карту подвигов.</h3>,
   needAnimated: true

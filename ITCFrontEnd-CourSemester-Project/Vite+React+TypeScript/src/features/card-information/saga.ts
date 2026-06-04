@@ -1,12 +1,11 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { cards } from '../../entities/cons'
 import { EventObject } from './ui/reurlcard'
+import { fetchAllEventsSuccess, fetchAllEventsFailure } from './slice'
 
-export const FETCH_ALL_EVENTS = 'FETCH_ALL_EVENTS'
-export const FETCH_ALL_EVENTS_SUCCESS = 'FETCH_ALL_EVENTS_SUCCESS'
-export const FETCH_ALL_EVENTS_FAILURE = 'FETCH_ALL_EVENTS_FAILURE'
+export const FETCH_ALL_EVENTS = 'FETCH_ALL_EVENTS';
 
-async function fetchAllEvents(): Promise<EventObject[]> {
+async function fetchAllEventsApi(): Promise<EventObject[]> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
 
@@ -52,11 +51,11 @@ async function fetchAllEvents(): Promise<EventObject[]> {
 
 function* fetchAllEventsSaga(): Generator<any, void, EventObject[]> {
     try {
-        const events: EventObject[] = yield call(fetchAllEvents);
-        yield put({ type: FETCH_ALL_EVENTS_SUCCESS, payload: events });
+        const events: EventObject[] = yield call(fetchAllEventsApi);
+        yield put(fetchAllEventsSuccess(events));
     } catch (error: any) {
         console.error('❌ [EventsDataService] Ошибка при загрузке данных:', error);
-        yield put({ type: FETCH_ALL_EVENTS_FAILURE, payload: error?.message || 'Unknown error' });
+        yield put(fetchAllEventsFailure(error?.message || 'Unknown error'));
     }
 }
 

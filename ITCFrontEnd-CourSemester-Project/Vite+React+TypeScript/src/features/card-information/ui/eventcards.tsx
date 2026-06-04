@@ -1,5 +1,5 @@
 ﻿import React from 'react'
-import { EventObject, formatDate } from './reurlcard' // @ts-ignore
+import { EventObject, formatDate } from './reurlcard'
 import './eventcard.scss'
 
 interface EventCardProps {
@@ -7,7 +7,7 @@ interface EventCardProps {
   eventDate: string;
   eventDescription: string;
   imageUrl?: string;
-  onClose: () => void; // @ts-ignore
+  onClose: () => void;
   siteUrl?: string;
   markerKey?: string;
   onMarkerClickClose?: (markerKey: string) => void;
