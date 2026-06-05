@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { SuccessModal } from '../../form-dispatch/success'
+import { SuccessModal } from './success'
 import { actions } from '../slice'
 import { selectEmail,
   selectTelegram,

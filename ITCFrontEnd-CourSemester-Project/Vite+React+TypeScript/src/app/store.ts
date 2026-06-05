@@ -7,7 +7,7 @@ import eventsReducer from './saga/slice' // импорт slice.ts как eventsR
 import { LogInFeature } from '../features/login'
 import { LogOutFeature } from '../features/logout'
 import { ReFreshFeature } from '../features/refresh'
-import { FormDesign } from '../features/form-design'
+import { FormDesign } from '../features/form'
 
 const sagaMiddleware = createSagaMiddleware();
 

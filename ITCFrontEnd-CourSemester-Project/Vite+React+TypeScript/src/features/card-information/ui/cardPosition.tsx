@@ -12,7 +12,6 @@ export const CardOnMap: React.FC<{
   event: EventObject;
   onClose: () => void;
 }> = ({ isVisible, event, onClose }) => {
-  // Используй правильный селектор
   const cardData = useSelector(selectCardData);
   const [show, setShow] = useState(false);
   const [isClosing, setIsClosing] = useState(false);

@@ -58,9 +58,16 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
   }
 
   const handleEventTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(actions.setEventType({ value: e.target.value, label: e.target.dataset.label ?? e.target.value }))
-    setIsTypevenOpen(false)
-  }
+  const value = e.target.value
+  const label = e.target.dataset.label ?? value
+  
+  dispatch(actions.setEventType({ value, label }))
+  
+  const typeId = value === 'political' ? 1 : value === 'military' ? 2 : null
+  dispatch(actions.setEventTypeId(typeId))
+  
+  setIsTypevenOpen(false)
+}
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
