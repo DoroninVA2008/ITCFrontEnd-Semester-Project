@@ -1,5 +1,7 @@
 ﻿import React from 'react'
-import { EventObject, formatDate } from './reurlcard'
+import { EventObject //, formatDate 
+} from '../slice' // ./reurlcard
+import { formatDate } from '../saga'
 import './eventcard.scss'
 
 interface EventCardProps {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { BuToSuc } from '../../../entities/butosuc'
 import { SuccessModal } from './success'
 import { actions } from '../slice'
 import { selectEmail,
@@ -104,13 +105,13 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onS
             />
           </div>
           <div className="success-actions">
-            <button
-              className={`submit-btn final-submit-btn ${isFormValid ? 'with-background' : ''}`}
-              disabled={!isFormValid || isSubmitting}
+            <BuToSuc
+              isFormValid={isFormValid}
+              isSubmitting={isSubmitting}
+              label="Отправить заявку"
+              loadingLabel="Отправка..."
               onClick={handleSend}
-            >
-              {isSubmitting ? 'Отправка...' : 'Отправить заявку'}
-            </button>
+            />
           </div>
         </div>
       </div>

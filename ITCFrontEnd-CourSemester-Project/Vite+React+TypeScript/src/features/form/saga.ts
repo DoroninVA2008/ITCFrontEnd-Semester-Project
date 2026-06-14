@@ -89,6 +89,6 @@ function* handleSubmitForm(): Generator<any, void, any> {
   }
 }
 
-export function* formDesignInit(): Generator<any, void, any> {
+export function* formInit(): Generator<any, void, any> {
   yield takeLatest(actions.submitRequest.type, handleSubmitForm)
 }

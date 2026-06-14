@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { cards } from '../../entities/cons'
-import { EventObject } from './ui/reurlcard'
-import { fetchAllEventsSuccess, fetchAllEventsFailure } from './slice'
+// import { EventObject } from './ui/reurlcard'
+import { EventObject, fetchAllEventsSuccess, fetchAllEventsFailure } from './slice'
 
 export const FETCH_ALL_EVENTS = 'FETCH_ALL_EVENTS';
 
@@ -58,6 +58,16 @@ function* fetchAllEventsSaga(): Generator<any, void, EventObject[]> {
         yield put(fetchAllEventsFailure(error?.message || 'Unknown error'));
     }
 }
+
+export const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString;
+    return date.toLocaleDateString('ru-RU', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).replace(/\//g, '.');
+  };
 
 export function* watchFetchAllEvents(): Generator<any, void, any> {
     yield takeLatest(FETCH_ALL_EVENTS, fetchAllEventsSaga);

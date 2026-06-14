@@ -7,7 +7,7 @@ import eventsReducer from './saga/slice' // импорт slice.ts как eventsR
 import { LogInFeature } from '../features/login'
 import { LogOutFeature } from '../features/logout'
 import { ReFreshFeature } from '../features/refresh'
-import { FormDesign } from '../features/form'
+import { FormFeature } from '../features/form'
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -19,7 +19,7 @@ export const store = configureStore({
     ...LogInFeature.reducer,
     ...LogOutFeature.reducer,
     ...ReFreshFeature.reducer,
-    ...FormDesign.reducer,
+    ...FormFeature.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

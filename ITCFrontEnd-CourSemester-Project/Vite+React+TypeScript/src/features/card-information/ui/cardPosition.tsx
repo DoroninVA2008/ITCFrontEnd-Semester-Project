@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useSelector } from 'react-redux'
 import { EventCard } from './eventcards'
-import { EventObject } from './reurlcard'
+import { EventObject } from '../slice'
 import { selectCardData } from '../selectors'
 import './eventcard.scss'
 

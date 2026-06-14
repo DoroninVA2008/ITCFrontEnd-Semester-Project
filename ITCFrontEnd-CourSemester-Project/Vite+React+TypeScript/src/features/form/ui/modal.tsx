@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { BuToCon } from '../../../entities/butocon'
 import { ContactModal } from './contac'
 import { actions } from '../slice'
 import { selectName,
@@ -263,13 +264,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
               </p>
             )}
 
-            <button
-              type="submit"
-              className={`submit-btn final-submit-btn ${isFormValid ? 'with-background' : ''}`}
-              disabled={!isFormValid}
-            >
-              Далее
-            </button>
+            <BuToCon isFormValid={false} />
           </form>
         </div>
       </div>

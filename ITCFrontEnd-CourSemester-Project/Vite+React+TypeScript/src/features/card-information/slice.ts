@@ -1,5 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { EventObject } from './ui/reurlcard'
+
+export enum EventType {
+    Execution = 1,
+    MilitaryOperation = 2,
+    BorderConflict = 3,
+    Uprising = 4
+}
+export interface EventObject {
+    id: number;
+    title: string;
+    description: string;
+    latitude: string;
+    longitude: string;
+    eventDate: string;
+    eventType: EventType;
+    previewUrlImage: string;
+    siteUrl: string | null;
+}
 
 interface EventsState {
   events: EventObject[];
