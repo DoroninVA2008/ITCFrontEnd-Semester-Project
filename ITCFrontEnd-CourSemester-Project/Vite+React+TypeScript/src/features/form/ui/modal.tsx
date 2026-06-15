@@ -264,7 +264,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
               </p>
             )}
 
-            <BuToCon isFormValid={false} />
+            <BuToCon isFormValid={isFormValid} />
           </form>
         </div>
       </div>

@@ -1,4 +1,4 @@
-export const apiServer = 'http://10.3.15.182:7666' // import.meta.env.VITE_API_BASE ??
+export const apiServer = 'http://10.3.13.202:7666' // import.meta.env.VITE_API_BASE ??
 export var tiLayer = 'http://10.3.15.182:8080/data/natural_earth/{z}/{x}/{y}.webp' // && 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}' // https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png
 // @ts-ignore
 export var landGeoJSon = '/countries.geojson' && '/src/features/layer-position/countries.geojson'

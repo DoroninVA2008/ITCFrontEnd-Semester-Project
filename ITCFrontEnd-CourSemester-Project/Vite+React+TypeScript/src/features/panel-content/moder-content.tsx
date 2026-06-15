@@ -24,14 +24,17 @@ export const ModerContentComponent: React.FC = () => {
   const menuRef = useRef<HTMLDivElement | null>(null)
   const navigate = useNavigate(); // создаем навигатор
 
-  useEffect(() => {// При монтировании вызываем fetchModerator и обрабатываем ошибку
-    fetchModerators()
-      .then(setModerators)
-      .catch(() => {
+  useEffect(() => {
+  fetchModerators()
+    .then(setModerators)
+    .catch((err) => {
+      console.error('Ошибка загрузки модераторов:', err)
+      if (err?.message?.includes('401') || err?.message?.includes('403')) {
         navigate('/log')
-      })
-  }, [navigate]);
-  // Остальной существующий код...
+      }
+    })
+}, [navigate])
+
   const closeMenu=(id: string) => {
     setMenuClosing(id)
     setTimeout(() => { setOpenMenuId(null); setMenuClosing(null) }, 300)
