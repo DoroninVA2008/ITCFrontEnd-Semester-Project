@@ -5,6 +5,9 @@ const cardSlice = createSlice({
   name: 'card',
   initialState: {
     cardData: null as any,
+    events: [] as any[],
+    isLoading: false,
+    error: null as string | null,
   },
   reducers: {},
   extraReducers: (builder) => {

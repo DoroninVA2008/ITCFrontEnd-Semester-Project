@@ -1,9 +1,9 @@
 import { name, reducer, actions } from './slice'
-import { authInit } from './saga'
+import { ReFreshInit } from './saga'
 
-export const Auth = {
+export const ReFreshFeature = {
     sagas: {
-        init: authInit
+        init: ReFreshInit
     },
     actions,
     reducer: {

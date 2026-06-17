@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-// import { adminLoginReducer } from '../../features/admin-connection/login-function/ui/slice'
+// import { reducer } from '../../features/login/slice'
 
 const initialState = {
   rootappsite: [],
@@ -27,7 +27,7 @@ const markersSlice = createSlice({
     setEvents(state, action) {
       state.marker = action.payload;
     },
-  // adminLogin: adminLoginReducer,
+  // adminLogin: reducer.reducers,
     // другие редьюсеры
   }
 });

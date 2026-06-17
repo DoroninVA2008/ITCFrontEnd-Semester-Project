@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AuthState } from './types'
 
+export const name = 'auth'
+
 const initialState: AuthState = {
   login: '',
   password: '',
@@ -13,10 +15,13 @@ const initialState: AuthState = {
   logoutCompleted: false,
   refreshReady: false,
   refreshUnauthorized: false,
+  navigateTo: null,
+  navigateToLogin: undefined,
+  auth: null
 };
 
-export const { name, reducer, actions } = createSlice({
-  name: 'auth',
+export const { reducer, actions } = createSlice({
+  name,
   initialState,
   reducers: {
     setLogin: (state, action: PayloadAction<string>) => {
@@ -35,22 +40,22 @@ export const { name, reducer, actions } = createSlice({
       state.role = action.payload.role;
       state.username = action.payload.username;
       state.error = null;
+      state.navigateTo = 
+        action.payload.role === 'moderator' ? '/mad' : 
+        action.payload.role === 'super_admin' ? '/adm' : 
+        '/log';
     },
     loginFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;
       state.isAuthenticated = false;
-    },
-    logout: (state) => {
-      state.isAuthenticated = false;
-      state.role = null;
-      state.username = null;
-      state.login = '';
-      state.password = '';
-      localStorage.removeItem('username');
+      state.navigateTo = '/log';
     },
     clearError: (state) => {
       state.error = null;
+    },
+    clearNavigateTo: (state) => {
+      state.navigateTo = null;
     },
     logoutRequest: (state) => {
       state.logoutLoading = true;
@@ -73,6 +78,7 @@ export const { name, reducer, actions } = createSlice({
     refreshUnauthorized: (state) => {
       state.refreshReady = false;
       state.refreshUnauthorized = true;
+      state.navigateTo = '/log';
     },
     refreshReset: (state) => {
       state.refreshReady = false;

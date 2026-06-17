@@ -1,62 +1,40 @@
-import { takeLatest, takeLeading, put, call, select } from 'redux-saga/effects'
-import { adminLogIn, adminLogOut, adminReFresh } from '../../entities/cons'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { takeLatest, takeLeading, put, call, select, delay, race, take } from 'redux-saga/effects'
+import { adminReFresh } from '../../entities/cons'
 import { actions } from './slice'
-import { selectLogin, selectPassword } from './selectors'
+import { selectors } from './selectors'
 
-function* handleAdminLogin(): Generator<any, void, any> {
-  try {
-    const login: string = yield select(selectLogin);
-    const password: string = yield select(selectPassword);
+export const useAdminReFresh = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    console.log('Отправляем:', JSON.stringify({ login, password }));
+  const ready = useSelector(selectors.selectRefreshReady);
+  const isAuthenticated = useSelector(selectors.selectIsAuthenticated);
+  const navigateToLogin = useSelector(selectors.selectNavigateToLogin);
 
-    const response: Response = yield call(fetch, adminLogIn, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ login, password }),
-    });
-
-    if (response.status === 401) {
-      yield put(actions.loginFailure('Неверный логин или пароль'));
-      return;
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(actions.startRefreshTimer());
     }
 
-    let role: string | null = null;
-    try {
-      const data: any = yield call([response, 'json']);
-      role = data?.role ?? null;
-    } catch {
-      // тело пустое или не JSON — ок
+    return () => {
+      dispatch(actions.stopRefreshTimer());
+    };
+  }, [dispatch, isAuthenticated]);
+
+  useEffect(() => {
+    if (navigateToLogin) {
+      dispatch(actions.clearNavigateToLogin());
+      navigate('/log');
     }
+  }, [navigateToLogin, dispatch, navigate]);
 
-    localStorage.setItem('username', login);
+  return { ready, isAuthenticated } as const;
+};
 
-    const finalRole =
-      role === 'super_admin' || (!role && login === 'super_admin')
-        ? 'super_admin'
-        : role || 'moderator';
-
-    yield put(actions.loginSuccess({ role: finalRole, username: login }));
-  } catch {
-    yield put(actions.loginFailure('Ошибка подключения к серверу'));
-  }
-}
-
-function* handleAdminLogout(): Generator<any, void, any> {
-  try {
-    yield call(fetch, adminLogOut, {
-      method: 'POST',
-      credentials: 'include',
-    });
-  } catch {
-    console.log('Ошибка при выходе из аккаунта');
-  } finally {
-    yield put(actions.logoutSuccess());
-  }
-}
-
-function* handleAdminRefresh(): Generator<any, void, any> {
+function* handleAdminReFresh(): Generator<any, void, any> {
   try {
     const response: Response = yield call(fetch, adminReFresh, {
       method: 'POST',
@@ -66,24 +44,74 @@ function* handleAdminRefresh(): Generator<any, void, any> {
 
     if (response.status === 401) {
       console.log('refresh_token отсутствует или невалиден');
-      yield put(actions.refreshUnauthorized());
+      yield put(actions.forceLogoutAndRedirect());
       return;
     }
 
     if (!response.ok) {
       console.log('Ошибка при обновлении токенов:', response.status);
+      if (response.status === 403 || response.status === 500) {
+        yield put(actions.forceLogoutAndRedirect());
+      }
       return;
     }
 
+    const data = yield response.json();
     console.log('Токены успешно обновлены');
+    
     yield put(actions.refreshSuccess());
+    
+    if (data.role && data.username) {
+      yield put(actions.loginSuccess({ 
+        role: data.role, 
+        username: data.username 
+      }));
+    }
   } catch (error) {
     console.log('Ошибка сети при обновлении токенов:', error);
+    yield put(actions.forceLogoutAndRedirect());
   }
 }
 
-export function* authInit(): Generator<any, void, any> {
-  yield takeLatest(actions.loginRequest, handleAdminLogin);
-  yield takeLatest(actions.logoutRequest, handleAdminLogout);
-  yield takeLeading(actions.refreshRequest, handleAdminRefresh);
+function* handleStartReFreshTimer(): Generator<any, void, any> {
+  const isAuthenticated: boolean = yield select(selectors.selectIsAuthenticated);
+  
+  if (!isAuthenticated) {
+    return;
+  }
+  
+  yield put(actions.refreshRequest());
+  
+  const { success, unauthorized } = yield race({
+    success: take(actions.refreshSuccess),
+    unauthorized: take(actions.refreshUnauthorized),
+    timeout: delay(5000)
+  });
+
+  if (unauthorized || !success) {
+    return;
+  }
+
+  while (true) {
+    const { stopped } = yield race({
+      timeout: delay(15 * 60 * 1000), // 15 минут
+      stopped: take(actions.stopRefreshTimer),
+    });
+
+    if (stopped) break;
+
+    yield put(actions.refreshRequest());
+  }
+}
+
+function* handleReFreshUnauthorized(): Generator<any, void, any> {
+  console.log('handleReFreshUnauthorized: очистка состояния');
+  yield put(actions.stopRefreshTimer());
+  yield put(actions.forceLogoutAndRedirect());
+}
+
+export function* ReFreshInit(): Generator<any, void, any> {
+  yield takeLeading(actions.refreshRequest, handleAdminReFresh);
+  yield takeLatest(actions.startRefreshTimer, handleStartReFreshTimer);
+  yield takeLatest(actions.refreshUnauthorized, handleReFreshUnauthorized);
 }

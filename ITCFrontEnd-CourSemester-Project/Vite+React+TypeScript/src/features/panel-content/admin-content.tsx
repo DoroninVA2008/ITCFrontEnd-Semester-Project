@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { RequestModal, Request } from './admreq'
 import { ReqCard } from '../admin-connection/admin-function/reqard'
 import { fetchRequests } from '../admin-connection/admin-function/reques'
@@ -10,7 +11,7 @@ const PAGE_SIZE = 5
 export const AdminContentComponent: React.FC = () => {
   const [selectedRequest, setSelectedRequest] = useState<Request | null>(null)
   const [requests, setRequests] = useState<Request[]>([])
-
+  const navigate = useNavigate()
   const [currentPage, setCurrentPage] = useState(1)
   const [activeStatus, setActiveStatus] = useState('')
   const [searchQ, setSearchQ] = useState('')
@@ -25,19 +26,31 @@ export const AdminContentComponent: React.FC = () => {
 
   useEffect(() => {
     setCurrentPage(1)
-    fetchRequests({
-      status: activeStatus || undefined,
-      q: debouncedQ || undefined,
-      limit: 100,
-    }).then(({ requests: r, total: t }) => {// @ts-ignore
-      setRequests(r)
-      if (!activeStatus && !debouncedQ) {
-        const counts: Record<string, number> = {}
-        r.forEach(req => { counts[req.status] = (counts[req.status] || 0) + 1 })
-        setStatusCounts(counts)
-        setAllTotal(t || r.length)
+    const loadRequests = async () => {
+      try {
+        const result = await fetchRequests({
+          status: activeStatus || undefined,
+          q: debouncedQ || undefined,
+          limit: 100,
+        })
+        if (result && result.requests) {
+          setRequests(result.requests)
+          if (!activeStatus && !debouncedQ) {
+            const counts: Record<string, number> = {}
+            result.requests.forEach((req: Request) => { 
+              counts[req.status] = (counts[req.status] || 0) + 1 
+            })
+            setStatusCounts(counts)
+            setAllTotal(result.total || result.requests.length)
+          }
+        }
+      } catch (error) {
+        console.error('Ошибка загрузки заявок:', error)
+        navigate('/log')
       }
-    })
+    }
+    
+    loadRequests()
   }, [activeStatus, debouncedQ])
 
   const totalPages = Math.max(1, Math.ceil(requests.length / PAGE_SIZE))

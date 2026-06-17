@@ -26,7 +26,7 @@ export const LayersLabels: React.FC = () => {
 
   useEffect(() => {
     if (isDataLoadedRef.current) return; // https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson
-    fetch(landGeoJSon) // ./src/features/layers/countries.geojson
+    fetch(landGeoJSon)
       .then(response => response.json())
       .then(data => {
         const adjustedData = centerRussiaOnMap(data);

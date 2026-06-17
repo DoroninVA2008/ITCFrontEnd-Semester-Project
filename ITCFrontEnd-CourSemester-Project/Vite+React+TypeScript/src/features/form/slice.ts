@@ -1,5 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import type { ContactEventPayload } from '../form-dispatch/foreques'
+
+interface ContactEventPayload {
+  name: string;
+  date: string;
+  description: string;
+  eventType: string;
+  zipFile?: File | null;
+}
 
 interface FormDesignState {
   name: string
@@ -10,6 +17,7 @@ interface FormDesignState {
   zipFile: File | null
   eventName: string
   eventPayload: ContactEventPayload | null
+  eventTypeId: number | null
   showContactModal: boolean
   email: string
   telegram: string
@@ -28,6 +36,7 @@ const initialState: FormDesignState = {
   zipFile: null,
   eventName: '',
   eventPayload: null,
+  eventTypeId: null,
   showContactModal: false,
   email: '',
   telegram: '',
@@ -50,7 +59,10 @@ export const { name, reducer, actions } = createSlice({
     },
     setZipFile: (state, action: PayloadAction<File | null>) => { state.zipFile = action.payload },
     setEventName: (state, action: PayloadAction<string>) => { state.eventName = action.payload },
-    setEventPayload: (state, action: PayloadAction<ContactEventPayload>) => { state.eventPayload = action.payload },
+    setEventPayload: (state, action: PayloadAction<ContactEventPayload>) => {  // Добавлен этот редюсер
+      state.eventPayload = action.payload
+    },
+    setEventTypeId: (state, action: PayloadAction<number | null>) => { state.eventTypeId = action.payload },
     setShowContactModal: (state, action: PayloadAction<boolean>) => { state.showContactModal = action.payload },
     setEmail: (state, action: PayloadAction<string>) => { state.email = action.payload },
     setTelegram: (state, action: PayloadAction<string>) => { state.telegram = action.payload },
@@ -77,6 +89,7 @@ export const { name, reducer, actions } = createSlice({
       state.eventType = null
       state.eventTypeLabel = null
       state.zipFile = null
+      state.eventTypeId = null
       state.eventPayload = null
       state.eventName = ''
     },

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useSelector } from 'react-redux'
 import { EventCard } from './eventcards'
-import { EventObject } from './reurlcard' // @ts-ignore
+import { EventObject } from '../slice'
+import { selectCardData } from '../selectors'
 import './eventcard.scss'
 
 export const CardOnMap: React.FC<{
@@ -11,7 +12,7 @@ export const CardOnMap: React.FC<{
   event: EventObject;
   onClose: () => void;
 }> = ({ isVisible, event, onClose }) => {
-  const cardData = useSelector((state: any) => state.card?.cardData);
+  const cardData = useSelector(selectCardData);
   const [show, setShow] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const hasShownRef = useRef(false);
@@ -59,10 +60,10 @@ export const CardOnMap: React.FC<{
         eventTitle={event.title}
         eventDate={event.eventDate}
         eventDescription={event.description}
-        imageUrl={event.previewUrlImage} // @ts-ignore
-        siteUrl={event.siteUrl}
+        imageUrl={event.previewUrlImage}
+        siteUrl={event.siteUrl || undefined}
         onClose={handleClose}
-        cardData={cardData}
+        cardData={cardData || undefined}
       />
     </div>,
     mapWrapper

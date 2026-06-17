@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { BuToCon } from '../../../entities/butocon'
 import { ContactModal } from './contac'
 import { actions } from '../slice'
 import { selectName,
@@ -58,9 +59,16 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
   }
 
   const handleEventTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(actions.setEventType({ value: e.target.value, label: e.target.dataset.label ?? e.target.value }))
-    setIsTypevenOpen(false)
-  }
+  const value = e.target.value
+  const label = e.target.dataset.label ?? value
+  
+  dispatch(actions.setEventType({ value, label }))
+  
+  const typeId = value === 'political' ? 1 : value === 'military' ? 2 : null
+  dispatch(actions.setEventTypeId(typeId))
+  
+  setIsTypevenOpen(false)
+}
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -256,13 +264,7 @@ export const SuggestEventModal: React.FC<SuggestEventModalProps> = ({ isOpen, on
               </p>
             )}
 
-            <button
-              type="submit"
-              className={`submit-btn final-submit-btn ${isFormValid ? 'with-background' : ''}`}
-              disabled={!isFormValid}
-            >
-              Далее
-            </button>
+            <BuToCon isFormValid={isFormValid} />
           </form>
         </div>
       </div>

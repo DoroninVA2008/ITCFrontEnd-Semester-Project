@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { BuTG } from '../../../entities/butg'
 
 interface SuccessModalProps {
   isOpen: boolean;
@@ -66,9 +67,7 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, onR
           Вы можете закрыть это окно и продолжить работу с картой.
         </p>
         <div className="success-actions">
-          <button className="submit-btn-active" onClick={handleReturnToMap}>
-            Привязать телеграм
-          </button>
+          <BuTG onClick={handleReturnToMap} />
         </div>
       </div>
     </div>

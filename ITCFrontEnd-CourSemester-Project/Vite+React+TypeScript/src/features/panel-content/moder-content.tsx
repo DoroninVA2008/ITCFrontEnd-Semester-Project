@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { ModerCard, Moderator, RoleType, ROLE_LABEL } from '../admin-connection/moder-function/modcard'
 import { fetchModerators, createAdmin, deleteAdmin, changeAdminRole, CreateAdminResult } from '../admin-connection/moder-function/modreques'
 import { ModeRole } from '../admin-connection/moder-function/moderole'
+import { useNavigate } from 'react-router-dom'
 
 export const ModerContentComponent: React.FC = () => {
   const [moderators, setModerators] = useState<Moderator[]>([])
@@ -21,19 +22,27 @@ export const ModerContentComponent: React.FC = () => {
   const [addError, setAddError] = useState<string | null>(null)
   const [addCreated, setAddCreated] = useState<CreateAdminResult | null>(null)
   const menuRef = useRef<HTMLDivElement | null>(null)
+  const navigate = useNavigate(); // создаем навигатор
 
   useEffect(() => {
-    fetchModerators().then(setModerators)
-  }, [])
+  fetchModerators()
+    .then(setModerators)
+    .catch((err) => {
+      console.error('Ошибка загрузки модераторов:', err)
+      if (err?.message?.includes('401') || err?.message?.includes('403')) {
+        navigate('/log')
+      }
+    })
+}, [navigate])
 
-  const closeMenu = (id: string) => {
+  const closeMenu=(id: string) => {
     setMenuClosing(id)
     setTimeout(() => { setOpenMenuId(null); setMenuClosing(null) }, 300)
   }
 
-  const closeChangeRole = () => {
+  const closeChangeRole=() => {
     setChangeRoleClosing(true)
-    setTimeout(() => { setChangeRoleMod(null); setChangeRoleClosing(false) }, 300)
+    setTimeout(() => { setChangeRoleMod(null); setChangeRoleClosing(false)}, 300)
   }
 
   const closeAddModer = () => {
@@ -49,12 +58,23 @@ export const ModerContentComponent: React.FC = () => {
   const handleCreateAdmin = async () => {
     setAddLoading(true)
     setAddError(null)
+    
+      const handleApiError = (err: any) => {
+        // Можно добавить логирование, показывать сообщения и т.п.
+        console.error('API Error:', err);
+        navigate('/log');
+      }
     try {
       const result = await createAdmin(addEmail, addRole)
       setAddCreated(result)
-      fetchModerators().then(setModerators)
+      // Обновляем список модераторов
+      fetchModerators()
+        .then(setModerators)
+        .catch(() => {
+          navigate('/log')
+        })
     } catch (err: any) {
-      setAddError(err?.message ?? 'Ошибка создания администратора')
+      handleApiError(err);
     } finally {
       setAddLoading(false)
     }
@@ -66,17 +86,6 @@ export const ModerContentComponent: React.FC = () => {
     if (openMenuId) closeMenu(openMenuId)
   }
 
-  useEffect(() => {
-    if (!openMenuId) return
-    const handle = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        closeMenu(openMenuId)
-      }
-    }
-    document.addEventListener('mousedown', handle)
-    return () => document.removeEventListener('mousedown', handle)
-  }, [openMenuId])
-
   const handleChangeRole = async () => {
     if (!changeRoleMod) return
     try {
@@ -85,6 +94,7 @@ export const ModerContentComponent: React.FC = () => {
       closeChangeRole()
     } catch (err: any) {
       console.error('Ошибка изменения роли:', err?.message)
+      // Можно еще редиректить или показывать ошибку
     }
   }
 
@@ -94,6 +104,8 @@ export const ModerContentComponent: React.FC = () => {
       setModerators(prev => prev.filter(m => m.id !== mod.id))
     } catch (err: any) {
       console.error('Ошибка удаления:', err?.message)
+      // Можно редирект тут тоже при ошибках
+      // navigate('/log');
     }
   }
 

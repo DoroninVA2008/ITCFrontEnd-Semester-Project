@@ -1,3 +1,4 @@
+// import { useNavigate } from 'react-router-dom'
 import { admins, DelAdmins, RolAdmins, DelForm, adminReview, AddForm } from '../../../entities/cons'
 import { Moderator, RoleType } from './modcard'
 
@@ -83,6 +84,7 @@ export const rejectRequest = async (id: string | number, comment: string): Promi
 }
 
 export const fetchModerators = async (): Promise<Moderator[]> => {
+  // const navigate = useNavigate();
   try {
     const response = await fetch(admins, {
       method: 'GET',
@@ -114,6 +116,7 @@ export const fetchModerators = async (): Promise<Moderator[]> => {
     }))
   } catch (err) {
     console.error('Ошибка загрузки модераторов:', err)
+    // navigate('/log');
     return []
   }
 }

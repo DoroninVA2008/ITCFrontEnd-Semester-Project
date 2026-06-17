@@ -1,4 +1,5 @@
 export interface AuthState {
+  navigateToLogin: any;
   login: string;
   password: string;
   loading: boolean;
@@ -10,4 +11,6 @@ export interface AuthState {
   logoutCompleted: boolean;
   refreshReady: boolean;
   refreshUnauthorized: boolean;
+  navigateTo: string | null;
+  auth: null;
 }

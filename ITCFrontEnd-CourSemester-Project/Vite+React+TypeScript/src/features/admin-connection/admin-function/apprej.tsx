@@ -14,6 +14,7 @@ interface ApproveModalProps { // @ts-ignore
 }
 
 const EVENT_TYPES = ['Битва', 'Война', 'Революция', 'Восстания', 'Переворот']
+
 const EVENT_TYPE_MAP: Record<string, number> = {
   'Битва': 1,
   'Война': 2,
@@ -21,6 +22,7 @@ const EVENT_TYPE_MAP: Record<string, number> = {
   'Восстания': 4,
   'Переворот': 5,
 }
+
 const EVENT_TYPE_ID_MAP: Record<number, string> = {
   1: 'Битва',
   2: 'Война',
@@ -28,6 +30,7 @@ const EVENT_TYPE_ID_MAP: Record<number, string> = {
   4: 'Восстания',
   5: 'Переворот',
 }
+
 const STATUS_LABEL: Record<string, string> = {
   published:       'Опубликовано',
   review:          'На проверке',

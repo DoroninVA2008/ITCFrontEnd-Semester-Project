@@ -1,50 +1,68 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { useAdminLogout } from '../features/logout-old/logout' // Исправить
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { LogOutFeature } from '../features/logout'
 
 export const ButoAcc: React.FC = () => {
-  const [open, setOpen] = useState(false)
-  const [closing, setClosing] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-  const isOpenRef = useRef(false)
-  const { handleLogout } = useAdminLogout()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+  const [open, setOpen] = useState(false);
+  const [closing, setClosing] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const isOpenRef = useRef(false);
+  const logoutCompleted = useSelector((state: any) => state.logout.logoutCompleted);
+
+  useEffect(() => {
+    if (logoutCompleted) {
+      dispatch(LogOutFeature.actions.logout());
+      dispatch(LogOutFeature.actions.logoutReset());
+      navigate('/log');
+    }
+  }, [logoutCompleted, dispatch, navigate]);
+
+  const handleLogout = () => {
+    dispatch(LogOutFeature.actions.logoutRequest());
+  };
 
   const closeDropdown = () => {
-    if (!isOpenRef.current) return
-    isOpenRef.current = false
-    setClosing(true)
+    if (!isOpenRef.current) return;
+    isOpenRef.current = false;
+    setClosing(true);
     setTimeout(() => {
-      setOpen(false)
-      setClosing(false)
-    }, 300)
-  }
+      setOpen(false);
+      setClosing(false);
+    }, 300);
+  };
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
-        closeDropdown()
+        closeDropdown();
       }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleToggle = () => {
     if (isOpenRef.current) {
-      closeDropdown()
+      closeDropdown();
     } else {
-      isOpenRef.current = true
-      setOpen(true)
+      isOpenRef.current = true;
+      setOpen(true);
     }
-  }
+  };
 
-  const username = localStorage.getItem('username') || 'admin'
-  const parts = username.split('_')
-  const secondInitial = parts[1]?.[0]?.toUpperCase() ?? 'T'
+  const username = localStorage.getItem('username') || 'UnAuthorized_AdModer';
+  const parts = username.split('_');
+  const firstInitial = parts[0]?.[0]?.toUpperCase() ?? 'A';
+  const secondInitial = parts[1]?.[0]?.toUpperCase() ?? 'A';
 
   return (
     <div className="butacc-wrap" ref={ref}>
       <button className="butacc" onClick={handleToggle}>
-        A{secondInitial}
+        {firstInitial}{secondInitial}
       </button>
       {(open || closing) && (
         <div className={`butacc-dropdown${closing ? ' butacc-dropdown--closing' : ''}`}>
@@ -55,5 +73,5 @@ export const ButoAcc: React.FC = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};

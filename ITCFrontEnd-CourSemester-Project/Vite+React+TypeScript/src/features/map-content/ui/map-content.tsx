@@ -50,7 +50,7 @@ export const MapContent: React.FC = () => {
         maxBoundsViscosity={1.0}
         ref={mapRef}
       >
-        <TileLayer url={tiLayer} noWrap={false} opacity={0} />
+        <TileLayer url={tiLayer} noWrap={false} opacity={0} maxNativeZoom={6} />
         <LayersLabels />
         <CityLabels />
         <MarkerWithPopup
